@@ -543,6 +543,8 @@ with pkgs;
 
   enpass = callPackage ../tools/security/enpass { };
 
+  et = callPackage ../tools/networking/et { };
+
   genymotion = callPackage ../development/mobile/genymotion { };
 
   grc = callPackage ../tools/misc/grc { };
