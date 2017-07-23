@@ -723,22 +723,28 @@ configurePhase() {
     runHook postConfigure
 }
 
-
-buildPhase() {
-    runHook preBuild
+makePhase() {
+    local phase="$1"
+    local phaseFlags="$2"
+    local phaseFlagsArray="$3"
+    local targets="$4"
 
     if [ -z "$makeFlags" ] && ! [ -n "$makefile" -o -e "Makefile" -o -e "makefile" -o -e "GNUmakefile" ]; then
         echo "no Makefile, doing nothing"
     else
-        # See https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
-        makeFlags="SHELL=$SHELL $makeFlags"
+        # Regarding SHELL, see https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
+        local actualMakeFlags="$targets SHELL=$SHELL ${makefile:+-f $makefile} ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} $makeFlags ${makeFlagsArray[@]} $phaseFlags $phaseFlagsArray"
 
-        echo "make flags: $makeFlags ${makeFlagsArray[@]} $buildFlags ${buildFlagsArray[@]}"
-        make ${makefile:+-f $makefile} \
-            ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
-            $makeFlags "${makeFlagsArray[@]}" \
-            $buildFlags "${buildFlagsArray[@]}"
+        echo "$phase flags: $actualMakeFlags"
+        make $actualMakeFlags
     fi
+}
+
+
+buildPhase() {
+    runHook preBuild
+
+    makePhase build "$buildFlags" "${buildFlagsArray[@]}"
 
     runHook postBuild
 }
@@ -747,11 +753,7 @@ buildPhase() {
 checkPhase() {
     runHook preCheck
 
-    echo "check flags: $makeFlags ${makeFlagsArray[@]} $checkFlags ${checkFlagsArray[@]}"
-    make ${makefile:+-f $makefile} \
-        ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
-        $makeFlags "${makeFlagsArray[@]}" \
-        ${checkFlags:-VERBOSE=y} "${checkFlagsArray[@]}" ${checkTarget:-check}
+    makePhase check "$checkFlags" "${checkFlagsArray[@]}" ${checkTarget:-check}
 
     runHook postCheck
 }
@@ -764,11 +766,7 @@ installPhase() {
         mkdir -p "$prefix"
     fi
 
-    installTargets=${installTargets:-install}
-    echo "install flags: $installTargets $makeFlags ${makeFlagsArray[@]} $installFlags ${installFlagsArray[@]}"
-    make ${makefile:+-f $makefile} $installTargets \
-        $makeFlags "${makeFlagsArray[@]}" \
-        $installFlags "${installFlagsArray[@]}"
+    makePhase install "$installFlags" "${installFlagsArray[@]}" ${installTargets:-install}
 
     runHook postInstall
 }
@@ -835,11 +833,7 @@ fixupPhase() {
 installCheckPhase() {
     runHook preInstallCheck
 
-    echo "installcheck flags: $makeFlags ${makeFlagsArray[@]} $installCheckFlags ${installCheckFlagsArray[@]}"
-    make ${makefile:+-f $makefile} \
-        ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
-        $makeFlags "${makeFlagsArray[@]}" \
-        $installCheckFlags "${installCheckFlagsArray[@]}" ${installCheckTarget:-installcheck}
+    makePhase install "$installCheckFlags" "$installCheckFlagsArray[@]}" ${installCheckTarget:-installcheck}
 
     runHook postInstallCheck
 }
@@ -848,8 +842,7 @@ installCheckPhase() {
 distPhase() {
     runHook preDist
 
-    echo "dist flags: $distFlags ${distFlagsArray[@]}"
-    make ${makefile:+-f $makefile} $distFlags "${distFlagsArray[@]}" ${distTarget:-dist}
+    makePhase dist "$distFlags" "${distFlagsArray[@]}" ${distTarget:-dist}
 
     if [ "$dontCopyDist" != 1 ]; then
         mkdir -p "$out/tarballs"
