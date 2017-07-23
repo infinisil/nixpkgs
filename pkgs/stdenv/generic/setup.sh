@@ -725,15 +725,16 @@ configurePhase() {
 
 makePhase() {
     local phase="$1"
-    local phaseFlags="$2"
-    local phaseFlagsArray="$3"
-    local targets="$4"
+    local targets="$2"
 
     if [ -z "$makeFlags" ] && ! [ -n "$makefile" -o -e "Makefile" -o -e "makefile" -o -e "GNUmakefile" ]; then
         echo "no Makefile, doing nothing"
     else
+        local phaseFlags=${phase}Flags
+        local phaseFlagsArray=${phase}FlagsArray[@]
+
         # Regarding SHELL, see https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
-        local actualMakeFlags="$targets SHELL=$SHELL ${makefile:+-f $makefile} ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} $makeFlags ${makeFlagsArray[@]} $phaseFlags $phaseFlagsArray"
+        local actualMakeFlags="$targets SHELL=$SHELL ${makefile:+-f $makefile} ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} $makeFlags ${makeFlagsArray[@]} ${!phaseFlags} ${!phaseFlagsArray}"
 
         echo "$phase flags: $actualMakeFlags"
         make $actualMakeFlags
@@ -744,7 +745,7 @@ makePhase() {
 buildPhase() {
     runHook preBuild
 
-    makePhase build "$buildFlags" "${buildFlagsArray[@]}"
+    makePhase build
 
     runHook postBuild
 }
@@ -753,7 +754,7 @@ buildPhase() {
 checkPhase() {
     runHook preCheck
 
-    makePhase check "$checkFlags" "${checkFlagsArray[@]}" ${checkTarget:-check}
+    makePhase check ${checkTarget:-check}
 
     runHook postCheck
 }
@@ -766,7 +767,7 @@ installPhase() {
         mkdir -p "$prefix"
     fi
 
-    makePhase install "$installFlags" "${installFlagsArray[@]}" ${installTargets:-install}
+    makePhase install ${installTargets:-install}
 
     runHook postInstall
 }
@@ -833,7 +834,7 @@ fixupPhase() {
 installCheckPhase() {
     runHook preInstallCheck
 
-    makePhase install "$installCheckFlags" "$installCheckFlagsArray[@]}" ${installCheckTarget:-installcheck}
+    makePhase install ${installCheckTarget:-installcheck}
 
     runHook postInstallCheck
 }
@@ -842,7 +843,7 @@ installCheckPhase() {
 distPhase() {
     runHook preDist
 
-    makePhase dist "$distFlags" "${distFlagsArray[@]}" ${distTarget:-dist}
+    makePhase dist ${distTarget:-dist}
 
     if [ "$dontCopyDist" != 1 ]; then
         mkdir -p "$out/tarballs"
