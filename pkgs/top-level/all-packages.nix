@@ -17245,6 +17245,8 @@ with pkgs;
 
   crrcsim = callPackage ../games/crrcsim {};
 
+  cuberite = callPackage ../games/cuberite { };
+
   cuyo = callPackage ../games/cuyo { };
 
   dhewm3 = callPackage ../games/dhewm3 {};
