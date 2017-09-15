@@ -70,6 +70,14 @@ in {
         '';
       };
 
+      readonlyPlaylists = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Do not require the playlist directory to be writable.
+        '';
+      };
+
       extraConfig = mkOption {
         type = types.lines;
         default = "";
@@ -162,6 +170,7 @@ in {
 
       preStart = ''
         mkdir -p "${cfg.dataDir}" && chown -R ${cfg.user}:${cfg.group} "${cfg.dataDir}"
+      '' + optionalString (! cfg.readonlyPlaylists) ''
         mkdir -p "${cfg.playlistDirectory}" && chown -R ${cfg.user}:${cfg.group} "${cfg.playlistDirectory}"
       '';
       serviceConfig = {
