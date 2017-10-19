@@ -59,6 +59,7 @@ let
                   ${net.extraConf}
               </Network>
               '') confOpts.networks) }
+            ${confOpts.extraUserConf}
     </User>
     ${confOpts.extraZncConf}
   '';
@@ -315,6 +316,14 @@ in
           type = types.lines;
           description = ''
             Extra config to `znc.conf` file.
+          '';
+        };
+
+        extraUserConf = mkOption {
+          default = "";
+          type = types.lines;
+          description = ''
+            Extra config to the user section of the `znc.conf` file.
           '';
         };
       };
