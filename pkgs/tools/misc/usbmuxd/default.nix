@@ -9,6 +9,12 @@ stdenv.mkDerivation rec {
     sha256 = "0bdlc7a8plvglqqx39qqampqm6y0hcdws76l9dffwl22zss4i29y";
   };
 
+  patchPhase = ''
+    substituteInPlace src/main.c \
+      --replace '"/var/run/usbmuxd.pid"' '"/var/run/usbmuxd/usbmuxd.pid"' \
+      --replace '"/var/run/usbmuxd"' '"/var/run/usbmuxd/usbmuxd"'
+  '';
+
   nativeBuildInputs = [ pkgconfig ];
   propagatedBuildInputs = [ libusb1 libplist libimobiledevice ];
 

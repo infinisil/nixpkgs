@@ -62,11 +62,17 @@ in
       description = "usbmuxd";
       wantedBy = [ "multi-user.target" ];
       unitConfig.Documentation = "man:usbmuxd(8)";
-      serviceConfig = {
+      preStart = ''
         # Trigger the udev rule manually. This doesn't require replugging the
         # device when first enabling the option to get it to work
-        ExecStartPre = "${pkgs.libudev}/bin/udevadm trigger -s usb -a idVendor=${apple}";
-        ExecStart = "${pkgs.usbmuxd}/bin/usbmuxd -U ${cfg.user} -f";
+        ${pkgs.libudev}/bin/udevadm trigger -s usb -a idVendor=${apple}
+
+        install -m 644 -g ${cfg.group} -d /var/run/usbmuxd
+      '';
+      serviceConfig = {
+        User = cfg.user;
+        PermissionsStartOnly = true;
+        ExecStart = "${pkgs.usbmuxd}/bin/usbmuxd -f";
       };
     };
 
