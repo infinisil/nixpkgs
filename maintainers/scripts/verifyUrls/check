@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+# This script takes a single URL as an argument and checks first whether the
+# https version of it is accessible or a redirect of it, second it checks
+# whether the http version is accessible or a redirect of it.
+#
+# The first working url in the above order is compared with the original
+# argument and if they are different both the original and the new version will
+# be output to stdout with a space inbetween, signifying a necessary change
+#
+# If no url was working, the original url and the string "invalid" will be
+# output to stdout, signifying a necessary removal/change
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+set -euo pipefail
+
+out=${1:-/dev/stdout}
+mode=${2:-normal}
+orig=$3
+prefix=${4:+$4: }
+
+error=""
+
+write() {
+	while ! mkdir lock 2>/dev/null; do sleep 1; done
+	echo "$*" >> "$out"
+	rmdir lock
+}
+
+log() {
+	if [[ "$1" == "imp" ]]; then
+		shift
+		echo -e "$prefix$*" >&2
+	elif [[ "$mode" != "quiet" ]]; then
+		echo -e "$prefix$*" >&2
+	fi
+}
+
+loggreen() {
+	log imp "\e[1;32m$* ($orig)\e[0m"
+}
+
+logyellow() {
+	log imp "\e[1;33m$* ($orig)\e[0m"
+}
+
+logred() {
+	log imp "\e[1;31m$* ($orig)\e[0m"
+}
+
+accept() {
+	local url=$1 lev
+	if [ "$url" != "$orig" ]; then
+		loggreen "Rewrite to $url"
+		lev=$(awk -f "$SCRIPTPATH/levenshtein" -v x="$orig" -v y="$url")
+		write "$lev $orig $url"
+	else
+		logyellow "no rewrite necessary"
+	fi
+	exit
+}
+
+check() {
+	local url="$1" result code finalUrl
+
+	log "Checking ($url)"
+
+	set +e
+	result=$(curl -sL -o /dev/null -m 300 \
+		-w '%{http_code} %{url_effective}\n' "$url"
+	)
+	code=$?
+	set -e
+
+	case "$code" in
+		0)
+			read stat finalUrl <<< "$result"
+			case "$stat" in
+				2*)
+					log "OK ($finalUrl)"
+					accept "$finalUrl"
+					;;
+				*)
+					error="HTTP code is $stat"
+					log "$error ($finalUrl)"
+					;;
+			esac
+			;;
+		*)
+			error="curl error $code"
+			log "$error ($url)"
+			;;
+	esac
+}
+
+https=${orig/#http:/https:}
+check "$https"
+
+if [[ "$orig" != "$https" ]]; then
+	check "$orig"
+fi
+
+logred "No url worked, $error"
+write "-1 $orig"

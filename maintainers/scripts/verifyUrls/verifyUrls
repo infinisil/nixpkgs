@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -eu
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+out=$SCRIPTPATH/replacements
+> $out
+
+par=${1:-100}
+
+urlRegex='"((https?://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))"'
+
+echo Finding urls...
+
+urls=$(find "$SCRIPTPATH/../../.." -name '*.nix' | \
+	xargs nix-instantiate --parse 2>/dev/null | \
+	rg "$urlRegex" -o -r '$1' | \
+	sed 's/#.*//' | \
+	sort -u | shuf
+)
+
+count=$(echo "$urls" | wc -l)
+
+echo Verifying $count urls with $par in parallel...
+
+sleep 3
+
+seq 1 $count | \
+	sed "s,$,/$count," | \
+	paste -d' ' <(echo "$urls") - | \
+	xargs -n2 -P "$par" "$SCRIPTPATH/check" $out quiet
