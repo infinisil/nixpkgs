@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!@shell@
 
 # This script takes a single URL as an argument and checks first whether the
 # https version of it is accessible or a redirect of it, second it checks
@@ -11,21 +11,20 @@
 # If no url was working, the original url and the string "invalid" will be
 # output to stdout, signifying a necessary removal/change
 
-SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-
 set -euo pipefail
 
 out=${1:-/dev/stdout}
 mode=${2:-normal}
-orig=$3
-prefix=${4:+$4: }
+lock=$3
+orig=$4
+prefix=${5:+$5: }
 
 error=""
 
 write() {
-	while ! mkdir lock 2>/dev/null; do sleep 1; done
+	while ! mkdir "$lock" 2>/dev/null; do sleep 1; done
 	echo "$*" >> "$out"
-	rmdir lock
+	rmdir "$lock"
 }
 
 log() {
@@ -53,7 +52,7 @@ accept() {
 	local url=$1 lev
 	if [ "$url" != "$orig" ]; then
 		loggreen "Rewrite to $url"
-		lev=$(awk -f "$SCRIPTPATH/levenshtein" -v x="$orig" -v y="$url")
+		lev=$(awk -f @levenshtein@ -v x="$orig" -v y="$url")
 		write "$lev $orig $url"
 	else
 		logyellow "no rewrite necessary"
@@ -67,7 +66,7 @@ check() {
 	log "Checking ($url)"
 
 	set +e
-	result=$(curl -sL -o /dev/null -m 300 \
+	result=$(@curl@/bin/curl -sL -o /dev/null -m 30 \
 		-w '%{http_code} %{url_effective}\n' "$url"
 	)
 	code=$?

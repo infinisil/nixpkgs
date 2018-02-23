@@ -1,5 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p ripgrep curl nix --pure
 
+export NIX_REMOTE=daemon
 set -eu
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
