@@ -14,6 +14,7 @@
   ./config/networking.nix
   ./config/no-x-libs.nix
   ./config/nsswitch.nix
+  ./config/ports.nix
   ./config/power-management.nix
   ./config/pulseaudio.nix
   ./config/shells-environment.nix
