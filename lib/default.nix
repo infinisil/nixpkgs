@@ -5,11 +5,9 @@
  */
 let
 
-  inherit (import ./fixed-points.nix {}) makeExtensible;
+  callLibs = file: import file { inherit lib; };
 
-  lib = makeExtensible (self: let
-    callLibs = file: import file { lib = self; };
-  in with self; {
+  lib = rec {
 
     # often used, or depending on very little
     trivial = callLibs ./trivial.nix;
@@ -130,5 +128,5 @@ let
       mergeAttrsNoOverride mergeAttrByFunc mergeAttrsByFuncDefaults
       mergeAttrsByFuncDefaultsClean mergeAttrBy
       prepareDerivationArgs nixType imap overridableDelayableArgs;
-  });
+  };
 in lib

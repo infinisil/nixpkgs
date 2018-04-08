@@ -59,7 +59,7 @@ rec {
         };
       };
 
-      closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options lib; } // specialArgs);
+      closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options; lib = import ./.; } // specialArgs);
 
       options = mergeModules prefix (reverseList (filterModules (specialArgs.modulesPath or "") closed));
 
