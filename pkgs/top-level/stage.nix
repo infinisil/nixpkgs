@@ -128,6 +128,7 @@ let
     allPackages
     aliases
     configOverrides
+    (import ../../new-pkgs { inherit lib; })
   ] ++ overlays ++ [
     stdenvOverrides ]);
 

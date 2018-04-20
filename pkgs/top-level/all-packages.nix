@@ -16736,9 +16736,7 @@ with pkgs;
 
   mirage = callPackage ../applications/graphics/mirage { };
 
-  mixxx = callPackage ../applications/audio/mixxx {
-    inherit (vamp) vampSDK;
-  };
+  mixxx = callPackage ../applications/audio/mixxx { };
 
   mjpg-streamer = callPackage ../applications/video/mjpg-streamer { };
 

@@ -1,7 +1,7 @@
 { stdenv, fetchurl, chromaprint, fetchpatch, fftw, flac, faad2, mp4v2
 , libid3tag, libmad, libopus, libshout, libsndfile, libusb1, libvorbis
 , pkgconfig, portaudio, portmidi, protobuf, qt4, rubberband, scons, sqlite
-, taglib, vampSDK
+, taglib, vamp
 }:
 
 stdenv.mkDerivation rec {
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     chromaprint fftw flac faad2 mp4v2 libid3tag libmad libopus libshout libsndfile
     libusb1 libvorbis pkgconfig portaudio portmidi protobuf qt4
-    rubberband scons sqlite taglib vampSDK
+    rubberband scons sqlite taglib vamp.vampSDK
   ];
 
   sconsFlags = [
