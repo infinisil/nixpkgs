@@ -1625,6 +1625,8 @@ with pkgs;
 
   citra = libsForQt5.callPackage ../misc/emulators/citra { };
 
+  cixl = callPackage ../development/compilers/cixl { };
+
   cmst = libsForQt5.callPackage ../tools/networking/cmst { };
 
   colord = callPackage ../tools/misc/colord { };
