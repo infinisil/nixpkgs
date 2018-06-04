@@ -615,7 +615,7 @@
   ./services/networking/xrdp.nix
   ./services/networking/zerobin.nix
   ./services/networking/zerotierone.nix
-  ./services/networking/znc.nix
+  ./services/networking/znc
   ./services/printing/cupsd.nix
   ./services/scheduling/atd.nix
   ./services/scheduling/chronos.nix
