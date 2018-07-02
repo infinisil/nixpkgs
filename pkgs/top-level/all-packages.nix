@@ -2421,7 +2421,7 @@ with pkgs;
   fluentd = callPackage ../tools/misc/fluentd { };
 
   flvstreamer = callPackage ../tools/networking/flvstreamer { };
-  
+
   hmetis = callPackage_i686 ../applications/science/math/hmetis { };
 
   libbsd = callPackage ../development/libraries/libbsd { };
@@ -2531,7 +2531,7 @@ with pkgs;
     foundationdb52
     foundationdb60;
 
-  foundationdb = callPackage ../servers/foundationdb { stdenv = overrideCC stdenv gcc49; };
+  foundationdb = callPackage ../servers/foundationdb { stdenv49 = overrideCC stdenv gcc49; };
 
   fuse-7z-ng = callPackage ../tools/filesystems/fuse-7z-ng { };
 
@@ -3722,7 +3722,7 @@ with pkgs;
   lzip = callPackage ../tools/compression/lzip { };
 
   luxcorerender = callPackage ../tools/graphics/luxcorerender { };
-  
+
   xz = callPackage ../tools/compression/xz { };
 
   lz4 = callPackage ../tools/compression/lz4 { };
@@ -4987,7 +4987,7 @@ with pkgs;
   securefs = callPackage ../tools/filesystems/securefs { };
 
   seexpr = callPackage ../development/compilers/seexpr { };
- 
+
   setroot = callPackage  ../tools/X11/setroot { };
 
   setserial = callPackage ../tools/system/setserial { };
