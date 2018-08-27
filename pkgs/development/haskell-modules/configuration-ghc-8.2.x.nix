@@ -89,7 +89,6 @@ self: super: {
   cabal2nix = super.cabal2nix.overrideScope (self: super: { Cabal = self.Cabal_2_2_0_1; });
   cabal2spec = super.cabal2spec.overrideScope (self: super: { Cabal = self.Cabal_2_2_0_1; });
   distribution-nixpkgs = super.distribution-nixpkgs.overrideScope (self: super: { Cabal = self.Cabal_2_2_0_1; });
-  hackage-db_2_0_1 = super.hackage-db_2_0_1.overrideScope (self: super: { Cabal = self.Cabal_2_2_0_1; });
   stack = super.stack.overrideScope (self: super: { Cabal = self.Cabal_2_2_0_1; });
   stylish-cabal = dontCheck (super.stylish-cabal.overrideScope (self: super: {
     Cabal = self.Cabal_2_2_0_1;

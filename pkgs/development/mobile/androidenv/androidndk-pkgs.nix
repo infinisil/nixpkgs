@@ -15,6 +15,10 @@ let
     "x86_64-unknown-linux-gnu" = {
       double = "linux-x86_64";
     };
+  }.${config} or
+    (throw "Android NDK doesn't support ${config}, as far as we know");
+
+  ndkInfoFun' = { config, ... }: {
     "armv5tel-unknown-linux-androideabi" = {
       arch = "arm";
       triple = "arm-linux-androideabi";
@@ -36,21 +40,24 @@ let
   hostInfo = ndkInfoFun hostPlatform;
   targetInfo = ndkInfoFun targetPlatform;
 
+  hostInfo' = ndkInfoFun' hostPlatform;
+  targetInfo' = ndkInfoFun' targetPlatform;
+
 in
 
 rec {
   # Misc tools
   binaries = let
       ndkBinDir =
-        "${androidndk}/libexec/${androidndk.name}/toolchains/${targetInfo.triple}-${targetInfo.gccVer}/prebuilt/${hostInfo.double}/bin";
+        "${androidndk}/libexec/${androidndk.name}/toolchains/${targetInfo'.triple}-${targetInfo'.gccVer}/prebuilt/${hostInfo.double}/bin";
     in runCommand "ndk-gcc-binutils" {
       isGNU = true; # for cc-wrapper
       nativeBuildInputs = [ makeWrapper ];
       propgatedBuildInputs = [ androidndk ];
     } ''
       mkdir -p $out/bin
-      for prog in ${ndkBinDir}/${targetInfo.triple}-*; do
-        prog_suffix=$(basename $prog | sed 's/${targetInfo.triple}-//')
+      for prog in ${ndkBinDir}/${targetInfo'.triple}-*; do
+        prog_suffix=$(basename $prog | sed 's/${targetInfo'.triple}-//')
         ln -s $prog $out/bin/${targetPlatform.config}-$prog_suffix
       done
     '';
@@ -68,7 +75,7 @@ rec {
     bintools = binutils;
     libc = targetAndroidndkPkgs.libraries;
     extraBuildCommands = ''
-      echo "-D__ANDROID_API__=${targetPlatform.sdkVer}" >> $out/nix-support/cc-cflags
+      echo "-D__ANDROID_API__=${targetPlatform.sdkVer or (throw "Not supported")}" >> $out/nix-support/cc-cflags
     ''
     + lib.optionalString targetPlatform.isAarch32 (let
         p =  targetPlatform.platform.gcc or {}
@@ -92,7 +99,7 @@ rec {
           -e 's|^(extraBefore=)\(\)$|\1(${builtins.toString flags})|'
       '')
       # GCC 4.9 is the first relase with "-fstack-protector"
-      + lib.optionalString (lib.versionOlder targetInfo.gccVer "4.9") ''
+      + lib.optionalString (lib.versionOlder targetInfo'.gccVer "4.9") ''
         sed -E \
         -i $out/nix-support/add-hardening.sh \
         -e 's|(-fstack-protector)-strong|\1|g'
@@ -107,17 +114,17 @@ rec {
   libraries =
     let
       includePath = if buildAndroidndk.version == "10e" then
-          "${buildAndroidndk}/libexec/${buildAndroidndk.name}/platforms/android-${hostPlatform.sdkVer}/arch-${hostInfo.arch}/usr/include/"
+          "${buildAndroidndk}/libexec/${buildAndroidndk.name}/platforms/android-${hostPlatform.sdkVer or (throw "Not supported")}/arch-${hostInfo'.arch}/usr/include/"
         else
           "${buildAndroidndk}/libexec/${buildAndroidndk.name}/sysroot/usr/include";
-      libPath = "${buildAndroidndk}/libexec/${buildAndroidndk.name}/platforms/android-${hostPlatform.sdkVer}/arch-${hostInfo.arch}/usr/lib/";
+      libPath = "${buildAndroidndk}/libexec/${buildAndroidndk.name}/platforms/android-${hostPlatform.sdkVer or (throw "Not supported")}/arch-${hostInfo'.arch}/usr/lib/";
     in
     runCommand "bionic-prebuilt" {} ''
       mkdir -p $out
       cp -r ${includePath} $out/include
       chmod +w $out/include
       ${lib.optionalString (lib.versionOlder "10e" buildAndroidndk.version)
-        "ln -s $out/include/${hostInfo.triple}/asm $out/include/asm"}
+        "ln -s $out/include/${hostInfo'.triple}/asm $out/include/asm"}
       ln -s ${libPath} $out/lib
     '';
 }

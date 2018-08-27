@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, cmake, apple_sdk_sierra, xnu-new }:
+{ stdenv, fetchFromGitHub, cmake, apple_sdk_sierra, xnu }:
 
 stdenv.mkDerivation rec {
   name = "swift-corelibs-libdispatch";
@@ -8,5 +8,5 @@ stdenv.mkDerivation rec {
     rev = "f83b5a498bad8e9ff8916183cf6e8ccf677c346b";
     sha256 = "1czkyyc9llq2mnqfp19mzcfsxzas0y8zrk0gr5hg60acna6jkz2l";
   };
-  buildInputs = [ cmake apple_sdk_sierra.sdk xnu-new ];
+  buildInputs = [ cmake apple_sdk_sierra.sdk xnu ];
 }

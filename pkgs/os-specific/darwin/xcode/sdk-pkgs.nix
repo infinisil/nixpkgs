@@ -27,7 +27,7 @@ rec {
     type = "derivation";
     outPath = xcode + "/Contents/Developer/Platforms/${platform}.platform/Developer/SDKs/${platform}${version}.sdk";
 
-    platform = targetPlatform.xcodePlatform;
+    platform = targetPlatform.xcodePlatform or throw "Not supported";
     version = targetPlatform.sdkVer;
   };
 

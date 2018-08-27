@@ -36,6 +36,11 @@ self: super: {
   unix = null;
   xhtml = null;
 
+  #
+  compact = null;
+  compact-mutable = null;
+  ghc-instances = null;
+
   # These are now core libraries in GHC 8.4.x.
   mtl = self.mtl_2_2_2;
   parsec = self.parsec_3_1_13_0;

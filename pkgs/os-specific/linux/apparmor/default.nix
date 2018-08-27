@@ -85,7 +85,7 @@ let
 
     prePatch = prePatchCommon + ''
       substituteInPlace ./libraries/libapparmor/src/Makefile.am --replace "/usr/include/netinet/in.h" "${stdenv.cc.libc.dev}/include/netinet/in.h"
-      substituteInPlace ./libraries/libapparmor/src/Makefile.in --replace "/usr/include/netinet/in.h" "${stdenv.cc.libc.dev}/include/netinet/in.h"
+      substituteInPlace ./libraries/libapparmor/src/Makefile.in --replace "/usr/include/netinet/in.h" "${stdenv.lib.getDev stdenv.cc.libc}/include/netinet/in.h"
     '';
     inherit patches;
 
