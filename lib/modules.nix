@@ -29,6 +29,8 @@ rec {
                   args ? {}
                 , # This would be remove in the future, Prefer _module.check option instead.
                   check ? true
+                ,
+                  disallowedOptions ? { config = null; options = null; }
                 }:
     let
       # This internal module declare internal options under the `_module'
@@ -59,9 +61,9 @@ rec {
         };
       };
 
-      closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options lib; } // specialArgs);
+      closed = closeModules disallowedOptions (modules ++ [ internalModule ]) ({ inherit config options lib; } // specialArgs);
 
-      options = mergeModules prefix (reverseList (filterModules (specialArgs.modulesPath or "") closed));
+      options = mergeModules prefix disallowedOptions (reverseList (filterModules (specialArgs.modulesPath or "") closed));
 
       # Traverse options and extract the option values into the final
       # config set.  At the same time, check whether all option
@@ -79,7 +81,7 @@ rec {
         if options._module.check.value && set ? _definedNames then
           foldl' (res: m:
             foldl' (res: name:
-              if set ? ${name} then res else throw "The option `${showOption (prefix ++ [name])}' defined in `${m.file}' does not exist.")
+              if set ? ${name} then res else throw "The option `${showOption (prefix ++ [name])}' defined in `${m._file}' does not exist.")
               res m.names)
             res set._definedNames
         else
@@ -98,34 +100,34 @@ rec {
      filter (m: !(elem m.key disabledKeys)) modules;
 
   /* Close a set of modules under the ‘imports’ relation. */
-  closeModules = modules: args:
+  closeModules = disallowedOptions: modules: args:
     let
       toClosureList = file: parentKey: imap1 (n: x:
         if isAttrs x || isFunction x then
           let key = "${parentKey}:anon-${toString n}"; in
-          unifyModuleSyntax file key (unpackSubmodule (applyIfFunction key) x args)
+          unifyModuleSyntax disallowedOptions file key (unpackSubmodule (applyIfFunction key) x args)
         else
           let file = toString x; key = toString x; in
-          unifyModuleSyntax file key (applyIfFunction key (import x) args));
+          unifyModuleSyntax disallowedOptions file key (applyIfFunction key (import x) args));
     in
       builtins.genericClosure {
         startSet = toClosureList unknownModule "" modules;
-        operator = m: toClosureList m.file m.key m.imports;
+        operator = m: toClosureList m._file m.key m.imports;
       };
 
   /* Massage a module into canonical form, that is, a set consisting
      of ‘options’, ‘config’ and ‘imports’ attributes. */
-  unifyModuleSyntax = file: key: m:
+  unifyModuleSyntax = disallowedOptions: file: key: m:
     let metaSet = if m ? meta
       then { meta = m.meta; }
       else {};
     in
-    if m ? config || m ? options then
+    if builtins.intersectAttrs m disallowedOptions != {} then
       let badAttrs = removeAttrs m ["_file" "key" "disabledModules" "imports" "options" "config" "meta"]; in
       if badAttrs != {} then
         throw "Module `${key}' has an unsupported attribute `${head (attrNames badAttrs)}'. This is caused by assignments to the top-level attributes `config' or `options'."
       else
-        { file = m._file or file;
+        { _file = m._file or file;
           key = toString m.key or key;
           disabledModules = m.disabledModules or [];
           imports = m.imports or [];
@@ -133,7 +135,7 @@ rec {
           config = mkMerge [ (m.config or {}) metaSet ];
         }
     else
-      { file = m._file or file;
+      { _file = m._file or file;
         key = toString m.key or key;
         disabledModules = m.disabledModules or [];
         imports = m.require or [] ++ m.imports or [];
@@ -176,22 +178,22 @@ rec {
      of the submodule. (see applyIfFunction) */
   unpackSubmodule = unpack: m: args:
     if isType "submodule" m then
-      { _file = m.file; } // (unpack m.submodule args)
+      { _file = m._file; } // (unpack m.submodule args)
     else unpack m args;
 
   packSubmodule = file: m:
-    { _type = "submodule"; file = file; submodule = m; };
+    { _type = "submodule"; _file = file; submodule = m; };
 
   /* Merge a list of modules.  This will recurse over the option
      declarations in all modules, combining them into a single set.
      At the same time, for each option declaration, it will merge the
      corresponding option definitions in all machines, returning them
      in the ‘value’ attribute of each option. */
-  mergeModules = prefix: modules:
-    mergeModules' prefix modules
-      (concatMap (m: map (config: { inherit (m) file; inherit config; }) (pushDownProperties m.config)) modules);
+  mergeModules = prefix: disallowedOptions: modules:
+    mergeModules' prefix disallowedOptions modules
+      (concatMap (m: map (config: { _file = m._file; inherit config; }) (pushDownProperties m.config)) modules);
 
-  mergeModules' = prefix: options: configs:
+  mergeModules' = prefix: disallowedOptions: modules: configs:
     listToAttrs (map (name: {
       # We're descending into attribute ‘name’.
       inherit name;
@@ -201,19 +203,19 @@ rec {
           # Get all submodules that declare ‘name’.
           decls = concatMap (m:
             if m.options ? ${name}
-              then [ { inherit (m) file; options = m.options.${name}; } ]
+              then [ { _file = m._file; options = m.options.${name}; } ]
               else []
-            ) options;
+            ) modules;
           # Get all submodules that define ‘name’.
           defns = concatMap (m:
             if m.config ? ${name}
-              then map (config: { inherit (m) file; inherit config; })
+              then map (config: { _file = m._file; inherit config; })
                 (pushDownProperties m.config.${name})
               else []
             ) configs;
           nrOptions = count (m: isOption m.options) decls;
           # Extract the definitions for this loc
-          defns' = map (m: { inherit (m) file; value = m.config.${name}; })
+          defns' = map (m: { file = m._file; value = m.config.${name}; })
             (filter (m: m.config ? ${name}) configs);
         in
           if nrOptions == length decls then
@@ -226,9 +228,14 @@ rec {
             in
               throw "The option `${showOption loc}' in `${firstOption.file}' is a prefix of options in `${firstNonOption.file}'."
           else
-            mergeModules' loc decls defns;
-    }) (concatMap (m: attrNames m.options) options))
-    // { _definedNames = map (m: { inherit (m) file; names = attrNames m.config; }) configs; };
+            mergeModules' loc (disallowedOptions.${name} or {}) decls defns;
+        }) (concatMap (m: let
+            opts = attrNames m.options;
+            disallowed = builtins.intersectAttrs m.options disallowedOptions;
+          in if disallowed != {}
+            then throw "Option ${concatMapStringsSep ", " (x: concatStringsSep "." (prefix ++ [x])) (attrNames disallowed)} are disallowed"
+            else opts) modules))
+    // { _definedNames = map (m: { inherit (m) _file; names = attrNames m.config; }) configs; };
 
   /* Merge multiple option declarations into a single declaration.  In
      general, there should be only one declaration of each option.
@@ -272,11 +279,11 @@ rec {
             else packSubmodule file { options = opt; };
           getSubModules = opt.options.type.getSubModules or null;
           submodules =
-            if getSubModules != null then map (packSubmodule opt.file) getSubModules ++ res.options
-            else if opt.options ? options then map (coerceOption opt.file) options' ++ res.options
+            if getSubModules != null then map (packSubmodule opt._file) getSubModules ++ res.options
+            else if opt.options ? options then map (coerceOption opt._file) options' ++ res.options
             else res.options;
         in opt.options // res //
-          { declarations = res.declarations ++ [opt.file];
+          { declarations = res.declarations ++ [opt._file];
             options = submodules;
           } // typeSet
     ) { inherit loc; declarations = []; options = []; } opts;
