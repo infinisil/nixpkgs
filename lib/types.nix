@@ -349,8 +349,10 @@ rec {
       functor = (defaultFunctor name) // { wrapped = elemType; };
     };
 
+    submodule = opts: submodule' {} opts;
+
     # A submodule (like typed attribute set). See NixOS manual.
-    submodule = opts:
+    submodule' = attrs: opts:
       let
         opts' = toList opts;
         inherit (lib.modules) evalModules;
@@ -360,14 +362,31 @@ rec {
         check = x: isAttrs x || isFunction x;
         merge = loc: defs:
           let
-            coerce = def: if isFunction def then def else { config = def; };
-            modules = opts' ++ map (def: { _file = def.file; imports = [(coerce def.value)]; }) defs;
-          in (evalModules {
+            coerce = unify: value: if isFunction value
+              then args: unify (value args)
+              else unify value;
+            modules = opts' ++ imap1 (n: { value, file }:
+            coerce (lib.modules.unifyModuleSyntax (attrs.disallowedOptions or {
+              config = null;
+              options = null;
+            }) file "${toString file}-${toString n}") value) defs;
+
+            # Treat as { options = ...; config = ...; } value when all
+            # attributes are known and there's no option for all these attributes
+            # Otherwise treat as { config = <actual value>; }
+
+          in (evalModules (attrs // {
             inherit modules;
-            args.name = last loc;
             prefix = loc;
-          }).config;
-        getSubOptions = prefix: (evalModules
+            args = {
+              name = last loc;
+            } // (attrs.args or {});
+            disallowedOptions = attrs.disallowedOptions or {
+              config = null;
+              options = null;
+            };
+          })).config;
+        getSubOptions = prefix: (evalModules (attrs //
           { modules = opts'; inherit prefix;
             # This is a work-around due to the fact that some sub-modules,
             # such as the one included in an attribute set, expects a "args"
@@ -384,10 +403,16 @@ rec {
             # &gt; and &lt; wouldn't be encoded correctly so the encoded values
             # would be used, and use of `<` and `>` would break the XML document.
             # It shouldn't cause an issue since this is cosmetic for the manual.
-            args.name = "‹name›";
-          }).options;
+            args = {
+              name = "‹name›";
+            } // (attrs.args or {});
+            disallowedOptions = attrs.disallowedOptions or {
+              config = null;
+              options = null;
+            };
+          })).options;
         getSubModules = opts';
-        substSubModules = m: submodule m;
+        substSubModules = opts: submodule' attrs opts;
         functor = (defaultFunctor name) // {
           # Merging of submodules is done as part of mergeOptionDecls, as we have to annotate
           # each submodule with its location.
