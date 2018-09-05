@@ -475,6 +475,24 @@ rec {
   */
   take = count: sublist 0 count;
 
+  /* Returns the longest prefix of all elements conforming to the predicate
+
+     Example:
+       takeWhile (x: x > 3) [ 4 10 2 7 ]
+       => [ 4 10 ]
+       takeWhile (x: true) [ 4 10 2 7 ]
+       => [ 4 10 2 7 ]
+       takeWhile (x: x < 2) [ 4 10 2 7 ]
+       => [ ]
+
+  */
+  takeWhile = pred: list: let
+    countWhile = i:
+      if length list == i then 0
+      else if pred (elemAt list i) then 1 + countWhile (i + 1)
+      else 0;
+    in take (countWhile 0) list;
+
   /* Remove the first (at most) N elements of a list.
 
      Example:

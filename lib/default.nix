@@ -75,7 +75,7 @@ let
       concatMap flatten remove findSingle findFirst any all count
       optional optionals toList range partition zipListsWith zipLists
       reverseList listDfs toposort sort naturalSort compareLists take
-      drop sublist last init crossLists unique intersectLists
+      takeWhile drop sublist last init crossLists unique intersectLists
       subtractLists mutuallyExclusive groupBy groupBy';
     inherit (strings) concatStrings concatMapStrings concatImapStrings
       intersperse concatStringsSep concatMapStringsSep
