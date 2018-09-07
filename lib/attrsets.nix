@@ -271,6 +271,46 @@ rec {
         in mapAttrs g set;
     in recurse [] set;
 
+  /* Recursively adds attributes `attrPath`, the path to that attribute as a
+     list of stirngs, and `attrPos`, the position of the attribute definition,
+     to all attribute sets, stopping recursion at derivations and
+     non-attributes. In addition, functions that only take a single non-optional
+     argument `attrPath` will receive the attribute path as an argument.
+
+     If such attributes are already present in the given attribute set, they
+     won't be overriden, and will even be used for further recursion.
+
+     Example:
+       metaMapAttrs {
+         foo = {
+           bar = {};
+           baz = { attrPath }:
+             "I am available through ${concatStringsSep "." attrPath}";
+         };
+       }
+       => {
+         foo = {
+           attrPath = [ "foo" ];
+           attrPos = { column = 3; file = "/path/to/file.nix"; line = 4; };
+           bar = {
+             attrPath = [ "foo" "bar" ];
+             attrPos = { column = 5; file = "/path/to/file.nix"; line = 5; };
+           };
+           baz = "I am available through foo.baz";
+         };
+       }
+  */
+
+  metaMapAttrs = { attrPath ? [], ... }@attrs:
+    if lib.isDerivation attrs then attrs
+    else lib.mapAttrs (name: value:
+      let
+        pathSet = { attrPath = attrPath ++ [ name ]; };
+        posSet = { attrPos = builtins.unsafeGetAttrPos name attrs; };
+        applied = if lib.isFunction value && lib.functionArgs value == { attrPath = false; } then value pathSet else value;
+      in if name != "attrPos" && lib.isAttrs applied then posSet // metaMapAttrs (pathSet // applied)
+      else applied
+    ) attrs;
 
   /* Generate an attribute set by mapping a function over a list of
      attribute names.

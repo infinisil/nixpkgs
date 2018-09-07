@@ -67,8 +67,8 @@ let
       getAttrFromPath attrVals attrValues catAttrs filterAttrs
       filterAttrsRecursive foldAttrs collect nameValuePair mapAttrs
       mapAttrs' mapAttrsToList mapAttrsRecursive mapAttrsRecursiveCond
-      genAttrs isDerivation toDerivation optionalAttrs
-      zipAttrsWithNames zipAttrsWith zipAttrs recursiveUpdateUntil
+      metaMapAttrs functionTakingPath genAttrs isDerivation toDerivation
+      optionalAttrs zipAttrsWithNames zipAttrsWith zipAttrs recursiveUpdateUntil
       recursiveUpdate matchAttrs overrideExisting getOutput getBin
       getLib getDev chooseDevOutputs zipWithNames zip;
     inherit (lists) singleton foldr fold foldl foldl' imap0 imap1
