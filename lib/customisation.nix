@@ -76,7 +76,7 @@ rec {
         ${if ff ? overrideAttrs then "overrideAttrs" else null} = fdrv:
           makeOverridable (args: (f args).overrideAttrs fdrv) origArgs;
       })
-      else if lib.isFunction ff then {
+      else if lib.isFunction ff && lib.functionArgs ff != { attrPath = false; } then {
         override = newArgs: makeOverridable f (overrideWith newArgs);
         __functor = self: ff;
         overrideDerivation = throw "overrideDerivation not yet supported for functors";

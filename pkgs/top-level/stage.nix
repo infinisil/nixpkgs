@@ -180,4 +180,4 @@ let
 
 in
   # Return the complete set of packages.
-  lib.fix toFix
+  lib.fix (x: lib.metaMapAttrs (toFix x))
