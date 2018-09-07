@@ -27,6 +27,7 @@ let
     strings = callLibs ./strings.nix;
     stringsWithDeps = callLibs ./strings-with-deps.nix;
     releases = callLibs ./releases.nix;
+    deprecation = callLibs ./deprecation.nix;
 
     # packaging
     customisation = callLibs ./customisation.nix;
@@ -97,6 +98,7 @@ let
       toInt readPathsFromFile fileContents;
     inherit (stringsWithDeps) textClosureList textClosureMap
       noDepEntry fullDepEntry packEntry stringAfter;
+    inherit (deprecation) deprecate;
     inherit (customisation) overrideDerivation makeOverridable
       callPackageWith callPackagesWith extendDerivation hydraJob
       makeScope;
