@@ -61,19 +61,12 @@ in stdenv.mkDerivation (args // {
     ${setupVendorDir}
 
     mkdir .cargo
-  '' + (if useRealVendorConfig then ''
-      substitute "$(pwd)/$cargoDepsCopy/.cargo/config" .cargo/config \
-      --subst-var-by vendor "$(pwd)/$cargoDepsCopy"
-    '' else ''
-      cat >.cargo/config <<-EOF
-        [source.crates-io]
-        registry = 'https://github.com/rust-lang/crates.io-index'
-        replace-with = 'vendored-sources'
-
-        [source.vendored-sources]
-        directory = '$(pwd)/$cargoDepsCopy'
-      EOF
-    '') + ''
+    config="$(pwd)/$cargoDepsCopy/.cargo/config";
+    if [[ ! -e $config ]]; then
+      config=${./fetchcargo-default-config.toml};
+    fi;
+    substitute $config .cargo/config \
+    --subst-var-by vendor "$(pwd)/$cargoDepsCopy"
 
     unset cargoDepsCopy
 
