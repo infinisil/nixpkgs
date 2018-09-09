@@ -28,5 +28,6 @@ build-idris-package  {
     homepage = https://github.com/Heather/Control.Eternal.Idris;
     license = lib.licenses.bsd3;
     maintainers = [ lib.maintainers.brainrape ];
+    platforms = with lib.platforms; lib.subtractLists darwin unix;
   };
 }

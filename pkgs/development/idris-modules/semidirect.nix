@@ -21,5 +21,6 @@ build-idris-package  {
     description = "Semidirect products in Idris";
     homepage = https://github.com/clayrat/idris-semidirect;
     maintainers = [ lib.maintainers.brainrape ];
+    platforms = with lib.platforms; lib.subtractLists darwin unix;
   };
 }

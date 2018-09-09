@@ -20,5 +20,6 @@ build-idris-package  {
     description = "Idris implementation of Yampa FRP library as described in Reactive Programming through Dependent Types";
     homepage = https://github.com/BartAdv/idris-yampa;
     maintainers = [ lib.maintainers.brainrape ];
+    platforms = with lib.platforms; lib.subtractLists darwin unix;
   };
 }

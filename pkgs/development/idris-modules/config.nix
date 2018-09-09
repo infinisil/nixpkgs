@@ -24,5 +24,6 @@ build-idris-package  {
     homepage = https://github.com/benclifford/idris-config;
     license = lib.licenses.bsd3;
     maintainers = [ lib.maintainers.brainrape ];
+    platforms = with lib.platforms; lib.subtractLists darwin unix;
   };
 }

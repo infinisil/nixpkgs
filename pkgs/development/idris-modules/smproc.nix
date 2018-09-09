@@ -21,5 +21,6 @@ build-idris-package  {
     homepage = https://github.com/jameshaydon/smproc;
     license = lib.licenses.mit;
     maintainers = [ lib.maintainers.brainrape ];
+    platforms = with lib.platforms; lib.subtractLists darwin unix;
   };
 }

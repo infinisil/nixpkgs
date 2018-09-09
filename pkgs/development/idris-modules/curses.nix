@@ -29,5 +29,6 @@ build-idris-package  {
     homepage = https://github.com/JakobBruenker/curses-idris;
     license = lib.licenses.mit;
     maintainers = [ lib.maintainers.brainrape ];
+    platforms = with lib.platforms; lib.subtractLists darwin unix;
   };
 }
