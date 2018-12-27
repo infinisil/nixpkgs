@@ -314,12 +314,19 @@ in
   # gitlab example
   fetchFromGitLab = {
     owner, repo, rev, domain ? "gitlab.com", name ? "source", group ? null,
+    # Personal access token, needed for certain repositories
+    # Create at https://gitlab.com/profile/personal_access_tokens
+    # See also: https://docs.gitlab.com/ee/api/README.html#personal-access-tokens
+    personalAccessToken ? null,
     ... # For hash agility
-  }@args: fetchzip ({
+  }@args: let
+    repoPath = "${lib.optionalString (group != null) "${group}%2F"}${owner}%2F${repo}";
+    parameters = "sha=${rev}${lib.optionalString (personalAccessToken != null) "&private_token=${personalAccessToken}"}";
+  in fetchzip ({
     inherit name;
-    url = "https://${domain}/api/v4/projects/${lib.optionalString (group != null) "${group}%2F"}${owner}%2F${repo}/repository/archive.tar.gz?sha=${rev}";
-    meta.homepage = "https://${domain}/${lib.optionalString (group != null) "${group}/"}${owner}/${repo}/";
-  } // removeAttrs args [ "domain" "owner" "group" "repo" "rev" ]) // { inherit rev; };
+    url = "https://${domain}/api/v4/projects/${repoPath}/repository/archive.tar.gz?${parameters}";
+    meta.homepage = "https://${lib.optionalString (personalAccessToken != null) "token:${personalAccessToken}@"}${domain}/${lib.optionalString (group != null) "${group}/"}${owner}/${repo}/";
+  } // removeAttrs args [ "domain" "owner" "group" "repo" "rev" "accessToken" ]) // { inherit rev; };
 
   # gitweb example, snapshot support is optional in gitweb
   fetchFromRepoOrCz = {
