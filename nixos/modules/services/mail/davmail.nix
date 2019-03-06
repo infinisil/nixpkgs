@@ -19,7 +19,7 @@ let
       else [ "${name}=${toStr value}" ]
   ) (attrNames attrs);
 
-  configFile = pkgs.writeText "davmail.properties" (concatStringsSep "\n" (configForValue cfg.config));
+  configFile = pkgs.writeText "davmail.properties" (concatStringsSep "\n" (linesForAttrs cfg.config));
 
 in
 
@@ -65,6 +65,11 @@ in
         popPort = 1110;
         smtpPort = 1025;
       };
+
+      assertions = [{
+        assertion = cfg.config ? davmail.url;
+        message = "You need to set `services.davmail.config.davmail.url` in order to use davmail";
+      }];
 
       systemd.services.davmail = {
         description = "DavMail POP/IMAP/SMTP Exchange Gateway";
