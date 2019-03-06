@@ -6,24 +6,20 @@ let
 
   cfg = config.services.davmail;
 
-  # http://davmail.sourceforge.net/serversetup.html
-  configFile = pkgs.writeText "davmail.properties" ''
-    davmail.server=true
-    davmail.disableUpdateCheck=true
+  configType = with types;
+    either (either (attrsOf configType) str) (either int bool) // {
+      description = "davmail config type (str, int, bool or attribute set thereof)";
+    };
 
-    davmail.logFilePath=/var/log/davmail/davmail.log
-    davmail.logFileSize=1MB
+  toStr = val: if isBool val then boolToString val else toString val;
 
-    davmail.mode=${cfg.mode}
-    davmail.url=${cfg.url}
-    davmail.caldavPort=${toString cfg.ports.caldav}
-    davmail.imapPort=${toString cfg.ports.imap}
-    davmail.ldapPort=${toString cfg.ports.ldap}
-    davmail.ports.pop=${toString cfg.ports.pop}
-    davmail.ports.smtp=${toString cfg.ports.smtp}
+  linesForAttrs = attrs: concatMap (name: let value = attrs.${name}; in
+    if isAttrs value
+      then map (line: name + "." + line) (linesForAttrs value)
+      else [ "${name}=${toStr value}" ]
+  ) (attrNames attrs);
 
-    ${cfg.extraConfig}
-  '';
+  configFile = pkgs.writeText "davmail.properties" (concatStringsSep "\n" (configForValue cfg.config));
 
 in
 
@@ -31,76 +27,45 @@ in
     options.services.davmail = {
       enable = mkEnableOption "davmail, an MS Exchange gateway";
 
-      mode = mkOption {
-        type = types.enum [ "auto" "EWS" "WebDav" ];
-        default = "auto";
-        description = "Connection mode.";
-        example = "EWS";
-      };
-
-      url = mkOption {
-        type = types.str;
-        description = "Outlook Web Access URL to access the exchange server, i.e. the base webmail URL.";
-      };
-
-      ports = {
-        caldav = mkOption {
-          type = types.int;
-          default = 1080;
-          description = "Local Caldav/Carddav server port to configure in Caldav (calendar) or Carddav (address book) client.";
-          example = 80;
-        };
-
-        imap = mkOption {
-          type = types.int;
-          default = 1143;
-          description = "Local IMAP server port to configure in IMAP client.";
-          example = 143;
-        };
-
-        ldap = mkOption {
-          type = types.int;
-          default = 1389;
-          description = "Local LDAP server port to configure in directory (address book) client.";
-          example = 389;
-        };
-
-        pop = mkOption {
-          type = types.int;
-          default = 1110;
-          description = "Local POP server port to configure in POP client.";
-          example = 110;
-        };
-
-        smtp = mkOption {
-          type = types.int;
-          default = 1025;
-          description = "Local SMTP server port to configure in SMTP client.";
-          example = 25;
-        };
-      };
-
-      extraConfig = mkOption {
-        type = types.lines;
-        default = "";
+      config = mkOption {
+        type = configType;
+        default = {};
         description = ''
-          Extra configuration in davmail.properties.
-
-          See http://davmail.sourceforge.net/serversetup.html and http://davmail.sourceforge.net/advanced.html for details.
+          Davmail configuration. Refer to
+          <link xlink:href="http://davmail.sourceforge.net/serversetup.html"/>
+          and <link xlink:href="http://davmail.sourceforge.net/advanced.html"/>
+          for details on supported values.
         '';
         example = literalExample ''
-          # allow remote connection to DavMail
-          davmail.allowRemote=true
-          # bind server sockets to a specific address
-          davmail.bindAddress=10.0.1.2
-
-          # let Exchange save a copy of sent messages in Sent folder
-          davmail.smtpSaveInSent=true
+          {
+            davmail.allowRemote = true;
+            davmail.imapPort = 55555;
+            davmail.bindAddress = "10.0.1.2";
+            davmail.smtpSaveInSent = true;
+            davmail.url = "https://outlook.office365.com/EWS/Exchange.asmx";
+            davmail.folderSizeLimit = 10;
+            davmail.caldavAutoSchedule = false;
+            log4j.logger.rootLogger = "DEBUG";
+          }
         '';
       };
     };
 
     config = mkIf cfg.enable {
+
+      services.davmail.config.davmail = mapAttrs (name: mkDefault) {
+        server = true;
+        disableUpdateCheck = true;
+        logFilePath = "/var/lib/davmail/davmail.log";
+        logFileSize = "1MB";
+        mode = "EWS";
+        caldavPort = 1080;
+        imapPort = 1143;
+        ldapPort = 1389;
+        popPort = 1110;
+        smtpPort = 1025;
+      };
+
       systemd.services.davmail = {
         description = "DavMail POP/IMAP/SMTP Exchange Gateway";
         after = [ "network.target" ];
