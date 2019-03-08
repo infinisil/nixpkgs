@@ -1,10 +1,9 @@
-{ stdenv, fetchFromGitHub, SDL2, frei0r, gettext, mlt, jack1, pkgconfig, qtbase
+{ stdenv, lib, fetchFromGitHub, SDL2, frei0r, gettext, mlt, jack1, pkgconfig, qtbase
 , qtmultimedia, qtwebkit, qtx11extras, qtwebsockets, qtquickcontrols
-, qtgraphicaleffects, libmlt
+, qtgraphicaleffects
 , qmake, makeWrapper, qttools }:
 
-assert stdenv.lib.versionAtLeast libmlt.version "6.8.0";
-assert stdenv.lib.versionAtLeast mlt.version "6.8.0";
+assert lib.versionAtLeast mlt.version "6.8.0";
 
 stdenv.mkDerivation rec {
   pname = "shotcut";
@@ -20,13 +19,20 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
   nativeBuildInputs = [ makeWrapper pkgconfig qmake ];
   buildInputs = [
-    SDL2 frei0r gettext mlt libmlt
+    SDL2 frei0r gettext mlt
     qtbase qtmultimedia qtwebkit qtx11extras qtwebsockets qtquickcontrols
     qtgraphicaleffects
   ];
 
-  NIX_CFLAGS_COMPILE = "-I${libmlt}/include/mlt++ -I${libmlt}/include/mlt";
-  qmakeFlags = [ "QMAKE_LRELEASE=${stdenv.lib.getDev qttools}/bin/lrelease" "SHOTCUT_VERSION=${version}" ];
+  NIX_CFLAGS_COMPILE = [
+    "-I${lib.getDev mlt}/include/mlt++"
+    "-I${lib.getDev mlt}/include/mlt"
+  ];
+
+  qmakeFlags = [
+    "QMAKE_LRELEASE=${lib.getDev qttools}/bin/lrelease"
+    "SHOTCUT_VERSION=${version}"
+  ];
 
   prePatch = ''
     sed 's_shotcutPath, "qmelt"_"${mlt}/bin/melt"_' -i src/jobs/meltjob.cpp
@@ -38,15 +44,18 @@ stdenv.mkDerivation rec {
   postInstall = ''
     mkdir -p $out/share/shotcut
     cp -r src/qml $out/share/shotcut/
-    wrapProgram $out/bin/shotcut --prefix FREI0R_PATH : ${frei0r}/lib/frei0r-1 --prefix LD_LIBRARY_PATH : ${stdenv.lib.makeLibraryPath [ jack1 SDL2 ]} --prefix PATH : ${mlt}/bin
+    wrapProgram $out/bin/shotcut \
+      --prefix FREI0R_PATH : ${frei0r}/lib/frei0r-1 \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ jack1 SDL2 ]} \
+      --prefix PATH : ${mlt}/bin
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A free, open source, cross-platform video editor";
     longDescription = ''
       An official binary for Shotcut, which includes all the
       dependencies pinned to specific versions, is provided on
-      http://shotcut.org.
+      https://shotcut.org.
 
       If you encounter problems with this version, please contact the
       nixpkgs maintainer(s). If you wish to report any bugs upstream,

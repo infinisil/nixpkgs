@@ -18565,9 +18565,7 @@ in
 
   scudcloud = callPackage ../applications/networking/instant-messengers/scudcloud { };
 
-  shotcut = libsForQt5.callPackage ../applications/video/shotcut {
-    libmlt = mlt;
-  };
+  shotcut = libsForQt5.callPackage ../applications/video/shotcut {};
 
   shogun = callPackage ../applications/science/machine-learning/shogun { };
 
