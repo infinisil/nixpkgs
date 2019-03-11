@@ -1,3 +1,21 @@
+# Faster manual
+
+Try with
+```
+nix-build nixos -A config.system.build.manual.optionsJSONBuild
+```
+
+Will fail because recursive Nix, although it might be possible to get around that.
+
+Problems:
+- We need pkgs to evaluate the docs, for related packages and for valid attr names, so we need to import <nixpkgs> into the store, which could be wayyyy too slow
+- NixOS allows users to change the baseModules by passing an *expression*. We would have to somehow serialize that expression so the recursive Nix can read it, or alternatively deprecate support for that
+- Any additional user modules have to chance to get docs (which would now be supported since a recent PR)
+
+
+
+
+
 [<img src="https://nixos.org/logo/nixos-hires.png" width="500px" alt="logo" />](https://nixos.org/nixos)
 
 [![Code Triagers Badge](https://www.codetriage.com/nixos/nixpkgs/badges/users.svg)](https://www.codetriage.com/nixos/nixpkgs)

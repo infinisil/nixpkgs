@@ -1,4 +1,4 @@
-pkgs: with pkgs.lib;
+lib: with lib;
 
 rec {
 

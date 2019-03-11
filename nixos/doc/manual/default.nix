@@ -234,6 +234,15 @@ let
 in rec {
   inherit generatedSources;
 
+  optionsJSONBuild = runCommand "options-json-build" {
+    nativeBuildInputs = [ pkgs.nix ];
+  } ''
+    set -x
+    nix-instantiate --eval ${./optionsWithin.nix} \
+      --arg nixpkgs ${lib.cleanSource <nixpkgs>} \
+      -A optionsJSON -vvvv > $out
+  '';
+
   # The NixOS options in JSON format.
   optionsJSON = runCommand "options-json"
     { meta.description = "List of NixOS options in JSON format";
