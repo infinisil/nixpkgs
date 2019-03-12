@@ -1,3 +1,16 @@
+# Faster rebuilds try 2, 1 second faster..
+
+I thought that the ever increasing number of options is the cause of nixos-rebuild's getting slower. So this branch changes nixpkgs to not evaluate the manual, meaning every option definition is evaluated lazily (confirmed with a `throw`). But it only shaves off a second. My system evaluates in 12 instead of 13 seconds. And this is with a bare-bones config, first with `manual = fakeManual` in /nixos/modules/misc/documentation.nix, second one with `manual = actualManual`:
+
+```
+$ time nb nixos --arg configuration ./config.nix -A system
+/nix/store/lmz37plih2av6sbnacxbf7ydw34imvap-nixos-system-nixos-19.09.git.c55427c
+nix-build nixos --arg configuration ./config.nix -A system  0.71s user 0.10s system 89% cpu 0.912 total
+$ time nb nixos --arg configuration ./config.nix -A system
+/nix/store/6mnij27z7n4z5xxws8hz7xwylnlw8hr8-nixos-system-nixos-19.09.git.c55427c
+nix-build nixos --arg configuration ./config.nix -A system  1.68s user 0.18s system 93% cpu 1.990 total
+$
+
 [<img src="https://nixos.org/logo/nixos-hires.png" width="500px" alt="logo" />](https://nixos.org/nixos)
 
 [![Code Triagers Badge](https://www.codetriage.com/nixos/nixpkgs/badges/users.svg)](https://www.codetriage.com/nixos/nixpkgs)

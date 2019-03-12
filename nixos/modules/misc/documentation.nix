@@ -13,7 +13,7 @@ let
     It isn't perfect, but it seems to cover a vast majority of use cases.
     Caveat: even if the package is reached by a different means,
     the path above will be shown and not e.g. `${config.services.foo.package}`. */
-  manual = import ../../doc/manual rec {
+  actualManual = import ../../doc/manual rec {
     inherit pkgs config;
     version = config.system.nixos.release;
     revision = "release-${version}";
@@ -35,6 +35,14 @@ let
           pkgSet;
       in scrubbedEval.options;
   };
+
+  fakeManual = {
+    manpages = pkgs.runCommand "fakeManpages" {} "mkdir $out";
+    manualHTML = pkgs.runCommand "fakeManualHTML" {} "mkdir $out";
+    manualHTMLIndex = pkgs.runCommand "fakeManualHTMLIndex" {} "mkdir $out";
+  };
+
+  manual = fakeManual;
 
   helpScript = pkgs.writeScriptBin "nixos-help"
     ''
