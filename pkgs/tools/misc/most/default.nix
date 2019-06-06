@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   name = "most-5.0.0a";
 
   src = fetchurl {
-    url = ftp://space.mit.edu/pub/davis/most/most-5.0.0a.tar.bz2;
+    url = "ftp://space.mit.edu/pub/davis/most/most-5.0.0a.tar.bz2";
     sha256 = "1aas904g8x48vsfh3wcr2k6mjzkm5808lfgl2qqhdfdnf4p5mjwl";
   };
 
@@ -26,7 +26,7 @@ stdenv.mkDerivation {
       systems. Unlike other well-known paging programs most supports multiple
       windows and can scroll left and right. Why settle for less?
     '';
-    homepage = http://www.jedsoft.org/most/index.html;
+    homepage = "http://www.jedsoft.org/most/index.html";
     license = stdenv.lib.licenses.gpl2;
     platforms = stdenv.lib.platforms.unix;
   };

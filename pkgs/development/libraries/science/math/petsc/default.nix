@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Library of linear algebra algorithms for solving partial differential equations";
-    homepage = https://www.mcs.anl.gov/petsc/index.html;
+    homepage = "https://www.mcs.anl.gov/petsc/index.html";
     platforms = stdenv.lib.platforms.all;
     license = stdenv.lib.licenses.bsd2;
   };

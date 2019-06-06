@@ -41,7 +41,7 @@ in stdenv.mkDerivation rec {
       # We remove the build flags from buildInfo data.
       ./forget-build-dependencies.patch
       (fetchpatch {
-        url = https://projects.archlinux.org/svntogit/community.git/plain/trunk/boost160.patch?h=packages/mongodb;
+        url = "https://projects.archlinux.org/svntogit/community.git/plain/trunk/boost160.patch?h=packages/mongodb";
         name = "boost160.patch";
         sha256 = "0bvsf3499zj55pzamwjmsssr6x63w434944w76273fr5rxwzcmh8";
       })
@@ -94,7 +94,7 @@ in stdenv.mkDerivation rec {
 
   meta = {
     description = "A scalable, high-performance, open source NoSQL database";
-    homepage = http://www.mongodb.org;
+    homepage = "http://www.mongodb.org";
     license = licenses.agpl3;
 
     maintainers = with maintainers; [ bluescreen303 offline cstrahan ];

@@ -17,7 +17,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "For when you really just want to serve some files over HTTP right now!";
-    homepage    = https://github.com/svenstaro/miniserve;
+    homepage    = "https://github.com/svenstaro/miniserve";
     license     = with licenses; [ mit ];
     maintainers = with maintainers; [ nequissimus ];
     platforms   = platforms.linux;

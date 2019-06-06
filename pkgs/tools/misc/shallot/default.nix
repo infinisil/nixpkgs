@@ -26,7 +26,7 @@ in stdenv.mkDerivation {
     description = "Shallot allows you to create customized .onion addresses for your hidden service";
 
     license = stdenv.lib.licenses.mit;
-    homepage = https://github.com/katmagic/Shallot;
+    homepage = "https://github.com/katmagic/Shallot";
     platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The LXQt PolicyKit agent";
-    homepage = https://github.com/lxqt/lxqt-policykit;
+    homepage = "https://github.com/lxqt/lxqt-policykit";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

@@ -102,7 +102,7 @@ in stdenv.mkDerivation rec {
       Microsoft calls their guest agents "Integration Services" which is why
       we use that name here.
     '';
-    homepage = https://kernel.org;
+    homepage = "https://kernel.org";
     maintainers = with maintainers; [ peterhoeg ];
     platforms = kernel.meta.platforms;
   };

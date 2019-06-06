@@ -17,7 +17,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [ numpy awkward ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/scikit-hep/uproot-methods;
+    homepage = "https://github.com/scikit-hep/uproot-methods";
     description = "Pythonic mix-ins for ROOT classes";
     license = licenses.bsd3;
     maintainers = [ maintainers.costrouc ];

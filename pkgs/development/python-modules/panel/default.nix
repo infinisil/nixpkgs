@@ -43,7 +43,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "A high level dashboarding library for python visualization libraries";
-    homepage = http://pyviz.org;
+    homepage = "http://pyviz.org";
     license = licenses.bsd3;
     maintainers = [ maintainers.costrouc ];
   };

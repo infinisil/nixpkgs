@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Tool used to launch programs quickly by typing their names";
-    homepage = https://github.com/lxqt/lxqt-runner;
+    homepage = "https://github.com/lxqt/lxqt-runner";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

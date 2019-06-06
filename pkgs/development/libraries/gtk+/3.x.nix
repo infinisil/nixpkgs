@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
       royalties.
     '';
 
-    homepage = https://www.gtk.org/;
+    homepage = "https://www.gtk.org/";
 
     license = licenses.lgpl2Plus;
 

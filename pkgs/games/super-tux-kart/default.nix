@@ -49,7 +49,7 @@ in stdenv.mkDerivation rec {
       characters and items for you to try, similar in spirit to Mario
       Kart.
     '';
-    homepage = https://supertuxkart.net/;
+    homepage = "https://supertuxkart.net/";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ c0dehero fuuzetsu peterhoeg ];
     platforms = with platforms; linux;

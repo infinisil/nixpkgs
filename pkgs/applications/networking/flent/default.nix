@@ -24,7 +24,7 @@ buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "The FLExible Network Tester";
-    homepage = https://flent.org;
+    homepage = "https://flent.org";
     license = licenses.gpl3;
 
     maintainers = [ maintainers.mmlb ];

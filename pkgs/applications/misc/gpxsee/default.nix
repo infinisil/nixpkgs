@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://www.gpxsee.org/;
+    homepage = "https://www.gpxsee.org/";
     description = "GPX viewer and analyzer";
     longDescription = ''
       GPXSee is a Qt-based GPS log file viewer and analyzer that supports GPX,

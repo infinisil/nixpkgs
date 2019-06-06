@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Bitlbee plugin for Discord";
 
-    homepage = https://github.com/sm00th/bitlbee-discord;
+    homepage = "https://github.com/sm00th/bitlbee-discord";
     license = licenses.gpl2Plus;
     maintainers = [ maintainers.lassulus ];
     platforms = stdenv.lib.platforms.linux;

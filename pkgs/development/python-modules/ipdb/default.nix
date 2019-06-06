@@ -22,7 +22,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/gotcha/ipdb;
+    homepage = "https://github.com/gotcha/ipdb";
     description = "IPython-enabled pdb";
     license = licenses.bsd0;
     maintainers = [ maintainers.costrouc ];

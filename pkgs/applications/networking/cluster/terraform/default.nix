@@ -41,7 +41,7 @@ let
 
       meta = with stdenv.lib; {
         description = "Tool for building, changing, and versioning infrastructure";
-        homepage = https://www.terraform.io/;
+        homepage = "https://www.terraform.io/";
         license = licenses.mpl20;
         maintainers = with maintainers; [ zimbatm peterhoeg kalbasit ];
       };

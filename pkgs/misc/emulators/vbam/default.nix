@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     description = "A merge of the original Visual Boy Advance forks";
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.lassulus ];
-    homepage = http://vba-m.com/;
+    homepage = "http://vba-m.com/";
     platforms = stdenv.lib.platforms.linux;
   };
 }

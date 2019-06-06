@@ -28,7 +28,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Collection of tools to support analysis of neural activity";
-    homepage = https://pypi.python.org/pypi/NeuroTools;
+    homepage = "https://pypi.python.org/pypi/NeuroTools";
     license = licenses.gpl2;
     maintainers = with maintainers; [ nico202 ];
   };

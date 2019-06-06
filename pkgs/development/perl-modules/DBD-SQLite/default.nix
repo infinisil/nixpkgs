@@ -4,7 +4,7 @@ buildPerlPackage rec {
   name = "DBD-SQLite-1.62";
 
   src = fetchurl {
-    url = mirror://cpan/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.62.tar.gz;
+    url = "mirror://cpan/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.62.tar.gz";
     sha256 = "0p78ri1q6xpc1i98i6mlriv8n66iz8r5r11dlsknjm4y58rfz0mx";
   };
 

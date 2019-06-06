@@ -101,7 +101,7 @@ in buildPythonPackage rec {
 
   meta = {
     description = "Open source, prototype-to-production deep learning platform";
-    homepage    = https://pytorch.org/;
+    homepage    = "https://pytorch.org/";
     license     = lib.licenses.bsd3;
     platforms   = lib.platforms.linux;
     maintainers = with lib.maintainers; [ teh thoughtpolice ];

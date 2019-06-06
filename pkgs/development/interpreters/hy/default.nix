@@ -29,7 +29,7 @@ pythonPackages.buildPythonApplication rec {
 
   meta = {
     description = "A LISP dialect embedded in Python";
-    homepage = http://hylang.org/;
+    homepage = "http://hylang.org/";
     license = stdenv.lib.licenses.mit;
     maintainers = [ stdenv.lib.maintainers.nixy ];
     platforms = stdenv.lib.platforms.all;

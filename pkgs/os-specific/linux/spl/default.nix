@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
       kernel.
     '';
 
-    homepage = http://zfsonlinux.org/;
+    homepage = "http://zfsonlinux.org/";
     platforms = platforms.linux;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ jcumming wizeman fpletz globin ];

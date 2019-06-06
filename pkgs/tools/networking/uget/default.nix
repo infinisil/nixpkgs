@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
       thinking that it "might be too powerful" because remember power is good
       and lightweight power is uGet!
     '';
-    homepage = http://www.ugetdm.com;
+    homepage = "http://www.ugetdm.com";
     license = licenses.lgpl21;
     platforms = platforms.unix;
     maintainers = with maintainers; [ romildo ];

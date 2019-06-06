@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Adobe Flash Player standalone executable";
-    homepage = https://www.adobe.com/support/flashplayer/debug_downloads.html;
+    homepage = "https://www.adobe.com/support/flashplayer/debug_downloads.html";
     license = stdenv.lib.licenses.unfree;
     maintainers = [];
     platforms = [ "x86_64-linux" ];

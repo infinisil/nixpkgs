@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
       - Simple project management
       - Plugin interface
     '';
-    homepage = https://www.geany.org/;
+    homepage = "https://www.geany.org/";
     license = licenses.gpl2;
     maintainers = with maintainers; [ frlan ];
     platforms = platforms.all;

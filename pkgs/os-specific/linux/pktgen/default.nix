@@ -56,7 +56,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Traffic generator powered by DPDK";
-    homepage = http://dpdk.org/;
+    homepage = "http://dpdk.org/";
     license = licenses.bsdOriginal;
     platforms =  [ "x86_64-linux" ];
     maintainers = [ maintainers.abuibrahim ];

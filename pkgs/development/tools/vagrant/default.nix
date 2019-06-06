@@ -90,7 +90,7 @@ in buildRubyGem rec {
 
   meta = with lib; {
     description = "A tool for building complete development environments";
-    homepage = https://www.vagrantup.com/;
+    homepage = "https://www.vagrantup.com/";
     license = licenses.mit;
     maintainers = with maintainers; [ aneeshusa ];
     platforms = with platforms; linux ++ darwin;

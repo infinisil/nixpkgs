@@ -22,7 +22,7 @@ stdenv.mkDerivation {
   dontStrip = true;
 
   meta = {
-    homepage = https://www.oilshell.org/;
+    homepage = "https://www.oilshell.org/";
 
     description = "A new unix shell, still in its early stages";
 

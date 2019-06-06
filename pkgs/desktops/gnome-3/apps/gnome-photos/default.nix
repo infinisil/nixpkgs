@@ -51,7 +51,7 @@ in stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/Photos;
+    homepage = "https://wiki.gnome.org/Apps/Photos";
     description = "Access, organize and share your photos";
     maintainers = gnome3.maintainers;
     license = licenses.gpl3Plus;

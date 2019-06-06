@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Draw UML diagrams using a simple and human readable text description";
-    homepage = http://plantuml.sourceforge.net/;
+    homepage = "http://plantuml.sourceforge.net/";
     # "plantuml -license" says GPLv3 or later
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ bjornfor ];

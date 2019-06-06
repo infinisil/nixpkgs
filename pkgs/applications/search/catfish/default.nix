@@ -52,7 +52,7 @@ pythonPackages.buildPythonApplication rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = https://docs.xfce.org/apps/catfish/start;
+    homepage = "https://docs.xfce.org/apps/catfish/start";
     description = "A handy file search tool";
     longDescription = ''
       Catfish is a handy file searching tool. The interface is

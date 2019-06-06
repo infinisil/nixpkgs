@@ -29,6 +29,6 @@ stdenv.mkDerivation rec {
     description = "GNOME Shell Extension allowing separate configuration of PulseAudio devices";
     license = licenses.gpl2;
     maintainers = with maintainers; [ aneeshusa ];
-    homepage = https://github.com/aleho/gnome-shell-volume-mixer;
+    homepage = "https://github.com/aleho/gnome-shell-volume-mixer";
   };
 }

@@ -37,7 +37,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib;
     { description = "Sayonara music player";
-      homepage = https://sayonara-player.com/;
+      homepage = "https://sayonara-player.com/";
       license = licenses.gpl3;
       platforms = platforms.linux;
       maintainers = [ maintainers.deepfire ];

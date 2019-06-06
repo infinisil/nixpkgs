@@ -42,7 +42,7 @@ in mkDerivation rec {
 
   meta = with lib; {
     description = "Qt Tox client";
-    homepage    = https://tox.chat;
+    homepage    = "https://tox.chat";
     license     = licenses.gpl3;
     maintainers = with maintainers; [ akaWolf peterhoeg ];
     platforms   = platforms.all;

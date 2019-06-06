@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Run graphical applications with Docker";
-    homepage = https://github.com/mviereck/x11docker;
+    homepage = "https://github.com/mviereck/x11docker";
     license = stdenv.lib.licenses.mit;
     maintainers = with stdenv.lib.maintainers; [ jD91mZM2 ];
   };

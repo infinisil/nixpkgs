@@ -17,7 +17,7 @@ stdenv.mkDerivation  rec {
 
   meta = with stdenv.lib; {
     description = "Fluidsynth GUI";
-    homepage = https://sourceforge.net/projects/qsynth;
+    homepage = "https://sourceforge.net/projects/qsynth";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ goibhniu ];
     platforms = platforms.linux;

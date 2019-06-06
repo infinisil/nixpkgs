@@ -58,7 +58,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "Protocol Buffers are Google's data interchange format";
-    homepage = https://developers.google.com/protocol-buffers/;
+    homepage = "https://developers.google.com/protocol-buffers/";
   };
 
   passthru.protobuf = protobuf;

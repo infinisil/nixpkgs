@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   name = "ocaml${ocaml.version}-${pname}-${version}";
 
   src = fetchurl {
-    url = https://gforge.inria.fr/frs/download.php/file/37819/sawja-1.5.6.tar.bz2;
+    url = "https://gforge.inria.fr/frs/download.php/file/37819/sawja-1.5.6.tar.bz2";
     sha256 = "0dkfdc8h94r7kj4p8q57fz7fssypgmjrix8xff0va7x1nya5sdp3";
   };
 

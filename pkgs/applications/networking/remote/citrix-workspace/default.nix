@@ -48,7 +48,7 @@ let
         x86hash   = "1hxgj5lk5ghbpssbqjd404qr84gls967vwrh8ww5hg3pn86kyf8w";
         x64suffix = "5";
         x86suffix = "5";
-        homepage  = https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html;
+        homepage  = "https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html";
       };
     };
 

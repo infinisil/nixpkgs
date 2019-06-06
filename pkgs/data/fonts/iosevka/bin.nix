@@ -15,7 +15,7 @@ in fetchzip rec {
   sha256 = "0d5ys9k8adj9v1hpwbmjqshzpjlnyj81xwp0328vc5q8pvjcfly6";
 
   meta = with stdenv.lib; {
-    homepage = https://be5invis.github.io/Iosevka/;
+    homepage = "https://be5invis.github.io/Iosevka/";
     downloadPage = "https://github.com/be5invis/Iosevka/releases";
     description = ''
       Slender monospace sans-serif and slab-serif typeface inspired by Pragmata

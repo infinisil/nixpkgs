@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   configureFlags = [ "--with-backend=pcsc" ];
 
   meta = with stdenv.lib; {
-    homepage = https://developers.yubico.com/yubico-piv-tool/;
+    homepage = "https://developers.yubico.com/yubico-piv-tool/";
     description = ''
       Used for interacting with the Privilege and Identification Card (PIV)
       application on a YubiKey

@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Renders an image of the earth or other planets into the X root window";
-    homepage = http://xplanet.sourceforge.net;
+    homepage = "http://xplanet.sourceforge.net";
     license = "GPL";
     maintainers = [ stdenv.lib.maintainers.sander ];
     platforms = stdenv.lib.platforms.all;

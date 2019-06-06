@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Integration testing infrastructure for the GStreamer framework";
-    homepage = https://gstreamer.freedesktop.org;
+    homepage = "https://gstreamer.freedesktop.org";
     license = stdenv.lib.licenses.lgpl2Plus;
     platforms = stdenv.lib.platforms.unix;
   };

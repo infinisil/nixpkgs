@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
       tens of thousands of connections is clearly realistic with todays
       hardware.
     '';
-    homepage = http://haproxy.1wt.eu;
+    homepage = "http://haproxy.1wt.eu";
     maintainers = with stdenv.lib.maintainers; [ fuzzy-id garbas ];
     platforms = with stdenv.lib.platforms; linux ++ darwin;
     license = stdenv.lib.licenses.gpl2;

@@ -187,7 +187,7 @@ rec {
   meta = with stdenv.lib; {
     inherit (s) version;
     description = "Distributed storage system";
-    homepage = https://www.gluster.org;
+    homepage = "https://www.gluster.org";
     license = licenses.lgpl3Plus; # dual licese: choice of lgpl3Plus or gpl2
     maintainers = [ maintainers.raskin ];
     platforms = with platforms; linux ++ freebsd;

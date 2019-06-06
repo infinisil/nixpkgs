@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   patches = [
     # Remove with 1.35.0.
     (fetchpatch {
-      url = https://github.com/aria2/aria2/commit/e8e04d6f22a507e8374651d3d2343cd9fb986993.patch;
+      url = "https://github.com/aria2/aria2/commit/e8e04d6f22a507e8374651d3d2343cd9fb986993.patch";
       sha256 = "1v27nqbsdjgg3ga4n0v9daq21m3cmdpy7d08kp32200pzag87f4y";
     })
   ];
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://aria2.github.io;
+    homepage = "https://aria2.github.io";
     description = "A lightweight, multi-protocol, multi-source, command-line download utility";
     license = licenses.gpl2Plus;
     platforms = platforms.unix;

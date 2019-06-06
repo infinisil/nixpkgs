@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
       on the map, make new tracks and waypoints, see real-time GPS
       position, etc.
     '';
-    homepage = https://sourceforge.net/projects/viking/;
+    homepage = "https://sourceforge.net/projects/viking/";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ pSub ];
     platforms = with platforms; linux;

@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Elementary icons for Xfce and other GTK+ desktops like GNOME";
-    homepage = https://github.com/shimmerproject/elementary-xfce;
+    homepage = "https://github.com/shimmerproject/elementary-xfce";
     license = licenses.gpl2;
     # darwin cannot deal with file names differing only in case
     platforms = platforms.linux;

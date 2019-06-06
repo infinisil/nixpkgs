@@ -56,7 +56,7 @@ EOF
 
   meta = with lib; {
     description = "Set of libraries and drivers for fast packet processing";
-    homepage = http://dpdk.org/;
+    homepage = "http://dpdk.org/";
     license = with licenses; [ lgpl21 gpl2 bsd2 ];
     platforms =  [ "x86_64-linux" ];
     maintainers = with maintainers; [ domenkozar orivej ];

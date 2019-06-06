@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "DBus proxy for Flatpak and others";
-    homepage = https://flatpak.org/;
+    homepage = "https://flatpak.org/";
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ jtojnar ];
     platforms = platforms.linux;

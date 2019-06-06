@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/mate-desktop/mate-indicator-applet;
+    homepage = "https://github.com/mate-desktop/mate-indicator-applet";
     description = "MATE panel indicator applet";
     longDescription = ''
       A small applet to display information from various applications

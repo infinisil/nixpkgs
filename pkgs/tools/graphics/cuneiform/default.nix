@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Multi-language OCR system";
-    homepage = https://launchpad.net/cuneiform-linux;
+    homepage = "https://launchpad.net/cuneiform-linux";
     license = licenses.bsd3;
     platforms = platforms.linux;
     maintainers = [ maintainers.raskin ];

@@ -39,7 +39,7 @@ python2Packages.buildPythonApplication rec {
     let
       fix-setup-py = fetchpatch {
         name = "fix-setup-py.patch";
-        url = https://github.com/linkcheck/linkchecker/commit/e62e630.patch;
+        url = "https://github.com/linkcheck/linkchecker/commit/e62e630.patch";
         sha256 = "046q1whg715w2yv33xx6rkj7fspvvz60cl978ax92lnf8j101czx";
       };
     in [
@@ -63,7 +63,7 @@ python2Packages.buildPythonApplication rec {
 
   meta = {
     description = "Check websites for broken links";
-    homepage = https://linkcheck.github.io/linkchecker/;
+    homepage = "https://linkcheck.github.io/linkchecker/";
     license = lib.licenses.gpl2;
     maintainers = with lib.maintainers; [ peterhoeg tweber ];
   };

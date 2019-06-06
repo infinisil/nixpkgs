@@ -20,7 +20,7 @@ buildGoPackage rec {
 
   meta = with lib; {
     description = "Easily create and extract .zip, .tar, .tar.gz, .tar.bz2, .tar.xz, .tar.lz4, .tar.sz, and .rar (extract-only) files with Go";
-    homepage = https://github.com/mholt/archiver;
+    homepage = "https://github.com/mholt/archiver";
     license = licenses.mit;
     maintainers = with maintainers; [ kalbasit ];
     platforms = platforms.all;

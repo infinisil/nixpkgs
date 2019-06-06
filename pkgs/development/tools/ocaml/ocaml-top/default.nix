@@ -17,7 +17,7 @@ with ocamlPackages; buildDunePackage rec {
   '';
 
   meta = {
-    homepage = https://www.typerex.org/ocaml-top.html;
+    homepage = "https://www.typerex.org/ocaml-top.html";
     license = stdenv.lib.licenses.gpl3;
     description = "A simple cross-platform OCaml code editor built for top-level evaluation";
     maintainers = with stdenv.lib.maintainers; [ vbgl ];

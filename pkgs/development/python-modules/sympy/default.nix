@@ -36,7 +36,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "A Python library for symbolic mathematics";
-    homepage    = http://www.sympy.org/;
+    homepage    = "http://www.sympy.org/";
     license     = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [ lovek323 timokau ];
   };

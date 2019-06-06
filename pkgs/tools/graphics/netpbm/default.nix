@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = http://netpbm.sourceforge.net/;
+    homepage = "http://netpbm.sourceforge.net/";
     description = "Toolkit for manipulation of graphic images";
     license = "GPL,free";
     platforms = with stdenv.lib.platforms; linux ++ darwin;

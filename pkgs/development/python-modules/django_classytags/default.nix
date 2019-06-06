@@ -20,7 +20,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Class based template tags for Django";
-    homepage = https://github.com/ojii/django-classy-tags;
+    homepage = "https://github.com/ojii/django-classy-tags";
     license = licenses.bsd3;
   };
 

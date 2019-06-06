@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
       expiration date.
     '';
     license = licenses.unfree;
-    homepage = http://makemkv.com;
+    homepage = "http://makemkv.com";
     platforms = [ "x86_64-linux" ];
     maintainers = [ maintainers.titanous ];
   };

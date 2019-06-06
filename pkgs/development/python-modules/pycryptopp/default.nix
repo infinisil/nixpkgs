@@ -24,7 +24,7 @@ buildPythonPackage rec {
   buildInputs = [ setuptoolsDarcs darcsver pkgs.cryptopp ];
 
   meta = with stdenv.lib; {
-    homepage = http://allmydata.org/trac/pycryptopp;
+    homepage = "http://allmydata.org/trac/pycryptopp";
     description = "Python wrappers for the Crypto++ library";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;

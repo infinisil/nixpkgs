@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   installFlags = "PREFIX=\${out}";
 
   meta = with stdenv.lib; {
-    homepage = https://rednex.github.io/rgbds/;
+    homepage = "https://rednex.github.io/rgbds/";
     description = "A free assembler/linker package for the Game Boy and Game Boy Color";
     license = licenses.mit;
     longDescription =

@@ -23,7 +23,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Stripe Python bindings";
-    homepage = https://github.com/stripe/stripe-python;
+    homepage = "https://github.com/stripe/stripe-python";
     license = licenses.mit;
   };
 }

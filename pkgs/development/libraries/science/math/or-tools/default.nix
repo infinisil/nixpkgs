@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "python" ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/google/or-tools;
+    homepage = "https://github.com/google/or-tools";
     license = licenses.asl20;
     description = ''
       Google's software suite for combinatorial optimization.

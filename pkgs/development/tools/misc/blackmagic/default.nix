@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
       directory.  It also places the FTDI version of the blackmagic
       executable in the bin directory.
     '';
-    homepage = https://github.com/blacksphere/blackmagic;
+    homepage = "https://github.com/blacksphere/blackmagic";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ pjones ];
     platforms = platforms.unix;

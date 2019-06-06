@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Header only C++ library for the JSON file format";
-    homepage = https://github.com/nlohmann/json;
+    homepage = "https://github.com/nlohmann/json";
     license = licenses.mit;
     platforms = platforms.all;
   };

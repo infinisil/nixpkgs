@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Library providing C and Python (libcURL like) API for downloading linux repository metadata and packages";
-    homepage    = https://rpm-software-management.github.io/librepo/;
+    homepage    = "https://rpm-software-management.github.io/librepo/";
     license     = licenses.lgpl2Plus;
     platforms   = platforms.linux;
     maintainers = with maintainers; [ copumpkin ];

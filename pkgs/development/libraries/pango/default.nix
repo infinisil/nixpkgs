@@ -74,7 +74,7 @@ in stdenv.mkDerivation rec {
       Pango forms the core of text and font handling for GTK+-2.x.
     '';
 
-    homepage = https://www.pango.org/;
+    homepage = "https://www.pango.org/";
     license = licenses.lgpl2Plus;
 
     maintainers = with maintainers; [ raskin ];

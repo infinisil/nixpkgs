@@ -40,7 +40,7 @@ pythonPackages.buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "A lightweight streaming server which brings DLNA / UPNP and Chromecast support to PulseAudio and Linux";
-    homepage = https://github.com/masmu/pulseaudio-dlna;
+    homepage = "https://github.com/masmu/pulseaudio-dlna";
 
     license = licenses.gpl3Plus;
 

@@ -70,7 +70,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A daemon, tools and libraries to access and manipulate disks, storage devices and technologies";
-    homepage = https://www.freedesktop.org/wiki/Software/udisks/;
+    homepage = "https://www.freedesktop.org/wiki/Software/udisks/";
     license = licenses.gpl2Plus; # lgpl2Plus for the library, gpl2Plus for the tools & daemon
     maintainers = with maintainers; [];
     platforms = platforms.linux;

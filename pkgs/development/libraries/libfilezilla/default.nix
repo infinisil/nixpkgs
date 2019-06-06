@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://lib.filezilla-project.org/;
+    homepage = "https://lib.filezilla-project.org/";
     description = "A modern C++ library, offering some basic functionality to build high-performing, platform-independent programs";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ pSub ];

@@ -25,6 +25,6 @@ stdenv.mkDerivation rec {
     description = "Arranges workspaces in a configurable grid";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ aneeshusa ];
-    homepage = https://github.com/zakkak/workspace-grid-gnome-shell-extension;
+    homepage = "https://github.com/zakkak/workspace-grid-gnome-shell-extension";
   };
 }

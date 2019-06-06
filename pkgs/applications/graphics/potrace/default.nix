@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ zlib ];
 
   meta = with stdenv.lib; {
-    homepage = http://potrace.sourceforge.net/;
+    homepage = "http://potrace.sourceforge.net/";
     description = "A tool for tracing a bitmap, which means, transforming a bitmap into a smooth, scalable image";
     platforms = platforms.unix;
     maintainers = [ maintainers.pSub ];

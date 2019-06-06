@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     description = ''
       An x-cursor theme inspired by macOS and based on KDE Breeze
     '';
-    homepage = https://github.com/keeferrourke/capitaine-cursors;
+    homepage = "https://github.com/keeferrourke/capitaine-cursors";
     license = licenses.lgpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [

@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   '';
   meta = {
     description = "Tooling for Yosys-based verification flows";
-    homepage    = https://symbiyosys.readthedocs.io/;
+    homepage    = "https://symbiyosys.readthedocs.io/";
     license     = stdenv.lib.licenses.isc;
     maintainers = with stdenv.lib.maintainers; [ thoughtpolice ];
     platforms   = stdenv.lib.platforms.unix;

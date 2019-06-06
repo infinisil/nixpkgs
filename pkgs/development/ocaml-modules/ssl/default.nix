@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   createFindlibDestdir = true;
 
   meta = {
-    homepage = http://savonet.rastageeks.org/;
+    homepage = "http://savonet.rastageeks.org/";
     description = "OCaml bindings for libssl ";
     license = "LGPL+link exception";
     platforms = ocaml.meta.platforms or [];

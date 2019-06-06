@@ -77,7 +77,7 @@ in buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "Windows KMS (Key Management Service) server written in Python";
-    homepage    = https://github.com/ThunderEX/py-kms;
+    homepage    = "https://github.com/ThunderEX/py-kms";
     license     = licenses.mit;
     maintainers = with maintainers; [ peterhoeg ];
   };

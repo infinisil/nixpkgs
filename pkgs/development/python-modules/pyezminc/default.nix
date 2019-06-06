@@ -25,7 +25,7 @@ buildPythonPackage rec {
   doCheck = false;  # e.g., expects test data in /opt
 
   meta = {
-    homepage = https://github.com/BIC-MNI/pyezminc;
+    homepage = "https://github.com/BIC-MNI/pyezminc";
     description = "Python API for libminc using EZMINC";
     license = stdenv.lib.licenses.gpl2;
     maintainers = with stdenv.lib.maintainers; [ bcdarwin ];

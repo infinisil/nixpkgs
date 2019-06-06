@@ -22,7 +22,7 @@ bundlerApp {
 
   meta = with lib; {
     description = "A curses threads-with-tags style email client";
-    homepage    = http://sup-heliotrope.github.io;
+    homepage    = "http://sup-heliotrope.github.io";
     license     = licenses.gpl2;
     maintainers = with maintainers; [ cstrahan lovek323 manveru ];
     platforms   = platforms.unix;

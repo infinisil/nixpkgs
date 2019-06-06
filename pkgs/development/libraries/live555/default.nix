@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Set of C++ libraries for multimedia streaming, using open standard protocols (RTP/RTCP, RTSP, SIP)";
-    homepage = http://www.live555.com/liveMedia/;
+    homepage = "http://www.live555.com/liveMedia/";
     license = licenses.lgpl21Plus;
     platforms = platforms.unix;
     broken = stdenv.hostPlatform.isAarch64;

@@ -129,7 +129,7 @@ stdenv.mkDerivation rec {
     ++ stdenv.lib.optional enableCuda cudatoolkit;
 
   meta = with stdenv.lib; {
-    homepage = http://faculty.cse.tamu.edu/davis/suitesparse.html;
+    homepage = "http://faculty.cse.tamu.edu/davis/suitesparse.html";
     description = "A suite of sparse matrix algorithms";
     license = with licenses; [ bsd2 gpl2Plus lgpl21Plus ];
     maintainers = with maintainers; [ ttuegel ];

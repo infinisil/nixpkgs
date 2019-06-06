@@ -104,7 +104,7 @@ in stdenv.mkDerivation rec {
       Signal Desktop is an Electron application that links with your
       "Signal Android" or "Signal iOS" app.
     '';
-    homepage    = https://signal.org/;
+    homepage    = "https://signal.org/";
     license     = lib.licenses.gpl3;
     maintainers = with lib.maintainers; [ ixmatus primeos ];
     platforms   = [ "x86_64-linux" ];

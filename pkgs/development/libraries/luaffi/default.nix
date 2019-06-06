@@ -23,7 +23,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Standalone FFI library for calling C functions from lua. Compatible with the luajit FFI interface.";
-    homepage = https://github.com/jmckaskill/luaffi;
+    homepage = "https://github.com/jmckaskill/luaffi";
     maintainers = with maintainers; [ ma27 ];
     license = licenses.mit;
     platforms = platforms.unix;

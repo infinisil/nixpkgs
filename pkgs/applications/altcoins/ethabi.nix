@@ -19,7 +19,7 @@ buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "Ethereum function call encoding (ABI) utility";
-    homepage = https://github.com/ethcore/ethabi/;
+    homepage = "https://github.com/ethcore/ethabi/";
     maintainers = [ maintainers.dbrock ];
     license = licenses.gpl3;
     inherit version;

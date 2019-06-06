@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Place and route tool for FPGAs";
-    homepage    = https://github.com/yosyshq/nextpnr;
+    homepage    = "https://github.com/yosyshq/nextpnr";
     license     = licenses.isc;
     platforms   = platforms.linux;
     maintainers = with maintainers; [ thoughtpolice ];

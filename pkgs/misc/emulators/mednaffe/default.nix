@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "GTK-based frontend for mednafen emulator";
-    homepage = https://github.com/AmatCoder/mednaffe;
+    homepage = "https://github.com/AmatCoder/mednaffe";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ sheenobu yegortimoshenko ];
     platforms = platforms.linux;

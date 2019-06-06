@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Messaging and emailing app that combines common web applications into one";
-    homepage = http://rambox.pro;
+    homepage = "http://rambox.pro";
     license = licenses.gpl3;
     maintainers = with maintainers; [ gnidorah ];
     platforms = platforms.linux;

@@ -149,7 +149,7 @@ let
     '';
 
     meta = with stdenv.lib; {
-      homepage = http://openjdk.java.net/;
+      homepage = "http://openjdk.java.net/";
       license = licenses.gpl2;
       description = "The open-source Java Development Kit";
       maintainers = with maintainers; [ edwtjo ];

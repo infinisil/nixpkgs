@@ -15,7 +15,7 @@ buildPythonPackage rec {
   patches = [
     # Fix tests for Python 3.7. Remove with the next release
     (fetchpatch {
-      url = https://github.com/Simplistix/testfixtures/commit/6e8807543b804946aba58e2c9e92f5bdc3656a57.patch;
+      url = "https://github.com/Simplistix/testfixtures/commit/6e8807543b804946aba58e2c9e92f5bdc3656a57.patch";
       sha256 = "1584jz2qz04arx8z8f6d1l1vab7gi38k3akzm223rmp7j4m7yrii";
     })
   ];
@@ -26,7 +26,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/Simplistix/testfixtures;
+    homepage = "https://github.com/Simplistix/testfixtures";
     description = "A collection of helpers and mock objects for unit tests and doc tests";
     license = licenses.mit;
   };

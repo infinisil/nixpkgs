@@ -17,7 +17,7 @@ buildGoPackage rec {
 
   meta = with stdenv.lib; {
     description = "Metrics relay from nginx stats to Prometheus";
-    homepage = https://github.com/discordianfish/nginx_exporter;
+    homepage = "https://github.com/discordianfish/nginx_exporter";
     license = licenses.mit;
     maintainers = with maintainers; [ benley fpletz willibutz ];
     platforms = platforms.unix;

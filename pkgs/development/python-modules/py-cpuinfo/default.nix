@@ -27,7 +27,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "Get CPU info with pure Python 2 & 3";
-    homepage = https://github.com/workhorsy/py-cpuinfo;
+    homepage = "https://github.com/workhorsy/py-cpuinfo";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ costrouc ];
   };

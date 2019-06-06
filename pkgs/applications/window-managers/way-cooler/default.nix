@@ -102,7 +102,7 @@ in symlinkJoin rec {
       window manager, with much better guarantees about interoperability
       between extensions.
     '';
-    homepage = http://way-cooler.org/;
+    homepage = "http://way-cooler.org/";
     license = with licenses; [ mit ];
     maintainers = [ maintainers.miltador ];
     broken = stdenv.hostPlatform.isAarch64; # fails to build wc-bg (on aarch64)

@@ -52,7 +52,7 @@ in stdenv.mkDerivation rec {
   patches = [
     (fetchpatch {
       name = "0001-build-Add-missing-dependency-to-run-js-test.patch";
-      url = https://bug787864.bugzilla-attachments.gnome.org/attachment.cgi?id=360016;
+      url = "https://bug787864.bugzilla-attachments.gnome.org/attachment.cgi?id=360016";
       sha256 = "1dmahd8ysbzh33rxglba0fbq127aw9h14cl2a2bw9913vjxhxijm";
     })
     (substituteAll {
@@ -90,7 +90,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Core user interface for the GNOME 3 desktop";
-    homepage = https://wiki.gnome.org/Projects/GnomeShell;
+    homepage = "https://wiki.gnome.org/Projects/GnomeShell";
     license = licenses.gpl2Plus;
     maintainers = gnome3.maintainers;
     platforms = platforms.linux;

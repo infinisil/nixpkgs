@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A high-quality Japanese font based on Inconsolata and Migu 1M";
-    homepage = https://www.rs.tus.ac.jp/yyusa/ricty.html;
+    homepage = "https://www.rs.tus.ac.jp/yyusa/ricty.html";
     license = licenses.unfree;
     maintainers = [ maintainers.mikoim ];
   };

@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Free, open source, multi-platform ebook (ePub) editor";
-    homepage = https://github.com/Sigil-Ebook/Sigil/;
+    homepage = "https://github.com/Sigil-Ebook/Sigil/";
     license = licenses.gpl3;
     maintainers =[ maintainers.ramkromberg ];
     platforms = platforms.linux;

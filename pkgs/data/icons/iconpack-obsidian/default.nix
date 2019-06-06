@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Gnome Icon Pack based upon Faenza";
-    homepage = https://github.com/madmaxms/iconpack-obsidian;
+    homepage = "https://github.com/madmaxms/iconpack-obsidian";
     license = licenses.lgpl3;
     # darwin cannot deal with file names differing only in case
     platforms = platforms.linux;

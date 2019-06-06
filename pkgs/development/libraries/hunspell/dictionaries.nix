@@ -39,7 +39,7 @@ let
       };
       meta = with stdenv.lib; {
         description = "Hunspell dictionary for ${shortDescription} from rla";
-        homepage = https://github.com/sbosio/rla-es;
+        homepage = "https://github.com/sbosio/rla-es";
         license = with licenses; [ gpl3 lgpl3 mpl11 ];
         maintainers = with maintainers; [ renzo ];
         platforms = platforms.all;
@@ -121,7 +121,7 @@ let
       meta = with stdenv.lib; {
         inherit longDescription;
         description = "Hunspell dictionary for ${shortDescription} from Dicollecte";
-        homepage = https://www.dicollecte.org/home.php?prj=fr;
+        homepage = "https://www.dicollecte.org/home.php?prj=fr";
         license = licenses.mpl20;
         maintainers = with maintainers; [ renzo ];
         platforms = platforms.all;
@@ -149,7 +149,7 @@ let
       readmeFile = "README_" + dictFileName + ".txt";
       meta = with stdenv.lib; {
         description = "Hunspell dictionary for ${shortDescription} from Wordlist";
-        homepage = http://wordlist.aspell.net/;
+        homepage = "http://wordlist.aspell.net/";
         license = licenses.bsd3;
         maintainers = with maintainers; [ renzo ];
         platforms = platforms.all;
@@ -171,7 +171,7 @@ let
       readmeFile = dictFileName + "_README.txt";
       meta = with stdenv.lib; {
         description = "Hunspell dictionary for ${shortDescription}";
-        homepage = https://sourceforge.net/projects/linguistico/;
+        homepage = "https://sourceforge.net/projects/linguistico/";
         license = licenses.gpl3;
         maintainers = with maintainers; [ renzo ];
         platforms = platforms.all;
@@ -212,7 +212,7 @@ let
       '';
 
       meta = with stdenv.lib; {
-        homepage = http://xuxen.eus/;
+        homepage = "http://xuxen.eus/";
         description = shortDescription;
         longDescription = longDescription;
         license = licenses.gpl2;
@@ -249,7 +249,7 @@ let
       '';
 
       meta = with stdenv.lib; {
-        homepage = https://www.j3e.de/ispell/igerman98/index_en.html;
+        homepage = "https://www.j3e.de/ispell/igerman98/index_en.html";
         description = shortDescription;
         license = with licenses; [ gpl2 gpl3 ];
         maintainers = with maintainers; [ timor ];
@@ -278,7 +278,7 @@ let
         cp -a ${sourceRoot}/* .
       '';
       meta = with stdenv.lib; {
-        homepage = https://wiki.documentfoundation.org/Development/Dictionaries;
+        homepage = "https://wiki.documentfoundation.org/Development/Dictionaries";
         description = "Hunspell dictionary for ${shortDescription} from LibreOffice";
         license = license;
         maintainers = with maintainers; [ vlaci ];
@@ -295,7 +295,7 @@ in {
     shortDescription = "English (United States)";
     dictFileName = "en_US";
     src = fetchurl {
-      url = mirror://sourceforge/wordlist/speller/2018.04.16/hunspell-en_US-2018.04.16.zip;
+      url = "mirror://sourceforge/wordlist/speller/2018.04.16/hunspell-en_US-2018.04.16.zip";
       sha256 = "18hbncvqnckzqarrmnzk58plymjqyi93k4qj98fac5mr71jbmzaf";
     };
   };
@@ -305,7 +305,7 @@ in {
     shortDescription = "English (Canada)";
     dictFileName = "en_CA";
     src = fetchurl {
-      url = mirror://sourceforge/wordlist/speller/2018.04.16/hunspell-en_CA-2018.04.16.zip;
+      url = "mirror://sourceforge/wordlist/speller/2018.04.16/hunspell-en_CA-2018.04.16.zip";
       sha256 = "06yf3s7y1215jmikbs18cn4j8a13csp4763w3jfgah8zlim6vc47";
     };
   };
@@ -315,7 +315,7 @@ in {
     shortDescription = "English (United Kingdom, 'ise' ending)";
     dictFileName = "en_GB-ise";
     src = fetchurl {
-      url = mirror://sourceforge/wordlist/speller//hunspell-en_GB-ise-2018.04.16.zip;
+      url = "mirror://sourceforge/wordlist/speller//hunspell-en_GB-ise-2018.04.16.zip";
       sha256 = "0ylg1zvfvsawamymcc9ivrqcb9qhlpgpnizm076xc56jz554xc2l";
     };
   };
@@ -325,7 +325,7 @@ in {
     shortDescription = "English (United Kingdom, 'ize' ending)";
     dictFileName = "en_GB-ize";
     src = fetchurl {
-      url = mirror://sourceforge/wordlist/speller//hunspell-en_GB-ize-2018.04.16.zip;
+      url = "mirror://sourceforge/wordlist/speller//hunspell-en_GB-ize-2018.04.16.zip";
       sha256 = "1rmwy6sxmd400cwjf58az6g14sq28p18f5mlq8ybg8y33q9m42ps";
     };
   };
@@ -510,7 +510,7 @@ in {
     dictFileName = "it_IT";
     shortDescription = "Hunspell dictionary for 'Italian (Italy)' from Linguistico";
     src = fetchurl {
-      url = mirror://sourceforge/linguistico/italiano_2_4_2007_09_01.zip;
+      url = "mirror://sourceforge/linguistico/italiano_2_4_2007_09_01.zip";
       sha256 = "0m9frz75fx456bczknay5i446gdcp1smm48lc0qfwzhz0j3zcdrd";
     };
   };
@@ -612,7 +612,7 @@ in {
 
     meta = with stdenv.lib; {
       description = "Hunspell dictionary for Ukrainian (Ukraine) from LibreOffice";
-      homepage = https://extensions.libreoffice.org/extensions/ukrainian-spelling-dictionary-and-thesaurus/;
+      homepage = "https://extensions.libreoffice.org/extensions/ukrainian-spelling-dictionary-and-thesaurus/";
       license = licenses.mpl20;
       maintainers = with maintainers; [ dywedir ];
       platforms = platforms.all;

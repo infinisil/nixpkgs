@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = {
-    homepage = http://sylpheed.sraoss.jp/en/;
+    homepage = "http://sylpheed.sraoss.jp/en/";
     description = "Lightweight and user-friendly e-mail client";
     maintainers = with maintainers; [ eelco ];
     platforms = platforms.linux ++ platforms.darwin;

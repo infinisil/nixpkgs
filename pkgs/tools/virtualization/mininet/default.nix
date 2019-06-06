@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     license = {
       fullName = "Mininet 2.3.0d4 License";
     };
-    homepage = https://github.com/mininet/mininet;
+    homepage = "https://github.com/mininet/mininet";
     maintainers = with maintainers; [ teto ];
   };
 }

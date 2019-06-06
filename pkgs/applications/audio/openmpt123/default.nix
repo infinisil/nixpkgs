@@ -22,7 +22,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A cross-platform command-line based module file player";
-    homepage = https://lib.openmpt.org/libopenmpt/;
+    homepage = "https://lib.openmpt.org/libopenmpt/";
     license = licenses.bsd3;
     maintainers = with maintainers; [ gnidorah ];
     platforms = platforms.linux;

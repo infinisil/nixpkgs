@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Web content rendering engine, GTK+ port";
-    homepage = http://webkitgtk.org/;
+    homepage = "http://webkitgtk.org/";
     license = licenses.bsd2;
     platforms = with platforms; linux ++ darwin;
     maintainers = [];
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
   patches = [
     ./webcore-svg-libxml-cflags.patch
     (fetchpatch {
-      url = https://raw.githubusercontent.com/gentoo/gentoo/7c5457e265bd40c156a8fe6b2ff94a4e34bcea8e/net-libs/webkit-gtk/files/webkit-gtk-2.4.9-gcc-6.patch;
+      url = "https://raw.githubusercontent.com/gentoo/gentoo/7c5457e265bd40c156a8fe6b2ff94a4e34bcea8e/net-libs/webkit-gtk/files/webkit-gtk-2.4.9-gcc-6.patch";
       sha256 = "0ll93dr5vxd40wvly1jaw41lvw86krac0jc6k6cacrps4i5ql5j0";
     })
   ] ++ optionals stdenv.isDarwin [

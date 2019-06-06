@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ ];
     platforms = platforms.linux;
     license = licenses.zlib;
-    downloadPage = http://tangramgames.dk/games/mrrescue;
+    downloadPage = "http://tangramgames.dk/games/mrrescue";
   };
 
 }

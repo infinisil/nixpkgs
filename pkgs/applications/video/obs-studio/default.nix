@@ -89,7 +89,7 @@ in stdenv.mkDerivation rec {
       Software", software originally designed for recording and streaming live
       video content, efficiently
     '';
-    homepage = https://obsproject.com;
+    homepage = "https://obsproject.com";
     maintainers = with maintainers; [ jb55 MP2E ];
     license = licenses.gpl2;
     platforms = [ "x86_64-linux" "i686-linux" ];

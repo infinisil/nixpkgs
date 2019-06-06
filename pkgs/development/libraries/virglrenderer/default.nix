@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A virtual 3D GPU library that allows a qemu guest to use the host GPU for accelerated 3D rendering";
-    homepage = https://virgil3d.github.io/;
+    homepage = "https://virgil3d.github.io/";
     license = licenses.mit;
     platforms = platforms.linux;
     maintainers = [ maintainers.xeji ];

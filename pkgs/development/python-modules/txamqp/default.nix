@@ -16,7 +16,7 @@ buildPythonPackage rec {
   buildInputs = [ twisted ];
 
   meta = with stdenv.lib; {
-    homepage = https://launchpad.net/txamqp;
+    homepage = "https://launchpad.net/txamqp";
     description = "Library for communicating with AMQP peers and brokers using Twisted";
     license = licenses.asl20;
     maintainers = with maintainers; [ rickynils ];

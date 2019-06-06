@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   name = "gnome-podcasts-${version}";
 
   src = fetchurl {
-    url = https://gitlab.gnome.org/World/podcasts/uploads/e59ac5d618d7daf4c7f33ba72957c466/gnome-podcasts-0.4.6.tar.xz;
+    url = "https://gitlab.gnome.org/World/podcasts/uploads/e59ac5d618d7daf4c7f33ba72957c466/gnome-podcasts-0.4.6.tar.xz";
     sha256 = "0g2rk3w251fp5jwbxs5ya1adv8nsgdqjy1vmfg8qqab6qyndhbrc";
   };
 
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Listen to your favorite podcasts";
-    homepage = https://wiki.gnome.org/Apps/Podcasts;
+    homepage = "https://wiki.gnome.org/Apps/Podcasts";
     license = licenses.gpl3;
     maintainers = gnome3.maintainers;
     platforms = platforms.unix;

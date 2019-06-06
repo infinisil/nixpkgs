@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Statically typed, imperative programming language";
-    homepage = https://nim-lang.org/;
+    homepage = "https://nim-lang.org/";
     license = licenses.mit;
     maintainers = with maintainers; [ ehmry peterhoeg ];
     platforms = with platforms; linux ++ darwin; # arbitrary

@@ -159,7 +159,7 @@ with lib;
   globalRedirect = mkOption {
     type = types.nullOr types.str;
     default = null;
-    example = http://newserver.example.org/;
+    example = "http://newserver.example.org/";
     description = ''
       If set, all requests for this host are redirected permanently to
       the given URL.

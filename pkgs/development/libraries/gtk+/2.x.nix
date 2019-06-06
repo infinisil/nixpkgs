@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     ./gtk2-theme-paths.patch
   ] ++ optionals stdenv.isDarwin [
     (fetchpatch {
-      url = https://bug557780.bugzilla-attachments.gnome.org/attachment.cgi?id=306776;
+      url = "https://bug557780.bugzilla-attachments.gnome.org/attachment.cgi?id=306776";
       sha256 = "0sp8f1r5c4j2nlnbqgv7s7nxa4cfwigvm033hvhb1ld652pjag4r";
     })
     ./2.0-darwin-x11.patch
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A multi-platform toolkit for creating graphical user interfaces";
-    homepage    = https://www.gtk.org/;
+    homepage    = "https://www.gtk.org/";
     license     = licenses.lgpl2Plus;
     maintainers = with maintainers; [ lovek323 raskin ];
     platforms   = platforms.all;

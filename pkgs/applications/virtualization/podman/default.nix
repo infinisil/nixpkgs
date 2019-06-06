@@ -36,7 +36,7 @@ buildGoPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://podman.io/;
+    homepage = "https://podman.io/";
     description = "A program for managing pods, containers and container images";
     license = licenses.asl20;
     maintainers = with maintainers; [ vdemeester ];

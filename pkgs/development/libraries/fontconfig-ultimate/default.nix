@@ -41,7 +41,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Font configuration files, patches, scripts and source packages (Infinality & friends)";
-    homepage = https://github.com/bohoomil/fontconfig-ultimate;
+    homepage = "https://github.com/bohoomil/fontconfig-ultimate";
     license = licenses.mit;
     platforms = platforms.all;
   };

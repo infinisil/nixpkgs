@@ -50,7 +50,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "SciPy (pronounced 'Sigh Pie') is open-source software for mathematics, science, and engineering. ";
-    homepage = https://www.scipy.org/;
+    homepage = "https://www.scipy.org/";
     maintainers = with lib.maintainers; [ fridh ];
   };
 }

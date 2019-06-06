@@ -30,7 +30,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [ numpy cachetools uproot-methods awkward ];
 
   meta = with lib; {
-    homepage = https://github.com/scikit-hep/uproot;
+    homepage = "https://github.com/scikit-hep/uproot";
     description = "ROOT I/O in pure Python and Numpy";
     license = licenses.bsd3;
     maintainers = with maintainers; [ ktf ];

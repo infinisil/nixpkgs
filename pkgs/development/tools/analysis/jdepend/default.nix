@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Traverses Java class file directories and generates design quality metrics for each Java package";
-    homepage = http://www.clarkware.com/software/JDepend.html;
+    homepage = "http://www.clarkware.com/software/JDepend.html";
     license = licenses.bsd3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ pSub ];

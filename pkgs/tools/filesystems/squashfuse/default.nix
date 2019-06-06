@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "FUSE filesystem to mount squashfs archives";
-    homepage = https://github.com/vasi/squashfuse;
+    homepage = "https://github.com/vasi/squashfuse";
     maintainers = [ maintainers.genesis ];
     platforms = platforms.linux;
     license = "BSD-2-Clause";

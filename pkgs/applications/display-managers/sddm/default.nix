@@ -58,7 +58,7 @@ in mkDerivation rec {
 
   meta = with lib; {
     description = "QML based X11 display manager";
-    homepage    = https://github.com/sddm/sddm;
+    homepage    = "https://github.com/sddm/sddm";
     maintainers = with maintainers; [ abbradar ttuegel ];
     platforms   = platforms.linux;
     license     = licenses.gpl2Plus;

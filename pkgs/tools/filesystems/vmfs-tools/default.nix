@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/glandium/vmfs-tools;
+    homepage = "https://github.com/glandium/vmfs-tools";
     description = "FUSE-based VMFS (vmware) mounting tools";
     maintainers = with maintainers; [ peterhoeg ];
     platforms = platforms.linux;

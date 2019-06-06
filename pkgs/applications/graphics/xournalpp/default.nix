@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Xournal++ is a handwriting Notetaking software with PDF annotation support";
-    homepage    = https://github.com/xournalpp/xournalpp;
+    homepage    = "https://github.com/xournalpp/xournalpp";
     license     = licenses.gpl2;
     maintainers = with maintainers; [ andrew-d ];
     platforms   = platforms.linux;

@@ -20,7 +20,7 @@ buildGoPackage rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/twpayne/chezmoi;
+    homepage = "https://github.com/twpayne/chezmoi";
     description = "Manage your dotfiles across multiple machines, securely";
     license = licenses.mit;
     maintainers = with maintainers; [ jhillyerd ];

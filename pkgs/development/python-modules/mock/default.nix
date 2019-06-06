@@ -32,7 +32,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Mock objects for Python";
-    homepage = http://python-mock.sourceforge.net/;
+    homepage = "http://python-mock.sourceforge.net/";
     license = stdenv.lib.licenses.bsd2;
   };
 

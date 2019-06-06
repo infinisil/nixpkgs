@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "MATE Desktop session manager";
-    homepage = https://github.com/mate-desktop/mate-session-manager;
+    homepage = "https://github.com/mate-desktop/mate-session-manager";
     license = with licenses; [ gpl2 lgpl2 ];
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

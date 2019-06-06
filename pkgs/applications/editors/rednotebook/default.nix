@@ -31,7 +31,7 @@ buildPythonApplication rec {
   ];
 
   meta = with lib; {
-    homepage = http://rednotebook.sourceforge.net/;
+    homepage = "http://rednotebook.sourceforge.net/";
     description = "A modern journal that includes a calendar navigation, customizable templates, export functionality and word clouds";
     license = licenses.gpl2;
     maintainers = with maintainers; [ orivej tstrobel ];

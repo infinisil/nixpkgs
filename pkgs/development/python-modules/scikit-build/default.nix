@@ -35,7 +35,7 @@ buildPythonPackage rec {
   '';
 
   meta = with lib; {
-    homepage = http://scikit-build.org/;
+    homepage = "http://scikit-build.org/";
     description = "Improved build system generator for CPython C/C++/Fortran/Cython extensions";
     license = with licenses; [ mit bsd2 ]; # BSD due to reuses of PyNE code
     maintainers = [ maintainers.FlorianFranzen ];

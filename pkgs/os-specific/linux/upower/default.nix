@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   version = "0.99.10";
 
   src = fetchurl {
-    url = https://gitlab.freedesktop.org/upower/upower/uploads/c438511024b9bc5a904f8775cfc8e4c4/upower-0.99.10.tar.xz;
+    url = "https://gitlab.freedesktop.org/upower/upower/uploads/c438511024b9bc5a904f8775cfc8e4c4/upower-0.99.10.tar.xz";
     sha256 = "17d2bclv5fgma2y3g8bsn9pdvspn1zrzismzdnzfivc0f2wm28k4";
   };
 
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = https://upower.freedesktop.org/;
+    homepage = "https://upower.freedesktop.org/";
     description = "A D-Bus service for power management";
     platforms = platforms.linux;
     license = licenses.gpl2Plus;

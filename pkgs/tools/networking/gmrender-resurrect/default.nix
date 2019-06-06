@@ -28,7 +28,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Resource efficient UPnP/DLNA renderer, optimal for Raspberry Pi, CuBox or a general MediaServer";
-    homepage = https://github.com/hzeller/gmrender-resurrect;
+    homepage = "https://github.com/hzeller/gmrender-resurrect";
     license = licenses.gpl2;
     platforms = platforms.linux;
     broken = true;

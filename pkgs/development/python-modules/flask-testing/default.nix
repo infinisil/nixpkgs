@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "Flask unittest integration.";
-    homepage = https://pythonhosted.org/Flask-Testing/;
+    homepage = "https://pythonhosted.org/Flask-Testing/";
     license = licenses.bsd3;
     maintainers = [ maintainers.mic92 ];
   };

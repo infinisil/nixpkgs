@@ -14,7 +14,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Python module for manipulation and statistical analysis of graphs";
-    homepage    = https://graph-tool.skewed.de/;
+    homepage    = "https://graph-tool.skewed.de/";
     license     = licenses.gpl3;
     maintainers = [ stdenv.lib.maintainers.joelmo ];
   };

@@ -94,7 +94,7 @@
 
   meta = {
     description = "Embeddable Scheme implementation";
-    homepage    = https://www.gnu.org/software/guile/;
+    homepage    = "https://www.gnu.org/software/guile/";
     license     = stdenv.lib.licenses.lgpl3Plus;
     maintainers = with stdenv.lib.maintainers; [ ludo lovek323 vrthra ];
     platforms   = stdenv.lib.platforms.all;

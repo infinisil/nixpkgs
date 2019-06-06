@@ -31,7 +31,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library for manipulating block devices";
-    homepage = http://storaged.org/libblockdev/;
+    homepage = "http://storaged.org/libblockdev/";
     license = licenses.lgpl2Plus; # lgpl2Plus for the library, gpl2Plus for the utils
     maintainers = with maintainers; [];
     platforms = platforms.linux;

@@ -25,7 +25,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Lightweight headless squeezebox client emulator";
-    homepage = https://github.com/ralph-irving/squeezelite;
+    homepage = "https://github.com/ralph-irving/squeezelite";
     license = licenses.gpl3;
     platforms = platforms.linux;
   };

@@ -29,7 +29,7 @@ buildPythonPackage rec {
 
   meta = with pkgs.lib; {
     description = "Pythonic remote execution";
-    homepage    = https://www.fabfile.org/;
+    homepage    = "https://www.fabfile.org/";
     license     = licenses.bsd2;
     maintainers = [ maintainers.costrouc ];
   };

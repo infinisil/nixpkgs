@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Cross platform image and hierarchical vector viewer based";
-    homepage = http://giv.sourceforge.net/giv/;
+    homepage = "http://giv.sourceforge.net/giv/";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ ];
     platforms = with platforms; linux;

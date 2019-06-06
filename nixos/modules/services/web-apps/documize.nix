@@ -121,7 +121,7 @@ in {
   config = mkIf cfg.enable {
     systemd.services.documize-server = {
       description = "Documize Wiki";
-      documentation = [ https://documize.com/ ];
+      documentation = [ "https://documize.com/" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {

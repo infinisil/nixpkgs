@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ globalplatform openssl pcsclite ];
 
   meta = with stdenv.lib; {
-    homepage = https://sourceforge.net/p/globalplatform/wiki/Home/;
+    homepage = "https://sourceforge.net/p/globalplatform/wiki/Home/";
     description = "GlobalPlatform pcsc connection plugin";
     license = [ licenses.lgpl3 licenses.gpl3 ];
     platforms = platforms.all;

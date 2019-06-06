@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Deepin graphical user interface library";
-    homepage = https://github.com/linuxdeepin/dtkwm;
+    homepage = "https://github.com/linuxdeepin/dtkwm";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

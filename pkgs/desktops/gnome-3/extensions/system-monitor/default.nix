@@ -41,6 +41,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl3Plus;
     broken = true; # GNOME 3.32 support WIP: https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet/pull/510
     maintainers = with maintainers; [ aneeshusa tiramiseb ];
-    homepage = https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet;
+    homepage = "https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet";
   };
 }

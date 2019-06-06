@@ -210,7 +210,7 @@ in stdenv.mkDerivation rec {
 
     meta = with stdenv.lib; {
       description = "Media center";
-      homepage    = https://kodi.tv/;
+      homepage    = "https://kodi.tv/";
       license     = licenses.gpl2;
       platforms   = platforms.linux;
       maintainers = with maintainers; [ domenkozar titanous edwtjo peterhoeg sephalon ];

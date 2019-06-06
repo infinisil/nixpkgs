@@ -30,7 +30,7 @@ in mkDerivation rec {
   meta = with lib; {
     description = "KDE Partition Manager";
     license = licenses.gpl2;
-    homepage = https://www.kde.org/applications/system/kdepartitionmanager/;
+    homepage = "https://www.kde.org/applications/system/kdepartitionmanager/";
     maintainers = with maintainers; [ peterhoeg ma27 ];
   };
 }

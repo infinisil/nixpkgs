@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   name = "giflib-5.1.4";
   src = fetchurl {
-    url = mirror://sourceforge/giflib/giflib-5.1.4.tar.bz2;
+    url = "mirror://sourceforge/giflib/giflib-5.1.4.tar.bz2";
     sha256 = "1md83dip8rf29y40cm5r7nn19705f54iraz6545zhwa6y8zyq9yz";
   };
 

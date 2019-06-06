@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     # PR24
     (fetchpatch {
       name = "fix-narrow-term-crash.patch";
-      url = https://github.com/troglobit/editline/pull/24/commits/8660aef4b795fbd46a86dca804f067a81757c5df.patch;
+      url = "https://github.com/troglobit/editline/pull/24/commits/8660aef4b795fbd46a86dca804f067a81757c5df.patch";
       sha256 = "0pcz1f141qv78xbq09yh0zfcjiqyavr66snz1hvxzvi8x0vixc4i";
     })
   ];
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" "man" "doc" ];
 
   meta = with stdenv.lib; {
-    homepage = http://troglobit.com/editline.html;
+    homepage = "http://troglobit.com/editline.html";
     description = "A readline() replacement for UNIX without termcap (ncurses)";
     license = licenses.bsdOriginal;
     maintainers = with maintainers; [ dtzWill ];

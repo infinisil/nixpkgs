@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.keybase.io/;
+    homepage = "https://www.keybase.io/";
     description = "The Keybase official GUI";
     platforms = platforms.linux;
     maintainers = with maintainers; [ rvolosatovs puffnfresh np ];

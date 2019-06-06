@@ -30,7 +30,7 @@ buildGoPackage {
 
   meta = {
     description = "Deploy Kubernetes Helm charts";
-    homepage = https://github.com/roboll/helmfile;
+    homepage = "https://github.com/roboll/helmfile";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ pneumaticat yurrriq ];
     platforms = lib.platforms.unix;

@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://geteventstore.com/;
+    homepage = "https://geteventstore.com/";
     description = "Event sourcing database with processing logic in JavaScript";
     license = stdenv.lib.licenses.bsd3;
     maintainers = with stdenv.lib.maintainers; [ puffnfresh ];

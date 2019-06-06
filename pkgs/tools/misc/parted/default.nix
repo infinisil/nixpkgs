@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     })
     ++ stdenv.lib.optional (lvm2 == null)
     (fetchpatch {
-      url = https://git.savannah.gnu.org/cgit/parted.git/patch/?id=7e87ca3c531228d35e13e802d2622006138b104c;
+      url = "https://git.savannah.gnu.org/cgit/parted.git/patch/?id=7e87ca3c531228d35e13e802d2622006138b104c";
       sha256 = "0i29lfg8cwj342q5s7qwqhncz2bkifj5rjc7cx6jd4zqb6ykkndj";
     });
 
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
       which also serves as a sample implementation and script backend.
     '';
 
-    homepage = https://www.gnu.org/software/parted/;
+    homepage = "https://www.gnu.org/software/parted/";
     license = stdenv.lib.licenses.gpl3Plus;
 
     maintainers = [

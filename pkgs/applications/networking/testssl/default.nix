@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
       CLI tool which checks a server's service on any port for the support of
       TLS/SSL ciphers, protocols as well as recent cryptographic flaws and more.
     '';
-    homepage = https://testssl.sh/;
+    homepage = "https://testssl.sh/";
     license = licenses.gpl2;
     maintainers = with maintainers; [ etu ];
   };

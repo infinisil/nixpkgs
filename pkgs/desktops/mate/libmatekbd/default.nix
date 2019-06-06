@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Keyboard management library for MATE";
-    homepage = https://github.com/mate-desktop/libmatekbd;
+    homepage = "https://github.com/mate-desktop/libmatekbd";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

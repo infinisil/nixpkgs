@@ -20,7 +20,7 @@ fetchzip rec {
   sha256 = "1calqmvrfv068w61f614la8mg8szas6m5i9s0lsmwjhb4qwjyxbw";
 
   meta = with lib; {
-    homepage = http://tobiasjung.name;
+    homepage = "http://tobiasjung.name";
     description = "A monospaced font created to be a most readable font for programming";
     maintainers = with lib.maintainers; [ myrl ];
     license = licenses.mit;

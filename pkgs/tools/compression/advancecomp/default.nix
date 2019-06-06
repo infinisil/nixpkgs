@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     license = licenses.gpl3 ;
     maintainers = [ maintainers.raskin ];
     platforms = platforms.linux;
-    homepage = https://github.com/amadvance/advancecomp;
+    homepage = "https://github.com/amadvance/advancecomp";
 
   };
 }

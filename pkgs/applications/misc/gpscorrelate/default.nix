@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     '';
 
     license = licenses.gpl2Plus;
-    homepage = https://github.com/freefoote/gpscorrelate;
+    homepage = "https://github.com/freefoote/gpscorrelate";
     platforms = platforms.linux;
   };
 }

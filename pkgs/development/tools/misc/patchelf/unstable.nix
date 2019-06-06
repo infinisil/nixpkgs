@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   doCheck = !stdenv.isDarwin;
 
   meta = {
-    homepage = https://nixos.org/patchelf.html;
+    homepage = "https://nixos.org/patchelf.html";
     license = "GPL";
     description = "A small utility to modify the dynamic linker and RPATH of ELF executables";
     maintainers = [ stdenv.lib.maintainers.eelco ];

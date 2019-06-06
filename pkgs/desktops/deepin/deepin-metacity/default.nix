@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "2D window manager for Deepin";
-    homepage = https://github.com/linuxdeepin/deepin-metacity;
+    homepage = "https://github.com/linuxdeepin/deepin-metacity";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

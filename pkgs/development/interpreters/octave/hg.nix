@@ -40,7 +40,7 @@ in lib.overrideDerivation octave (attrs: rec {
   name = "octave-${version}";
 
   src = fetchhg {
-    url = http://www.octave.org/hg/octave;
+    url = "http://www.octave.org/hg/octave";
     inherit rev;
 
     sha256 =

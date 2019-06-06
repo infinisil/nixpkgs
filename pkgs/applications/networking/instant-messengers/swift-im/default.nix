@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://swift.im/;
+    homepage = "https://swift.im/";
     description = "Qt XMPP client";
     license = licenses.gpl3;
     maintainers = with maintainers; [ orivej ];

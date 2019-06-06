@@ -425,7 +425,7 @@ self: super: {
 
     meta = {
       description = "A code-completion engine for Vim";
-      homepage = https://github.com/Valloric/YouCompleteMe;
+      homepage = "https://github.com/Valloric/YouCompleteMe";
       license = stdenv.lib.licenses.gpl3;
       maintainers = with stdenv.lib.maintainers; [marcweber jagajaga];
       platforms = stdenv.lib.platforms.unix;
@@ -460,7 +460,7 @@ self: super: {
 
   unicode-vim = let
     unicode-data = fetchurl {
-      url = http://www.unicode.org/Public/UNIDATA/UnicodeData.txt;
+      url = "http://www.unicode.org/Public/UNIDATA/UnicodeData.txt";
       sha256 = "16b0jzvvzarnlxdvs2izd5ia0ipbd87md143dc6lv6xpdqcs75s9";
     };
   in super.unicode-vim.overrideAttrs(old: {

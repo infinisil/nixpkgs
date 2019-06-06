@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
   dontStrip = true;
 
   meta = with stdenv.lib; {
-    homepage = http://www.teamviewer.com;
+    homepage = "http://www.teamviewer.com";
     license = licenses.unfree;
     description = "Desktop sharing application, providing remote support and online meetings";
     platforms = [ "x86_64-linux" ];

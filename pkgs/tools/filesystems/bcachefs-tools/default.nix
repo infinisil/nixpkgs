@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Tool for managing bcachefs filesystems";
-    homepage = https://bcachefs.org/;
+    homepage = "https://bcachefs.org/";
     license = licenses.gpl2;
     maintainers = with maintainers; [ davidak chiiruno ];
     platforms = platforms.linux;

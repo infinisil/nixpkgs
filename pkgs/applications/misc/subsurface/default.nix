@@ -21,7 +21,7 @@ let
     enableParallelBuilding = true;
 
     meta = with stdenv.lib; {
-      homepage = http://www.libdivecomputer.org;
+      homepage = "http://www.libdivecomputer.org";
       description = "A cross-platform and open source library for communication with dive computers from various manufacturers";
       maintainers = with maintainers; [ mguentner ];
       license = licenses.lgpl21;
@@ -103,7 +103,7 @@ in stdenv.mkDerivation rec {
       conveniently be entered using a map interface), logging of equipment used and
       names of other divers, and lets users rate dives and provide additional notes.
     '';
-    homepage = https://subsurface-divelog.org;
+    homepage = "https://subsurface-divelog.org";
     license = licenses.gpl2;
     maintainers = with maintainers; [ mguentner ];
     platforms = platforms.all;

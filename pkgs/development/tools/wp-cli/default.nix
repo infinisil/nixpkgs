@@ -49,7 +49,7 @@ _EOF
 
   meta = with stdenv.lib; {
     description = "A command line interface for WordPress";
-    homepage    = https://wp-cli.org;
+    homepage    = "https://wp-cli.org";
     license     = licenses.mit;
     maintainers = with maintainers; [ peterhoeg ];
     platforms   = platforms.all;

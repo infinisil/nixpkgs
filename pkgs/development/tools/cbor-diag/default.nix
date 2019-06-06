@@ -22,7 +22,7 @@ bundlerApp {
 
   meta = with lib; {
     description = "CBOR diagnostic utilities";
-    homepage    = https://github.com/cabo/cbor-diag;
+    homepage    = "https://github.com/cabo/cbor-diag";
     license     = with licenses; asl20;
     maintainers = with maintainers; [ fdns ];
     platforms   = platforms.unix;

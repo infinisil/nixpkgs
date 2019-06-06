@@ -37,7 +37,7 @@ in stdenv.mkDerivation rec {
     platforms = platforms.linux;
     description = "Python bindings for KDE";
     license = with licenses; [ gpl2 lgpl2 ];
-    homepage = https://api.kde.org/pykde-4.3-api/;
+    homepage = "https://api.kde.org/pykde-4.3-api/";
     maintainers = with maintainers; [ gnidorah ];
   };
 }

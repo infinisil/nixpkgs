@@ -20,14 +20,14 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [(fetchpatch {
-    url = https://git.xfce.org/xfce/xfdesktop/patch?id=157f5b55cfc3629d595ef38984278de5915aac27;
+    url = "https://git.xfce.org/xfce/xfdesktop/patch?id=157f5b55cfc3629d595ef38984278de5915aac27";
     sha256 = "0ki7hnyfpz7bdmsxqnm9qvyk040iyv1fawnhzfbyyzrh4nc5jd3x";
   })];
 
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://www.xfce.org/projects/xfdesktop;
+    homepage = "https://www.xfce.org/projects/xfdesktop";
     description = "Xfce desktop manager";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;

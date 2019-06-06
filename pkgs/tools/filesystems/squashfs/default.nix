@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     ++ stdenv.lib.optional lz4Support "LZ4_SUPPORT=1";
 
   meta = {
-    homepage = http://squashfs.sourceforge.net/;
+    homepage = "http://squashfs.sourceforge.net/";
     description = "Tool for creating and unpacking squashfs filesystems";
     platforms = stdenv.lib.platforms.unix;
     license = stdenv.lib.licenses.gpl2Plus;

@@ -46,7 +46,7 @@ stdenv.mkDerivation {
     + ":${perlldap}/${perl.libPrefix}";
 
   meta = {
-    homepage = http://www.spinnaker.de/lbdb/;
+    homepage = "http://www.spinnaker.de/lbdb/";
     license = licenses.gpl2;
     platforms = platforms.all;
     description = "The Little Brother's Database";

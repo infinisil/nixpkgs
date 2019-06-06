@@ -30,7 +30,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Wikipedia API for Python";
-    homepage = https://github.com/goldsmith/Wikipedia;
+    homepage = "https://github.com/goldsmith/Wikipedia";
     license = licenses.mit;
     maintainers = [ maintainers.worldofpeace ];
   };

@@ -61,7 +61,7 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://lizardfs.com;
+    homepage = "https://lizardfs.com";
     description = "A highly reliable, scalable and efficient distributed file system";
     platforms = platforms.linux;
     license = licenses.gpl3;

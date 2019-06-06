@@ -9,7 +9,7 @@ let
   version = "0.5.9";
   rev = "c68bc34e9466ef22326dd9072d557c56160e9092";
   sha256 = "1b611piwnwiwk4dcvn2qm4wjb9msa385lpx81y3k669ga3ip9rkc";
-  jsoncppURL = https://github.com/open-source-parsers/jsoncpp/archive/1.8.4.tar.gz;
+  jsoncppURL = "https://github.com/open-source-parsers/jsoncpp/archive/1.8.4.tar.gz";
   jsoncpp = fetchzip {
     url = jsoncppURL;
     sha256 = "1z0gj7a6jypkijmpknis04qybs1hkd04d1arr3gy89lnxmp6qzlm";
@@ -76,7 +76,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Compiler for Ethereum smart contract language Solidity";
-    homepage = https://github.com/ethereum/solidity;
+    homepage = "https://github.com/ethereum/solidity";
     license = licenses.gpl3;
     platforms = with platforms; linux ++ darwin;
     maintainers = with maintainers; [ dbrock akru lionello sifmelcara ];

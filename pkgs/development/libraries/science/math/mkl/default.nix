@@ -71,7 +71,7 @@ stdenvNoCC.mkDerivation rec {
       choice of compilers, languages, operating systems, and linking and
       threading models.
     '';
-    homepage = https://software.intel.com/en-us/mkl;
+    homepage = "https://software.intel.com/en-us/mkl";
     license = licenses.issl;
     platforms = [ "x86_64-linux" "x86_64-darwin" ];
     maintainers = [ maintainers.bhipple ];

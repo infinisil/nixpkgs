@@ -18,7 +18,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Python-Tool to communicate with the AVM FritzBox using the TR-064 protocol";
-    homepage = https://bitbucket.org/kbr/fritzconnection;
+    homepage = "https://bitbucket.org/kbr/fritzconnection";
     license = licenses.mit;
     maintainers = with maintainers; [ dotlambda ];
   };

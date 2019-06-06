@@ -23,7 +23,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Tablib: format-agnostic tabular dataset library";
-    homepage = http://python-tablib.org;
+    homepage = "http://python-tablib.org";
     license = licenses.mit;
   };
 }

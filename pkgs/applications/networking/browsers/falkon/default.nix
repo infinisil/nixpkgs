@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "QtWebEngine based cross-platform web browser";
-    homepage    = https://community.kde.org/Incubator/Projects/Falkon;
+    homepage    = "https://community.kde.org/Incubator/Projects/Falkon";
     license     = licenses.gpl3;
     maintainers = with maintainers; [ peterhoeg ];
     platforms   = platforms.unix;

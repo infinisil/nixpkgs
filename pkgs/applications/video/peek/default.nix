@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage    = https://github.com/phw/peek;
+    homepage    = "https://github.com/phw/peek";
     description = "Simple animated GIF screen recorder with an easy to use interface";
     license     = licenses.gpl3;
     maintainers = with maintainers; [ puffnfresh ];

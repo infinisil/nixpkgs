@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Deepin file search tool";
-    homepage = https://github.com/linuxdeepin/deepin-anything;
+    homepage = "https://github.com/linuxdeepin/deepin-anything";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

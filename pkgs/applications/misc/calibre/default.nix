@@ -169,7 +169,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Comprehensive e-book software";
-    homepage = https://calibre-ebook.com;
+    homepage = "https://calibre-ebook.com";
     license = with licenses; if unrarSupport then unfreeRedistributable else gpl3;
     maintainers = with maintainers; [ domenkozar pSub AndersonTorres ];
     platforms = platforms.linux;

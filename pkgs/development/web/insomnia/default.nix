@@ -87,7 +87,7 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://insomnia.rest/;
+    homepage = "https://insomnia.rest/";
     description = "The most intuitive cross-platform REST API Client";
     license = licenses.mit;
     platforms = [ "x86_64-linux" ];

@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Daemon used to register global keyboard shortcuts";
-    homepage = https://github.com/lxqt/lxqt-globalkeys;
+    homepage = "https://github.com/lxqt/lxqt-globalkeys";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

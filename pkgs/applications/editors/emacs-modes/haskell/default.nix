@@ -32,7 +32,7 @@ stdenv.mkDerivation {
   installCheckTarget = "check";
 
   meta = {
-    homepage = https://github.com/haskell/haskell-mode;
+    homepage = "https://github.com/haskell/haskell-mode";
     description = "Haskell mode for Emacs";
 
     platforms = stdenv.lib.platforms.unix;

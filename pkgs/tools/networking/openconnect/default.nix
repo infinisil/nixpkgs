@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "VPN Client for Cisco's AnyConnect SSL VPN";
-    homepage = http://www.infradead.org/openconnect/;
+    homepage = "http://www.infradead.org/openconnect/";
     license = stdenv.lib.licenses.lgpl21;
     maintainers = with stdenv.lib.maintainers; [ pradeepchhetri ];
     platforms = stdenv.lib.platforms.linux;

@@ -34,7 +34,7 @@ in python3Packages.buildPythonApplication rec {
       and invoke methods on those interfaces.
     '';
 
-    homepage = https://wiki.gnome.org/Apps/DFeet;
+    homepage = "https://wiki.gnome.org/Apps/DFeet";
     platforms = stdenv.lib.platforms.all;
     license = stdenv.lib.licenses.gpl2;
     maintainers = with stdenv.lib.maintainers; [ ktosiek ];

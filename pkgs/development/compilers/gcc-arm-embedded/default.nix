@@ -43,7 +43,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Pre-built GNU toolchain from ARM Cortex-M & Cortex-R processors (Cortex-M0/M0+/M3/M4, Cortex-R4/R5/R7)";
-    homepage = https://launchpad.net/gcc-arm-embedded;
+    homepage = "https://launchpad.net/gcc-arm-embedded";
     license = with licenses; [ bsd2 gpl2 gpl3 lgpl21 lgpl3 mit ];
     maintainers = [ maintainers.rasendubi ];
     platforms = platforms.linux;

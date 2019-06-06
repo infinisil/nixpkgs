@@ -32,7 +32,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Simple shell based CA utility";
-    homepage = https://openvpn.net/;
+    homepage = "https://openvpn.net/";
     license = licenses.gpl2;
     maintainers = [ maintainers.offline ];
     platforms = platforms.unix;

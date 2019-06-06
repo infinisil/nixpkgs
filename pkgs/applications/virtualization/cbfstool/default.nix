@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Management utility for CBFS formatted ROM images";
-    homepage = https://www.coreboot.org;
+    homepage = "https://www.coreboot.org";
     license = licenses.gpl2;
     maintainers = [ maintainers.tstrobel ];
     platforms = platforms.linux;

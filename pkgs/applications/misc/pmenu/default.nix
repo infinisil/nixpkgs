@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://gitlab.com/o9000/pmenu;
+    homepage = "https://gitlab.com/o9000/pmenu";
     description = "Start menu for Linux/BSD";
     license = stdenv.lib.licenses.gpl2;
     platforms = stdenv.lib.platforms.unix;

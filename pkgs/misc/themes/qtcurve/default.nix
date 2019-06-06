@@ -42,7 +42,7 @@ in stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/QtCurve/qtcurve;
+    homepage = "https://github.com/QtCurve/qtcurve";
     description = "Widget styles for Qt5/Plasma 5 and gtk2";
     platforms = platforms.linux;
     license = licenses.lgpl21Plus;

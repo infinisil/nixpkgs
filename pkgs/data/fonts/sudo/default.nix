@@ -13,7 +13,7 @@ in fetchzip rec {
   '';
   meta = with lib; {
     description = "Font for programmers and command line users";
-    homepage = https://www.kutilek.de/sudo-font/;
+    homepage = "https://www.kutilek.de/sudo-font/";
     license = licenses.ofl;
     maintainers = with maintainers; [ dtzWill ];
     platforms = platforms.all;

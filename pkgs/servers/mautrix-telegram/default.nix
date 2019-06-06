@@ -50,7 +50,7 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    homepage = https://github.com/tulir/mautrix-telegram;
+    homepage = "https://github.com/tulir/mautrix-telegram";
     description = "A Matrix-Telegram hybrid puppeting/relaybot bridge";
     license = licenses.agpl3Plus;
     maintainers = with maintainers; [ nyanloutre ma27 ];

@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ zlib bzip2 ];
 
   meta = {
-    homepage = https://bitbucket.org/ripencc/bgpdump/wiki/Home;
+    homepage = "https://bitbucket.org/ripencc/bgpdump/wiki/Home";
     description = ''Analyze dump files produced by Zebra/Quagga or MRT'';
     license = stdenv.lib.licenses.hpnd;
     maintainers = with stdenv.lib.maintainers; [ lewo ];

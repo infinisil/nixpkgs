@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   '';
   meta = with lib; {
     description = "Laptop power measuring tool";
-    homepage = https://kernel.ubuntu.com/~cking/powerstat/;
+    homepage = "https://kernel.ubuntu.com/~cking/powerstat/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ womfoo ];

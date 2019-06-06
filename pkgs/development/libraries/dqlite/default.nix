@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Expose a SQLite database over the network and replicate it across a cluster of peers";
-    homepage = https://github.com/CanonicalLtd/dqlite/;
+    homepage = "https://github.com/CanonicalLtd/dqlite/";
     license = licenses.asl20;
     maintainers = with maintainers; [ joko ];
     platforms = platforms.unix;

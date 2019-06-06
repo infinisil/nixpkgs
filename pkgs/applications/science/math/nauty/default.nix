@@ -38,6 +38,6 @@ stdenv.mkDerivation rec {
     license = licenses.asl20;
     maintainers = with maintainers; [ raskin timokau ];
     platforms = platforms.linux;
-    homepage = http://pallini.di.uniroma1.it/;
+    homepage = "http://pallini.di.uniroma1.it/";
   };
 }

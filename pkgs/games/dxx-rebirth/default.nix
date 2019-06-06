@@ -46,7 +46,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Source Port of the Descent 1 and 2 engines";
-    homepage = https://www.dxx-rebirth.com/;
+    homepage = "https://www.dxx-rebirth.com/";
     license = licenses.free;
     maintainers = with maintainers; [ peterhoeg ];
     platforms = with platforms; linux;

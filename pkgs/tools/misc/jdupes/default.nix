@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
       duplicate files. This fork known as 'jdupes' is heavily modified
       from and improved over the original.
     '';
-    homepage = https://github.com/jbruchon/jdupes;
+    homepage = "https://github.com/jbruchon/jdupes";
     license = licenses.mit;
     maintainers = with maintainers; [ romildo ];
     platforms = platforms.all;

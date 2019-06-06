@@ -129,7 +129,7 @@ in stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://fwupd.org/;
+    homepage = "https://fwupd.org/";
     maintainers = with maintainers; [];
     license = [ licenses.gpl2 ];
     platforms = platforms.linux;

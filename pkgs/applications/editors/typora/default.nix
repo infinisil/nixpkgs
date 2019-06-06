@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A minimal Markdown reading & writing app";
-    homepage = https://typora.io;
+    homepage = "https://typora.io";
     license = licenses.unfree;
     maintainers = with maintainers; [ jensbin worldofpeace ];
     inherit (electron_3.meta) platforms;

@@ -24,6 +24,6 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ vrthra ];
     platforms = platforms.linux;
     license = licenses.publicDomain;
-    homepage = https://www.cs.arizona.edu/icon/;
+    homepage = "https://www.cs.arizona.edu/icon/";
   };
 }

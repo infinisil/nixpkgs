@@ -21,7 +21,7 @@ in fetchurl rec {
 
   meta = with lib; {
     description = "Monospaced bitmap fonts";
-    homepage = https://www.cambus.net/spleen-monospaced-bitmap-fonts;
+    homepage = "https://www.cambus.net/spleen-monospaced-bitmap-fonts";
     license = licenses.bsd2;
     maintainers = with maintainers; [ dtzWill ];
   };

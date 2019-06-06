@@ -25,7 +25,7 @@ let
 
     patches = [
       (fetchpatch {
-        url = https://github.com/dezgeg/u-boot/commit/extlinux-path-length-2018-03.patch;
+        url = "https://github.com/dezgeg/u-boot/commit/extlinux-path-length-2018-03.patch";
         sha256 = "07jafdnxvqv8lz256qy29agjc2k1zj5ad4k28r1w5qkhwj4ixmf8";
       })
     ] ++ extraPatches;
@@ -79,7 +79,7 @@ let
     dontStrip = true;
 
     meta = with lib; {
-      homepage = http://www.denx.de/wiki/U-Boot/;
+      homepage = "http://www.denx.de/wiki/U-Boot/";
       description = "Boot loader for embedded systems";
       license = licenses.gpl2;
       maintainers = [ maintainers.dezgeg ];

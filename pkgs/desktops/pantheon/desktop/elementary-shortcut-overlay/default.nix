@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A native OS-wide shortcut overlay to be launched by Gala";
-    homepage = https://github.com/elementary/shortcut-overlay;
+    homepage = "https://github.com/elementary/shortcut-overlay";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

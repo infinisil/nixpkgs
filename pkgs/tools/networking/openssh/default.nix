@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
       # for details
       (fetchpatch {
         name = "CVE-2018-20685.patch";
-        url = https://github.com/openssh/openssh-portable/commit/6010c0303a422a9c5fa8860c061bf7105eb7f8b2.patch;
+        url = "https://github.com/openssh/openssh-portable/commit/6010c0303a422a9c5fa8860c061bf7105eb7f8b2.patch";
         sha256 = "0q27i9ymr97yb628y44qi4m11hk5qikb1ji1vhvax8hp18lwskds";
       })
     ]
@@ -104,7 +104,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = {
-    homepage = http://www.openssh.com/;
+    homepage = "http://www.openssh.com/";
     description = "An implementation of the SSH protocol";
     license = stdenv.lib.licenses.bsd2;
     platforms = platforms.unix ++ platforms.windows;

@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Notification daemon for MATE";
-    homepage = https://github.com/mate-desktop/mate-notification-daemon;
+    homepage = "https://github.com/mate-desktop/mate-notification-daemon";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

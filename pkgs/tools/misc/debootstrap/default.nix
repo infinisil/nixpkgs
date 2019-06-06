@@ -59,7 +59,7 @@ in stdenv.mkDerivation rec {
 
   meta = {
     description = "Tool to create a Debian system in a chroot";
-    homepage = https://wiki.debian.org/Debootstrap;
+    homepage = "https://wiki.debian.org/Debootstrap";
     license = stdenv.lib.licenses.mit;
     maintainers = [ stdenv.lib.maintainers.marcweber ];
     platforms = stdenv.lib.platforms.linux;

@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Varnish realtime status page";
-    homepage = https://github.com/varnish/libvmod-rtstatus;
+    homepage = "https://github.com/varnish/libvmod-rtstatus";
     inherit (varnish.meta) license platforms maintainers;
   };
 }

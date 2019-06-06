@@ -32,7 +32,7 @@ buildPythonPackage rec {
   '';
 
   meta = {
-    homepage = https://github.com/santosjorge/cufflinks;
+    homepage = "https://github.com/santosjorge/cufflinks";
     description = "Productivity Tools for Plotly + Pandas";
     license = stdenv.lib.licenses.mit;
     maintainers = with stdenv.lib.maintainers; [ globin ];

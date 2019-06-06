@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "API documentation browser for GNOME";
-    homepage = https://wiki.gnome.org/Apps/Devhelp;
+    homepage = "https://wiki.gnome.org/Apps/Devhelp";
     license = licenses.gpl2;
     maintainers = gnome3.maintainers;
     platforms = platforms.linux;

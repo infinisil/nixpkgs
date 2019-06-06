@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Set of extensions for Caja file manager";
-    homepage = https://mate-desktop.org;
+    homepage = "https://mate-desktop.org";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

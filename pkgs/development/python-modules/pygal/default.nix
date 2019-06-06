@@ -46,7 +46,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Sexy and simple python charting";
-    homepage = http://www.pygal.org;
+    homepage = "http://www.pygal.org";
     license = licenses.lgpl3;
     maintainers = with maintainers; [ sjourdois ];
   };

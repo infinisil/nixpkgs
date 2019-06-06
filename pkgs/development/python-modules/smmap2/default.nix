@@ -13,7 +13,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "A pure python implementation of a sliding window memory map manager";
-    homepage = https://pypi.org/project/smmap2;
+    homepage = "https://pypi.org/project/smmap2";
     maintainers = [ ];
     license = lib.licenses.bsd3;
   };

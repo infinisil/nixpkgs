@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   '';
   meta = with lib; {
     description = "File activity monitoring tool";
-    homepage = https://kernel.ubuntu.com/~cking/fnotifystat/;
+    homepage = "https://kernel.ubuntu.com/~cking/fnotifystat/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ womfoo ];

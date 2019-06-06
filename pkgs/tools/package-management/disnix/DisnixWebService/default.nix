@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   name = "DisnixWebService-0.8";
   src = fetchurl {
-    url = https://github.com/svanderburg/DisnixWebService/files/1756703/DisnixWebService-0.8.tar.gz;
+    url = "https://github.com/svanderburg/DisnixWebService/files/1756703/DisnixWebService-0.8.tar.gz";
     sha256 = "05hmyz17rmqlph0i321kmhabnpw84kqz32lgc5cd4shxyzsal9hz";
   };
   buildInputs = [ apacheAnt jdk ];

@@ -24,7 +24,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "C++ Libraries for Computer Vision Research and Implementation";
-    homepage = http://vxl.sourceforge.net/;
+    homepage = "http://vxl.sourceforge.net/";
     license = "VXL License";
     maintainers = with stdenv.lib.maintainers; [viric];
     platforms = with stdenv.lib.platforms; linux;

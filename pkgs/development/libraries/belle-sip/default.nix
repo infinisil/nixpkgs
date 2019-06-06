@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = http://www.linphone.org/index.php/eng;
+    homepage = "http://www.linphone.org/index.php/eng";
     description = "A Voice-over-IP phone";
     license = licenses.gpl2;
     platforms = platforms.all;

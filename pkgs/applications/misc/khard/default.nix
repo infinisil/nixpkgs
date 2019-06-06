@@ -47,7 +47,7 @@ in with python.pkgs; buildPythonApplication rec {
   doCheck = false;
 
   meta = {
-    homepage = https://github.com/scheibler/khard;
+    homepage = "https://github.com/scheibler/khard";
     description = "Console carddav client";
     license = stdenv.lib.licenses.gpl3;
     maintainers = with stdenv.lib.maintainers; [ matthiasbeyer ];

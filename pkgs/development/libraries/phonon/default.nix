@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   name = "phonon-${if withQt5 then "qt5" else "qt4"}-${v}";
 
   meta = {
-    homepage = https://phonon.kde.org/;
+    homepage = "https://phonon.kde.org/";
     description = "Multimedia API for Qt";
     license = stdenv.lib.licenses.lgpl2;
     platforms = stdenv.lib.platforms.linux;

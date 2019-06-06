@@ -29,7 +29,7 @@ buildPythonApplication rec {
 
   meta = {
     description = "Command-line tool to create and verify OpenTimestamps proofs";
-    homepage = https://github.com/opentimestamps/opentimestamps-client;
+    homepage = "https://github.com/opentimestamps/opentimestamps-client";
     license = lib.licenses.lgpl3;
   };
 }

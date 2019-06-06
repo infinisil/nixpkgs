@@ -13,7 +13,7 @@ buildPythonPackage rec {
   checkInputs = [ pytest_3 pytestrunner hypothesis ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/chardet/chardet;
+    homepage = "https://github.com/chardet/chardet";
     description = "Universal encoding detector";
     license = licenses.lgpl2;
     maintainers = with maintainers; [ domenkozar ];

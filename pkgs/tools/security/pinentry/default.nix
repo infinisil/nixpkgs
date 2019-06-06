@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://gnupg.org/aegypten2/;
+    homepage = "http://gnupg.org/aegypten2/";
     description = "GnuPG’s interface to passphrase input";
     license = licenses.gpl2Plus;
     platforms = platforms.all;

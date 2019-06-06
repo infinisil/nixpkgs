@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ libxml2 lzma openssl zlib bzip2 fts ];
 
   meta = {
-    homepage    = https://mackyle.github.io/xar/;
+    homepage    = "https://mackyle.github.io/xar/";
     description = "Extensible Archiver";
 
     longDescription =

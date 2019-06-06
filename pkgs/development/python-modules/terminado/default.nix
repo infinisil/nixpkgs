@@ -18,7 +18,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Terminals served by Tornado websockets";
-    homepage = https://github.com/jupyter/terminado;
+    homepage = "https://github.com/jupyter/terminado";
     license = licenses.bsd2;
   };
 }

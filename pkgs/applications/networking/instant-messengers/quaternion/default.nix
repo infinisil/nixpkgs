@@ -28,7 +28,7 @@ let
 
     meta = with lib; {
       description = "Cross-platform desktop IM client for the Matrix protocol";
-      homepage    = https://matrix.org/docs/projects/client/quaternion.html;
+      homepage    = "https://matrix.org/docs/projects/client/quaternion.html";
       license     = licenses.gpl3;
       maintainers = with maintainers; [ peterhoeg ];
       inherit (qtbase.meta) platforms;

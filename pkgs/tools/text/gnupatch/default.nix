@@ -14,11 +14,11 @@ stdenv.mkDerivation rec {
     # https://git.savannah.gnu.org/cgit/patch.git/patch/?id=f290f48a621867084884bfff87f8093c15195e6a
     ./CVE-2018-6951.patch
     (fetchurl {
-      url = https://sources.debian.org/data/main/p/patch/2.7.6-2/debian/patches/Allow_input_files_to_be_missing_for_ed-style_patches.patch;
+      url = "https://sources.debian.org/data/main/p/patch/2.7.6-2/debian/patches/Allow_input_files_to_be_missing_for_ed-style_patches.patch";
       sha256 = "0iw0lk0yhnhvfjzal48ij6zdr92mgb84jq7fwryy1hdhi47hhq64";
     })
     (fetchurl { # CVE-2018-1000156
-      url = https://sources.debian.org/data/main/p/patch/2.7.6-2/debian/patches/Fix_arbitrary_command_execution_in_ed-style_patches.patch;
+      url = "https://sources.debian.org/data/main/p/patch/2.7.6-2/debian/patches/Fix_arbitrary_command_execution_in_ed-style_patches.patch";
       sha256 = "1bpy16n3hm5nv9xkrn6c4wglzsdzj3ss1biq16w9kfv48p4hx2vg";
     })
     # https://git.savannah.gnu.org/cgit/patch.git/commit/?id=9c986353e420ead6e706262bf204d6e03322c300
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
          more original files, producing patched versions.
       '';
 
-    homepage = https://savannah.gnu.org/projects/patch;
+    homepage = "https://savannah.gnu.org/projects/patch";
 
     license = stdenv.lib.licenses.gpl3Plus;
 

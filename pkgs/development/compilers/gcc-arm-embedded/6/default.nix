@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Pre-built GNU toolchain from ARM Cortex-M & Cortex-R processors (Cortex-M0/M0+/M3/M4/M7, Cortex-R4/R5/R7/R8)";
-    homepage = https://developer.arm.com/open-source/gnu-toolchain/gnu-rm;
+    homepage = "https://developer.arm.com/open-source/gnu-toolchain/gnu-rm";
     license = with stdenv.lib.licenses; [ bsd2 gpl2 gpl3 lgpl21 lgpl3 mit ];
     maintainers = with stdenv.lib.maintainers; [ vinymeuh ];
     platforms = with stdenv.lib.platforms; linux ++ darwin;

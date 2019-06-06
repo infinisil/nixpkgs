@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Linux application sandboxing and distribution framework";
-    homepage = https://flatpak.org/;
+    homepage = "https://flatpak.org/";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ jtojnar ];
     platforms = platforms.linux;

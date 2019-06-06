@@ -46,7 +46,7 @@ in stdenv.mkDerivation rec {
 
   meta = {
     description = "A Free and Open Source Geographic Information System";
-    homepage = http://www.qgis.org;
+    homepage = "http://www.qgis.org";
     license = stdenv.lib.licenses.gpl2Plus;
     platforms = with stdenv.lib.platforms; linux;
     maintainers = with stdenv.lib.maintainers; [ lsix ];

@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
       OpenOrienteering Mapper is an orienteering mapmaking program
       and provides a free alternative to the existing proprietary solution.
     '';
-    homepage = https://www.openorienteering.org/apps/mapper/;
+    homepage = "https://www.openorienteering.org/apps/mapper/";
     license = licenses.gpl3;
     platforms = with platforms; linux ++ darwin;
     maintainers = with maintainers; [mpickering];

@@ -28,7 +28,7 @@ python3.pkgs.buildPythonApplication rec {
     })
     # Fix compability with Python 3.4
     (fetchurl {
-      url = https://sources.debian.org/data/main/k/kazam/1.4.5-2/debian/patches/configparser_api_changes.patch;
+      url = "https://sources.debian.org/data/main/k/kazam/1.4.5-2/debian/patches/configparser_api_changes.patch";
       sha256 = "0yvmipnh98s7y07cp1f113l0qqfw65k13an96byq707z3ymv1c2h";
     })
   ];
@@ -38,7 +38,7 @@ python3.pkgs.buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "A screencasting program created with design in mind";
-    homepage = https://code.launchpad.net/kazam;
+    homepage = "https://code.launchpad.net/kazam";
     license = licenses.lgpl3;
     platforms = platforms.linux;
     maintainers = [ maintainers.domenkozar ];

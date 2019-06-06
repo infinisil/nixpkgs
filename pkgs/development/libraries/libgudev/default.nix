@@ -27,7 +27,7 @@ in stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Projects/libgudev;
+    homepage = "https://wiki.gnome.org/Projects/libgudev";
     maintainers = [ maintainers.eelco ] ++ gnome3.maintainers;
     platforms = platforms.linux;
     license = licenses.lgpl2Plus;

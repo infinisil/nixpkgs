@@ -19,7 +19,7 @@ buildGoPackage rec {
   buildFlags = [ "-tags production" ];
 
   meta = with stdenv.lib; {
-    homepage = https://www.keybase.io;
+    homepage = "https://www.keybase.io";
     description = "The Keybase FS FUSE driver";
     platforms = platforms.unix;
     maintainers = with maintainers; [ rvolosatovs bennofs np ];

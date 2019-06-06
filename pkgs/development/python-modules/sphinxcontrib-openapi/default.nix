@@ -21,7 +21,7 @@ buildPythonPackage rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/ikalnytskyi/sphinxcontrib-openapi;
+    homepage = "https://github.com/ikalnytskyi/sphinxcontrib-openapi";
     description = "OpenAPI (fka Swagger) spec renderer for Sphinx";
     license = licenses.bsd0;
   };

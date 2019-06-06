@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://avocode.com/;
+    homepage = "https://avocode.com/";
     description = "The bridge between designers and developers";
     license = licenses.unfree;
     platforms = platforms.linux;

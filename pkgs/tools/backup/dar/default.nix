@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   hardeningDisable = [ "format" ];
 
   meta = {
-    homepage = http://dar.linux.free.fr;
+    homepage = "http://dar.linux.free.fr";
     description = "Disk ARchiver, allows backing up files into indexed archives";
     license = licenses.gpl2;
     platforms = platforms.unix;

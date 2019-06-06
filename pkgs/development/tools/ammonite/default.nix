@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
         with a lot of ergonomic improvements and configurability
         that may be familiar to people coming from IDEs or other REPLs such as IPython or Zsh.
     '';
-    homepage = http://www.lihaoyi.com/Ammonite/;
+    homepage = "http://www.lihaoyi.com/Ammonite/";
     license = lib.licenses.mit;
     platforms = lib.platforms.all;
     maintainers = [ lib.maintainers.nequissimus ];

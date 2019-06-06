@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   checkTarget = "test";
 
   meta = {
-    homepage = https://github.com/jlblancoc/nanoflann;
+    homepage = "https://github.com/jlblancoc/nanoflann";
     license = stdenv.lib.licenses.bsd3;
     description = "Header only C++ library for approximate nearest neighbor search";
     platforms = stdenv.lib.platforms.unix;

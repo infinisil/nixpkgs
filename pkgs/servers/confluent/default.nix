@@ -40,7 +40,7 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.confluent.io/;
+    homepage = "https://www.confluent.io/";
     description = "Confluent platform";
     license = licenses.asl20;
     maintainers = [ maintainers.offline ];

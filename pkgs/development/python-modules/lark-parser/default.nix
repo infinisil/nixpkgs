@@ -22,7 +22,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "A modern parsing library for Python, implementing Earley & LALR(1) and an easy interface";
-    homepage = https://github.com/lark-parser/lark;
+    homepage = "https://github.com/lark-parser/lark";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ fridh ];
   };

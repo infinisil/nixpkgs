@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Cross platform GUI for the computer algebra system Maxima";
     license = licenses.gpl2;
-    homepage = https://wxmaxima-developers.github.io/wxmaxima/;
+    homepage = "https://wxmaxima-developers.github.io/wxmaxima/";
     platforms = platforms.linux;
     maintainers = [ maintainers.peti ];
   };

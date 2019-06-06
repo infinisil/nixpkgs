@@ -3339,7 +3339,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A markdown parser built for speed";
-      homepage = https://marked.js.org/;
+      homepage = "https://marked.js.org/";
       license = "MIT";
     };
     production = true;
@@ -3620,7 +3620,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Leaner CSS";
-      homepage = http://lesscss.org/;
+      homepage = "http://lesscss.org/";
       license = "Apache-2.0";
     };
     production = true;
@@ -3766,7 +3766,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "simple, flexible, fun test framework";
-      homepage = https://mochajs.org/;
+      homepage = "https://mochajs.org/";
       license = "MIT";
     };
     production = true;
@@ -3862,7 +3862,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "test framework agnostic BDD-style assertions";
-      homepage = https://github.com/shouldjs/should.js;
+      homepage = "https://github.com/shouldjs/should.js";
       license = "MIT";
     };
     production = true;
@@ -3897,7 +3897,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "JavaScript test spies, stubs and mocks.";
-      homepage = https://sinonjs.org/;
+      homepage = "https://sinonjs.org/";
       license = "BSD-3-Clause";
     };
     production = true;
@@ -3949,7 +3949,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Static analysis tool for JavaScript";
-      homepage = http://jshint.com/;
+      homepage = "http://jshint.com/";
       license = "(MIT AND JSON)";
     };
     production = true;
@@ -3984,7 +3984,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Portable Unix shell commands for Node.js";
-      homepage = http://github.com/shelljs/shelljs;
+      homepage = "http://github.com/shelljs/shelljs";
       license = "BSD-3-Clause";
     };
     production = true;

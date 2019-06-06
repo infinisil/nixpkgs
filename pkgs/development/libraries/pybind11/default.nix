@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = {
-    homepage = https://github.com/pybind/pybind11;
+    homepage = "https://github.com/pybind/pybind11";
     description = "Seamless operability between C++11 and Python";
     longDescription = ''
       Pybind11 is a lightweight header-only library that exposes

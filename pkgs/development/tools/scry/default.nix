@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Code analysis server for the Crystal programming language";
-    homepage = https://github.com/crystal-lang-tools/scry;
+    homepage = "https://github.com/crystal-lang-tools/scry";
     license = licenses.mit;
     maintainers = with maintainers; [ peterhoeg ];
   };

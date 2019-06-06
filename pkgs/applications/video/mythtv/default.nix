@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   configureFlags = [ "--dvb-path=${linuxHeaders}/include" ];
 
   meta = with stdenv.lib; {
-    homepage = https://www.mythtv.org/;
+    homepage = "https://www.mythtv.org/";
     description = "Open Source DVR";
     license = licenses.gpl2;
     platforms = platforms.linux;

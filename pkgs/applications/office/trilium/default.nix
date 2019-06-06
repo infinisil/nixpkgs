@@ -58,7 +58,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     inherit description;
-    homepage = https://github.com/zadam/trilium;
+    homepage = "https://github.com/zadam/trilium";
     license = licenses.agpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ emmanuelrosa dtzWill ];

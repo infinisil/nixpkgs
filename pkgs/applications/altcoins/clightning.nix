@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
       Bitcoin, enabling secure and instant transfer of funds between any two
       parties for any amount.
     '';
-    homepage = https://github.com/ElementsProject/lightning;
+    homepage = "https://github.com/ElementsProject/lightning";
     maintainers = with maintainers; [ jb55 ];
     license = licenses.mit;
     platforms = platforms.linux;

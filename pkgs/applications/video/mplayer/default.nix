@@ -58,7 +58,7 @@ let
 
   codecs_src =
     let
-      dir = http://www.mplayerhq.hu/MPlayer/releases/codecs/;
+      dir = "http://www.mplayerhq.hu/MPlayer/releases/codecs/";
     in
     if stdenv.hostPlatform.system == "i686-linux" then fetchurl {
       url = "${dir}/essential-20071007.tar.bz2";
@@ -215,7 +215,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A movie player that supports many video formats";
-    homepage = http://mplayerhq.hu;
+    homepage = "http://mplayerhq.hu";
     license = "GPL";
     maintainers = [ stdenv.lib.maintainers.eelco ];
     platforms = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;

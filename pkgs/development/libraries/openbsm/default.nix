@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   patches = lib.optional stdenv.isDarwin [ ./bsm-add-audit_token_to_pid.patch ];
 
   meta = {
-    homepage = http://www.openbsm.org/;
+    homepage = "http://www.openbsm.org/";
     platforms = lib.platforms.unix;
     maintainers = with lib.maintainers; [ matthewbauer ];
     license = lib.licenses.bsd2;

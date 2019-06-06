@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Create flat virtual Ethernet networks of almost unlimited size";
-    homepage = https://www.zerotier.com;
+    homepage = "https://www.zerotier.com";
     license = licenses.gpl3;
     maintainers = with maintainers; [ sjmackenzie zimbatm ehmry obadz ];
     platforms = platforms.x86_64 ++ platforms.aarch64;

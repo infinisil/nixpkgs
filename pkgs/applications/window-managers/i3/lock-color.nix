@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
         - clock: time/date with configurable format
         - keyboard-layout
     '';
-    homepage = https://github.com/PandorasFox/i3lock-color;
+    homepage = "https://github.com/PandorasFox/i3lock-color";
     maintainers = with maintainers; [ garbas malyn ];
     license = licenses.bsd3;
 

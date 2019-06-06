@@ -45,7 +45,7 @@ in
     '';
 
     meta = with stdenv.lib; {
-      homepage = https://dotnet.github.io/;
+      homepage = "https://dotnet.github.io/";
       description = ".NET Core SDK ${version} with .NET Core ${netCoreVersion}";
       platforms = [ "x86_64-linux" ];
       maintainers = with maintainers; [ kuznero ];

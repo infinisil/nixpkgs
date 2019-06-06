@@ -10,7 +10,7 @@ stdenv.mkDerivation {
   name = "xf86-input-multitouch-20110312";
 
   src = fetchgit {
-    url = http://bitmath.org/git/multitouch.git;
+    url = "http://bitmath.org/git/multitouch.git";
     rev = "4d87c041f6a232aa30528d70d4b9946d1824b4ed";
     sha256 = "1jh52d3lkmchn5xdbz4qn50d30nild1zxvfbvwwl2rbmphs5ww6y";
   };
@@ -39,7 +39,7 @@ stdenv.mkDerivation {
   '';
 
   meta = {
-    homepage = http://bitmath.org/code/multitouch/;
+    homepage = "http://bitmath.org/code/multitouch/";
 
     description = "Brings multitouch gestures to the Linux desktop";
 

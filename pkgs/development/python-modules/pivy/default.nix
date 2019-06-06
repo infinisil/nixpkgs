@@ -27,7 +27,7 @@ buildPythonPackage rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://pivy.coin3d.org/;
+    homepage = "http://pivy.coin3d.org/";
     description = "A Python binding for Coin";
     license = licenses.bsd0;
   };

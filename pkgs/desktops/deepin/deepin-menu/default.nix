@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Deepin menu service";
-    homepage = https://github.com/linuxdeepin/deepin-menu;
+    homepage = "https://github.com/linuxdeepin/deepin-menu";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

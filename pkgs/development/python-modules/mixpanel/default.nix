@@ -22,7 +22,7 @@ buildPythonPackage rec {
   checkPhase = "py.test tests.py";
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/mixpanel/mixpanel-python;
+    homepage = "https://github.com/mixpanel/mixpanel-python";
     description = ''This is the official Mixpanel Python library'';
     license = licenses.asl20;
   };

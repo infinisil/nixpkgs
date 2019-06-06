@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = http://www.xine-project.org/;
+    homepage = "http://www.xine-project.org/";
     description = "A high-performance, portable and reusable multimedia playback engine";
     platforms = platforms.linux;
     license = with licenses; [ gpl2 lgpl2 ];

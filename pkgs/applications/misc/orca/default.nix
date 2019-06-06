@@ -56,7 +56,7 @@ buildPythonApplication rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Projects/Orca;
+    homepage = "https://wiki.gnome.org/Projects/Orca";
     description = "Screen reader";
     longDescription = ''
       A free, open source, flexible and extensible screen reader that provides

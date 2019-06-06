@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Dropbox extension for Caja file manager";
-    homepage = https://github.com/mate-desktop/caja-dropbox;
+    homepage = "https://github.com/mate-desktop/caja-dropbox";
     license = with licenses; [ gpl3 cc-by-nd-30 ];
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

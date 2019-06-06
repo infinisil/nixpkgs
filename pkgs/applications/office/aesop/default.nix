@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The simplest PDF viewer around";
-    homepage = https://github.com/lainsce/aesop;
+    homepage = "https://github.com/lainsce/aesop";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ worldofpeace ];
     platforms = platforms.linux;

@@ -50,7 +50,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "A Python interface for fplll";
-    homepage = https://github.com/fplll/fpylll;
+    homepage = "https://github.com/fplll/fpylll";
     maintainers = with lib.maintainers; [ timokau ];
     license = lib.licenses.gpl2Plus;
   };

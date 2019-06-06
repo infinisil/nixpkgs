@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Control MPRIS Version 2 Capable Media Players";
     license = licenses.gpl2Plus;
-    homepage = https://github.com/JasonLG1979/gnome-shell-extensions-mediaplayer/;
+    homepage = "https://github.com/JasonLG1979/gnome-shell-extensions-mediaplayer/";
     maintainers = with maintainers; [ tiramiseb ];
   };
 }

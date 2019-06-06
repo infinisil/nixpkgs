@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
       Cask can also be used to manage dependencies for your local Emacs configuration.
     '';
 
-    homepage = https://cask.readthedocs.io/en/latest/index.html;
+    homepage = "https://cask.readthedocs.io/en/latest/index.html";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = [ maintainers.flexw ];

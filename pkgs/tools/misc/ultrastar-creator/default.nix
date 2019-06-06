@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Ultrastar karaoke song creation tool";
-    homepage = https://github.com/UltraStar-Deluxe/UltraStar-Creator;
+    homepage = "https://github.com/UltraStar-Deluxe/UltraStar-Creator";
     license = licenses.gpl2;
     maintainers = with maintainers; [ Profpatsch ];
   };

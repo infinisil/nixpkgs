@@ -31,7 +31,7 @@ buildRustPackage rec {
 
   meta = with lib; {
     description = "An application automation framework";
-    homepage = https://www.habitat.sh;
+    homepage = "https://www.habitat.sh";
     license = licenses.asl20;
     maintainers = [ maintainers.rushmorem ];
     platforms = [ "x86_64-linux" "x86_64-darwin" ];

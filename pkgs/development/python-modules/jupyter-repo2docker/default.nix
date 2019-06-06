@@ -32,7 +32,7 @@ buildPythonPackage rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = https://repo2docker.readthedocs.io/en/latest/;
+    homepage = "https://repo2docker.readthedocs.io/en/latest/";
     description = "Repo2docker: Turn code repositories into Jupyter enabled Docker Images";
     license = licenses.bsdOriginal;
     maintainers = [ maintainers.costrouc ];

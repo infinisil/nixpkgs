@@ -40,7 +40,7 @@ buildPythonPackage rec {
   '';
 
   meta = {
-    homepage = http://pycurl.sourceforge.net/;
+    homepage = "http://pycurl.sourceforge.net/";
     description = "Python wrapper for libcurl";
   };
 }

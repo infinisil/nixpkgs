@@ -25,7 +25,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "A simple alerting application for Graphite metrics";
-    homepage = https://github.com/seatgeek/graphite-pager;
+    homepage = "https://github.com/seatgeek/graphite-pager";
     maintainers = with maintainers; [ offline basvandijk ];
     license = licenses.bsd2;
   };

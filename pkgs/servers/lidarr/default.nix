@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A Usenet/BitTorrent music downloader";
-    homepage = https://lidarr.audio/;
+    homepage = "https://lidarr.audio/";
     license = licenses.gpl3;
     maintainers = [ maintainers.etu ];
     platforms = platforms.all;

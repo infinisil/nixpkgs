@@ -27,7 +27,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "The uncompromising Python code formatter";
-    homepage    = https://github.com/ambv/black;
+    homepage    = "https://github.com/ambv/black";
     license     = licenses.mit;
     maintainers = with maintainers; [ sveitser ];
   };

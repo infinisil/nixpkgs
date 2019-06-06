@@ -45,7 +45,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "The Astronomical Plotting Library in Python";
-    homepage = http://aplpy.github.io;
+    homepage = "http://aplpy.github.io";
     license = licenses.mit;
     maintainers = [ maintainers.smaret ];
   };

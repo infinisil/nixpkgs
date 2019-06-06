@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   patches = [
     # darwin compatibility
     (fetchpatch {
-      url = https://github.com/xkbcommon/libxkbcommon/commit/edb1c662394578a54b7bbed231d918925e5d8150.patch;
+      url = "https://github.com/xkbcommon/libxkbcommon/commit/edb1c662394578a54b7bbed231d918925e5d8150.patch";
       sha256 = "0ydjlir32r3xfsbqhnsx1bz6ags2m908yhf9i09i1s7sgcimbcx5";
     })
   ];
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library to handle keyboard descriptions";
-    homepage = https://xkbcommon.org;
+    homepage = "https://xkbcommon.org";
     license = licenses.mit;
     maintainers = with maintainers; [ garbas ttuegel ];
     platforms = with platforms; unix;

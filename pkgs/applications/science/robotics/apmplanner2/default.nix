@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
       A GUI ground control station for autonomous vehicles using the MAVLink protocol.
       Includes support for the APM and PX4 based controllers.
     '';
-    homepage = http://ardupilot.org/planner2/;
+    homepage = "http://ardupilot.org/planner2/";
     license = stdenv.lib.licenses.gpl3;
     maintainers = [ stdenv.lib.maintainers.wucke13 ];
   };

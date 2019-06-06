@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   meta = { 
     description = "NetCDF Operator toolkit";
     longDescription = "The NCO (netCDF Operator) toolkit manipulates and analyzes data stored in netCDF-accessible formats, including DAP, HDF4, and HDF5";
-    homepage = http://nco.sourceforge.net/;
+    homepage = "http://nco.sourceforge.net/";
     license = stdenv.lib.licenses.gpl3;
     maintainers = [ stdenv.lib.maintainers.bzizou ];
     platforms = stdenv.lib.platforms.linux;

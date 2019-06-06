@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A functional lisp";
-    homepage    = https://github.com/aoh/owl-lisp;
+    homepage    = "https://github.com/aoh/owl-lisp";
     license     = licenses.mit;
     maintainers = with maintainers; [ peterhoeg ];
   };

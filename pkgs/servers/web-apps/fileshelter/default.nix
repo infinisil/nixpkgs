@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/epoupon/fileshelter;
+    homepage = "https://github.com/epoupon/fileshelter";
     description = "FileShelter is a 'one-click' file sharing web application";
     maintainers = [ maintainers.willibutz ];
     license = licenses.gpl3;

@@ -18,7 +18,7 @@ bundlerEnv rec {
       - Prints advisory information.
       - Does not require a network connection.
     '';
-    homepage    = https://github.com/rubysec/bundler-audit;
+    homepage    = "https://github.com/rubysec/bundler-audit";
     license     = licenses.gpl3Plus;
     maintainers = with maintainers; [ primeos ];
     platforms   = platforms.unix;

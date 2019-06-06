@@ -56,7 +56,7 @@ rustPlatform.buildRustPackage rec {
       As with most compiler related software, this will only work
       inside a nix-shell with the required libraries as buildInputs.
     '';
-    homepage = https://github.com/rust-lang/rust-bindgen;
+    homepage = "https://github.com/rust-lang/rust-bindgen";
     license = with licenses; [ bsd3 ];
     maintainers = [ maintainers.ralith ];
   };

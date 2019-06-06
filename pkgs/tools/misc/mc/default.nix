@@ -27,9 +27,9 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "File Manager and User Shell for the GNU Project";
-    homepage = http://www.midnight-commander.org;
+    homepage = "http://www.midnight-commander.org";
     downloadPage = "http://www.midnight-commander.org/downloads/";
-    repositories.git = git://github.com/MidnightCommander/mc.git;
+    repositories.git = "git://github.com/MidnightCommander/mc.git";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = [ stdenv.lib.maintainers.sander ];
     platforms = with stdenv.lib.platforms; linux ++ darwin;

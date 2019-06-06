@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   patches = [ ./gcc-O3.patch ];
 
   meta = with stdenv.lib; {
-    homepage = http://www.phontron.com/kytea/;
+    homepage = "http://www.phontron.com/kytea/";
     description = "General toolkit developed for analyzing text";
 
     longDescription = ''

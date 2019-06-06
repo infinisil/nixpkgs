@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
       Chromium on Linux.
     '';
     license = licenses.gpl2Plus;
-    homepage = http://git.fishsoup.net/cgit/git-bz/;
+    homepage = "http://git.fishsoup.net/cgit/git-bz/";
 
     platforms = platforms.linux;
   };

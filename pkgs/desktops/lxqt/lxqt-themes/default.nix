@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Themes, graphics and icons for LXQt";
-    homepage = https://github.com/lxqt/lxqt-themes;
+    homepage = "https://github.com/lxqt/lxqt-themes";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

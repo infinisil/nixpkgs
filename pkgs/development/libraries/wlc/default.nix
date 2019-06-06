@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library for making a simple Wayland compositor";
-    homepage    = https://github.com/Cloudef/wlc;
+    homepage    = "https://github.com/Cloudef/wlc";
     license     = licenses.mit;
     platforms   = platforms.linux;
     maintainers = with maintainers; [ primeos ]; # Trying to keep it up-to-date.

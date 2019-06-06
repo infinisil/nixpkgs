@@ -39,7 +39,7 @@ in python3.pkgs.buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "Drop-down terminal for GNOME";
-    homepage = http://guake-project.org;
+    homepage = "http://guake-project.org";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = [ maintainers.msteen ];

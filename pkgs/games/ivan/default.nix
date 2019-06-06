@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
       This is a fan continuation of IVAN by members of Attnam.com
     '';
-    homepage = https://attnam.com/;
+    homepage = "https://attnam.com/";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [freepotion];

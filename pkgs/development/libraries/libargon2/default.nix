@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
       Catena, Lyra2, Makwa and yescrypt were given special recognition. The PHC
       recommends using Argon2 rather than legacy algorithms.
     '';
-    homepage = https://www.argon2.com/;
+    homepage = "https://www.argon2.com/";
     license = with licenses; [ asl20 cc0 ];
     maintainers = with maintainers; [ taeer olynch ];
     platforms = platforms.linux ++ platforms.darwin;

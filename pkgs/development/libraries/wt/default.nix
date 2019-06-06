@@ -34,7 +34,7 @@ let
       ];
 
       meta = with stdenv.lib; {
-        homepage = https://www.webtoolkit.eu/wt;
+        homepage = "https://www.webtoolkit.eu/wt";
         description = "C++ library for developing web applications";
         platforms = platforms.linux;
         license = licenses.gpl2;

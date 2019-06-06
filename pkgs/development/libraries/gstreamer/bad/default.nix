@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     # Enable bs2b compilation
     # https://bugzilla.gnome.org/show_bug.cgi?id=794346
     (fetchurl {
-      url = https://bugzilla.gnome.org/attachment.cgi?id=369724;
+      url = "https://bugzilla.gnome.org/attachment.cgi?id=369724";
       sha256 = "1716mp0h2866ab33w607isvfhv1zwyj71qb4jrkx5v0h276v1pwr";
     })
   ];

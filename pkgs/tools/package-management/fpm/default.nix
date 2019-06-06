@@ -7,7 +7,7 @@ bundlerApp {
 
   meta = with lib; {
     description = "Tool to build packages for multiple platforms with ease";
-    homepage    = https://github.com/jordansissel/fpm;
+    homepage    = "https://github.com/jordansissel/fpm";
     license     = licenses.mit;
     maintainers = with maintainers; [ manveru ];
     platforms   = platforms.unix;

@@ -16,7 +16,7 @@ buildGoPackage {
 
   meta = {
     description = "A tool for managing Kubernetes resources as code";
-    homepage = https://github.com/ksonnet/kubecfg;
+    homepage = "https://github.com/ksonnet/kubecfg";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ benley ];
     platforms = lib.platforms.unix;

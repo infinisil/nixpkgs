@@ -36,7 +36,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A graphics application for digital painters";
-    homepage = http://mypaint.org/;
+    homepage = "http://mypaint.org/";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ goibhniu jtojnar ];

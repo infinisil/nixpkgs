@@ -27,7 +27,7 @@ let
 
   qemuMemfdBuildFix = fetchpatch {
     name = "xen-4.8-memfd-build-fix.patch";
-    url = https://github.com/qemu/qemu/commit/75e5b70e6b5dcc4f2219992d7cffa462aa406af0.patch;
+    url = "https://github.com/qemu/qemu/commit/75e5b70e6b5dcc4f2219992d7cffa462aa406af0.patch";
     sha256 = "0gaz93kb33qc0jx6iphvny0yrd17i8zhcl3a9ky5ylc2idz0wiwa";
   };
 
@@ -49,7 +49,7 @@ callPackage (import ./generic.nix (rec {
   xenfiles = optionalAttrs withInternalQemu {
     "qemu-xen" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/qemu-xen.git;
+        url = "https://xenbits.xen.org/git-http/qemu-xen.git";
         # rev = "refs/tags/qemu-xen-${version}";
         # use revision hash - reproducible but must be updated with each new version
         rev = "b79708a8ed1b3d18bee67baeaf33b3fa529493e2";
@@ -69,7 +69,7 @@ callPackage (import ./generic.nix (rec {
   } // optionalAttrs withInternalTraditionalQemu {
     "qemu-xen-traditional" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/qemu-xen-traditional.git;
+        url = "https://xenbits.xen.org/git-http/qemu-xen-traditional.git";
         # rev = "refs/tags/xen-${version}";
         # use revision hash - reproducible but must be updated with each new version
         rev = "c8ea0457495342c417c3dc033bba25148b279f60";
@@ -87,7 +87,7 @@ callPackage (import ./generic.nix (rec {
   } // optionalAttrs withInternalSeabios {
     "firmware/seabios-dir-remote" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/seabios.git;
+        url = "https://xenbits.xen.org/git-http/seabios.git";
         rev = "f0cdc36d2f2424f6b40438f7ee7cc502c0eff4df";
         sha256 = "1wq5pjkjrfzqnq3wyr15mcn1l4c563m65gdyf8jm97kgb13pwwfm";
       };
@@ -97,7 +97,7 @@ callPackage (import ./generic.nix (rec {
   } // optionalAttrs withInternalOVMF {
     "firmware/ovmf-dir-remote" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/ovmf.git;
+        url = "https://xenbits.xen.org/git-http/ovmf.git";
         rev = "173bf5c847e3ca8b42c11796ce048d8e2e916ff8";
         sha256 = "07zmdj90zjrzip74fvd4ss8n8njk6cim85s58mc6snxmqqv7gmcr";
       };
@@ -107,7 +107,7 @@ callPackage (import ./generic.nix (rec {
     # TODO: patch Xen to make this optional?
     "firmware/etherboot/ipxe.git" = {
       src = fetchgit {
-        url = https://git.ipxe.org/ipxe.git;
+        url = "https://git.ipxe.org/ipxe.git";
         rev = "356f6c1b64d7a97746d1816cef8ca22bdd8d0b5d";
         sha256 = "15n400vm3id5r8y3k6lrp9ab2911a9vh9856f5gvphkazfnmns09";
       };
@@ -117,7 +117,7 @@ callPackage (import ./generic.nix (rec {
     "xen-libhvm-dir-remote" = {
       src = fetchgit {
         name = "xen-libhvm";
-        url = https://github.com/michalpalka/xen-libhvm;
+        url = "https://github.com/michalpalka/xen-libhvm";
         rev = "83065d36b36d6d527c2a4e0f5aaf0a09ee83122c";
         sha256 = "1jzv479wvgjkazprqdzcdjy199azmx2xl3pnxli39kc5mvjz3lzd";
       };

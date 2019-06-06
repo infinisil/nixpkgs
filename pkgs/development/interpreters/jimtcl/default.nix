@@ -33,7 +33,7 @@ in stdenv.mkDerivation rec {
 
   meta = {
     description = "An open source small-footprint implementation of the Tcl programming language";
-    homepage = http://jim.tcl.tk/;
+    homepage = "http://jim.tcl.tk/";
     license = stdenv.lib.licenses.bsd2;
     platforms = stdenv.lib.platforms.all;
     maintainers = with stdenv.lib.maintainers; [ dbohdan vrthra ];

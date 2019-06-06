@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ leenaars ];
     platforms = platforms.linux;
     license = licenses.free;
-    downloadPage = http://stabyourself.net/rimshot/;
+    downloadPage = "http://stabyourself.net/rimshot/";
   };
 
 }

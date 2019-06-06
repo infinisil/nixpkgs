@@ -36,7 +36,7 @@ buildPythonApplication rec {
       Rich command-line interface for MySQL with auto-completion and
       syntax highlighting.
     '';
-    homepage = http://mycli.net;
+    homepage = "http://mycli.net";
     license = lib.licenses.bsd3;
   };
 }

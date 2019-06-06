@@ -27,7 +27,7 @@ buildGoPackage rec {
     maintainers = [maintainers.imalsogreg];
     broken = stdenv.isDarwin;  # test with CoreFoundation 10.11
     platforms = platforms.all;
-    homepage = https://github.com/segmentio/aws-okta;
+    homepage = "https://github.com/segmentio/aws-okta";
     downloadPage = "https://github.com/segmentio/aws-okta";
   };
 }

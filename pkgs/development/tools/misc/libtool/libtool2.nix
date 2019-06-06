@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
       documentation for details.
     '';
 
-    homepage = https://www.gnu.org/software/libtool/;
+    homepage = "https://www.gnu.org/software/libtool/";
 
     license = stdenv.lib.licenses.gpl2Plus;
 

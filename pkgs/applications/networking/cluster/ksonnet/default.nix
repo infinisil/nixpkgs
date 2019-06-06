@@ -15,7 +15,7 @@ buildGoPackage rec {
 
   meta = {
     description = "A CLI-supported framework that streamlines writing and deployment of Kubernetes configurations to multiple clusters";
-    homepage = https://github.com/ksonnet/ksonnet;
+    homepage = "https://github.com/ksonnet/ksonnet";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ flokli ];
     platforms = lib.platforms.unix;

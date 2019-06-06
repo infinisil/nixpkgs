@@ -39,7 +39,7 @@ in {
         else throw "unsupported version ${version} for plugin ${pluginName}";
     };
     meta = with stdenv.lib; {
-      homepage = https://github.com/vhyza/elasticsearch-analysis-lemmagen;
+      homepage = "https://github.com/vhyza/elasticsearch-analysis-lemmagen";
       description = "LemmaGen Analysis plugin provides jLemmaGen lemmatizer as Elasticsearch token filter";
       license = licenses.asl20;
     };
@@ -58,7 +58,7 @@ in {
         else throw "unsupported version ${version} for plugin ${pluginName}";
     };
     meta = with stdenv.lib; {
-      homepage = https://github.com/elastic/elasticsearch/tree/master/plugins/discovery-ec2;
+      homepage = "https://github.com/elastic/elasticsearch/tree/master/plugins/discovery-ec2";
       description = "The EC2 discovery plugin uses the AWS API for unicast discovery.";
       license = licenses.asl20;
     };
@@ -77,7 +77,7 @@ in {
         else throw "unsupported version ${version} for plugin ${pluginName}";
     };
     meta = with stdenv.lib; {
-      homepage = https://github.com/elastic/elasticsearch/tree/master/plugins/repository-s3;
+      homepage = "https://github.com/elastic/elasticsearch/tree/master/plugins/repository-s3";
       description = "The S3 repository plugin adds support for using AWS S3 as a repository for Snapshot/Restore.";
       license = licenses.asl20;
     };
@@ -96,7 +96,7 @@ in {
         else throw "unsupported version ${version} for plugin ${pluginName}";
     };
     meta = with stdenv.lib; {
-      homepage = https://github.com/elastic/elasticsearch/tree/master/plugins/repository-gcs;
+      homepage = "https://github.com/elastic/elasticsearch/tree/master/plugins/repository-gcs";
       description = "The GCS repository plugin adds support for using Google Cloud Storage as a repository for Snapshot/Restore.";
       license = licenses.asl20;
     };
@@ -121,7 +121,7 @@ in {
         else throw "unsupported version ${version} for plugin ${pluginName}";
     };
     meta = with stdenv.lib; {
-      homepage = https://github.com/floragunncom/search-guard;
+      homepage = "https://github.com/floragunncom/search-guard";
       description = "Elasticsearch plugin that offers encryption, authentication, and authorisation. ";
       license = licenses.asl20;
     };

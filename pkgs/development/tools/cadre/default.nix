@@ -7,7 +7,7 @@ bundlerApp {
 
   meta = with lib; {
     description = "Toolkit to add Ruby development - in-editor coverage, libnotify of test runs";
-    homepage    = https://github.com/nyarly/cadre;
+    homepage    = "https://github.com/nyarly/cadre";
     license     = licenses.mit;
     maintainers = [ maintainers.nyarly ];
     platforms   = platforms.unix;

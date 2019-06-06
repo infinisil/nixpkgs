@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [ xvapx ];
-    homepage = https://www.tribler.org/;
+    homepage = "https://www.tribler.org/";
     description = "A completely decentralised P2P filesharing client based on the Bittorrent protocol";
     license = licenses.lgpl21;
     platforms = platforms.linux;

@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Crossplatform tool for fast making screenshots";
-    homepage = https://github.com/lxqt/screengrab;
+    homepage = "https://github.com/lxqt/screengrab";
     license = licenses.gpl2;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

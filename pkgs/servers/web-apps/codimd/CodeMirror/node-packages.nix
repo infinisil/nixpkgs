@@ -1206,7 +1206,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "No-ceremony linter";
-      homepage = http://github.com/marijnh/blint;
+      homepage = "http://github.com/marijnh/blint";
     };
     production = true;
     bypassCache = true;
@@ -1325,7 +1325,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Headless WebKit with JS API";
-      homepage = https://github.com/Medium/phantomjs;
+      homepage = "https://github.com/Medium/phantomjs";
       license = "Apache-2.0";
     };
     production = true;
@@ -1347,7 +1347,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Next-generation ES6 module bundler";
-      homepage = https://github.com/rollup/rollup;
+      homepage = "https://github.com/rollup/rollup";
       license = "MIT";
     };
     production = true;
@@ -1445,7 +1445,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "JavaScript parser, mangler/compressor and beautifier toolkit";
-      homepage = http://lisperator.net/uglifyjs;
+      homepage = "http://lisperator.net/uglifyjs";
       license = "BSD-2-Clause";
     };
     production = true;

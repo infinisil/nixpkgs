@@ -22,7 +22,7 @@ buildGoPackage rec {
 
   meta = with lib; {
     description = "Vulnerability Static Analysis for Containers";
-    homepage = https://github.com/coreos/clair;
+    homepage = "https://github.com/coreos/clair";
     license = licenses.asl20;
     maintainers = [ maintainers.marsam ];
   };

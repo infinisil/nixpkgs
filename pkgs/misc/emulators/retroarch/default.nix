@@ -78,7 +78,7 @@ in stdenv.mkDerivation rec {
   preFixup = "rm $out/bin/retroarch-cg2glsl";
 
   meta = {
-    homepage = https://libretro.com;
+    homepage = "https://libretro.com";
     description = "Multi-platform emulator frontend for libretro cores";
     license = licenses.gpl3;
     platforms = platforms.all;

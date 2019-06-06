@@ -96,7 +96,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Qt5 binding of Chromium Embedded Framework";
-    homepage = https://github.com/linuxdeepin/qcef;
+    homepage = "https://github.com/linuxdeepin/qcef";
     license = licenses.lgpl3;
     platforms = platforms.linux;
     badPlatforms = [ "aarch64-linux" ];  # the cef-binary is not available

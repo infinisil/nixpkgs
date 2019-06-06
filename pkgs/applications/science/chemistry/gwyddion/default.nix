@@ -12,7 +12,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ gtk2 ];
   meta = {
-    homepage = http://gwyddion.net/;
+    homepage = "http://gwyddion.net/";
 
     description = "Scanning probe microscopy data visualization and analysis";
 

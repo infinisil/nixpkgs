@@ -39,7 +39,7 @@ buildPythonPackage rec {
   '';
 
   meta = {
-    homepage = http://live.gnome.org/PyGObject;
+    homepage = "http://live.gnome.org/PyGObject";
     description = "Python bindings for Glib";
     platforms = stdenv.lib.platforms.unix;
   };

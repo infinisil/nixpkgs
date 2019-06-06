@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Stateful programmatic web browsing in Python";
-    homepage = http://wwwsearch.sourceforge.net/;
+    homepage = "http://wwwsearch.sourceforge.net/";
     license = "BSD-style";
   };
 

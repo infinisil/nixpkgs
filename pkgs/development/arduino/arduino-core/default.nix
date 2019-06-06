@@ -213,7 +213,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Open-source electronics prototyping platform";
-    homepage = http://arduino.cc/;
+    homepage = "http://arduino.cc/";
     license = if withTeensyduino then licenses.unfreeRedistributable else licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ antono auntie robberer bjornfor ];

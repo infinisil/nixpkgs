@@ -23,6 +23,6 @@ stdenv.mkDerivation rec {
     license = licenses.bsd3;
     maintainers = with maintainers; [ jonafato ];
     platforms = gnome3.gnome-shell.meta.platforms;
-    homepage = https://github.com/ikalnytskyi/gnome-shell-extension-icon-hider;
+    homepage = "https://github.com/ikalnytskyi/gnome-shell-extension-icon-hider";
   };
 }

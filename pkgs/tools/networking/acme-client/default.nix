@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://kristaps.bsd.lv/acme-client/;
+    homepage = "https://kristaps.bsd.lv/acme-client/";
     description = "Secure ACME/Let's Encrypt client";
     platforms = platforms.unix;
     license = licenses.isc;

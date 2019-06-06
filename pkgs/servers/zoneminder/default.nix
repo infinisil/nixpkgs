@@ -185,7 +185,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Video surveillance software system";
-    homepage = https://zoneminder.com;
+    homepage = "https://zoneminder.com";
     license = licenses.gpl3;
     maintainers = with maintainers; [ peterhoeg ];
     platforms = platforms.unix;

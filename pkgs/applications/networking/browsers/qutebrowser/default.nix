@@ -96,7 +96,7 @@ in python3Packages.buildPythonApplication rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage    = https://github.com/The-Compiler/qutebrowser;
+    homepage    = "https://github.com/The-Compiler/qutebrowser";
     description = "Keyboard-focused browser with a minimal GUI";
     license     = licenses.gpl3Plus;
     maintainers = with maintainers; [ jagajaga rnhmjoj ];

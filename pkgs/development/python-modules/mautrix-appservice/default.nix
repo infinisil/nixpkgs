@@ -20,7 +20,7 @@ buildPythonPackage rec {
   disabled = pythonOlder "3.5";
 
   meta = with lib; {
-    homepage = https://github.com/tulir/mautrix-appservice-python;
+    homepage = "https://github.com/tulir/mautrix-appservice-python";
     description = "A Python 3 asyncio-based Matrix application service framework";
     license = licenses.mit;
     maintainers = with maintainers; [ nyanloutre ];

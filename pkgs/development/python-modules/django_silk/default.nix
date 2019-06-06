@@ -30,7 +30,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Silky smooth profiling for the Django Framework";
-    homepage = https://github.com/mtford90/silk;
+    homepage = "https://github.com/mtford90/silk";
     license = licenses.mit;
   };
 

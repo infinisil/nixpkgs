@@ -52,7 +52,7 @@ in
     };
 
     meta = {
-      homepage = https://github.com/phillipberndt/autorandr/;
+      homepage = "https://github.com/phillipberndt/autorandr/";
       description = "Automatically select a display configuration based on connected devices";
       license = stdenv.lib.licenses.gpl3Plus;
       maintainers = [ stdenv.lib.maintainers.coroa ];

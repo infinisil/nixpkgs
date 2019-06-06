@@ -66,7 +66,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Open AFS client kernel module";
-    homepage = https://www.openafs.org;
+    homepage = "https://www.openafs.org";
     license = licenses.ipl10;
     platforms = platforms.linux;
     maintainers = [ maintainers.z77z maintainers.spacefrogg ];

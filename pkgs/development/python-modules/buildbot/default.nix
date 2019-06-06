@@ -93,7 +93,7 @@ let
     };
 
     meta = with lib; {
-      homepage = http://buildbot.net/;
+      homepage = "http://buildbot.net/";
       description = "Buildbot is an open-source continuous integration framework for automating software build, test, and release processes";
       maintainers = with maintainers; [ nand0p ryansydnor ];
       license = licenses.gpl2;

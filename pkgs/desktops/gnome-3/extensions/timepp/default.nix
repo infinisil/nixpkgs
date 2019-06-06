@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A todo.txt manager, time tracker, timer, stopwatch, pomodoro, and alarms gnome-shell extension.";
-    homepage = https://github.com/zagortenay333/timepp__gnome;
+    homepage = "https://github.com/zagortenay333/timepp__gnome";
     license = licenses.gpl3;
     maintainers = with maintainers; [ svsdep ];
   };

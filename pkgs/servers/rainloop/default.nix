@@ -26,7 +26,7 @@
       meta = with stdenv.lib; {
         description = "Simple, modern & fast web-based email client";
         homepage = "https://www.rainloop.net";
-        downloadPage = https://github.com/RainLoop/rainloop-webmail/releases;
+        downloadPage = "https://github.com/RainLoop/rainloop-webmail/releases";
         license = licenses.agpl3;
         platforms = platforms.all;
         maintainers = with maintainers; [ das_j ];

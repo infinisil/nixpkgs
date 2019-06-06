@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Change terminal colors on the fly";
-    homepage    = https://github.com/peterhoeg/dynamic-colors;
+    homepage    = "https://github.com/peterhoeg/dynamic-colors";
     license     = licenses.mit;
     maintainers = with maintainers; [ peterhoeg ];
     platforms   = platforms.unix;

@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" "devdoc" ];
 
   src = fetchgit {
-    url = https://git.launchpad.net/~unity-team/bamf;
+    url = "https://git.launchpad.net/~unity-team/bamf";
     rev = version;
     sha256 = "1klvij1wyhdj5d8sr3b16pfixc1yk8ihglpjykg7zrr1f50jfgsz";
   };
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
       Removes the headache of applications matching
       into a simple DBus daemon and c wrapper library.
     '';
-    homepage = https://launchpad.net/bamf;
+    homepage = "https://launchpad.net/bamf";
     license = licenses.lgpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ davidak ];

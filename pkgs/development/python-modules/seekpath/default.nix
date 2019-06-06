@@ -17,7 +17,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "A module to obtain and visualize band paths in the Brillouin zone of crystal structures.";
-    homepage = https://github.com/giovannipizzi/seekpath;
+    homepage = "https://github.com/giovannipizzi/seekpath";
     license = licenses.mit;
     maintainers = with maintainers; [ psyanticy ];
   };

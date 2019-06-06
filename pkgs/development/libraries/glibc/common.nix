@@ -192,7 +192,7 @@ stdenv.mkDerivation ({
   doCheck = false; # fails
 
   meta = {
-    homepage = https://www.gnu.org/software/libc/;
+    homepage = "https://www.gnu.org/software/libc/";
     description = "The GNU C Library";
 
     longDescription =

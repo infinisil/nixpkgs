@@ -103,7 +103,7 @@ in stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.wireshark.org/;
+    homepage = "https://www.wireshark.org/";
     description = "Powerful network protocol analyzer";
     license = licenses.gpl2;
 

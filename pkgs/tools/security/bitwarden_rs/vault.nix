@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Integrates the web vault into bitwarden_rs";
-    homepage = https://github.com/dani-garcia/bw_web_builds;
+    homepage = "https://github.com/dani-garcia/bw_web_builds";
     platforms = platforms.all;
     license = licenses.gpl3;
     maintainers = with maintainers; [ msteen ];

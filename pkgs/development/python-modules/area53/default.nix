@@ -17,7 +17,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Python Interface to Route53";
-    homepage = https://github.com/mariusv/Area53;
+    homepage = "https://github.com/mariusv/Area53";
     license = licenses.unfree; # unspecified
   };
 }

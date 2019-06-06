@@ -65,7 +65,7 @@ in py.pkgs.buildPythonApplication rec {
   '';
 
   meta = with lib; {
-    homepage = https://aws.amazon.com/cli/;
+    homepage = "https://aws.amazon.com/cli/";
     description = "Unified tool to manage your AWS services";
     license = licenses.asl20;
     maintainers = with maintainers; [ muflax ];

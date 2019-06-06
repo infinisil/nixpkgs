@@ -18,7 +18,7 @@ buildOcaml rec {
              ++ stdenv.lib.optional (asyncSupport && async_ssl_p4 != null) async_ssl_p4;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/mirage/ocaml-conduit;
+    homepage = "https://github.com/mirage/ocaml-conduit";
     description = "Resolve URIs into communication channels for Async or Lwt ";
     license = licenses.mit;
     maintainers = [ maintainers.ericbmerritt ];

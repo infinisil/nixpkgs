@@ -90,7 +90,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A small but very powerful text-based mail client";
-    homepage    = http://www.neomutt.org;
+    homepage    = "http://www.neomutt.org";
     license     = licenses.gpl2Plus;
     maintainers = with maintainers; [ cstrahan erikryb jfrankenau vrthra ];
     platforms   = platforms.unix;

@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A tool for squential logic synthesis and formal verification";
-    homepage    = https://people.eecs.berkeley.edu/~alanmi/abc;
+    homepage    = "https://people.eecs.berkeley.edu/~alanmi/abc";
     license     = stdenv.lib.licenses.mit;
     platforms   = stdenv.lib.platforms.unix;
     maintainers = [ stdenv.lib.maintainers.thoughtpolice ];

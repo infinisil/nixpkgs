@@ -109,7 +109,7 @@ stdenv.mkDerivation rec {
   doCheck = false; # fails
 
   meta = with stdenv.lib; {
-    homepage = http://www.cmake.org/;
+    homepage = "http://www.cmake.org/";
     description = "Cross-Platform Makefile Generator";
     platforms = if useQt4 then qt4.meta.platforms else platforms.all;
     maintainers = with maintainers; [ ttuegel lnl7 ];

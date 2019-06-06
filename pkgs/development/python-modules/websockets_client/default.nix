@@ -17,7 +17,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [ six ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/liris/websocket-client;
+    homepage = "https://github.com/liris/websocket-client";
     description = "Websocket client for python";
     license = licenses.lgpl2;
   };

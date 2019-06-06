@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib ;{
     description = "Open source multimedia framework";
-    homepage = https://gstreamer.freedesktop.org;
+    homepage = "https://gstreamer.freedesktop.org";
     license = licenses.lgpl2Plus;
     platforms = platforms.unix;
     maintainers = with maintainers; [ ttuegel matthewbauer ];

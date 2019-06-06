@@ -29,7 +29,7 @@ buildPythonPackage rec {
   '';
 
   meta = with lib; {
-    homepage = https://nicolargo.github.io/glances/;
+    homepage = "https://nicolargo.github.io/glances/";
     description = "Cross-platform curses-based monitoring tool";
     license = licenses.lgpl3;
     maintainers = with maintainers; [ primeos koral ];

@@ -41,7 +41,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Convert CSV files into a SQLite database";
-    homepage = https://github.com/simonw/csvs-to-sqlite;
+    homepage = "https://github.com/simonw/csvs-to-sqlite";
     license = licenses.asl20;
     maintainers = [ maintainers.costrouc ];
   };

@@ -4,7 +4,7 @@ ftgl, freetype}:
 stdenv.mkDerivation rec {
   name = "opencascade-oce-0.18.3";
   src = fetchurl {
-    url = https://github.com/tpaviot/oce/archive/OCE-0.18.3.tar.gz;
+    url = "https://github.com/tpaviot/oce/archive/OCE-0.18.3.tar.gz";
     sha256 = "0v4ny0qhr5hiialb2ss25bllfnd6j4g7mfxnqfmr1xsjpykxcly5";
   };
 
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Open CASCADE Technology, libraries for 3D modeling and numerical simulation";
-    homepage = http://www.opencascade.org/;
+    homepage = "http://www.opencascade.org/";
     maintainers = [ maintainers.viric ];
     platforms = platforms.linux;
     license = licenses.lgpl21;

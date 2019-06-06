@@ -31,7 +31,7 @@ rustPlatform.buildRustPackage {
       uutils is an attempt at writing universal (as in cross-platform)
       CLI utils in Rust. This repo is to aggregate the GNU coreutils rewrites.
     '';
-    homepage = https://github.com/uutils/coreutils;
+    homepage = "https://github.com/uutils/coreutils";
     maintainers = with maintainers; [ ma27 ];
     license = licenses.mit;
     platforms = platforms.unix;

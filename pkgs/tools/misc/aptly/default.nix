@@ -38,7 +38,7 @@ buildGoPackage {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.aptly.info;
+    homepage = "https://www.aptly.info";
     description = "Debian repository management tool";
     license = licenses.mit;
     platforms = platforms.unix;

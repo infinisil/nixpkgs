@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The LXQt desktop panel";
-    homepage = https://github.com/lxqt/lxqt-panel;
+    homepage = "https://github.com/lxqt/lxqt-panel";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

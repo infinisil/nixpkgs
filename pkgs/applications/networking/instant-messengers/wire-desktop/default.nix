@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A modern, secure messenger";
-    homepage = https://wire.com/;
+    homepage = "https://wire.com/";
     license = licenses.gpl3;
     maintainers = with maintainers; [ worldofpeace ];
     platforms = [ "x86_64-linux" ];

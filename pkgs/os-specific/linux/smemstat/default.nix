@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   '';
   meta = with lib; {
     description = "Memory usage monitoring tool";
-    homepage = https://kernel.ubuntu.com/~cking/smemstat/;
+    homepage = "https://kernel.ubuntu.com/~cking/smemstat/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ womfoo ];

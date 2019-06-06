@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://niftools.sourceforge.net/wiki/NifSkope;
+    homepage = "http://niftools.sourceforge.net/wiki/NifSkope";
     description = "A tool for analyzing and editing NetImmerse/Gamebryo '*.nif' files";
     maintainers = with maintainers; [ eelco ma27 ];
     platforms = platforms.linux;

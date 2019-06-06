@@ -156,7 +156,7 @@ in python3.pkgs.buildPythonApplication rec {
   '';
 
   meta = {
-    homepage = https://launchpad.net/onboard;
+    homepage = "https://launchpad.net/onboard";
     description = "An onscreen keyboard useful for tablet PC users and for mobility impaired users.";
     maintainers = with stdenv.lib.maintainers; [ johnramsden ];
     license = stdenv.lib.licenses.gpl3;

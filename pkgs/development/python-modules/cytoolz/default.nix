@@ -21,7 +21,7 @@ buildPythonPackage rec {
     # temporal fix for a test failure: https://github.com/pytoolz/cytoolz/issues/122
     (fetchpatch {
       name = "py37.patch";
-      url = https://salsa.debian.org/python-team/modules/python-cytoolz/raw/5ce4158deefc47475d1e76813f900e6c72ddcc6e/debian/patches/py37.patch;
+      url = "https://salsa.debian.org/python-team/modules/python-cytoolz/raw/5ce4158deefc47475d1e76813f900e6c72ddcc6e/debian/patches/py37.patch";
       sha256 = "1z29y7s5n751q3f74r3bz0f48yg6izvi68hc4pkwcalxmkq5r1n9";
     })
   ];
@@ -38,7 +38,7 @@ buildPythonPackage rec {
   '';
 
   meta = {
-    homepage = https://github.com/pytoolz/cytoolz/;
+    homepage = "https://github.com/pytoolz/cytoolz/";
     description = "Cython implementation of Toolz: High performance functional utilities";
     license = "licenses.bsd3";
     maintainers = with lib.maintainers; [ fridh ];

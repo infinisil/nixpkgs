@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     ( cd colorer/configs/base
       patch -p2 <  ${ fetchpatch {
                         name   = "nix-language-highlighting.patch";
-                        url    = https://github.com/colorer/Colorer-schemes/commit/64bd06de0a63224b431cd8fc42cd9fa84b8ba7c0.patch;
+                        url    = "https://github.com/colorer/Colorer-schemes/commit/64bd06de0a63224b431cd8fc42cd9fa84b8ba7c0.patch";
                         sha256 = "1mrj1wyxmk7sll9j1jzw6miwi0sfavf654klms24wngnh6hadsch";
                       }
                     }
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "An orthodox file manager";
-    homepage = https://github.com/elfmz/far2l;
+    homepage = "https://github.com/elfmz/far2l";
     license = licenses.gpl2;
     maintainers = [ maintainers.volth ];
     platforms = platforms.all;

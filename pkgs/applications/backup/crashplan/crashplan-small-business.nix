@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An online backup solution";
-    homepage = http://www.crashplan.com/business/;
+    homepage = "http://www.crashplan.com/business/";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     maintainers = with maintainers; [ xvapx ];

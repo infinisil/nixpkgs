@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Python binding for Caja components";
-    homepage = https://github.com/mate-desktop/python-caja;
+    homepage = "https://github.com/mate-desktop/python-caja";
     license = [ licenses.gpl2Plus ];
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

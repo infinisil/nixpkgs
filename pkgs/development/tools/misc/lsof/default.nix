@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://people.freebsd.org/~abe/;
+    homepage = "https://people.freebsd.org/~abe/";
     description = "A tool to list open files";
     longDescription = ''
       List open files. Can show what process has opened some file,

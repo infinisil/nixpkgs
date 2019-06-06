@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE="-I ${irssi}/include/irssi -I ${irssi}/include/irssi/src/core -I ${irssi}/include/irssi/src/";
 
   meta = {
-    homepage = https://github.com/cryptodotis/irssi-otr;
+    homepage = "https://github.com/cryptodotis/irssi-otr";
     license = stdenv.lib.licenses.gpl2Plus;
     platforms = stdenv.lib.platforms.linux;
   };

@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A refreshing language for the front-end web";
-    homepage = https://mint-lang.com/;
+    homepage = "https://mint-lang.com/";
     license = stdenv.lib.licenses.bsd3;
     maintainers = with stdenv.lib.maintainers; [ manveru ];
     platforms = [ "x86_64-linux" "i686-linux" "x86_64-darwin" ];

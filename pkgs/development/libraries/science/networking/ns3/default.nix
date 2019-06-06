@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
   hardeningDisable = [ "fortify" ];
 
   meta = {
-    homepage = http://www.nsnam.org;
+    homepage = "http://www.nsnam.org";
     license = stdenv.lib.licenses.gpl3;
     description = "A discrete time event network simulator";
     platforms = with stdenv.lib.platforms; unix;

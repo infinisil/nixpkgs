@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An open source MQTT v3.1/3.1.1 broker";
-    homepage = http://mosquitto.org/;
+    homepage = "http://mosquitto.org/";
     license = licenses.epl10;
     maintainers = with maintainers; [ peterhoeg ];
     platforms = platforms.unix;

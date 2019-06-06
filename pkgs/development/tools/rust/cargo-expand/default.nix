@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "A utility and Cargo subcommand designed to let people expand macros in their Rust source code";
-    homepage = https://github.com/dtolnay/cargo-expand;
+    homepage = "https://github.com/dtolnay/cargo-expand";
     license = with licenses; [ mit asl20 ];
     platforms = platforms.all;
     maintainers = with maintainers; [ xrelkd ];

@@ -24,7 +24,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Python Tools for Robot Framework and Test Libraries";
-    homepage = https://bitbucket.org/userzimmermann/robotframework-tools;
+    homepage = "https://bitbucket.org/userzimmermann/robotframework-tools";
     license = licenses.gpl3;
     broken = isPy3k; # 2019-03-15, missing dependency robotframework-python3
   };

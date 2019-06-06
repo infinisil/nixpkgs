@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/gingerlime/smugline;
+    homepage = "https://github.com/gingerlime/smugline";
     description = "A simple command line tool for smugmug ";
     license = licenses.mit;
   };

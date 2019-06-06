@@ -11,7 +11,7 @@ let
   # Enable non-bundled uriparser
   # Introduced in https://github.com/apache/arrow/pull/4092
   Finduriparser_cmake = fetchurl {
-    url = https://raw.githubusercontent.com/apache/arrow/af4f52961209a5f1b43a19483536285c957e3bed/cpp/cmake_modules/Finduriparser.cmake;
+    url = "https://raw.githubusercontent.com/apache/arrow/af4f52961209a5f1b43a19483536285c957e3bed/cpp/cmake_modules/Finduriparser.cmake";
     sha256 = "1cylrw00n2nkc2c49xk9j3rrza351rpravxgpw047vimcw0sk93s";
   };
 in
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A  cross-language development platform for in-memory data";
-    homepage = https://arrow.apache.org/;
+    homepage = "https://arrow.apache.org/";
     license = stdenv.lib.licenses.asl20;
     platforms = stdenv.lib.platforms.unix;
     maintainers = with stdenv.lib.maintainers; [ veprbl ];

@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   configureFlags = [ "--with-xsession-prefix=$(out)" ];
 
   meta = with stdenv.lib; {
-    homepage = https://www.xfce.org/projects/xfce4-session;
+    homepage = "https://www.xfce.org/projects/xfce4-session";
     description = "Session manager for Xfce";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;

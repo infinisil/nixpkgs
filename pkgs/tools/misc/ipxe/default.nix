@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   buildInputs = [ perl cdrkit syslinux xz openssl gnu-efi ];
 
   src = fetchgit {
-    url = https://git.ipxe.org/ipxe.git;
+    url = "https://git.ipxe.org/ipxe.git";
     sha256 = "0if3m8h1nfxy4n37cwlfbc5kand52290v80m4zvjppc81im3nr5g";
     inherit rev;
   };
@@ -65,7 +65,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib;
     { description = "Network boot firmware";
-      homepage = http://ipxe.org/;
+      homepage = "http://ipxe.org/";
       license = licenses.gpl2;
       maintainers = with maintainers; [ ehmry ];
       platforms = platforms.all;

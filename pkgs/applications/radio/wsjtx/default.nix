@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
       These modes were all designed for making reliable, confirmed ham radio
       contacts under extreme weak-signal conditions.
     '';
-    homepage = http://physics.princeton.edu/pulsar/k1jt/wsjtx.html;
+    homepage = "http://physics.princeton.edu/pulsar/k1jt/wsjtx.html";
     # Older licenses are for the statically-linked hamlib
     license = with licenses; [ gpl3Plus gpl2Plus lgpl21Plus ];
     platforms = platforms.linux;

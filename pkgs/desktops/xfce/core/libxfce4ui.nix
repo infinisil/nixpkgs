@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://www.xfce.org/;
+    homepage = "https://www.xfce.org/";
     description = "Basic GUI library for Xfce";
     license = licenses.lgpl2Plus;
     platforms = platforms.linux;

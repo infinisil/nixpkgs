@@ -48,7 +48,7 @@ let
         x86hash   = "2DCA3C8EDED11C5D824D579BC3A6B7D531EAEDDCBFB16E91B5702C72CAE9DEE4";
         x64suffix = "20";
         x86suffix = "20";
-        homepage  = https://www.citrix.com/downloads/citrix-receiver/linux/receiver-for-linux-latest.html;
+        homepage  = "https://www.citrix.com/downloads/citrix-receiver/linux/receiver-for-linux-latest.html";
       };
     };
 

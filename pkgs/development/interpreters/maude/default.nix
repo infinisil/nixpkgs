@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = false;
 
   meta = {
-    homepage = http://maude.cs.illinois.edu/;
+    homepage = "http://maude.cs.illinois.edu/";
     description = "High-level specification language";
     license = stdenv.lib.licenses.gpl2;
 

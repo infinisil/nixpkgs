@@ -99,7 +99,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Tool to build flatpaks from source";
-    homepage = https://flatpak.org/;
+    homepage = "https://flatpak.org/";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ jtojnar ];
     platforms = platforms.linux;

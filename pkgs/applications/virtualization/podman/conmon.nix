@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://github.com/containers/conmon;
+    homepage = "https://github.com/containers/conmon";
     description = "An OCI container runtime monitor";
     license = licenses.asl20;
     maintainers = with maintainers; [ vdemeester ];

@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Cross-platform (Windows, Linux, and macOS) automation and configuration tool/framework";
-    homepage = https://github.com/PowerShell/PowerShell;
+    homepage = "https://github.com/PowerShell/PowerShell";
     maintainers = [ maintainers.yrashk ];
     platforms = platforms.unix;
     license = with licenses; [ mit ];

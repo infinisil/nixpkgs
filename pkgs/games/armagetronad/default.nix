@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   buildInputs = [ SDL SDL_image libxml2 libjpeg libpng libGLU_combined zlib ];
 
   meta = with stdenv.lib; {
-    homepage = http://armagetronad.org;
+    homepage = "http://armagetronad.org";
     description = "An multiplayer networked arcade racing game in 3D similar to Tron";
     license = licenses.gpl2;
     platforms = platforms.linux;

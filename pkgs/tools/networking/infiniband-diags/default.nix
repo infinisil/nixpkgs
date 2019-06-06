@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Utilities designed to help configure, debug, and maintain infiniband fabrics";
-    homepage = http://linux-rdma.org/;
+    homepage = "http://linux-rdma.org/";
     license =  licenses.bsd2; # Or GPL 2
     maintainers = [ maintainers.aij ];
     platforms = [ "x86_64-linux" ];

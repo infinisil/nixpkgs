@@ -46,7 +46,7 @@ in buildGoPackage rec {
 
   meta = {
     description = "A tool which facilitates building OCI images";
-    homepage = https://github.com/containers/buildah;
+    homepage = "https://github.com/containers/buildah";
     maintainers = with stdenv.lib.maintainers; [ Profpatsch vdemeester ];
     license = stdenv.lib.licenses.asl20;
   };

@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
     + stdenv.lib.optionalString (configDir == "") "touch $out/lib/smb.conf";
 
   meta = with stdenv.lib; {
-    homepage = https://www.samba.org/;
+    homepage = "https://www.samba.org/";
     description = "The standard Windows interoperability suite of programs for Linux and Unix";
     platforms = platforms.linux;
     license = licenses.gpl3;

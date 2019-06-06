@@ -22,7 +22,7 @@ pythonPackages.buildPythonApplication {
   propagatedBuildInputs = with pythonPackages; [ six ];
 
   meta = {
-    homepage = https://www.phildev.net/pius/;
+    homepage = "https://www.phildev.net/pius/";
 
     description = "PGP Individual UID Signer (PIUS), quickly and easily sign UIDs on a set of PGP keys";
 

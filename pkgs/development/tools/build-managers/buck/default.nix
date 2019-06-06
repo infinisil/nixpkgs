@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://buckbuild.com/;
+    homepage = "https://buckbuild.com/";
     description = "A high-performance build tool";
     maintainers = [ maintainers.jgertm ];
     license = licenses.asl20;

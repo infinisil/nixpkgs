@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
       without explicit instrumentation, meaning you can profile a program
       without modifying its source code.
     '';
-    homepage = https://github.com/uber/pyflame;
+    homepage = "https://github.com/uber/pyflame";
     license = licenses.asl20;
     maintainers = [ maintainers.symphorien ];
     # arm: https://github.com/uber/pyflame/issues/136

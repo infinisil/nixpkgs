@@ -67,7 +67,7 @@ unwrapped = stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Caching validating DNS resolver, from .cz domain registry";
-    homepage = https://knot-resolver.cz;
+    homepage = "https://knot-resolver.cz";
     license = licenses.gpl3Plus;
     # Platforms using negative pointers for stack won't work ATM due to LuaJIT impl.
     platforms = filter (p: p != "aarch64-linux") platforms.unix;

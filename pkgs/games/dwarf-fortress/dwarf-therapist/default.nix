@@ -25,6 +25,6 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ the-kenny abbradar bendlas numinit ];
     license = licenses.mit;
     platforms = platforms.unix;
-    homepage = https://github.com/Dwarf-Therapist/Dwarf-Therapist;
+    homepage = "https://github.com/Dwarf-Therapist/Dwarf-Therapist";
   };
 }

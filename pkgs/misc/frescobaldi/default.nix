@@ -20,7 +20,7 @@ python3Packages.buildPythonApplication rec {
   doCheck = false;
 
   meta = with lib; {
-    homepage = http://frescobaldi.org/;
+    homepage = "http://frescobaldi.org/";
     description = ''Frescobaldi is a LilyPond sheet music text editor'';
     longDescription = ''
       Powerful text editor with syntax highlighting and automatic completion, 

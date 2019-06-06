@@ -24,7 +24,7 @@ buildGoPackage rec {
       aiming for very short games, almost no character building, and a
       simplified inventory.
     '';
-    homepage = https://download.tuxfamily.org/boohu/index.html;
+    homepage = "https://download.tuxfamily.org/boohu/index.html";
     license = licenses.isc;
     platforms = platforms.unix;
     maintainers = with maintainers; [freepotion];

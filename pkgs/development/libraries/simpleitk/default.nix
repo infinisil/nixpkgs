@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = http://www.simpleitk.org;
+    homepage = "http://www.simpleitk.org";
     description = "Simplified interface to ITK";
     maintainers = with maintainers; [ bcdarwin ];
     platforms = platforms.unix;

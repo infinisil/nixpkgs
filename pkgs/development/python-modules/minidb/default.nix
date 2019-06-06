@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "A simple SQLite3-based store for Python objects";
-    homepage = https://thp.io/2010/minidb/;
+    homepage = "https://thp.io/2010/minidb/";
     license = stdenv.lib.licenses.isc;
     maintainers = [ stdenv.lib.maintainers.tv ];
   };

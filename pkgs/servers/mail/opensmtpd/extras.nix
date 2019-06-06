@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
       "-L${mysql.connector-c}/lib/mysql";
 
   meta = with stdenv.lib; {
-    homepage = https://www.opensmtpd.org/;
+    homepage = "https://www.opensmtpd.org/";
     description = "Extra plugins for the OpenSMTPD mail server";
     license = licenses.isc;
     platforms = platforms.linux;

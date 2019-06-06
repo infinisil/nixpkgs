@@ -5,7 +5,7 @@ buildPythonPackage rec {
   version = "4.10.0";
 
   src = assert version == libvirt.version; fetchgit {
-    url = git://libvirt.org/libvirt-python.git;
+    url = "git://libvirt.org/libvirt-python.git";
     rev = "v${version}";
     sha256 = "184gd857fkks9ivh4zzbmva2fs2dfxg9lihvhfrwyd2pxflglvyf";
   };
@@ -19,7 +19,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://www.libvirt.org/;
+    homepage = "http://www.libvirt.org/";
     description = "libvirt Python bindings";
     license = licenses.lgpl2;
     maintainers = [ maintainers.fpletz ];

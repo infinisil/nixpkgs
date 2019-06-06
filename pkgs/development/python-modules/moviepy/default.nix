@@ -46,7 +46,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Video editing with Python";
-    homepage = http://zulko.github.io/moviepy/;
+    homepage = "http://zulko.github.io/moviepy/";
     license = licenses.mit;
   };
 

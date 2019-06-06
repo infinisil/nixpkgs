@@ -67,7 +67,7 @@ python3Packages.buildPythonApplication rec {
       diffoscope is developed as part of the "reproducible builds" Debian
       project and was formerly known as "debbindiff".
     '';
-    homepage    = https://wiki.debian.org/ReproducibleBuilds;
+    homepage    = "https://wiki.debian.org/ReproducibleBuilds";
     license     = licenses.gpl3Plus;
     maintainers = with maintainers; [ dezgeg ];
     platforms   = platforms.linux;

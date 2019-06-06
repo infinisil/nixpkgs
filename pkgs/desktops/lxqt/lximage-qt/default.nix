@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The image viewer and screenshot tool for lxqt";
-    homepage = https://github.com/lxqt/lximage-qt;
+    homepage = "https://github.com/lxqt/lximage-qt";
     license = licenses.gpl2;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

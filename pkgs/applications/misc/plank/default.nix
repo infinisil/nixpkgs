@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Elegant, simple, clean dock";
-    homepage = https://launchpad.net/plank;
+    homepage = "https://launchpad.net/plank";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ davidak ] ++ pantheon.maintainers;

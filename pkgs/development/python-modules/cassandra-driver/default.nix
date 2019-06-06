@@ -63,7 +63,7 @@ buildPythonPackage rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = http://datastax.github.io/python-driver/;
+    homepage = "http://datastax.github.io/python-driver/";
     description = "A Python client driver for Apache Cassandra";
     license = licenses.asl20;
   };

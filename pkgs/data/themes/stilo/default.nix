@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Minimalistic GTK themes";
-    homepage = https://github.com/lassekongo83/stilo-themes;
+    homepage = "https://github.com/lassekongo83/stilo-themes";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = [ maintainers.romildo ];

@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   ] ++ lib.optional stdenv.isDarwin ./respect_macos_arch.patch;
 
   patch_gcc6 = fetchpatch {
-    url = https://raw.githubusercontent.com/gentoo/gentoo/20e2bff3697ebf5f291e9907b34aae3074a36b53/dev-cpp/gmock/files/gmock-1.7.0-gcc6.patch;
+    url = "https://raw.githubusercontent.com/gentoo/gentoo/20e2bff3697ebf5f291e9907b34aae3074a36b53/dev-cpp/gmock/files/gmock-1.7.0-gcc6.patch";
     sha256 = "0j3f381x1lf8qci9pfv6mliggl8qs2w05v5lw3rs3gn7aibg174d";
   };
 
@@ -25,12 +25,12 @@ stdenv.mkDerivation rec {
   # we replace it with 1.7.0 for synergy-1.8.8. This should
   # become unnecessary when we update to a newer version of Synergy.
   gmock_zip = fetchurl {
-    url = https://github.com/google/googlemock/archive/release-1.7.0.zip;
+    url = "https://github.com/google/googlemock/archive/release-1.7.0.zip";
     sha256 = "11bd04098rzamv7f9y01zaf9c8zrmzdk6g1qrlwq780pxzlr4ya0";
   };
 
   gtest_zip = fetchurl {
-    url = https://github.com/google/googletest/archive/release-1.7.0.zip;
+    url = "https://github.com/google/googletest/archive/release-1.7.0.zip";
     sha256 = "1l5n6kzdypjzjrz2jh14ylzrx735lccfx2p3s4ccgci8g9abg35m";
   };
 
@@ -79,7 +79,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Share one mouse and keyboard between multiple computers";
-    homepage = http://synergy-project.org/;
+    homepage = "http://synergy-project.org/";
     license = licenses.gpl2;
     maintainers = with maintainers; [ aszlig enzime ];
     platforms = platforms.all;

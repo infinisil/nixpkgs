@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     ++ lib.optional withGd "-DENABLE_GD=ON";
 
   meta = with stdenv.lib; {
-    homepage = https://rspamd.com;
+    homepage = "https://rspamd.com";
     license = licenses.asl20;
     description = "Advanced spam filtering system";
     maintainers = with maintainers; [ avnik fpletz ];

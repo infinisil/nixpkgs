@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "DAW similar to FL Studio (music production software)";
-    homepage = https://lmms.io;
+    homepage = "https://lmms.io";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ goibhniu yegortimoshenko ];

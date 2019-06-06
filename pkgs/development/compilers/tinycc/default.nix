@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
       generation.
     '';
 
-    homepage = http://www.tinycc.org/;
+    homepage = "http://www.tinycc.org/";
     license = licenses.mit;
 
     platforms = [ "x86_64-linux" ];

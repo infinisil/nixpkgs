@@ -14,7 +14,7 @@ python3Packages.buildPythonApplication rec {
 
   meta = {
     description = "Command-line program to download image-galleries and -collections from several image hosting sites";
-    homepage = https://github.com/mikf/gallery-dl;
+    homepage = "https://github.com/mikf/gallery-dl";
     license = lib.licenses.gpl2;
     maintainers = with lib.maintainers; [ dawidsowa ];
   };

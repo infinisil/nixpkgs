@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "DeadBeeF Infobar Plugin";
-    homepage = https://bitbucket.org/dsimbiriatin/deadbeef-infobar;
+    homepage = "https://bitbucket.org/dsimbiriatin/deadbeef-infobar";
     license = licenses.gpl2Plus;
     maintainers = [ maintainers.jtojnar ];
     platforms = platforms.linux;

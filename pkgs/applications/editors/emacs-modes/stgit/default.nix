@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "An emacs mode for Stgit";
-    homepage = http://procode.org/stgit/;
+    homepage = "http://procode.org/stgit/";
     platforms = stdenv.lib.platforms.all;
   };
 }

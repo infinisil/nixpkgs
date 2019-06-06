@@ -65,7 +65,7 @@ buildGoPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://cri-o.io;
+    homepage = "https://cri-o.io";
     description = ''Open Container Initiative-based implementation of the
                     Kubernetes Container Runtime Interface'';
     license = licenses.asl20;

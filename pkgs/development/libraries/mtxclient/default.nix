@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Client API library for Matrix, built on top of Boost.Asio";
-    homepage = https://github.com/mujx/mtxclient;
+    homepage = "https://github.com/mujx/mtxclient";
     license = licenses.mit;
     maintainers = with maintainers; [ fpletz ];
     platforms = platforms.unix;

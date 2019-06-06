@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "QPlatformTheme for a better Qt application inclusion in GNOME";
-    homepage = https://github.com/FedoraQt/QGnomePlatform;
+    homepage = "https://github.com/FedoraQt/QGnomePlatform";
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ worldofpeace ];
     platforms = platforms.linux;

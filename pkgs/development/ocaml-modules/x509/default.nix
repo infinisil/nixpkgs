@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   inherit (topkg) installPhase;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/mirleft/ocaml-x509;
+    homepage = "https://github.com/mirleft/ocaml-x509";
     description = "X509 (RFC5280) handling in OCaml";
     license = licenses.bsd2;
     maintainers = with maintainers; [ vbgl ];

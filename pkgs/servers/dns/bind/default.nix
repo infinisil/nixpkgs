@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
       # version.
       (fetchpatch {
         name = "client-atomics-as-refcount.patch";
-        url = https://gitlab.isc.org/isc-projects/bind9/commit/d72f436b7d7c697b262968c48c2d7643069ab17f.diff;
+        url = "https://gitlab.isc.org/isc-projects/bind9/commit/d72f436b7d7c697b262968c48c2d7643069ab17f.diff";
         sha256 = "0sidlab9wcv21751fbq3h9m4wy6hk7frag9ar2jndw8rn3axr2qy";
       })
     ] ++
@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
   doCheck = false; # requires root and the net
 
   meta = {
-    homepage = https://www.isc.org/downloads/bind/;
+    homepage = "https://www.isc.org/downloads/bind/";
     description = "Domain name server";
     license = stdenv.lib.licenses.mpl20;
 

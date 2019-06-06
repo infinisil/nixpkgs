@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
       allowing access to mpv's powerful playback capabilities through an
       easy-to-use user interface.
     '';
-    homepage = https://github.com/gnome-mpv/gnome-mpv;
+    homepage = "https://github.com/gnome-mpv/gnome-mpv";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
   };

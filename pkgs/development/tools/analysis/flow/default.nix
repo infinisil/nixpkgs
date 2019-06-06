@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A static type checker for JavaScript";
-    homepage = https://flow.org/;
+    homepage = "https://flow.org/";
     license = licenses.mit;
     platforms = ocamlPackages.ocaml.meta.platforms;
     maintainers = with maintainers; [ marsam puffnfresh globin ];

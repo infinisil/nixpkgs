@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   rev = "602";
 
   src = fetchsvn {
-    url = https://recordmydesktop.svn.sourceforge.net/svnroot/recordmydesktop/trunk/recordmydesktop;
+    url = "https://recordmydesktop.svn.sourceforge.net/svnroot/recordmydesktop/trunk/recordmydesktop";
     inherit rev;
     sha256 = "1avirkc4ymrd575m616pi6wpgq1i0r5sb3qahps1g18sjpxks0lf";
   };
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Desktop session recorder";
-    homepage = http://recordmydesktop.sourceforge.net/;
+    homepage = "http://recordmydesktop.sourceforge.net/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = [ ];

@@ -8531,7 +8531,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Microsoft Azure Cross Platform Command Line tool";
-      homepage = https://github.com/Azure/azure-xplat-cli;
+      homepage = "https://github.com/Azure/azure-xplat-cli";
       license = "Apache-2.0";
     };
     production = true;
@@ -8549,7 +8549,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The browser package manager";
-      homepage = http://bower.io/;
+      homepage = "http://bower.io/";
       license = "MIT";
     };
     production = true;
@@ -8567,7 +8567,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Unfancy JavaScript";
-      homepage = http://coffeescript.org/;
+      homepage = "http://coffeescript.org/";
       license = "MIT";
     };
     production = true;
@@ -8978,7 +8978,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Build tool and bindings loader for node-gyp that supports prebuilds";
-      homepage = https://github.com/prebuild/node-gyp-build;
+      homepage = "https://github.com/prebuild/node-gyp-build";
       license = "MIT";
     };
     production = true;
@@ -9084,7 +9084,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Fast, disk space efficient package manager";
-      homepage = https://pnpm.js.org/;
+      homepage = "https://pnpm.js.org/";
       license = "MIT";
     };
     production = true;

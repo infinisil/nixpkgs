@@ -154,7 +154,7 @@ stdenv.mkDerivation rec {
   installCheckPhase = "$out/bin/ibus version";
 
   meta = {
-    homepage = https://github.com/ibus/ibus;
+    homepage = "https://github.com/ibus/ibus";
     description = "Intelligent Input Bus, input method framework";
     license = licenses.lgpl21Plus;
     platforms = platforms.linux;

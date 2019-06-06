@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Switchboard Printers Plug";
-    homepage = https://github.com/elementary/switchboard-plug-printers;
+    homepage = "https://github.com/elementary/switchboard-plug-printers";
     license = licenses.lgpl3Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

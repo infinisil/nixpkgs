@@ -28,7 +28,7 @@ buildPythonPackage rec {
   doCheck = false; # No such file or directory: '/usr/sbin/kadmin.local'
 
   meta = with stdenv.lib; {
-    homepage = https://pypi.python.org/pypi/gssapi;
+    homepage = "https://pypi.python.org/pypi/gssapi";
     description = "Python GSSAPI Wrapper";
     license = licenses.mit;
   };

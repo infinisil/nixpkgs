@@ -28,7 +28,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Python library and command-line utility for Shodan";
-    homepage = https://github.com/achillean/shodan-python;
+    homepage = "https://github.com/achillean/shodan-python";
     license = licenses.mit;
     maintainers = with maintainers; [ lihop ];
   };

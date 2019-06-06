@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
       Facette is a web application to display time series data from various
       sources — such as collectd, Graphite, InfluxDB or KairosDB — on graphs.
     '';
-    homepage = https://facette.io/;
+    homepage = "https://facette.io/";
     license = licenses.bsd3;
     maintainers = with maintainers; [ fgaz ];
     broken = true; # not really broken, it just requires an internet connection to build. see #45382

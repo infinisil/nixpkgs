@@ -38,7 +38,7 @@ in buildFHSUserEnv {
 
   meta = with lib; {
     description = "An open source ecosystem for IoT development";
-    homepage = http://platformio.org;
+    homepage = "http://platformio.org";
     maintainers = with maintainers; [ mog ];
     license = licenses.asl20;
     platforms = with platforms; linux;

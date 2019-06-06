@@ -38,7 +38,7 @@ in buildPythonPackage rec {
   '';
 
   meta = {
-    homepage = https://github.com/ContinuumIO/datashape;
+    homepage = "https://github.com/ContinuumIO/datashape";
     description = "A data description language";
     license = lib.licenses.bsd2;
     maintainers = with lib.maintainers; [ fridh ];

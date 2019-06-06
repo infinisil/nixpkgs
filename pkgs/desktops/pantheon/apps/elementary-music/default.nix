@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Music player and library designed for elementary OS";
-    homepage = https://github.com/elementary/music;
+    homepage = "https://github.com/elementary/music";
     license = licenses.lgpl2Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

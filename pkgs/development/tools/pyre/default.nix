@@ -73,7 +73,7 @@ let
 
   meta = with stdenv.lib; {
     description = "A performant type-checker for Python 3";
-    homepage = https://pyre-check.org;
+    homepage = "https://pyre-check.org";
     license = licenses.mit;
     platforms = ocamlPackages.ocaml.meta.platforms;
     maintainers = with maintainers; [ teh ];

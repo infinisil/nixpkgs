@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   doCheck = false; # requires dbus daemon
 
   meta = with stdenv.lib; {
-    homepage = http://docs.xfce.org/xfce/xfconf/start;
+    homepage = "http://docs.xfce.org/xfce/xfconf/start";
     description = "Simple client-server configuration storage and query system for Xfce";
     license = licenses.gpl2;
     platforms = platforms.linux;

@@ -49,7 +49,7 @@ common =
               customMemoryManagement = false;
             }).overrideDerivation (args: {
               patches = args.patches or [] ++ [(fetchpatch {
-                url = https://github.com/edolstra/aws-sdk-cpp/commit/7d58e303159b2fb343af9a1ec4512238efa147c7.patch;
+                url = "https://github.com/edolstra/aws-sdk-cpp/commit/7d58e303159b2fb343af9a1ec4512238efa147c7.patch";
                 sha256 = "103phn6kyvs1yc7fibyin3lgxz699qakhw671kl207484im55id1";
               })];
             }));
@@ -113,7 +113,7 @@ common =
           a package, multi-user package management and easy setup of build
           environments.
         '';
-        homepage = https://nixos.org/;
+        homepage = "https://nixos.org/";
         license = stdenv.lib.licenses.lgpl2Plus;
         maintainers = [ stdenv.lib.maintainers.eelco ];
         platforms = stdenv.lib.platforms.all;

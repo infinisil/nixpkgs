@@ -41,7 +41,7 @@ in stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Real-space time dependent density-functional theory code";
-    homepage = http://octopus-code.org;
+    homepage = "http://octopus-code.org";
     maintainers = with maintainers; [ markuskowa ];
     license = licenses.gpl2;
     platforms = [ "x86_64-linux" ];

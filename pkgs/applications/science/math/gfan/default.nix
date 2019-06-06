@@ -23,6 +23,6 @@ stdenv.mkDerivation rec {
     license = stdenv.lib.licenses.gpl2 ;
     maintainers = [stdenv.lib.maintainers.raskin];
     platforms = stdenv.lib.platforms.unix;
-    homepage = http://home.math.au.dk/jensen/software/gfan/gfan.html;
+    homepage = "http://home.math.au.dk/jensen/software/gfan/gfan.html";
   };
 }

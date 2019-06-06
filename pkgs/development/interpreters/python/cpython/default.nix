@@ -96,7 +96,7 @@ in with passthru; stdenv.mkDerivation {
   ] ++ optionals isPy37 [
     # Fix darwin build https://bugs.python.org/issue34027
     (fetchpatch {
-      url = https://bugs.python.org/file47666/darwin-libutil.patch;
+      url = "https://bugs.python.org/file47666/darwin-libutil.patch";
       sha256 = "0242gihnw3wfskl4fydp2xanpl8k5q7fj4dp7dbbqf46a4iwdzpa";
     })
   ] ++ optionals (isPy3k && hasDistutilsCxxPatch) [
@@ -252,7 +252,7 @@ in with passthru; stdenv.mkDerivation {
   enableParallelBuilding = true;
 
   meta = {
-    homepage = http://python.org;
+    homepage = "http://python.org";
     description = "A high-level dynamically-typed programming language";
     longDescription = ''
       Python is a remarkably powerful dynamic programming language that

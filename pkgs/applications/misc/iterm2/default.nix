@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A replacement for Terminal and the successor to iTerm";
-    homepage = https://www.iterm2.com/;
+    homepage = "https://www.iterm2.com/";
     license = stdenv.lib.licenses.gpl2;
     platforms = stdenv.lib.platforms.darwin;
   };

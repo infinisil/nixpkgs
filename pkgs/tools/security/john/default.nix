@@ -67,7 +67,7 @@ stdenv.mkDerivation rec {
   meta = {
     description = "John the Ripper password cracker";
     license = licenses.gpl2;
-    homepage = https://github.com/magnumripper/JohnTheRipper/;
+    homepage = "https://github.com/magnumripper/JohnTheRipper/";
     maintainers = with maintainers; [ offline ];
     platforms = [ "x86_64-linux" "x86_64-darwin"];
   };

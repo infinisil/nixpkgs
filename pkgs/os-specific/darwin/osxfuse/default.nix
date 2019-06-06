@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ headers ];
 
   meta = with stdenv.lib; {
-    homepage = https://osxfuse.github.io;
+    homepage = "https://osxfuse.github.io";
     description = "C-based FUSE for macOS SDK";
     platforms = platforms.darwin;
     license = licenses.gpl2;

@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   patches = [
     # fix build with e-d-s 3.32
     (fetchpatch {
-      url = https://gitlab.gnome.org/GNOME/gnome-todo/commit/6cdabc4dd0c6c804a093b94c269461ce376fed4f.patch;
+      url = "https://gitlab.gnome.org/GNOME/gnome-todo/commit/6cdabc4dd0c6c804a093b94c269461ce376fed4f.patch";
       sha256 = "08ldgyxv9216dgr8y9asqd7j2y82y9yqnqhkqaxc9i8a67yz1gzy";
     })
   ];
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Personal task manager for GNOME";
-    homepage = https://wiki.gnome.org/Apps/Todo;
+    homepage = "https://wiki.gnome.org/Apps/Todo";
     license = licenses.gpl3Plus;
     maintainers = gnome3.maintainers;
     platforms = platforms.linux;

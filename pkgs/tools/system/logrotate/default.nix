@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ popt ];
 
   meta = {
-    homepage = https://fedorahosted.org/releases/l/o/logrotate/;
+    homepage = "https://fedorahosted.org/releases/l/o/logrotate/";
     description = "Rotates and compresses system logs";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = [ stdenv.lib.maintainers.viric ];

@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "API Support for your favorite torrent trackers.";
-    homepage = https://github.com/Jackett/Jackett/;
+    homepage = "https://github.com/Jackett/Jackett/";
     license = licenses.gpl2;
     maintainers = with maintainers; [ edwtjo ];
     platforms = platforms.all;

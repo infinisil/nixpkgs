@@ -63,10 +63,10 @@ stdenv.mkDerivation rec {
       C or C++ programs, though that is not its primary goal.
     '';
 
-    homepage = http://hboehm.info/gc/;
+    homepage = "http://hboehm.info/gc/";
 
     # non-copyleft, X11-style license
-    license = http://hboehm.info/gc/license.txt;
+    license = "http://hboehm.info/gc/license.txt";
 
     maintainers = [ ];
     platforms = stdenv.lib.platforms.all;

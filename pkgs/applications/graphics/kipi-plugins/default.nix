@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Plugins for KDE-based image applications";
     license = stdenv.lib.licenses.gpl2;
-    homepage = https://www.digikam.org;
+    homepage = "https://www.digikam.org";
     maintainers = with stdenv.lib.maintainers; [ ttuegel ];
     platforms = stdenv.lib.platforms.linux;
   };

@@ -39,8 +39,8 @@ stdenv.mkDerivation rec {
       interface for monitoring and administering UPS, PDU and SCD hardware.
       It uses a layered approach to connect all of the parts.
     '';
-    homepage = http://www.networkupstools.org/;
-    repositories.git = https://github.com/networkupstools/nut.git;
+    homepage = "http://www.networkupstools.org/";
+    repositories.git = "https://github.com/networkupstools/nut.git";
     platforms = platforms.linux;
     maintainers = [ maintainers.pierron ];
     license = with licenses; [ gpl1Plus gpl2Plus gpl3Plus ];

@@ -37,6 +37,6 @@ buildPerlPackage rec {
       growing variety of other databases and technologies.
     '';
     license = stdenv.lib.licenses.gpl2Plus;
-    homepage = http://www.maatkit.org/;
+    homepage = "http://www.maatkit.org/";
   };
 }

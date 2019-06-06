@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/mate-desktop/mate-sensors-applet;
+    homepage = "https://github.com/mate-desktop/mate-sensors-applet";
     description = "MATE panel applet for hardware sensors";
     license = with licenses; [ gpl2Plus ];
     platforms = platforms.linux;

@@ -74,7 +74,7 @@ in stdenv.mkDerivation rec {
     })
     # https://bugzilla.gnome.org/show_bug.cgi?id=795576
     (fetchurl {
-      url = https://bugzilla.gnome.org/attachment.cgi?id=371427;
+      url = "https://bugzilla.gnome.org/attachment.cgi?id=371427";
       sha256 = "187flswvzymjfxwfrrhizb1cvs780zm39aa3i2vwa5fbllr7kcpf";
     })
   ];
@@ -92,7 +92,7 @@ in stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Projects/Tracker;
+    homepage = "https://wiki.gnome.org/Projects/Tracker";
     description = "Desktop-neutral user information store, search tool and indexer";
     maintainers = gnome3.maintainers;
     license = licenses.gpl2Plus;

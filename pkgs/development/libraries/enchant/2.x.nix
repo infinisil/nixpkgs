@@ -21,7 +21,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Generic spell checking library";
-    homepage = https://abiword.github.io/enchant/;
+    homepage = "https://abiword.github.io/enchant/";
     license = licenses.lgpl21Plus; # with extra provision for non-free checkers
     maintainers = with maintainers; [ jtojnar ];
     platforms = platforms.unix;

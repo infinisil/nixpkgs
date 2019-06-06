@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   dontPatchELF = true;
 
   meta = {
-    homepage = https://ledger-cli.org/;
+    homepage = "https://ledger-cli.org/";
     description = "A double-entry accounting system with a command-line reporting interface";
     license = "BSD";
 

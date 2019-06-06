@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "GUI for Git, Mercurial, Subversion";
-    homepage = http://www.syntevo.com/smartgit/;
+    homepage = "http://www.syntevo.com/smartgit/";
     license = licenses.unfree;
     platforms = platforms.linux;
     maintainers = with stdenv.lib.maintainers; [ jraygauthier ];

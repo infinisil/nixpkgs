@@ -36,7 +36,7 @@ buildPythonApplication rec {
   ];
 
   meta = {
-    homepage = http://mkdocs.org/;
+    homepage = "http://mkdocs.org/";
     description = "Project documentation with Markdown";
     license = lib.licenses.bsd2;
   };

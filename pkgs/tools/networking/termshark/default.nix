@@ -26,7 +26,7 @@ buildGoModule rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://termshark.io/;
+    homepage = "https://termshark.io/";
     description = "A terminal UI for wireshark-cli, inspired by Wireshark";
     platforms = platforms.linux;
     license = licenses.mit;

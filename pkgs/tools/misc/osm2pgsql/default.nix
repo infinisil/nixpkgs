@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   meta = {
     description = "OpenStreetMap data to PostgreSQL converter";
     version = "0.92.1-unstable";
-    homepage = https://github.com/openstreetmap/osm2pgsql;
+    homepage = "https://github.com/openstreetmap/osm2pgsql";
     license = stdenv.lib.licenses.gpl2;
     platforms = stdenv.lib.platforms.linux;
   };

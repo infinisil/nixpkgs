@@ -14,7 +14,7 @@ buildGoModule rec {
   modSha256 = "0llbx2sgcx95ym2q4l3334rdj3nkgr9z5jyp8406cp3k1ixi7gdb";
 
   meta = with stdenv.lib; {
-    homepage = https://pgmetrics.io/;
+    homepage = "https://pgmetrics.io/";
     description = "Collect and display information and stats from a running PostgreSQL server";
     license = licenses.asl20;
     maintainers = [ maintainers.marsam ];

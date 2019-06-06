@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
         - Increase / Decrease the volume for a device
         - Mute or unmute a device
     '';
-    homepage = https://github.com/cdemoulins/pamixer;
+    homepage = "https://github.com/cdemoulins/pamixer";
     license = licenses.gpl3;
     platforms = platforms.linux;
   };

@@ -9,7 +9,7 @@ python27Packages.buildPythonApplication rec {
   };
 
   meta = with lib; {
-    homepage = https://github.com/quiet-oceans/motuclient-setuptools;
+    homepage = "https://github.com/quiet-oceans/motuclient-setuptools";
     description = "CLI to query oceanographic data to Motu servers";
     longDescription = ''
       Access data from (motu)[https://sourceforge.net/projects/cls-motu/] servers.

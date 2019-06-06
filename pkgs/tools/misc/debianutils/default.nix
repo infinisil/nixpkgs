@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
        The specific utilities included are: add-shell installkernel ischroot remove-shell run-parts savelog tempfile which
     '';
-    downloadPage = https://packages.debian.org/sid/debianutils;
+    downloadPage = "https://packages.debian.org/sid/debianutils";
     license = with stdenv.lib.licenses; [ gpl2Plus publicDomain smail ];
     maintainers = [];
     platforms = stdenv.lib.platforms.all;

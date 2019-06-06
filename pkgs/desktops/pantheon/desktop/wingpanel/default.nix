@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
       Wingpanel is an empty container that accepts indicators as extensions,
       including the applications menu.
     '';
-    homepage = https://github.com/elementary/wingpanel;
+    homepage = "https://github.com/elementary/wingpanel";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

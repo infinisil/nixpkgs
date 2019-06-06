@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     ++ stdenv.lib.optional stdenv.isDarwin Cocoa;
 
   meta = with stdenv.lib; {
-    homepage = http://www.itksnap.org/c3d;
+    homepage = "http://www.itksnap.org/c3d";
     description = "Medical imaging processing tool";
     maintainers = with maintainers; [ bcdarwin ];
     platforms = platforms.unix;

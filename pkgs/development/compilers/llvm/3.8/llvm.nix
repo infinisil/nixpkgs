@@ -58,7 +58,7 @@ in stdenv.mkDerivation rec {
       patch -p1 < ${
         fetchpatch {
           name = "sigaltstack.patch"; # for glibc-2.26
-          url = https://github.com/llvm-mirror/compiler-rt/commit/8a5e425a68d.diff;
+          url = "https://github.com/llvm-mirror/compiler-rt/commit/8a5e425a68d.diff";
           sha256 = "0h4y5vl74qaa7dl54b1fcyqalvlpd8zban2d1jxfkxpzyi7m8ifi";
         }
       }
@@ -109,7 +109,7 @@ in stdenv.mkDerivation rec {
 
   meta = {
     description = "Collection of modular and reusable compiler and toolchain technologies";
-    homepage    = http://llvm.org/;
+    homepage    = "http://llvm.org/";
     license     = stdenv.lib.licenses.ncsa;
     maintainers = with stdenv.lib.maintainers; [ lovek323 raskin ];
     platforms   = stdenv.lib.platforms.all;

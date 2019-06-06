@@ -49,7 +49,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Securely transfer data between computers";
-    homepage = https://github.com/warner/magic-wormhole;
+    homepage = "https://github.com/warner/magic-wormhole";
     license = licenses.mit;
     maintainers = with maintainers; [ asymmetric ];
   };

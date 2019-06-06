@@ -9,7 +9,7 @@ in stdenv.mkDerivation rec {
   version = "0.3.8-svn${recordmydesktop.rev}";
 
   src = fetchsvn {
-    url = https://recordmydesktop.svn.sourceforge.net/svnroot/recordmydesktop/trunk/qt-recordmydesktop;
+    url = "https://recordmydesktop.svn.sourceforge.net/svnroot/recordmydesktop/trunk/qt-recordmydesktop";
     inherit (recordmydesktop) rev;
     sha256 = "0vz7amrmz317sbx2cv2186d0r57as4l26xa9rpim5gbvzk20caqc";
   };
@@ -29,7 +29,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "GTK frontend for recordmydesktop";
-    homepage = http://recordmydesktop.sourceforge.net/;
+    homepage = "http://recordmydesktop.sourceforge.net/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = [ ];

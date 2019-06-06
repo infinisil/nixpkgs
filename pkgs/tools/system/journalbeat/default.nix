@@ -20,7 +20,7 @@ buildGoPackage rec {
   '';
 
   meta = with lib; {
-    homepage = https://github.com/mheese/journalbeat;
+    homepage = "https://github.com/mheese/journalbeat";
     description = "Journalbeat is a log shipper from systemd/journald to Logstash/Elasticsearch";
     license = licenses.asl20;
     maintainers = with maintainers; [ mbrgm ];

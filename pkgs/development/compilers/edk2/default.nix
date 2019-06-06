@@ -47,7 +47,7 @@ edk2 = stdenv.mkDerivation {
 
   meta = {
     description = "Intel EFI development kit";
-    homepage = https://sourceforge.net/projects/edk2/;
+    homepage = "https://sourceforge.net/projects/edk2/";
     license = stdenv.lib.licenses.bsd2;
     branch = "UDK2017";
     platforms = ["x86_64-linux" "i686-linux" "aarch64-linux"];

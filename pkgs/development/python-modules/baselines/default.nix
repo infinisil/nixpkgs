@@ -52,7 +52,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "High-quality implementations of reinforcement learning algorithms";
-    homepage = https://github.com/openai/baselines;
+    homepage = "https://github.com/openai/baselines";
     license = licenses.mit;
     maintainers = with maintainers; [ timokau ];
   };

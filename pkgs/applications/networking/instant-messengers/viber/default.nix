@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
   dontPatchELF = true;
 
   meta = {
-    homepage = http://www.viber.com;
+    homepage = "http://www.viber.com";
     description = "An instant messaging and Voice over IP (VoIP) app";
     license = stdenv.lib.licenses.unfree;
     platforms = [ "x86_64-linux" ];

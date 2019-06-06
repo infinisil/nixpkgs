@@ -63,7 +63,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Simple magic-wormhole client";
-    homepage    = https://github.com/bleakgrey/Transporter;
+    homepage    = "https://github.com/bleakgrey/Transporter";
     license     = licenses.gpl3;
     maintainers = with maintainers; [ worldofpeace ];
     platforms = platforms.linux;

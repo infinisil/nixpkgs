@@ -29,7 +29,7 @@ buildGoPackage rec {
   meta = {
     description = "OpenID Connect and OAuth2 identity provider with pluggable connectors";
     license = lib.licenses.asl20;
-    homepage = https://github.com/dexidp/dex;
+    homepage = "https://github.com/dexidp/dex";
     maintainers = with lib.maintainers; [benley];
     platforms = lib.platforms.unix;
   };

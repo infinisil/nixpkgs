@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "WWAN modem manager, part of NetworkManager";
-    homepage = https://www.freedesktop.org/wiki/Software/ModemManager/;
+    homepage = "https://www.freedesktop.org/wiki/Software/ModemManager/";
     license = licenses.gpl2Plus;
     maintainers = [ ];
     platforms = platforms.linux;

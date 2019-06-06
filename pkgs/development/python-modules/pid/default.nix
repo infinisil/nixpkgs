@@ -20,7 +20,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Pidfile featuring stale detection and file-locking";
-    homepage = https://github.com/trbs/pid/;
+    homepage = "https://github.com/trbs/pid/";
     license = licenses.asl20;
   };
 

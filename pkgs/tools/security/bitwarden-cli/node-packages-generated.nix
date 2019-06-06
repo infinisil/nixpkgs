@@ -1397,7 +1397,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A secure and free password manager for all of your devices.";
-      homepage = https://bitwarden.com/;
+      homepage = "https://bitwarden.com/";
       license = "GPL-3.0";
     };
     production = true;

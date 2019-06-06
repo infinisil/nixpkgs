@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Provides a noise source using the CPU execution timing jitter";
-    homepage = https://github.com/smuellerDD/jitterentropy-library;
+    homepage = "https://github.com/smuellerDD/jitterentropy-library";
     license = with stdenv.lib.licenses; [ gpl2 bsd3 ];
     platforms = stdenv.lib.platforms.linux;
     maintainers = with stdenv.lib.maintainers; [ johnazoidberg ];

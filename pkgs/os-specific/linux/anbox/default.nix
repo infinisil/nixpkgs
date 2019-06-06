@@ -128,7 +128,7 @@ stdenv.mkDerivation rec {
     }.${stdenv.system} or null;
 
   meta = with stdenv.lib; {
-    homepage = https://anbox.io;
+    homepage = "https://anbox.io";
     description = "Android in a box";
     license = licenses.gpl2;
     maintainers = with maintainers; [ edwtjo ];

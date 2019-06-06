@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ libva libpciaccess intel-gmmlib libX11 ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/intel/media-driver;
+    homepage = "https://github.com/intel/media-driver";
     license = with licenses; [ bsd3 mit ];
     description = "Intel Media Driver for VAAPI — Broadwell+ iGPUs";
     platforms = platforms.linux;

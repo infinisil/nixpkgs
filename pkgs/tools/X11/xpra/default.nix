@@ -79,7 +79,7 @@ in buildPythonApplication rec {
   passthru = { inherit xf86videodummy; };
 
   meta = {
-    homepage = http://xpra.org/;
+    homepage = "http://xpra.org/";
     downloadPage = "https://xpra.org/src/";
     downloadURLRegexp = "xpra-.*[.]tar[.]xz$";
     description = "Persistent remote applications for X";

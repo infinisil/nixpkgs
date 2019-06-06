@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   patches = [
     # CVE-2018-7225. Remove with the next release
     (fetchpatch {
-      url = https://salsa.debian.org/debian/libvncserver/raw/master/debian/patches/CVE-2018-7225.patch;
+      url = "https://salsa.debian.org/debian/libvncserver/raw/master/debian/patches/CVE-2018-7225.patch";
       sha256 = "1hj1lzxsrdmzzl061vg0ncdpvfmvvkrpk8q12mp70qvszcqa7ja3";
     })
   ];

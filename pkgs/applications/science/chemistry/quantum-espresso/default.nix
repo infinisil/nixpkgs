@@ -35,7 +35,7 @@ configureFlags = if (mpi != null) then [ "LD=${mpi}/bin/mpif90" ] else [ "LD=${g
         nanoscale. It is based on density-functional theory, plane waves, and
         pseudopotentials.
       '';
-    homepage = https://www.quantum-espresso.org/;
+    homepage = "https://www.quantum-espresso.org/";
     license = licenses.gpl2;
     platforms = [ "x86_64-linux" ];
     maintainers = [ maintainers.costrouc ];

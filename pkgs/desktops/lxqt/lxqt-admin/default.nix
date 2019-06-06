@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "LXQt system administration tool";
-    homepage = https://github.com/lxqt/lxqt-admin;
+    homepage = "https://github.com/lxqt/lxqt-admin";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

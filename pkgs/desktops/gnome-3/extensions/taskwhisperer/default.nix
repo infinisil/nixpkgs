@@ -37,6 +37,6 @@ stdenv.mkDerivation rec {
     description = "GNOME Shell TaskWarrior GUI";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ jonafato ];
-    homepage = https://github.com/cinatic/taskwhisperer;
+    homepage = "https://github.com/cinatic/taskwhisperer";
   };
 }

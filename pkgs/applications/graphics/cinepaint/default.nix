@@ -29,7 +29,7 @@ in stdenv.mkDerivation rec {
   NIX_LDFLAGS = "-lm -llcms -ljpeg -lpng -lX11";
 
   meta = {
-    homepage = http://www.cinepaint.org/;
+    homepage = "http://www.cinepaint.org/";
     license = stdenv.lib.licenses.free;
     description = "Image editor which supports images over 8bpp and ICC profiles";
     maintainers = with stdenv.lib.maintainers; [viric];

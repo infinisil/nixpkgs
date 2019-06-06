@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
   passthru.pkgs = builtins.throw "python-boot does not support packages, this package is only intended for bootstrapping." {};
 
   meta = {
-    homepage = http://python.org;
+    homepage = "http://python.org";
     description = "A high-level dynamically-typed programming language";
     longDescription = ''
       Python is a remarkably powerful dynamic programming language that

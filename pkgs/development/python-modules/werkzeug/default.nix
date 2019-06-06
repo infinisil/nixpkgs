@@ -26,7 +26,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://werkzeug.pocoo.org/;
+    homepage = "http://werkzeug.pocoo.org/";
     description = "A WSGI utility library for Python";
     license = licenses.bsd3;
   };

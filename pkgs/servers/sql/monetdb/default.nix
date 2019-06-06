@@ -22,7 +22,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An open source database system";
-    homepage = https://www.monetdb.org/;
+    homepage = "https://www.monetdb.org/";
     license = licenses.mpl20;
     platforms = platforms.unix;
     maintainers = [ maintainers.StillerHarpo ];

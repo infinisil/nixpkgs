@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   preConfigure = "export LIBS=-lncurses";
 
   meta = {
-    homepage = http://gopher.quux.org:70/devel/gopher;
+    homepage = "http://gopher.quux.org:70/devel/gopher";
     description = "A ncurses gopher client";
     platforms = stdenv.lib.platforms.unix;
     license = stdenv.lib.licenses.gpl2;

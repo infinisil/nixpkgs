@@ -14,7 +14,7 @@ buildGo110Package rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://maunium.net/go/gomuks/;
+    homepage = "https://maunium.net/go/gomuks/";
     description = "A terminal based Matrix client written in Go";
     license = licenses.gpl3;
     maintainers = with maintainers; [ tilpner ];

@@ -12,7 +12,7 @@ buildDunePackage rec {
   propagatedBuildInputs = [ ppx_sexp_conv sexplib ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/mirage/ocaml-ipaddr;
+    homepage = "https://github.com/mirage/ocaml-ipaddr";
     description = "A library for manipulation of IP (and MAC) address representations ";
     license = licenses.isc;
     maintainers = [ maintainers.ericbmerritt ];

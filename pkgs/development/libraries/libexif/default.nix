@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   patches = [
    (fetchpatch {
      name = "CVE-2017-7544.patch";
-     url = https://sourceforge.net/p/libexif/bugs/_discuss/thread/fc394c4b/489a/attachment/xx.pat;
+     url = "https://sourceforge.net/p/libexif/bugs/_discuss/thread/fc394c4b/489a/attachment/xx.pat";
      sha256 = "1qgk8hgnxr8d63jsc4vljxz9yg33mbml280dq4a6050rmk9wq4la";
    })
   ];
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ gettext ];
 
   meta = {
-    homepage = http://libexif.sourceforge.net/;
+    homepage = "http://libexif.sourceforge.net/";
     description = "A library to read and manipulate EXIF data in digital photographs";
     license = stdenv.lib.licenses.lgpl21;
     platforms = stdenv.lib.platforms.unix;

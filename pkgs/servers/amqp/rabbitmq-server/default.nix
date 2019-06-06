@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = http://www.rabbitmq.com/;
+    homepage = "http://www.rabbitmq.com/";
     description = "An implementation of the AMQP messaging protocol";
     license = stdenv.lib.licenses.mpl11;
     platforms = stdenv.lib.platforms.unix;

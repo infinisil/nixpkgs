@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
 	meta = {
 		description = "A DSL to organize functor applications";
-		homepage = https://github.com/mirage/functoria;
+		homepage = "https://github.com/mirage/functoria";
 		license = stdenv.lib.licenses.isc;
 		maintainers = [ stdenv.lib.maintainers.vbgl ];
 		inherit (ocaml.meta) platforms;

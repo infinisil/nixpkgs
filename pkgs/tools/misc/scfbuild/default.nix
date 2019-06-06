@@ -23,7 +23,7 @@ buildPythonApplication rec {
 
   meta = with lib; {
     description = "SVGinOT color font builder";
-    homepage = https://github.com/eosrei/scfbuild;
+    homepage = "https://github.com/eosrei/scfbuild";
     license = licenses.gpl3;
     maintainers = with maintainers; [ abbradar ];
   };

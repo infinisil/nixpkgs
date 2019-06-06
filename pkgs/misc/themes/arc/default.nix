@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A flat theme with transparent elements for GTK 3, GTK 2 and Gnome-Shell";
-    homepage    = https://github.com/NicoHood/arc-theme;
+    homepage    = "https://github.com/NicoHood/arc-theme";
     license     = licenses.gpl3;
     maintainers = with maintainers; [ simonvandel romildo ];
     platforms   = platforms.linux;

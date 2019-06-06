@@ -90,7 +90,7 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = http://sonic-pi.net/;
+    homepage = "http://sonic-pi.net/";
     description = "Free live coding synth for everyone originally designed to support computing and music lessons within schools";
     license = stdenv.lib.licenses.mit;
     maintainers = with stdenv.lib.maintainers; [ Phlogistique kamilchm ];

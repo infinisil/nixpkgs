@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = stdenv.lib.optional stdenv.cc.isClang "-Wno-error=format-security";
 
   meta = with stdenv.lib; {
-    homepage = http://doomseeker.drdteam.org/;
+    homepage = "http://doomseeker.drdteam.org/";
     description = "Multiplayer server browser for many Doom source ports";
     license = licenses.gpl2;
     platforms = platforms.unix;

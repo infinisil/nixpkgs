@@ -191,7 +191,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Realtime collaborative markdown notes on all platforms";
     license = licenses.agpl3;
-    homepage = https://github.com/hackmdio/codimd;
+    homepage = "https://github.com/hackmdio/codimd";
     maintainers = with maintainers; [ willibutz ma27 ];
     platforms = platforms.linux;
   };

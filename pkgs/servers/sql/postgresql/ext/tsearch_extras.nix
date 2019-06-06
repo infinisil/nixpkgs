@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Provides a few PostgreSQL functions for a lower-level data full text search";
-    homepage = https://github.com/zulip/tsearch_extras/;
+    homepage = "https://github.com/zulip/tsearch_extras/";
     license = licenses.postgresql;
     maintainers = with maintainers; [ DerTim1 ];
   };

@@ -163,7 +163,7 @@ in
 
     services.kubernetes.addonManager.bootstrapAddons = mkIf isRBACEnabled
     (let
-      name = system:kube-addon-manager;
+      name = "system:kube-addon-manager";
       namespace = "kube-system";
     in
     {

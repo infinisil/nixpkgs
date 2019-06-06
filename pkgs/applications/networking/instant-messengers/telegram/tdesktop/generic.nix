@@ -146,7 +146,7 @@ mkDerivation rec {
       + (if stable then "(stable version)" else "(pre-release)");
     license = licenses.gpl3;
     platforms = platforms.linux;
-    homepage = https://desktop.telegram.org/;
+    homepage = "https://desktop.telegram.org/";
     maintainers = with maintainers; [ primeos abbradar garbas ];
   };
 }

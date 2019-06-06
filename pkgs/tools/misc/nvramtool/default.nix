@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "utility for reading/writing coreboot parameters and displaying information from the coreboot table in CMOS/NVRAM";
-    homepage = https://www.coreboot.org/Nvramtool;
+    homepage = "https://www.coreboot.org/Nvramtool";
     license = licenses.gpl2;
     maintainers = [ maintainers.cryptix ];
     platforms = platforms.linux;

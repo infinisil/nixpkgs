@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     longDescription = ''
       sea-slang for gossip - a scuttlebutt is basically a watercooler on a ship.
     '';
-    homepage = https://www.scuttlebutt.nz/;
+    homepage = "https://www.scuttlebutt.nz/";
     license = licenses.agpl3;
     maintainers = with maintainers; [ thedavidmeister ];
     platforms = [ "x86_64-linux" ];

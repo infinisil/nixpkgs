@@ -115,7 +115,7 @@ stdenv.mkDerivation rec {
       daemons.
     '';
 
-    homepage = https://linux-nfs.org/;
+    homepage = "https://linux-nfs.org/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ abbradar ];

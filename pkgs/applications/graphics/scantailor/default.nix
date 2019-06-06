@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = {
-    homepage = http://scantailor.org/;
+    homepage = "http://scantailor.org/";
     description = "Interactive post-processing tool for scanned pages";
 
     license = stdenv.lib.licenses.gpl3Plus;

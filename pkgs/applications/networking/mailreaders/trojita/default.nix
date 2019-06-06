@@ -29,7 +29,7 @@ mkDerivation rec {
 
   meta = with lib; {
     description = "A Qt IMAP e-mail client";
-    homepage = http://trojita.flaska.net/;
+    homepage = "http://trojita.flaska.net/";
     license = with licenses; [ gpl2 gpl3 ];
     platforms = platforms.linux;
   };

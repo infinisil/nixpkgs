@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://www.balabit.com/network-security/syslog-ng/;
+    homepage = "https://www.balabit.com/network-security/syslog-ng/";
     description = "Next-generation syslogd with advanced networking and filtering capabilities";
     license = licenses.gpl2;
     maintainers = with maintainers; [ rickynils  fpletz ];

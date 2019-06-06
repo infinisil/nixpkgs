@@ -74,7 +74,7 @@ in stdenv.mkDerivation {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://zandronum.com/;
+    homepage = "http://zandronum.com/";
     description = "Multiplayer oriented port, based off Skulltag, for Doom and Doom II by id Software";
     maintainers = with maintainers; [ lassulus MP2E ];
     license = licenses.unfreeRedistributable;

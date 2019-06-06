@@ -82,7 +82,7 @@ in buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Computation using data flow graphs for scalable machine learning";
-    homepage = http://tensorflow.org;
+    homepage = "http://tensorflow.org";
     license = licenses.asl20;
     maintainers = with maintainers; [ jyp abbradar ];
     platforms = with platforms; linux ++ lib.optionals (!cudaSupport) darwin;

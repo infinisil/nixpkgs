@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Utilities to configure the MATE desktop";
-    homepage = https://github.com/mate-desktop/mate-control-center;
+    homepage = "https://github.com/mate-desktop/mate-control-center";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

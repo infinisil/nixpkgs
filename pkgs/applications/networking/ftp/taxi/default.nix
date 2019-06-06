@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The FTP Client that drives you anywhere";
-    homepage    = https://github.com/Alecaddd/taxi;
+    homepage    = "https://github.com/Alecaddd/taxi";
     license     = licenses.gpl3Plus;
     maintainers = with maintainers; [ worldofpeace ];
     platforms   = platforms.linux;

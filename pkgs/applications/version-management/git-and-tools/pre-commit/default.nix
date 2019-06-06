@@ -27,7 +27,7 @@ with python3Packages; buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "A framework for managing and maintaining multi-language pre-commit hooks";
-    homepage = https://pre-commit.com/;
+    homepage = "https://pre-commit.com/";
     license = licenses.mit;
     maintainers = with maintainers; [ borisbabic ];
   };

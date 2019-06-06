@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An open source re-implementation of RollerCoaster Tycoon 2 (original game required)";
-    homepage = https://openrct2.io/;
+    homepage = "https://openrct2.io/";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ geistesk ];

@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   hunspellDictionaries = with stdenv.lib; filter isDerivation (attrValues hunspellDicts);
 
   mathJaxSrc = fetchurl {
-    url = https://s3.amazonaws.com/rstudio-buildtools/mathjax-26.zip;
+    url = "https://s3.amazonaws.com/rstudio-buildtools/mathjax-26.zip";
     sha256 = "0wbcqb9rbfqqvvhqr1pbqax75wp8ydqdyhp91fbqfqp26xzjv6lk";
   };
 
@@ -118,7 +118,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib;
     { description = "Set of integrated tools for the R language";
-      homepage = https://www.rstudio.com/;
+      homepage = "https://www.rstudio.com/";
       license = licenses.agpl3;
       maintainers = with maintainers; [ ehmry changlinli ciil ];
       platforms = platforms.linux;

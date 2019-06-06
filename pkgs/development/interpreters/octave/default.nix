@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = {
-    homepage = http://octave.org/;
+    homepage = "http://octave.org/";
     license = stdenv.lib.licenses.gpl3Plus;
     maintainers = with stdenv.lib.maintainers; [raskin];
     description = "Scientific Pragramming Language";

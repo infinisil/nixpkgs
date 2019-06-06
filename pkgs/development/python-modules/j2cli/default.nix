@@ -21,7 +21,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [ jinja2 pyyaml ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/kolypto/j2cli;
+    homepage = "https://github.com/kolypto/j2cli";
     description = "Jinja2 Command-Line Tool";
     license = licenses.bsd3;
     longDescription = ''

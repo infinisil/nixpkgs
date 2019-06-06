@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
       client, and relay agent.
    '';
 
-    homepage = http://www.isc.org/products/DHCP/;
+    homepage = "http://www.isc.org/products/DHCP/";
     license = licenses.isc;
     platforms = platforms.unix;
   };

@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   patches = [
     # https://bugzilla.abisource.com/show_bug.cgi?id=13791
     (fetchurl {
-      url = https://bugzilla.abisource.com/attachment.cgi?id=5860;
+      url = "https://bugzilla.abisource.com/attachment.cgi?id=5860";
       sha256 = "02p8kz02xm1197zcpzjs010mna9hxsbq5lwgxr8b7qhh9yxja7al";
     })
   ];
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Word processing program, similar to Microsoft Word";
-    homepage = https://www.abisource.com/;
+    homepage = "https://www.abisource.com/";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ pSub ylwghst ];

@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The Debian package manager";
-    homepage = https://wiki.debian.org/Teams/Dpkg;
+    homepage = "https://wiki.debian.org/Teams/Dpkg";
     license = licenses.gpl2Plus;
     platforms = platforms.unix;
     maintainers = with maintainers; [ ];

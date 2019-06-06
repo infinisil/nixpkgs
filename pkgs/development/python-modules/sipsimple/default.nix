@@ -18,7 +18,7 @@ buildPythonPackage rec {
   disabled = isPy3k;
 
   src = fetchdarcs {
-    url = http://devel.ag-projects.com/repositories/python-sipsimple;
+    url = "http://devel.ag-projects.com/repositories/python-sipsimple";
     rev = "release-${version}";
     sha256 = "0jdilm11f5aahxrzrkxrfx9sgjgkbla1r0wayc5dzd2wmjrdjyrg";
   };
@@ -34,7 +34,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "SIP SIMPLE implementation for Python";
-    homepage = http://sipsimpleclient.org/;
+    homepage = "http://sipsimpleclient.org/";
     license = licenses.gpl3;
     maintainers = with maintainers; [ pSub ];
   };

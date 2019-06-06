@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A daemon that helps to launch applications faster";
-    homepage = https://github.com/linuxdeepin/deepin-turbo;
+    homepage = "https://github.com/linuxdeepin/deepin-turbo";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

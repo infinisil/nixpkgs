@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Core utility library for all LXQt components";
-    homepage = https://github.com/lxqt/liblxqt;
+    homepage = "https://github.com/lxqt/liblxqt";
     license = licenses.lgpl21Plus;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

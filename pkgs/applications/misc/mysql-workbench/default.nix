@@ -101,7 +101,7 @@ in stdenv.mkDerivation rec {
       and execute SQL queries.
     '';
 
-    homepage = http://wb.mysql.com/;
+    homepage = "http://wb.mysql.com/";
     license = licenses.gpl2;
     maintainers = [ maintainers.kkallio ];
     platforms = platforms.linux;

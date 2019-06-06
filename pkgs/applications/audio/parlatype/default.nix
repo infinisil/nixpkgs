@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
       It plays audio sources to transcribe them in your favourite text application.
       It’s intended to be useful for journalists, students, scientists and whoever needs to transcribe audio files.
     '';
-    homepage = https://gkarsay.github.io/parlatype/;
+    homepage = "https://gkarsay.github.io/parlatype/";
     license = licenses.gpl3Plus;
     maintainers = [ maintainers.melchips ];
     platforms = platforms.linux;

@@ -86,7 +86,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://mlterm.sourceforge.net/;
+    homepage = "http://mlterm.sourceforge.net/";
     license = licenses.bsd2;
     maintainers = with maintainers; [ vrthra ramkromberg ];
     platforms = with platforms; linux;

@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
   version = "1.2.0";
 
   src = fetchurl {
-    url = https://gforge.inria.fr/frs/download.php/file/37903/why3-1.2.0.tar.gz;
+    url = "https://gforge.inria.fr/frs/download.php/file/37903/why3-1.2.0.tar.gz";
     sha256 = "0xz001jhi71ja8vqrjz27v63bidrzj4qvg1yqarq6p4dmpxhk348";
   };
 

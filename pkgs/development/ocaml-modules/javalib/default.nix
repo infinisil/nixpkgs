@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library that parses Java .class files into OCaml data structures";
-    homepage = https://javalib-team.github.io/javalib/;
+    homepage = "https://javalib-team.github.io/javalib/";
     license = licenses.lgpl3;
     maintainers = [ maintainers.vbgl ];
     platforms = ocaml.meta.platforms or [];

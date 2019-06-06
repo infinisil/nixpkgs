@@ -35,7 +35,7 @@ buildPythonPackage rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/dask/dask-ml;
+    homepage = "https://github.com/dask/dask-ml";
     description = "Scalable Machine Learn with Dask";
     license = licenses.bsd3;
     maintainers = [ maintainers.costrouc ];

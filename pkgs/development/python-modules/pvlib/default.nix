@@ -27,7 +27,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://pvlib-python.readthedocs.io;
+    homepage = "http://pvlib-python.readthedocs.io";
     description = "Simulate the performance of photovoltaic energy systems";
     license = licenses.bsd3;
     maintainers = with maintainers; [ jluttine ];

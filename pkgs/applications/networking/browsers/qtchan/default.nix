@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchpatch {
-      url = https://github.com/siavash119/qtchan/commit/718abeee5cf4aca8c99b35b26f43909362a29ee6.patch;
+      url = "https://github.com/siavash119/qtchan/commit/718abeee5cf4aca8c99b35b26f43909362a29ee6.patch";
       sha256 = "11b72l5njvfsyapd479hp4yfvwwb1mhq3f077hwgg0waz5l7n00z";
     })
   ];

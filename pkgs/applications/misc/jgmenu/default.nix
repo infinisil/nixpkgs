@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/johanmalm/jgmenu;
+    homepage = "https://github.com/johanmalm/jgmenu";
     description = "Small X11 menu intended to be used with openbox and tint2";
     license = licenses.gpl2;
     platforms = platforms.linux;

@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
     meta = with stdenv.lib; {
         description = "All-in-one cross-platform voice and text chat for gamers";
-        homepage = https://discordapp.com/;
+        homepage = "https://discordapp.com/";
         downloadPage = "https://github.com/crmarsh/discord-linux-bugs";
         license = licenses.unfree;
         maintainers = [ maintainers.ldesgoui maintainers.MP2E ];

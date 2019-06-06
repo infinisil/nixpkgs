@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A lightweight Qt-based terminal emulator";
-    homepage = https://github.com/lxqt/qterminal;
+    homepage = "https://github.com/lxqt/qterminal";
     license = licenses.gpl2;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

@@ -31,7 +31,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "BLAS-like linear algebra library";
-    homepage = https://github.com/explosion/cython-blis;
+    homepage = "https://github.com/explosion/cython-blis";
     license = licenses.mit;
     maintainers = with maintainers; [ danieldk ];
     };

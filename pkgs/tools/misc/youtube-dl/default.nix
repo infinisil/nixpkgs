@@ -55,8 +55,8 @@ buildPythonPackage rec {
   doCheck = false;
 
   meta = with lib; {
-    homepage = https://rg3.github.io/youtube-dl/;
-    repositories.git = https://github.com/rg3/youtube-dl.git;
+    homepage = "https://rg3.github.io/youtube-dl/";
+    repositories.git = "https://github.com/rg3/youtube-dl.git";
     description = "Command-line tool to download videos from YouTube.com and other sites";
     longDescription = ''
       youtube-dl is a small, Python-based command-line program

@@ -52,7 +52,7 @@ callPackage (import ./generic.nix (rec {
   xenfiles = optionalAttrs withInternalQemu {
     "qemu-xen" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/qemu-xen.git;
+        url = "https://xenbits.xen.org/git-http/qemu-xen.git";
         rev = "refs/tags/qemu-xen-${version}";
         sha256 = "014s755slmsc7xzy7qhk9i3kbjr2grxb5yznjp71dl6xxfvnday2";
       };
@@ -88,7 +88,7 @@ callPackage (import ./generic.nix (rec {
   } // optionalAttrs withInternalTraditionalQemu {
     "qemu-xen-traditional" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/qemu-xen-traditional.git;
+        url = "https://xenbits.xen.org/git-http/qemu-xen-traditional.git";
         rev = "refs/tags/xen-${version}";
         sha256 = "0n0ycxlf1wgdjkdl8l2w1i0zzssk55dfv67x8i6b2ima01r0k93r";
       };
@@ -124,7 +124,7 @@ callPackage (import ./generic.nix (rec {
   } // optionalAttrs withInternalSeabios {
     "firmware/seabios-dir-remote" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/seabios.git;
+        url = "https://xenbits.xen.org/git-http/seabios.git";
         rev = "e51488c5f8800a52ac5c8da7a31b85cca5cc95d2";
         #rev = "rel-1.7.5";
         sha256 = "0jk54ybhmw97pzyhpm6jr2x99f702kbn0ipxv5qxcbynflgdazyb";
@@ -135,7 +135,7 @@ callPackage (import ./generic.nix (rec {
   } // optionalAttrs withInternalOVMF {
     "firmware/ovmf-dir-remote" = {
       src = fetchgit {
-        url = https://xenbits.xen.org/git-http/ovmf.git;
+        url = "https://xenbits.xen.org/git-http/ovmf.git";
         rev = "cb9a7ebabcd6b8a49dc0854b2f9592d732b5afbd";
         sha256 = "07zmdj90zjrzip74fvd4ss8n8njk6cim85s58mc6snxmqqv7gmcq";
       };
@@ -145,7 +145,7 @@ callPackage (import ./generic.nix (rec {
     # TODO: patch Xen to make this optional?
     "firmware/etherboot/ipxe.git" = {
       src = fetchgit {
-        url = https://git.ipxe.org/ipxe.git;
+        url = "https://git.ipxe.org/ipxe.git";
         rev = "9a93db3f0947484e30e753bbd61a10b17336e20e";
         sha256 = "1ga3h1b34q0cl9azj7j9nswn7mfcs3cgfjdihrm5zkp2xw2hpvr6";
       };
@@ -155,7 +155,7 @@ callPackage (import ./generic.nix (rec {
     "xen-libhvm-dir-remote" = {
       src = fetchgit {
         name = "xen-libhvm";
-        url = https://github.com/ts468/xen-libhvm;
+        url = "https://github.com/ts468/xen-libhvm";
         rev = "442dcc4f6f4e374a51e4613532468bd6b48bdf63";
         sha256 = "9ba97c39a00a54c154785716aa06691d312c99be498ebbc00dc3769968178ba8";
       };

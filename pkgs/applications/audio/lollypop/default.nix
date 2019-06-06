@@ -80,7 +80,7 @@ python3.pkgs.buildPythonApplication rec  {
 
   meta = with lib; {
     description = "A modern music player for GNOME";
-    homepage = https://wiki.gnome.org/Apps/Lollypop;
+    homepage = "https://wiki.gnome.org/Apps/Lollypop";
     license = licenses.gpl3Plus;
     changelog = "https://gitlab.gnome.org/World/lollypop/tags/${version}";
     maintainers = with maintainers; [ worldofpeace ];

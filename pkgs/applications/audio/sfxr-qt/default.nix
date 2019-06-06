@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   configurePhase = "cmake . -DCMAKE_INSTALL_PREFIX=$out";
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/agateau/sfxr-qt;
+    homepage = "https://github.com/agateau/sfxr-qt";
     description = "A sound effect generator, QtQuick port of sfxr";
     license = licenses.gpl2;
     maintainers = with maintainers; [ fgaz ];

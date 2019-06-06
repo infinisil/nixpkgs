@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
       the regular computers and GPUs most people already have.
       The Litecoin network is scheduled to produce 84 million currency units.
     '';
-    homepage = https://litecoin.org/;
+    homepage = "https://litecoin.org/";
     platforms = platforms.unix;
     license = licenses.mit;
     broken = stdenv.isDarwin;

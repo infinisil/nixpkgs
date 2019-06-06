@@ -29,7 +29,7 @@ let
 
     meta = with stdenv.lib; {
       description = "Search engine library";
-      homepage = https://xapian.org/;
+      homepage = "https://xapian.org/";
       license = licenses.gpl2Plus;
       maintainers = with maintainers; [ ];
       platforms = platforms.unix;

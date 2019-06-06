@@ -33,7 +33,7 @@ buildPythonApplication rec {
 
   patches = [
     (fetchpatch {
-      url = https://github.com/syncthing/syncthing-gtk/commit/b2535e5a9cdb31c4987ab7af37f62d58d38255b7.patch;
+      url = "https://github.com/syncthing/syncthing-gtk/commit/b2535e5a9cdb31c4987ab7af37f62d58d38255b7.patch";
       sha256 = "047v79wz2a9334gbzywlqwpacrk53s26ksvfqaddk06avv8742w7";
     })
     (substituteAll {
@@ -56,7 +56,7 @@ buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "GTK3 & python based GUI for Syncthing";
-    homepage = https://github.com/syncthing/syncthing-gtk;
+    homepage = "https://github.com/syncthing/syncthing-gtk";
     license = licenses.gpl2;
     maintainers = with maintainers; [ ];
     platforms = syncthing.meta.platforms;

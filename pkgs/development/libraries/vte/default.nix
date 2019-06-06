@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://www.gnome.org/;
+    homepage = "https://www.gnome.org/";
     description = "A library implementing a terminal emulator widget for GTK+";
     longDescription = ''
       VTE is a library (libvte) implementing a terminal emulator widget for

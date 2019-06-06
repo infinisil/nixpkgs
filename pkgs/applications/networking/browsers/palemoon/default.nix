@@ -114,7 +114,7 @@ stdenv.mkDerivation rec {
       experience, while offering full customization and a growing collection of
       extensions and themes to make the browser truly your own.
     '';
-    homepage    = https://www.palemoon.org/;
+    homepage    = "https://www.palemoon.org/";
     license     = licenses.mpl20;
     maintainers = with maintainers; [ rnhmjoj AndersonTorres ];
     platforms   = platforms.linux;

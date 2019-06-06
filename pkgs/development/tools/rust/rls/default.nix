@@ -39,7 +39,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "Rust Language Server - provides information about Rust programs to IDEs and other tools";
-    homepage = https://github.com/rust-lang/rls/;
+    homepage = "https://github.com/rust-lang/rls/";
     license = licenses.mit;
     maintainers = with maintainers; [ symphorien ];
     platforms = platforms.all;

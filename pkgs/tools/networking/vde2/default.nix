@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   hardeningDisable = [ "format" ];
 
   meta = with stdenv.lib; {
-    homepage = http://vde.sourceforge.net/;
+    homepage = "http://vde.sourceforge.net/";
     description = "Virtual Distributed Ethernet, an Ethernet compliant virtual network";
     platforms = platforms.unix;
     license = licenses.gpl2;

@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An alternative session manager ported from the original razor-session";
-    homepage = https://github.com/lxqt/lxqt-session;
+    homepage = "https://github.com/lxqt/lxqt-session";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

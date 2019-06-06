@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Dedicated AVLDrumkits LV2 Plugin";
-    homepage    = http://x42-plugins.com/x42/x42-avldrums;
+    homepage    = "http://x42-plugins.com/x42/x42-avldrums";
     license     = licenses.gpl2;
     maintainers = [ maintainers.magnetophon ];
     platforms   = [ "i686-linux" "x86_64-linux" ];

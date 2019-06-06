@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A fast, highly customizable system info script";
-    homepage = https://github.com/dylanaraps/neofetch;
+    homepage = "https://github.com/dylanaraps/neofetch";
     license = licenses.mit;
     platforms = platforms.all;
     maintainers = with maintainers; [ alibabzo konimex ];

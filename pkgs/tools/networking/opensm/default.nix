@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Infiniband subnet manager";
-    homepage = https://www.openfabrics.org/;
+    homepage = "https://www.openfabrics.org/";
     license = licenses.gpl2; # dual licensed as 2-clause BSD
     maintainers = [ maintainers.aij ];
     platforms = [ "x86_64-linux" ];

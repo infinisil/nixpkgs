@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
       speed is preserved and remain roughly the same at all settings, a
       property shared by most LZ compression algorithms, such as zlib.
     '';
-    homepage = https://facebook.github.io/zstd/;
+    homepage = "https://facebook.github.io/zstd/";
     # The licence of the CLI programme is GPLv2+, that of the library BSD-2.
     license = with licenses; [ gpl2Plus bsd2 ];
 

@@ -14,7 +14,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Logging utilities";
-    homepage = http://code.google.com/p/logutils/;
+    homepage = "http://code.google.com/p/logutils/";
     license = licenses.bsd0;
   };
 

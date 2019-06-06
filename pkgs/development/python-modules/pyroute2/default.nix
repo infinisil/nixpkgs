@@ -14,7 +14,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Python Netlink library";
-    homepage = https://github.com/svinota/pyroute2;
+    homepage = "https://github.com/svinota/pyroute2";
     license = licenses.asl20;
     maintainers = [maintainers.mic92];
     platforms = platforms.unix;

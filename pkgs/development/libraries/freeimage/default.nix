@@ -4,12 +4,12 @@ stdenv.mkDerivation {
   name = "freeimage-3.17.0";
 
   src = fetchurl {
-    url = mirror://sourceforge/freeimage/FreeImage3170.zip;
+    url = "mirror://sourceforge/freeimage/FreeImage3170.zip";
     sha256 = "12bz57asdcfsz3zr9i9nska0fb6h3z2aizy412qjqkixkginbz7v";
   };
 
   patches = let
-    patchURL = https://anonscm.debian.org/cgit/debian-science/packages/freeimage.git/plain/debian/patches;
+    patchURL = "https://anonscm.debian.org/cgit/debian-science/packages/freeimage.git/plain/debian/patches";
   in [
     (fetchurl {
       url = patchURL + "/Fix-CVE-2015-0852.patch";
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
       sha256 = "14ffgqbnwg28r6sjvm3z89zbnnm9ghbc81hdhrzxlyk3vwvd6cw3";
     })
     (fetchurl {
-      url = https://raw.githubusercontent.com/buildroot/buildroot/2018.05/package/libfreeimage/0005-Manage-powf64-with-glibc.patch;
+      url = "https://raw.githubusercontent.com/buildroot/buildroot/2018.05/package/libfreeimage/0005-Manage-powf64-with-glibc.patch";
       sha256 = "1lis479ad5cfkhqm044nk4x97wfwm3hry3bvij1w5xkndnlfppc2";
     })
   ];
@@ -65,7 +65,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "Open Source library for accessing popular graphics image file formats";
-    homepage = http://freeimage.sourceforge.net/;
+    homepage = "http://freeimage.sourceforge.net/";
     license = "GPL";
     maintainers = with stdenv.lib.maintainers; [viric];
     platforms = with stdenv.lib.platforms; unix;

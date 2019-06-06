@@ -35,7 +35,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "A Rust task runner and build tool";
-    homepage = https://github.com/sagiegurari/cargo-make;
+    homepage = "https://github.com/sagiegurari/cargo-make";
     license = licenses.asl20;
     maintainers = with maintainers; [ xrelkd ];
     platforms = platforms.all;

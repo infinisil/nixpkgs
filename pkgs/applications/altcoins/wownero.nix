@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
       signatures using different participants for the same transaction outputs.
       Unlike opposing forks.
     '';
-    homepage    = http://wownero.org/;
+    homepage    = "http://wownero.org/";
     license     = licenses.bsd3;
     platforms   = platforms.all;
     maintainers = with maintainers; [ fuwa ];

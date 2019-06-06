@@ -23,7 +23,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Parallel graph management and execution in heterogeneous computing";
-    homepage = http://www.cacr.caltech.edu/~mmckerns/pathos.htm;
+    homepage = "http://www.cacr.caltech.edu/~mmckerns/pathos.htm";
     license = licenses.bsd3;
   };
 

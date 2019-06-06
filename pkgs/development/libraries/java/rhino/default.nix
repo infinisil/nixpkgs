@@ -51,7 +51,7 @@ stdenv.mkDerivation {
          to provide scripting to end users.
       '';
 
-    homepage = http://www.mozilla.org/rhino/;
+    homepage = "http://www.mozilla.org/rhino/";
 
     license = with licenses; [ mpl11 /* or */ gpl2Plus ];
     platforms = platforms.linux ++ platforms.darwin;

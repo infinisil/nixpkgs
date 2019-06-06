@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Daemon which collects system performance statistics periodically";
-    homepage = https://collectd.org;
+    homepage = "https://collectd.org";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = with maintainers; [ bjornfor fpletz ];

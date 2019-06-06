@@ -16,7 +16,7 @@ buildGoPackage rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/bronze1man/yaml2json;
+    homepage = "https://github.com/bronze1man/yaml2json";
     description = "Convert yaml to json";
     license = with licenses; [ mit ];
     maintainers = [ maintainers.adisbladis ];

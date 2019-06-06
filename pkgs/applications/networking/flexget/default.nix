@@ -63,7 +63,7 @@ buildPythonApplication rec {
   ] ++ lib.optional (pythonOlder "3.4") pathlib;
 
   meta = with lib; {
-    homepage    = https://flexget.com/;
+    homepage    = "https://flexget.com/";
     description = "Multipurpose automation tool for content like torrents";
     license     = licenses.mit;
     maintainers = with maintainers; [ ];

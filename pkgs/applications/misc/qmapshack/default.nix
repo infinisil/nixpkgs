@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://bitbucket.org/maproom/qmapshack/wiki/Home;
+    homepage = "https://bitbucket.org/maproom/qmapshack/wiki/Home";
     description = "Plan your next outdoor trip";
     license = licenses.gpl3;
     maintainers = with maintainers; [ dotlambda ];

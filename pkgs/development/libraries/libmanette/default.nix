@@ -28,7 +28,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "A simple GObject game controller library";
-    homepage = https://wiki.gnome.org/Apps/Builder;
+    homepage = "https://wiki.gnome.org/Apps/Builder";
     license = licenses.lgpl21Plus;
     maintainers = gnome3.maintainers;
     platforms = platforms.unix;

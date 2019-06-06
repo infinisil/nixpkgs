@@ -2317,7 +2317,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Unfancy JavaScript";
-      homepage = http://coffeescript.org/;
+      homepage = "http://coffeescript.org/";
       license = "MIT";
     };
     production = true;
@@ -2770,7 +2770,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Generate Nix expressions to build NPM packages";
-      homepage = https://github.com/svanderburg/node2nix;
+      homepage = "https://github.com/svanderburg/node2nix";
       license = "MIT";
     };
     production = true;

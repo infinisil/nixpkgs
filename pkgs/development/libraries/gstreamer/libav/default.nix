@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   version = "1.14.4";
 
   meta = {
-    homepage = https://gstreamer.freedesktop.org;
+    homepage = "https://gstreamer.freedesktop.org";
     license = stdenv.lib.licenses.lgpl2Plus;
     platforms = stdenv.lib.platforms.unix;
   };

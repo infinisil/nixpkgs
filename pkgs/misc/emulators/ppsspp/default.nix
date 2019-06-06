@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = {
-    homepage = https://www.ppsspp.org/;
+    homepage = "https://www.ppsspp.org/";
     description = "A PSP emulator for Android, Windows, Mac and Linux, written in C++";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ fuuzetsu AndersonTorres ];

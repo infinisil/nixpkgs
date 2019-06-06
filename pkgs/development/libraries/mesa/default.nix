@@ -308,7 +308,7 @@ let self = stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "An open source implementation of OpenGL";
-    homepage = https://www.mesa3d.org/;
+    homepage = "https://www.mesa3d.org/";
     license = licenses.mit; # X11 variant, in most files
     platforms = platforms.linux ++ platforms.darwin;
     maintainers = with maintainers; [ vcunat ];

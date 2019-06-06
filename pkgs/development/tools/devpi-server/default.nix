@@ -26,7 +26,7 @@ pythonPackages.buildPythonApplication rec {
   '';
 
   meta = with stdenv.lib;{
-    homepage = http://doc.devpi.net;
+    homepage = "http://doc.devpi.net";
     description = "Github-style pypi index server and packaging meta tool";
     license = licenses.mit;
     maintainers = with maintainers; [ makefu ];

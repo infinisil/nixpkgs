@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The simplest way to keep notes";
-    homepage = https://github.com/Automattic/simplenote-electron;
+    homepage = "https://github.com/Automattic/simplenote-electron";
     license = licenses.lgpl2;
     platforms = [ "x86_64-linux" ];
   };

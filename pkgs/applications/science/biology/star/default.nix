@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   
   meta = with stdenv.lib; {
     description = "Spliced Transcripts Alignment to a Reference";
-    homepage = https://github.com/alexdobin/STAR;
+    homepage = "https://github.com/alexdobin/STAR";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = [ maintainers.arcadio ];

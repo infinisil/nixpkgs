@@ -22,7 +22,7 @@ buildPythonPackage rec {
   meta = with stdenv.lib; {
     description = "A framework for writing webhooks for GitHub";
     license = licenses.mit;
-    homepage = https://github.com/bloomberg/python-github-webhook;
+    homepage = "https://github.com/bloomberg/python-github-webhook";
   };
 
 }

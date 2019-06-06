@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     # Tests access the helper using relative path
     # https://github.com/ostreedev/ostree/issues/1593
     (fetchpatch {
-      url = https://github.com/ostreedev/ostree/pull/1633.patch;
+      url = "https://github.com/ostreedev/ostree/pull/1633.patch";
       sha256 = "07xiw1dr7j4yw3w92qhw37f9crlglibflcqj2kf0v5gfrl9i6g4j";
     })
   ];
@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Git for operating system binaries";
-    homepage = https://ostree.readthedocs.io/en/latest/;
+    homepage = "https://ostree.readthedocs.io/en/latest/";
     license = licenses.lgpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ copumpkin ];

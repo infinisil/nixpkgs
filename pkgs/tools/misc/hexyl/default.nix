@@ -21,7 +21,7 @@ rustPlatform.buildRustPackage rec {
       printable ASCII characters, ASCII whitespace characters, other ASCII
       characters and non-ASCII).
     '';
-    homepage    = https://github.com/sharkdp/hexyl;
+    homepage    = "https://github.com/sharkdp/hexyl";
     license     = with licenses; [ asl20 /* or */ mit ];
     maintainers = with maintainers; [ dywedir ];
     platforms   = platforms.linux ++ platforms.darwin;

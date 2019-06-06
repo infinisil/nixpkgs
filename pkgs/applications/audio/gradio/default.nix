@@ -62,7 +62,7 @@ in stdenv.mkDerivation rec {
   patches = [ ./0001-Remove-post-install-script-that-hardcodes-paths.patch ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/haecker-felix/gradio;
+    homepage = "https://github.com/haecker-felix/gradio";
     description = "A GTK3 app for finding and listening to internet radio stations";
     license = licenses.gpl3;
     platforms = platforms.linux;

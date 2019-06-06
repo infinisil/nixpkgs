@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
            Brother HL-L2300D
            Brother MFC-7360N
       '';
-    homepage = https://github.com/pdewacht/brlaser;
+    homepage = "https://github.com/pdewacht/brlaser";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ StijnDW ];

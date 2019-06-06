@@ -34,7 +34,7 @@ in stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A very fast network logon cracker which support many different services";
     license = licenses.agpl3;
-    homepage = https://www.thc.org/thc-hydra/;
+    homepage = "https://www.thc.org/thc-hydra/";
     maintainers = with maintainers; [offline];
     platforms = platforms.linux;
   };

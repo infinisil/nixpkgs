@@ -39,7 +39,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Keeps your pinned dependencies fresh";
-    homepage = https://github.com/jazzband/pip-tools/;
+    homepage = "https://github.com/jazzband/pip-tools/";
     license = licenses.bsd3;
     maintainers = with maintainers; [ zimbatm ];
   };

@@ -691,14 +691,14 @@ self: super: {
   # This has been committed upstream, but there is, as of yet, no new release.
   # Also, disable the test suite to avoid https://github.com/haskell-crypto/cryptonite/issues/260.
   cryptonite = appendPatch (dontCheck super.cryptonite) (pkgs.fetchpatch {
-    url = https://github.com/haskell-crypto/cryptonite/commit/4622e5fc8ece82f4cf31358e31cd02cf020e558e.patch;
+    url = "https://github.com/haskell-crypto/cryptonite/commit/4622e5fc8ece82f4cf31358e31cd02cf020e558e.patch";
     sha256 = "1m2d47ni4jbrpvxry50imj91qahr3r7zkqm157clrzlmw6gzpgnq";
   });
 
   # Djinn's last release was 2014, incompatible with Semigroup-Monoid Proposal
   # https://github.com/augustss/djinn/pull/8
   djinn = appendPatch super.djinn (pkgs.fetchpatch {
-    url = https://github.com/augustss/djinn/commit/6cb9433a137fb6b5194afe41d616bd8b62b95630.patch;
+    url = "https://github.com/augustss/djinn/commit/6cb9433a137fb6b5194afe41d616bd8b62b95630.patch";
     sha256 = "0s021y5nzrh74gfp8xpxpxm11ivzfs3jwg6mkrlyry3iy584xqil";
   });
 
@@ -1150,7 +1150,7 @@ self: super: {
 
   # https://github.com/adinapoli/mandrill/pull/52
   mandrill = appendPatch super.mandrill (pkgs.fetchpatch {
-    url = https://github.com/adinapoli/mandrill/commit/30356d9dfc025a5f35a156b17685241fc3882c55.patch;
+    url = "https://github.com/adinapoli/mandrill/commit/30356d9dfc025a5f35a156b17685241fc3882c55.patch";
     sha256 = "1qair09xs6vln3vsjz7sy4hhv037146zak4mq3iv6kdhmp606hqv";
   });
 

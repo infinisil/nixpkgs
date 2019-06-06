@@ -19,7 +19,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Bash tab completion for argparse";
-    homepage = https://argcomplete.readthedocs.io;
+    homepage = "https://argcomplete.readthedocs.io";
     maintainers = [ maintainers.womfoo ];
     license = [ licenses.asl20 ];
   };

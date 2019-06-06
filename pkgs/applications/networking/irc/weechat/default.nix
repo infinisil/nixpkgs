@@ -38,7 +38,7 @@ let
 
       patches = [
         (fetchpatch {
-          url = https://github.com/weechat/weechat/commit/6a9937f08ad2c14aeb0a847ffb99e652d47d8251.patch;
+          url = "https://github.com/weechat/weechat/commit/6a9937f08ad2c14aeb0a847ffb99e652d47d8251.patch";
           sha256 = "1blhgxwqs65dvpw3ppxszxrsg02rx7qck1w71h61ljinyjzri3bp";
           excludes = [ "ChangeLog.adoc" ];
         })
@@ -77,7 +77,7 @@ let
       '';
 
       meta = {
-        homepage = http://www.weechat.org/;
+        homepage = "http://www.weechat.org/";
         description = "A fast, light and extensible chat client";
         longDescription = ''
           You can find more documentation as to how to customize this package

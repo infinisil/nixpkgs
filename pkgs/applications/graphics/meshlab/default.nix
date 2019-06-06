@@ -61,7 +61,7 @@ in stdenv.mkDerivation {
 
   meta = {
     description = "A system for processing and editing 3D triangular meshes.";
-    homepage = http://www.meshlab.net/;
+    homepage = "http://www.meshlab.net/";
     license = stdenv.lib.licenses.gpl3;
     maintainers = with stdenv.lib.maintainers; [viric];
     platforms = with stdenv.lib.platforms; linux;

@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Deepin movie player";
-    homepage = https://github.com/linuxdeepin/deepin-movie-reborn;
+    homepage = "https://github.com/linuxdeepin/deepin-movie-reborn";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

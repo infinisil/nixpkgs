@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     ++ optional stdenv.isDarwin gtk-mac-integration;
 
   meta = {
-    homepage = https://pwmt.org/projects/zathura/;
+    homepage = "https://pwmt.org/projects/zathura/";
     description = "A core component for zathura PDF viewer";
     license = licenses.zlib;
     platforms = platforms.unix;

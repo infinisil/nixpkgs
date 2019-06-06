@@ -35,7 +35,7 @@ in rec {
 
         meta = with stdenv.lib; {
           description = "Service monitoring system and time series database";
-          homepage = https://prometheus.io;
+          homepage = "https://prometheus.io";
           license = licenses.asl20;
           maintainers = with maintainers; [ benley fpletz ];
           platforms = platforms.unix;

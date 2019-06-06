@@ -32,7 +32,7 @@ buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "A collection of more than 1000 solitaire card games";
-    homepage = http://pysolfc.sourceforge.net/;
+    homepage = "http://pysolfc.sourceforge.net/";
     license = licenses.gpl3;
     maintainers = with maintainers; [ kierdavis ];
   };

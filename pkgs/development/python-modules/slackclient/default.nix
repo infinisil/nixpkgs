@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "A client for Slack, which supports the Slack Web API and Real Time Messaging (RTM) API";
-    homepage = https://github.com/slackapi/python-slackclient;
+    homepage = "https://github.com/slackapi/python-slackclient";
     license = licenses.mit;
     maintainers = with maintainers; [ psyanticy ];
   };

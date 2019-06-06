@@ -16,7 +16,7 @@ buildPythonPackage rec {
   doCheck = false;
 
   meta = with lib;{
-    homepage = http://pygments.org;
+    homepage = "http://pygments.org";
     description = "pygments packaged static files for python";
     license = licenses.mit;
     maintainers = with maintainers; [ makefu ];

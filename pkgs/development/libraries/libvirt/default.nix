@@ -27,7 +27,7 @@ in stdenv.mkDerivation rec {
       }
     else
       fetchgit {
-        url = git://libvirt.org/libvirt.git;
+        url = "git://libvirt.org/libvirt.git";
         rev = "v${version}";
         sha256 = "0dlpv3v6jpbmgvhpn29ryp0w2a1xny8ciqid8hnlf3klahz9kwz9";
         fetchSubmodules = true;
@@ -123,8 +123,8 @@ in stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = "-fno-stack-protector";
 
   meta = {
-    homepage = http://libvirt.org/;
-    repositories.git = git://libvirt.org/libvirt.git;
+    homepage = "http://libvirt.org/";
+    repositories.git = "git://libvirt.org/libvirt.git";
     description = ''
       A toolkit to interact with the virtualization capabilities of recent
       versions of Linux (and other OSes)

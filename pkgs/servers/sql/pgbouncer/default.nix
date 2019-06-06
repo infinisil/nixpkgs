@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ libevent openssl ];
 
   meta = with stdenv.lib; {
-    homepage = https://pgbouncer.github.io;
+    homepage = "https://pgbouncer.github.io";
     description = "Lightweight connection pooler for PostgreSQL";
     license = licenses.isc;
     platforms = platforms.linux;

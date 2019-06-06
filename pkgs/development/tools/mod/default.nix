@@ -21,7 +21,7 @@ buildGoModule rec {
       Command line tool to upgrade/downgrade Semantic Import Versioning in Go
       Modules.
       '';
-    homepage = https://github.com/marwan-at-work/mod;
+    homepage = "https://github.com/marwan-at-work/mod";
     license = licenses.mit;
     maintainers = with maintainers; [ kalbasit ];
     platforms = platforms.linux ++ platforms.darwin;

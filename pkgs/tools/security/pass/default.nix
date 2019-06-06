@@ -118,7 +118,7 @@ let
 
     meta = with stdenv.lib; {
       description = "Stores, retrieves, generates, and synchronizes passwords securely";
-      homepage    = https://www.passwordstore.org/;
+      homepage    = "https://www.passwordstore.org/";
       license     = licenses.gpl2Plus;
       maintainers = with maintainers; [ lovek323 the-kenny fpletz tadfisher ];
       platforms   = platforms.unix;

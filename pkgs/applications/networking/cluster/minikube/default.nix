@@ -65,7 +65,7 @@ in buildGoPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage    = https://github.com/kubernetes/minikube;
+    homepage    = "https://github.com/kubernetes/minikube";
     description = "A tool that makes it easy to run Kubernetes locally";
     license     = licenses.asl20;
     maintainers = with maintainers; [ ebzzry copumpkin vdemeester ];

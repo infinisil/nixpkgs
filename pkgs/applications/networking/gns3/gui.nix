@@ -31,7 +31,7 @@ in pythonPackages.buildPythonPackage rec {
       requires access to a local or remote GNS3 server (it's recommended to
       download the official GNS3 VM).
     '';
-    homepage = https://www.gns3.com/;
+    homepage = "https://www.gns3.com/";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ primeos ];

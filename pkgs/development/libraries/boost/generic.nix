@@ -110,7 +110,7 @@ stdenv.mkDerivation {
     else ./darwin-no-system-python.patch);
 
   meta = {
-    homepage = http://boost.org/;
+    homepage = "http://boost.org/";
     description = "Collection of C++ libraries";
     license = stdenv.lib.licenses.boost;
 

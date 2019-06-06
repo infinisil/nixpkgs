@@ -69,7 +69,7 @@ in python.pkgs.buildPythonPackage {
       Qemu/KVM. Clients like the GNS3 GUI control the server using a HTTP REST
       API.
     '';
-    homepage = https://www.gns3.com/;
+    homepage = "https://www.gns3.com/";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ primeos ];

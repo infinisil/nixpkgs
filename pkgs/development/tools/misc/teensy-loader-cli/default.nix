@@ -19,7 +19,7 @@ stdenv.mkDerivation {
   meta = with stdenv.lib; {
     license = licenses.gpl3;
     description = "Firmware uploader for the Teensy microcontroller boards";
-    homepage = https://www.pjrc.com/teensy/;
+    homepage = "https://www.pjrc.com/teensy/";
     maintainers = with maintainers; [ the-kenny ];
     platforms = platforms.unix;
   };

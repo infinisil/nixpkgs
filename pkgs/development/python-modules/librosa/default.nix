@@ -26,7 +26,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Python module for audio and music processing";
-    homepage = http://librosa.github.io/;
+    homepage = "http://librosa.github.io/";
     license = licenses.isc;
   };
 

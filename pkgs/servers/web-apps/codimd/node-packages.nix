@@ -12249,7 +12249,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Babel command line.";
-      homepage = https://babeljs.io/;
+      homepage = "https://babeljs.io/";
       license = "MIT";
     };
     production = true;
@@ -12321,7 +12321,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Babel compiler core.";
-      homepage = https://babeljs.io/;
+      homepage = "https://babeljs.io/";
       license = "MIT";
     };
     production = true;
@@ -12355,7 +12355,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "babel module loader for webpack";
-      homepage = https://github.com/babel/babel-loader;
+      homepage = "https://github.com/babel/babel-loader";
       license = "MIT";
     };
     production = true;
@@ -12404,7 +12404,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Provides polyfills necessary for a full ES2015+ environment";
-      homepage = https://babeljs.io/;
+      homepage = "https://babeljs.io/";
       license = "MIT";
     };
     production = true;
@@ -12489,7 +12489,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Babel preset for all es2015 plugins.";
-      homepage = https://babeljs.io/;
+      homepage = "https://babeljs.io/";
       license = "MIT";
     };
     production = true;
@@ -12615,7 +12615,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Copy files && directories with webpack";
-      homepage = https://github.com/webpack-contrib/copy-webpack-plugin;
+      homepage = "https://github.com/webpack-contrib/copy-webpack-plugin";
       license = "MIT";
     };
     production = true;
@@ -12905,7 +12905,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "EJS (Underscore/LoDash Templates) loader for webpack";
-      homepage = https://github.com/difelice/ejs-loader;
+      homepage = "https://github.com/difelice/ejs-loader";
       license = "MIT";
     };
     production = true;
@@ -12965,7 +12965,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "expose loader module for webpack";
-      homepage = https://github.com/webpack-contrib/expose-loader;
+      homepage = "https://github.com/webpack-contrib/expose-loader";
       license = "MIT";
     };
     production = true;
@@ -12994,7 +12994,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Extract text from bundle into a file.";
-      homepage = http://github.com/webpack/extract-text-webpack-plugin;
+      homepage = "http://github.com/webpack/extract-text-webpack-plugin";
       license = "MIT";
     };
     production = true;
@@ -13019,7 +13019,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "file loader module for webpack";
-      homepage = https://github.com/webpack/file-loader;
+      homepage = "https://github.com/webpack/file-loader";
       license = "MIT";
     };
     production = true;
@@ -13084,7 +13084,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Simplifies creation of HTML files to serve your webpack bundles";
-      homepage = https://github.com/jantimon/html-webpack-plugin;
+      homepage = "https://github.com/jantimon/html-webpack-plugin";
       license = "MIT";
     };
     production = true;
@@ -13155,7 +13155,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Validate JSON";
-      homepage = http://zaach.github.com/jsonlint/;
+      homepage = "http://zaach.github.com/jsonlint/";
     };
     production = true;
     bypassCache = true;
@@ -13255,7 +13255,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Leaner CSS";
-      homepage = http://lesscss.org/;
+      homepage = "http://lesscss.org/";
       license = "Apache-2.0";
     };
     production = true;
@@ -13400,7 +13400,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A Webpack plugin to optimize \\ minimize CSS assets.";
-      homepage = http://github.com/NMFR/optimize-css-assets-webpack-plugin;
+      homepage = "http://github.com/NMFR/optimize-css-assets-webpack-plugin";
       license = "MIT";
     };
     production = true;
@@ -13421,7 +13421,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "script loader module for webpack";
-      homepage = https://github.com/webpack/script-loader;
+      homepage = "https://github.com/webpack/script-loader";
       license = "MIT";
     };
     production = true;
@@ -13626,7 +13626,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "JavaScript Standard Style";
-      homepage = http://standardjs.com/;
+      homepage = "http://standardjs.com/";
       license = "MIT";
     };
     production = true;
@@ -14133,7 +14133,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Packs CommonJs/AMD modules for the browser. Allows to split your codebase into multiple bundles, which can be loaded on demand. Support loaders to preprocess files, i.e. json, jade, coffee, css, less, ... and your custom stuff.";
-      homepage = https://github.com/webpack/webpack;
+      homepage = "https://github.com/webpack/webpack";
       license = "MIT";
     };
     production = true;
@@ -14266,7 +14266,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "a streaming interface for archive generation";
-      homepage = https://github.com/archiverjs/node-archiver;
+      homepage = "https://github.com/archiverjs/node-archiver";
       license = "MIT";
     };
     production = true;
@@ -14287,7 +14287,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Higher-order functions and common patterns for asynchronous code";
-      homepage = https://caolan.github.io/async/;
+      homepage = "https://caolan.github.io/async/";
       license = "MIT";
     };
     production = true;
@@ -14320,7 +14320,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "AWS SDK for JavaScript";
-      homepage = https://github.com/aws/aws-sdk-js;
+      homepage = "https://github.com/aws/aws-sdk-js";
       license = "Apache-2.0";
     };
     production = true;
@@ -14425,7 +14425,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Microsoft Azure Storage Client Library for Node.js";
-      homepage = http://github.com/Azure/azure-storage-node;
+      homepage = "http://github.com/Azure/azure-storage-node";
       license = "Apache-2.0";
     };
     production = true;
@@ -14443,7 +14443,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "JavaScript MD5 implementation. Compatible with server-side environments like Node.js, module loaders like RequireJS, Browserify or webpack and all web browsers.";
-      homepage = https://github.com/blueimp/JavaScript-MD5;
+      homepage = "https://github.com/blueimp/JavaScript-MD5";
       license = "MIT";
     };
     production = true;
@@ -14502,7 +14502,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The most popular front-end framework for developing responsive, mobile first projects on the web.";
-      homepage = https://getbootstrap.com/;
+      homepage = "https://getbootstrap.com/";
       license = "MIT";
     };
     production = true;
@@ -14537,7 +14537,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Chance - Utility library to generate anything random";
-      homepage = http://chancejs.com/;
+      homepage = "http://chancejs.com/";
       license = "MIT";
     };
     production = true;
@@ -15060,7 +15060,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Full-featured in-browser code editor";
-      homepage = https://codemirror.net/;
+      homepage = "https://codemirror.net/";
       license = "MIT";
     };
     production = true;
@@ -15130,7 +15130,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Session store for connect-session using sequelize";
-      homepage = https://github.com/mweibel/connect-session-sequelize;
+      homepage = "https://github.com/mweibel/connect-session-sequelize";
       license = "MIT";
     };
     production = true;
@@ -15148,7 +15148,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "HTTP server cookie parsing and serialization";
-      homepage = https://github.com/jshttp/cookie;
+      homepage = "https://github.com/jshttp/cookie";
       license = "MIT";
     };
     production = true;
@@ -15170,7 +15170,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "cookie parsing with signatures";
-      homepage = https://github.com/expressjs/cookie-parser;
+      homepage = "https://github.com/expressjs/cookie-parser";
       license = "MIT";
     };
     production = true;
@@ -15188,7 +15188,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "recursively Object.freeze() objects and functions";
-      homepage = https://github.com/substack/deep-freeze;
+      homepage = "https://github.com/substack/deep-freeze";
       license = "public domain";
     };
     production = true;
@@ -15224,7 +15224,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Embedded JavaScript templates";
-      homepage = https://github.com/mde/ejs;
+      homepage = "https://github.com/mde/ejs";
       license = "Apache-2.0";
     };
     production = true;
@@ -15314,7 +15314,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Fast, unopinionated, minimalist web framework";
-      homepage = http://expressjs.com/;
+      homepage = "http://expressjs.com/";
       license = "MIT";
     };
     production = true;
@@ -15384,7 +15384,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "[![JS.ORG](https://img.shields.io/badge/js.org-flowchart-ffb400.svg?style=flat-square)](http://js.org)";
-      homepage = http://flowchart.js.org/;
+      homepage = "http://flowchart.js.org/";
       license = "MIT";
     };
     production = true;
@@ -15402,7 +15402,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The iconic font and CSS framework";
-      homepage = http://fontawesome.io/;
+      homepage = "http://fontawesome.io/";
       license = "(OFL-1.1 AND MIT)";
     };
     production = true;
@@ -15420,7 +15420,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A node.js module for parsing form data, especially file uploads.";
-      homepage = https://github.com/felixge/node-formidable;
+      homepage = "https://github.com/felixge/node-formidable";
       license = "MIT";
     };
     production = true;
@@ -15483,7 +15483,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Handlebars provides the power necessary to let you build semantic templates effectively with no frustration";
-      homepage = http://www.handlebarsjs.com/;
+      homepage = "http://www.handlebarsjs.com/";
       license = "MIT";
     };
     production = true;
@@ -15522,7 +15522,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "help secure Express/Connect apps with various HTTP headers";
-      homepage = https://helmetjs.github.io/;
+      homepage = "https://helmetjs.github.io/";
       license = "MIT";
     };
     production = true;
@@ -15540,7 +15540,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Syntax highlighting with language autodetection.";
-      homepage = https://highlightjs.org/;
+      homepage = "https://highlightjs.org/";
       license = "BSD-3-Clause";
     };
     production = true;
@@ -15618,7 +15618,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "lightweight translation module with dynamic json storage";
-      homepage = http://github.com/mashpie/i18n-node;
+      homepage = "http://github.com/mashpie/i18n-node";
       license = "MIT";
     };
     production = true;
@@ -15706,7 +15706,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Upload images to imgur.com";
-      homepage = https://github.com/kaimallea/node-imgur;
+      homepage = "https://github.com/kaimallea/node-imgur";
       license = "MIT";
     };
     production = true;
@@ -15742,7 +15742,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "JavaScript library for DOM operations";
-      homepage = https://jquery.com/;
+      homepage = "https://jquery.com/";
       license = "MIT";
     };
     production = true;
@@ -15760,7 +15760,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A jQuery plugin that adds cross-browser mouse wheel support.";
-      homepage = https://github.com/jquery/jquery-mousewheel;
+      homepage = "https://github.com/jquery/jquery-mousewheel";
     };
     production = true;
     bypassCache = true;
@@ -15777,7 +15777,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.";
-      homepage = http://jqueryui.com/;
+      homepage = "http://jqueryui.com/";
       license = "MIT";
     };
     production = true;
@@ -15922,7 +15922,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A simple, lightweight url parser for JavaScript (~1.7 Kb minified, ~0.7Kb gzipped).";
-      homepage = https://github.com/WillZWL/;
+      homepage = "https://github.com/WillZWL/";
       license = "MIT";
     };
     production = true;
@@ -15945,7 +15945,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "YAML 1.2 parser and serializer";
-      homepage = https://github.com/nodeca/js-yaml;
+      homepage = "https://github.com/nodeca/js-yaml";
       license = "MIT";
     };
     production = true;
@@ -16054,7 +16054,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "library for defining and dispatching keyboard shortcuts";
-      homepage = https://github.com/madrobby/keymaster;
+      homepage = "https://github.com/madrobby/keymaster";
     };
     production = true;
     bypassCache = true;
@@ -16074,7 +16074,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The perfect library for lists. Supports search, sort, filters and flexibility. Built to be invisible and work on existing HTML";
-      homepage = http://listjs.com/;
+      homepage = "http://listjs.com/";
       license = "MIT";
     };
     production = true;
@@ -16092,7 +16092,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Lodash modular utilities.";
-      homepage = https://lodash.com/;
+      homepage = "https://lodash.com/";
       license = "MIT";
     };
     production = true;
@@ -16110,7 +16110,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "LZ-based compression algorithm";
-      homepage = http://pieroxy.net/blog/pages/lz-string/index.html;
+      homepage = "http://pieroxy.net/blog/pages/lz-string/index.html";
       license = "WTFPL";
     };
     production = true;
@@ -16154,7 +16154,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "<abbr> tag for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-abbr;
+      homepage = "https://github.com/markdown-it/markdown-it-abbr";
       license = "MIT";
     };
     production = true;
@@ -16190,7 +16190,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "<dl> tag for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-deflist;
+      homepage = "https://github.com/markdown-it/markdown-it-deflist";
       license = "MIT";
     };
     production = true;
@@ -16208,7 +16208,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Emoji plugin for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-emoji;
+      homepage = "https://github.com/markdown-it/markdown-it-emoji";
       license = "MIT";
     };
     production = true;
@@ -16244,7 +16244,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Markdown-it plugin to specify image size";
-      homepage = https://github.com/tatsy/markdown-it-imsize;
+      homepage = "https://github.com/tatsy/markdown-it-imsize";
       license = "MIT";
     };
     production = true;
@@ -16262,7 +16262,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "<ins> tag for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-ins;
+      homepage = "https://github.com/markdown-it/markdown-it-ins";
       license = "MIT";
     };
     production = true;
@@ -16280,7 +16280,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "<mark> tag for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-mark;
+      homepage = "https://github.com/markdown-it/markdown-it-mark";
       license = "MIT";
     };
     production = true;
@@ -16316,7 +16316,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "plugin that makes regexp replacement simple";
-      homepage = https://github.com/rlidwka/markdown-it-regexp;
+      homepage = "https://github.com/rlidwka/markdown-it-regexp";
       license = "MIT";
     };
     production = true;
@@ -16334,7 +16334,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "<sub> tag for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-sub;
+      homepage = "https://github.com/markdown-it/markdown-it-sub";
       license = "MIT";
     };
     production = true;
@@ -16352,7 +16352,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "<sup> tag for markdown-it markdown parser.";
-      homepage = https://github.com/markdown-it/markdown-it-sup;
+      homepage = "https://github.com/markdown-it/markdown-it-sup";
       license = "MIT";
     };
     production = true;
@@ -16471,7 +16471,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Markdown to PDF converter";
-      homepage = https://github.com/alanshaw/markdown-pdf;
+      homepage = "https://github.com/alanshaw/markdown-pdf";
       license = "MIT";
     };
     production = true;
@@ -16559,7 +16559,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Javascript library for interacting with the Mattermost API";
-      homepage = https://www.mattermost.org/;
+      homepage = "https://www.mattermost.org/";
       license = "Apache-2.0";
     };
     production = true;
@@ -16627,7 +16627,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "parse argument options";
-      homepage = https://github.com/substack/minimist;
+      homepage = "https://github.com/substack/minimist";
       license = "MIT";
     };
     production = true;
@@ -16702,7 +16702,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Parse, validate, manipulate, and display dates";
-      homepage = http://momentjs.com/;
+      homepage = "http://momentjs.com/";
       license = "MIT";
     };
     production = true;
@@ -16778,7 +16778,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Rigorous implementation of RFC4122 (v1 and v4) UUIDs.";
-      homepage = https://github.com/broofa/node-uuid;
+      homepage = "https://github.com/broofa/node-uuid";
     };
     production = true;
     bypassCache = true;
@@ -16795,7 +16795,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A scalable set of icons handcrafted with <3 by GitHub.";
-      homepage = https://octicons.github.com/;
+      homepage = "https://octicons.github.com/";
       license = "(OFL-1.1 OR MIT)";
     };
     production = true;
@@ -16817,7 +16817,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Simple, unobtrusive authentication for Node.js.";
-      homepage = http://passportjs.org/;
+      homepage = "http://passportjs.org/";
       license = "MIT";
     };
     production = true;
@@ -17208,7 +17208,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "PostgreSQL client - pure javascript & libpq with the same API";
-      homepage = http://github.com/brianc/node-postgres;
+      homepage = "http://github.com/brianc/node-postgres";
       license = "MIT";
     };
     production = true;
@@ -17229,7 +17229,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "An module for serializing and deserializing JSON data in to hstore format";
-      homepage = https://github.com/scarney81/pg-hstore;
+      homepage = "https://github.com/scarney81/pg-hstore";
     };
     production = true;
     bypassCache = true;
@@ -17271,7 +17271,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A tiny script for generating attractive random colors";
-      homepage = https://randomcolor.lllllllllllllllll.com/;
+      homepage = "https://randomcolor.lllllllllllllllll.com/";
       license = "CC0";
     };
     production = true;
@@ -17293,7 +17293,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "JavaScript Vector Library";
-      homepage = http://dmitrybaranovskiy.github.io/raphael/;
+      homepage = "http://dmitrybaranovskiy.github.io/raphael/";
       license = "MIT";
     };
     production = true;
@@ -17311,7 +17311,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Synchronous Readline for interactively running to have a conversation with the user via a console(TTY).";
-      homepage = https://github.com/anseki/readline-sync;
+      homepage = "https://github.com/anseki/readline-sync";
       license = "MIT";
     };
     production = true;
@@ -17399,7 +17399,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The HTML Presentation Framework";
-      homepage = http://revealjs.com/;
+      homepage = "http://revealjs.com/";
       license = "MIT";
     };
     production = true;
@@ -17420,7 +17420,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The scrypt crypto library for NodeJS";
-      homepage = https://github.com/barrysteyn/node-scrypt;
+      homepage = "https://github.com/barrysteyn/node-scrypt";
       license = "zlib";
     };
     production = true;
@@ -17438,7 +17438,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Browserify-ed version of Select2.";
-      homepage = http://ivaynberg.github.io/select2;
+      homepage = "http://ivaynberg.github.io/select2";
     };
     production = true;
     bypassCache = true;
@@ -18105,7 +18105,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "The Sequelize CLI";
-      homepage = https://github.com/sequelize/cli;
+      homepage = "https://github.com/sequelize/cli";
       license = "MIT";
     };
     production = true;
@@ -18123,7 +18123,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Amazingly short non-sequential url-friendly unique id generator.";
-      homepage = https://github.com/dylang/shortid;
+      homepage = "https://github.com/dylang/shortid";
       license = "MIT";
     };
     production = true;
@@ -18407,7 +18407,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Asynchronous, non-blocking SQLite3 bindings";
-      homepage = http://github.com/mapbox/node-sqlite3;
+      homepage = "http://github.com/mapbox/node-sqlite3";
       license = "BSD-3-Clause";
     };
     production = true;
@@ -18443,7 +18443,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "string contains methods that aren't included in the vanilla JavaScript string such as escaping html, decoding html entities, stripping tags, etc.";
-      homepage = http://stringjs.com/;
+      homepage = "http://stringjs.com/";
       license = "MIT";
     };
     production = true;
@@ -18481,7 +18481,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A TDS driver, for connecting to MS SQLServer databases.";
-      homepage = https://github.com/tediousjs/tedious;
+      homepage = "https://github.com/tediousjs/tedious";
       license = "MIT";
     };
     production = true;
@@ -18609,7 +18609,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Don't fall over when your Node.JS server is too busy. Now without native dependencies!";
-      homepage = https://github.com/STRML/node-toobusy;
+      homepage = "https://github.com/STRML/node-toobusy";
       license = "WTFPL";
     };
     production = true;
@@ -18645,7 +18645,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Tiny WebSockets";
-      homepage = https://github.com/uWebSockets/uWebSockets;
+      homepage = "https://github.com/uWebSockets/uWebSockets";
       license = "Zlib";
     };
     production = true;
@@ -18663,7 +18663,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "String validation and sanitization";
-      homepage = https://github.com/chriso/validator.js;
+      homepage = "https://github.com/chriso/validator.js";
       license = "MIT";
     };
     production = true;
@@ -18681,7 +18681,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Accelerated JavaScript animation.";
-      homepage = http://velocityjs.org/;
+      homepage = "http://velocityjs.org/";
       license = "MIT";
     };
     production = true;
@@ -18717,7 +18717,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "A hack to put Graphviz on the web.";
-      homepage = https://github.com/mdaines/viz.js;
+      homepage = "https://github.com/mdaines/viz.js";
       license = "MIT";
     };
     production = true;
@@ -18765,7 +18765,7 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist";
-      homepage = https://github.com/leizongmin/js-xss;
+      homepage = "https://github.com/leizongmin/js-xss";
       license = "MIT";
     };
     production = true;

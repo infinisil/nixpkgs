@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     license = licenses.gpl2;
-    homepage = https://gitlab.com/Remmina/Remmina;
+    homepage = "https://gitlab.com/Remmina/Remmina";
     description = "Remote desktop client written in GTK+";
     maintainers = with maintainers; [ melsigl ryantm ];
     platforms = platforms.linux;

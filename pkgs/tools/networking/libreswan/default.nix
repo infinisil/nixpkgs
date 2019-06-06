@@ -77,7 +77,7 @@ stdenv.mkDerivation {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://libreswan.org;
+    homepage = "https://libreswan.org";
     description = "A free software implementation of the VPN protocol based on IPSec and the Internet Key Exchange";
     platforms = platforms.linux ++ platforms.darwin ++ platforms.freebsd;
     license = licenses.gpl2;

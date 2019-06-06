@@ -24,6 +24,6 @@ buildPythonPackage rec {
     description = "OAuthlib implementation for Flask";
     license = licenses.mit;
     maintainers = [ maintainers.mic92 ];
-    homepage = https://github.com/lepture/flask-oauthlib;
+    homepage = "https://github.com/lepture/flask-oauthlib";
   };
 }

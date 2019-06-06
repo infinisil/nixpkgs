@@ -20,7 +20,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "An unofficial lightweight implementation of the Bitwarden server API using Rust and SQLite";
-    homepage = https://github.com/dani-garcia/bitwarden_rs;
+    homepage = "https://github.com/dani-garcia/bitwarden_rs";
     license = licenses.gpl3;
     maintainers = with maintainers; [ msteen ];
     platforms = platforms.all;

@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Provides web server plugins to connect web servers with Tomcat";
-    homepage = https://tomcat.apache.org/download-connectors.cgi;
+    homepage = "https://tomcat.apache.org/download-connectors.cgi";
     license = licenses.asl20;
     platforms = platforms.unix;
   };

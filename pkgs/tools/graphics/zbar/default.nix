@@ -49,6 +49,6 @@ in stdenv.mkDerivation rec {
     maintainers = with maintainers; [ delroth raskin ];
     platforms = platforms.unix;
     license = licenses.lgpl21;
-    homepage = https://github.com/mchehab/zbar;
+    homepage = "https://github.com/mchehab/zbar";
   };
 }

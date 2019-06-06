@@ -15,7 +15,7 @@ stdenv.mkDerivation rec{
 
   meta = with stdenv.lib; {
     description = "Scaling, colorspace conversion and dithering library";
-    homepage    = https://github.com/sekrit-twc/zimg;
+    homepage    = "https://github.com/sekrit-twc/zimg";
     license     = licenses.wtfpl;
     platforms   = platforms.linux ++ platforms.darwin;
     maintainers = with maintainers; [ rnhmjoj ];

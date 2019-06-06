@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A random number generator daemon";
-    homepage = https://github.com/nhorman/rng-tools;
+    homepage = "https://github.com/nhorman/rng-tools";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ johnazoidberg ];

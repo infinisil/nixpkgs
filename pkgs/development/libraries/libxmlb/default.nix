@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library to help create and query binary XML blobs";
-    homepage = https://github.com/hughsie/libxmlb;
+    homepage = "https://github.com/hughsie/libxmlb";
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ jtojnar ];
     platforms = platforms.linux;

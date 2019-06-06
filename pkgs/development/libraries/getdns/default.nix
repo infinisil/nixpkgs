@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
       inspire application developers to implement innovative security solutions in
       their applications.
 '';
-    homepage = https://getdnsapi.net;
+    homepage = "https://getdnsapi.net";
     maintainers = with maintainers; [ leenaars ];
     license = licenses.bsd3;
     platforms = platforms.all;

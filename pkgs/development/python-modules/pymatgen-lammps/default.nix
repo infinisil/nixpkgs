@@ -24,7 +24,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "A LAMMPS wrapper using pymatgen";
-    homepage = https://gitlab.com/costrouc/pymatgen-lammps;
+    homepage = "https://gitlab.com/costrouc/pymatgen-lammps";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ costrouc ];
   };

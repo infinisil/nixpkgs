@@ -6,7 +6,7 @@ stdenv.mkDerivation {
   builder = ./builder.sh;
 
   src = fetchurl {
-    url = mirror://sourceforge/hsqldb/hsqldb_1_8_0_9.zip;
+    url = "mirror://sourceforge/hsqldb/hsqldb_1_8_0_9.zip";
     sha256 = "1v5dslwsqb7csjmi5g78pghsay2pszidvlzhyi79y18mra5iv3g9";
   };
 

@@ -91,7 +91,7 @@ in stdenv.mkDerivation {
   passthru.updateScript = ./update.sh;
 
   meta = {
-    homepage = https://zoom.us/;
+    homepage = "https://zoom.us/";
     description = "zoom.us video conferencing application";
     license = stdenv.lib.licenses.unfree;
     platforms = builtins.attrNames srcs;

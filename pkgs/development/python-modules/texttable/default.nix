@@ -14,7 +14,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "A module to generate a formatted text table, using ASCII characters";
-    homepage = http://foutaise.org/code/;
+    homepage = "http://foutaise.org/code/";
     license = lib.licenses.lgpl2;
   };
 }

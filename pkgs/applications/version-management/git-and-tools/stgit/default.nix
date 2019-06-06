@@ -28,7 +28,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "A patch manager implemented on top of Git";
-    homepage = http://procode.org/stgit/;
+    homepage = "http://procode.org/stgit/";
     license = licenses.gpl2;
     maintainers = with maintainers; [ the-kenny ];
     platforms = platforms.unix;

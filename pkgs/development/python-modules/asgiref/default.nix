@@ -24,6 +24,6 @@ buildPythonPackage rec {
   meta = with stdenv.lib; {
     description = "Reference ASGI adapters and channel layers";
     license = licenses.bsd3;
-    homepage = https://github.com/django/asgiref;
+    homepage = "https://github.com/django/asgiref";
   };
 }

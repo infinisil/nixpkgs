@@ -32,7 +32,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Google Application Utilities for Python";
-    homepage = http://code.google.com/p/google-apputils-python;
+    homepage = "http://code.google.com/p/google-apputils-python";
     license = licenses.asl20;
   };
 

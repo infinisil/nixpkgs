@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Car racing game - TORCS fork with more experimental approach";
-    homepage = http://speed-dreams.sourceforge.net/;
+    homepage = "http://speed-dreams.sourceforge.net/";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = with stdenv.lib.maintainers; [raskin];
     platforms = stdenv.lib.platforms.linux;

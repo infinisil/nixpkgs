@@ -33,7 +33,7 @@ buildPythonPackage rec {
   '';
 
   meta = {
-    homepage = https://github.com/ContinuumIO/odo;
+    homepage = "https://github.com/ContinuumIO/odo";
     description = "Data migration utilities";
     license = lib.licenses.bsdOriginal;
     maintainers = with lib.maintainers; [ fridh ];

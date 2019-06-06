@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Software for Saleae logic analyzers";
-    homepage = http://www.saleae.com/;
+    homepage = "http://www.saleae.com/";
     license = licenses.unfree;
     platforms = platforms.linux;
     maintainers = [ maintainers.bjornfor ];

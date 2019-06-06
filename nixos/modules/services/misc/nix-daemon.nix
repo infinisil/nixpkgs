@@ -272,7 +272,7 @@ in
 
       binaryCaches = mkOption {
         type = types.listOf types.str;
-        default = [ https://cache.nixos.org/ ];
+        default = [ "https://cache.nixos.org/" ];
         description = ''
           List of binary cache URLs used to obtain pre-built binaries
           of Nix packages.
@@ -282,7 +282,7 @@ in
       trustedBinaryCaches = mkOption {
         type = types.listOf types.str;
         default = [ ];
-        example = [ http://hydra.nixos.org/ ];
+        example = [ "http://hydra.nixos.org/" ];
         description = ''
           List of binary cache URLs that non-root users can use (in
           addition to those specified using

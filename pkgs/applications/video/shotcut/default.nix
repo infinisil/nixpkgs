@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
       nixpkgs maintainer(s). If you wish to report any bugs upstream,
       please use the official build from shotcut.org instead.
     '';
-    homepage = https://shotcut.org;
+    homepage = "https://shotcut.org";
     license = licenses.gpl3;
     maintainers = with maintainers; [ goibhniu woffs ];
     platforms = platforms.linux;

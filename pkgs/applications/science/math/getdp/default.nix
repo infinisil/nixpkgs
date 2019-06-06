@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
       GetDP is a free finite element solver using mixed elements to discretize de Rham-type complexes in one, two and three dimensions.
       The main feature of GetDP is the closeness between the input data defining discrete problems (written by the user in ASCII data files) and the symbolic mathematical expressions of these problems.
     '';
-    homepage = http://getdp.info/;
+    homepage = "http://getdp.info/";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = with maintainers; [ wucke13 ];
     platforms = platforms.linux;

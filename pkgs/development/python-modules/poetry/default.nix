@@ -78,7 +78,7 @@ in buildPythonPackage rec {
   '';
 
   meta = with lib; {
-    homepage = https://github.com/sdispater/poetry;
+    homepage = "https://github.com/sdispater/poetry";
     description = "Python dependency management and packaging made easy";
     license = licenses.mit;
     maintainers = with maintainers; [ jakewaksbaum ];

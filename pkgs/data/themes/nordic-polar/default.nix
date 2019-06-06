@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Gtk theme created using the awesome Nord color pallete";
-    homepage = https://github.com/EliverLara/Nordic-Polar;
+    homepage = "https://github.com/EliverLara/Nordic-Polar";
     license = licenses.gpl3;
     platforms = platforms.all;
     maintainers = [ maintainers.romildo ];

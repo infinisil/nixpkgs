@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Lightweight and customizable notification daemon";
-    homepage = https://dunst-project.org/;
+    homepage = "https://dunst-project.org/";
     license = licenses.bsd3;
     # NOTE: 'unix' or even 'all' COULD work too, I'm not sure
     platforms = platforms.linux;

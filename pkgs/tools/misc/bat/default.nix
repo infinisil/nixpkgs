@@ -27,7 +27,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "A cat(1) clone with syntax highlighting and Git integration";
-    homepage    = https://github.com/sharkdp/bat;
+    homepage    = "https://github.com/sharkdp/bat";
     license     = with licenses; [ asl20 /* or */ mit ];
     maintainers = with maintainers; [ dywedir lilyball ];
     platforms   = platforms.all;

@@ -82,7 +82,7 @@ in buildPythonApplication {
       discontinued development. I elected instead to package GitHub user
       @goatpig's fork, as it's the most active, at time of this writing.
     '';
-    homepage = https://github.com/goatpig/BitcoinArmory;
+    homepage = "https://github.com/goatpig/BitcoinArmory";
     license = stdenv.lib.licenses.agpl3Plus;
     maintainers = with stdenv.lib.maintainers; [ elitak ];
     platforms = [ "i686-linux" "x86_64-linux" ];

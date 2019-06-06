@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ libxml2 ];
 
   meta = with stdenv.lib; {
-    homepage = http://libxmlplusplus.sourceforge.net/;
+    homepage = "http://libxmlplusplus.sourceforge.net/";
     description = "C++ wrapper for the libxml2 XML parser library, version 3";
     license = licenses.lgpl2Plus;
     platforms = platforms.unix;

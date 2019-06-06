@@ -58,7 +58,7 @@ stdenv.mkDerivation {
   patches = [
     # fix output of llvm-config (fixed in llvm 4.0)
     (fetchpatch {
-      url = https://github.com/llvm-mirror/llvm/commit/5340b5b3d970069aebf3dde49d8964583742e01a.patch;
+      url = "https://github.com/llvm-mirror/llvm/commit/5340b5b3d970069aebf3dde49d8964583742e01a.patch";
       sha256 = "095f8knplwqbc2p7rad1kq8633i34qynni9jna93an7kyc80wdxl";
    })
    ] ++ stdenv.lib.optionals stdenv.hostPlatform.isMusl [
@@ -70,7 +70,7 @@ stdenv.mkDerivation {
   + ''
     patch -p1 --reverse < ${fetchpatch {
       name = "fix-red-icons.diff"; # https://bugs.freedesktop.org/show_bug.cgi?id=99078
-      url = https://github.com/llvm-mirror/llvm/commit/c280d74837d8.diff;
+      url = "https://github.com/llvm-mirror/llvm/commit/c280d74837d8.diff";
       sha256 = "11sq86spw41v72f676igksapdlsgh7fiqp5qkkmgfj0ndqcn9skf";
     }}
   ''
@@ -99,7 +99,7 @@ stdenv.mkDerivation {
       patch -p1 < ${
         fetchpatch {
           name = "sigaltstack.patch"; # for glibc-2.26
-          url = https://github.com/llvm-mirror/compiler-rt/commit/8a5e425a68d.diff;
+          url = "https://github.com/llvm-mirror/compiler-rt/commit/8a5e425a68d.diff";
           sha256 = "0h4y5vl74qaa7dl54b1fcyqalvlpd8zban2d1jxfkxpzyi7m8ifi";
         }
       }
@@ -167,7 +167,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "Collection of modular and reusable compiler and toolchain technologies";
-    homepage    = http://llvm.org/;
+    homepage    = "http://llvm.org/";
     license     = stdenv.lib.licenses.ncsa;
     maintainers = with stdenv.lib.maintainers; [ lovek323 raskin ];
     platforms   = stdenv.lib.platforms.all;

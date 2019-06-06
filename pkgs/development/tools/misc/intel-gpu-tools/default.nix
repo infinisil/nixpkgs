@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://01.org/linuxgraphics/;
+    homepage = "https://01.org/linuxgraphics/";
     description = "Tools for development and testing of the Intel DRM driver";
     license = licenses.mit;
     platforms = [ "x86_64-linux" "i686-linux" ];

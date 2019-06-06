@@ -27,6 +27,6 @@ buildGoPackage rec {
     maintainers = with maintainers; [ synthetica ];
     platforms = platforms.unix;
     license = licenses.mit;
-    homepage = https://circleci.com/;
+    homepage = "https://circleci.com/";
   };
 }

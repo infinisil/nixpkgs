@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/BIC-MNI/minc-tools;
+    homepage = "https://github.com/BIC-MNI/minc-tools";
     description = "Command-line utilities for working with MINC files";
     maintainers = with maintainers; [ bcdarwin ];
     platforms = platforms.unix;

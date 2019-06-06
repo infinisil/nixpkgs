@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "GUI frontend for sudo/su";
-    homepage = https://github.com/lxqt/lxqt-sudo;
+    homepage = "https://github.com/lxqt/lxqt-sudo";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

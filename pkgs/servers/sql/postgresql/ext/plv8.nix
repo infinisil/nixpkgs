@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "PL/v8 - A Procedural Language in JavaScript powered by V8";
-    homepage = https://pgxn.org/dist/plv8/;
+    homepage = "https://pgxn.org/dist/plv8/";
     maintainers = with maintainers; [ volth ];
     platforms = platforms.linux;
     license = licenses.postgresql;

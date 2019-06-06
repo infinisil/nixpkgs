@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Screenshot and annotation tool";
-    homepage = http://shutter-project.org/;
+    homepage = "http://shutter-project.org/";
     license = licenses.gpl3Plus;
     platforms = platforms.all;
     maintainers = [ maintainers.bjornfor ];

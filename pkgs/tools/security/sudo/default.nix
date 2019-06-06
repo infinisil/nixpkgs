@@ -74,9 +74,9 @@ stdenv.mkDerivation rec {
       providing an audit trail of the commands and their arguments.
       '';
 
-    homepage = https://www.sudo.ws/;
+    homepage = "https://www.sudo.ws/";
 
-    license = https://www.sudo.ws/sudo/license.html;
+    license = "https://www.sudo.ws/sudo/license.html";
 
     maintainers = [ stdenv.lib.maintainers.eelco ];
 

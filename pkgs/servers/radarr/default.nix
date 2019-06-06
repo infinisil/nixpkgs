@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A Usenet/BitTorrent movie downloader";
-    homepage = https://radarr.video/;
+    homepage = "https://radarr.video/";
     license = licenses.gpl3;
     maintainers = with maintainers; [ edwtjo ];
     platforms = platforms.all;

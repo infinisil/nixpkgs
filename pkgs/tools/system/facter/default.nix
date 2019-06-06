@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/puppetlabs/facter;
+    homepage = "https://github.com/puppetlabs/facter";
     description = "A system inventory tool";
     license = licenses.asl20;
     maintainers = [ maintainers.womfoo ];

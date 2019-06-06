@@ -35,7 +35,7 @@ buildPythonApplication rec {
 
   meta = {
     description = "SELinux Tools";
-    homepage = https://github.com/TresysTechnology/setools/wiki;
+    homepage = "https://github.com/TresysTechnology/setools/wiki";
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

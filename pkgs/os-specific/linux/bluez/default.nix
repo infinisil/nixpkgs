@@ -88,9 +88,9 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Bluetooth support for Linux";
-    homepage = http://www.bluez.org/;
+    homepage = "http://www.bluez.org/";
     license = with licenses; [ gpl2 lgpl21 ];
     platforms = platforms.linux;
-    repositories.git = https://git.kernel.org/pub/scm/bluetooth/bluez.git;
+    repositories.git = "https://git.kernel.org/pub/scm/bluetooth/bluez.git";
   };
 }

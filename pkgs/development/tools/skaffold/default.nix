@@ -25,7 +25,7 @@ buildGoPackage rec {
 
   meta = {
     description = "Easy and Repeatable Kubernetes Development";
-    homepage = https://github.com/GoogleContainerTools/skaffold;
+    homepage = "https://github.com/GoogleContainerTools/skaffold";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ vdemeester ];
   };

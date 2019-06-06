@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     platforms = platforms.linux;
-    homepage = http://www.kde.org;
+    homepage = "http://www.kde.org";
     license = with licenses; [ gpl2 fdl12 lgpl21 ];
   };
 }

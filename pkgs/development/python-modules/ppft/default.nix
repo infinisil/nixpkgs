@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Distributed and parallel python";
-    homepage = https://github.com/uqfoundation;
+    homepage = "https://github.com/uqfoundation";
     license = licenses.bsd3;
   };
 

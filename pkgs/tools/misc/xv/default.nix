@@ -32,7 +32,7 @@ rustPlatform.buildRustPackage rec {
     longDescription = ''
       XV is a terminal hex viewer with a text user interface, written in 100% safe Rust.
     '';
-    homepage    = https://chrisvest.github.io/xv/;
+    homepage    = "https://chrisvest.github.io/xv/";
     license     = with licenses; [ asl20 ];
     maintainers = with maintainers; [ lilyball ];
     platforms   = platforms.all;

@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Network sniffer";
-    homepage = http://www.tcpdump.org/;
+    homepage = "http://www.tcpdump.org/";
     license = "BSD-style";
     maintainers = with stdenv.lib.maintainers; [ ];
     platforms = stdenv.lib.platforms.unix;

@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The project that aims to replace the existing {ip,ip6,arp,eb}tables framework";
-    homepage = http://netfilter.org/projects/nftables;
+    homepage = "http://netfilter.org/projects/nftables";
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

@@ -127,7 +127,7 @@ stdenv.mkDerivation rec {
     '';
     license = licenses.gpl3;
     maintainers = with maintainers; [ johnramsden ];
-    homepage = https://nylas.com;
+    homepage = "https://nylas.com";
     platforms = [ "x86_64-linux" ];
   };
 }

@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Base window manager for deepin, fork of gnome mutter";
-    homepage = https://github.com/linuxdeepin/deepin-mutter;
+    homepage = "https://github.com/linuxdeepin/deepin-mutter";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ romildo ];

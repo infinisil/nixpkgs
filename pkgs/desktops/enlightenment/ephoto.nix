@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Image viewer and editor written using the Enlightenment Foundation Libraries";
-    homepage = http://smhouston.us/ephoto/;
+    homepage = "http://smhouston.us/ephoto/";
     license = stdenv.lib.licenses.bsd2;
     platforms = stdenv.lib.platforms.linux;
     maintainers = [ stdenv.lib.maintainers.romildo ];

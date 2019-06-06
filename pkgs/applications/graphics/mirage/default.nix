@@ -22,7 +22,7 @@ pythonPackages.buildPythonApplication rec {
     meta = {
       description = "Simple image viewer written in PyGTK";
 
-      homepage = http://mirageiv.sourceforge.net/;
+      homepage = "http://mirageiv.sourceforge.net/";
 
       license = stdenv.lib.licenses.gpl2;
     };

@@ -27,7 +27,7 @@ in stdenv.mkDerivation {
   enableParallelBuilding = true;
 
   meta = {
-    homepage = https://notepadqq.com/;
+    homepage = "https://notepadqq.com/";
     description = "Notepad++-like editor for the Linux desktop";
     license = stdenv.lib.licenses.gpl3;
     platforms = stdenv.lib.platforms.linux;

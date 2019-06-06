@@ -21,7 +21,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "A cargo subcommand for displaying when Rust dependencies are out of date";
-    homepage = https://github.com/kbknapp/cargo-outdated;
+    homepage = "https://github.com/kbknapp/cargo-outdated";
     license = with licenses; [ asl20 /* or */ mit ];
     platforms = platforms.all;
     maintainers = [ maintainers.sondr3 ];

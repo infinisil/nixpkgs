@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
     license = licenses.zlib;
     maintainers = with maintainers; [ leenaars ];
-    downloadPage = http://vapor.love2d.org/;
+    downloadPage = "http://vapor.love2d.org/";
   };
 
 }

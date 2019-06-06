@@ -24,7 +24,7 @@ buildPythonApplication rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = https://www.transifex.com/;
+    homepage = "https://www.transifex.com/";
     license = licenses.gpl2;
     description = "Transifex translation service client";
     maintainers = [ maintainers.etu ];

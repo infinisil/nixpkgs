@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Library to access weather information from online services for MATE";
-    homepage = https://github.com/mate-desktop/libmateweather;
+    homepage = "https://github.com/mate-desktop/libmateweather";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

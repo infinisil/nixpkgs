@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A service which logs the users's activities and events";
-    homepage = https://zeitgeist.freedesktop.org/;
+    homepage = "https://zeitgeist.freedesktop.org/";
     maintainers = with maintainers; [ lethalman worldofpeace ];
     license = licenses.gpl2;
     platforms = platforms.linux;

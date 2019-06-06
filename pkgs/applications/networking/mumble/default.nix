@@ -64,7 +64,7 @@ let
 
     meta = {
       description = "Low-latency, high quality voice chat software";
-      homepage = https://mumble.info;
+      homepage = "https://mumble.info";
       license = licenses.bsd3;
       maintainers = with maintainers; [ ];
       platforms = platforms.linux;

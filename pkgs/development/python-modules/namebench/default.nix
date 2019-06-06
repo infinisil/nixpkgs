@@ -28,7 +28,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://namebench.googlecode.com/;
+    homepage = "http://namebench.googlecode.com/";
     description = "Find fastest DNS servers available";
     license = with licenses; [
       asl20

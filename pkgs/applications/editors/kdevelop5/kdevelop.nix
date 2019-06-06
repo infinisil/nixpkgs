@@ -76,7 +76,7 @@ mkDerivation rec {
         programing languages. It is based on KDevPlatform, KDE and Qt
         libraries and is under development since 1998.
       '';
-    homepage = https://www.kdevelop.org;
+    homepage = "https://www.kdevelop.org";
     license = with licenses; [ gpl2Plus lgpl2Plus ];
   };
 }

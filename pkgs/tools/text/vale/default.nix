@@ -16,7 +16,7 @@ buildGoPackage rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://errata-ai.github.io/vale/;
+    homepage = "https://errata-ai.github.io/vale/";
     description = "A syntax-aware linter for prose built with speed and extensibility in mind";
     license = licenses.mit;
     maintainers = [ maintainers.marsam ];

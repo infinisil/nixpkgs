@@ -35,7 +35,7 @@ stdenv.mkDerivation {
     longDescription = ''
       nfdump is a set of tools for working with netflow data.
     '';
-    homepage = https://github.com/phaag/nfdump;
+    homepage = "https://github.com/phaag/nfdump";
     license = licenses.bsd3;
     maintainers = [ maintainers.takikawa ];
     platforms = platforms.unix;

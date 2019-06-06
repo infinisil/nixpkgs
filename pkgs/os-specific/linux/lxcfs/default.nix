@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://linuxcontainers.org/lxcfs;
+    homepage = "https://linuxcontainers.org/lxcfs";
     description = "FUSE filesystem for LXC";
     license = licenses.asl20;
     platforms = platforms.linux;

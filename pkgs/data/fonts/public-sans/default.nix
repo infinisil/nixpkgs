@@ -16,7 +16,7 @@ in fetchzip rec {
 
   meta = with lib; {
     description = "A strong, neutral, principles-driven, open source typeface for text or display";
-    homepage = https://public-sans.digital.gov/;
+    homepage = "https://public-sans.digital.gov/";
     license = licenses.ofl;
     maintainers = with maintainers; [ dtzWill ];
     platforms = platforms.all;

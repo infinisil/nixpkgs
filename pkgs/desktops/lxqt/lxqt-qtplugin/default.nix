@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "LXQt Qt platform integration plugin";
-    homepage = https://github.com/lxqt/lxqt-qtplugin;
+    homepage = "https://github.com/lxqt/lxqt-qtplugin";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

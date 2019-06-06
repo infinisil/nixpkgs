@@ -28,7 +28,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "Bukubrow is a WebExtension for Buku, a command-line bookmark manager";
-    homepage = https://github.com/SamHH/bukubrow;
+    homepage = "https://github.com/SamHH/bukubrow";
     license = licenses.gpl3;
     platforms = platforms.all;
     maintainers = with maintainers; [ infinisil ];

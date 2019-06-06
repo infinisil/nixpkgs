@@ -73,7 +73,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Common interface to speech synthesis";
-    homepage = https://devel.freebsoft.org/speechd;
+    homepage = "https://devel.freebsoft.org/speechd";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ berce ];
     platforms = platforms.linux;

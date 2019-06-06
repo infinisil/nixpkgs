@@ -23,7 +23,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Fast implementation of asyncio event loop on top of libuv";
-    homepage = http://github.com/MagicStack/uvloop;
+    homepage = "http://github.com/MagicStack/uvloop";
     license = licenses.mit;
     maintainers = [ maintainers.costrouc ];
   };

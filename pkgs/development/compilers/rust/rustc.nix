@@ -209,7 +209,7 @@ in stdenv.mkDerivation rec {
   requiredSystemFeatures = [ "big-parallel" ];
 
   meta = with stdenv.lib; {
-    homepage = https://www.rust-lang.org/;
+    homepage = "https://www.rust-lang.org/";
     description = "A safe, concurrent, practical language";
     maintainers = with maintainers; [ madjar cstrahan wizeman globin havvy ];
     license = [ licenses.mit licenses.asl20 ];

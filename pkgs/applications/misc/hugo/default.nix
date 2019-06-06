@@ -21,7 +21,7 @@ buildGoModule rec {
 
   meta = with stdenv.lib; {
     description = "A fast and modern static website engine.";
-    homepage = https://gohugo.io;
+    homepage = "https://gohugo.io";
     license = licenses.asl20;
     maintainers = with maintainers; [ schneefux ];
   };

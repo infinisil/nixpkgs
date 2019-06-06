@@ -23,7 +23,7 @@ build-idris-package  {
 
   meta = {
     description = "SDL2 binding for Idris";
-    homepage = https://github.com/steshaw/idris-sdl2;
+    homepage = "https://github.com/steshaw/idris-sdl2";
     maintainers = [ lib.maintainers.brainrape ];
     # Can't find file sdl2.o
     broken = true;

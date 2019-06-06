@@ -36,7 +36,7 @@ buildPythonPackage rec {
   checkInputs = [ nose ];
 
   meta = with lib; {
-    homepage = https://github.com/christiansandberg/canopen/;
+    homepage = "https://github.com/christiansandberg/canopen/";
     description = "CANopen stack implementation";
     license = licenses.lgpl3;
     maintainers = with maintainers; [ sorki ];

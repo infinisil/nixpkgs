@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://fontmanager.github.io/;
+    homepage = "https://fontmanager.github.io/";
     description = "Simple font management for GTK+ desktop environments";
     longDescription = ''
       Font Manager is intended to provide a way for average users to
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
       Font Manager is NOT a professional-grade font management solution.
     '';
     license = licenses.gpl3;
-    repositories.git = https://github.com/FontManager/master;
+    repositories.git = "https://github.com/FontManager/master";
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];
   };

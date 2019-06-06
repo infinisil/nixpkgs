@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.getpostman.com;
+    homepage = "https://www.getpostman.com";
     description = "API Development Environment";
     license = stdenv.lib.licenses.postman;
     platforms = [ "x86_64-linux" ];

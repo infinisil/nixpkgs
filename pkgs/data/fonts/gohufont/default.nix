@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     description = ''
       A monospace bitmap font well suited for programming and terminal use
     '';
-    homepage    = http://font.gohu.org/;
+    homepage    = "http://font.gohu.org/";
     license     = licenses.wtfpl;
     maintainers = with maintainers; [ epitrochoid rnhmjoj ];
   };

@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "GL Easy Extension Library";
-    homepage = https://sourceforge.net/p/glee/glee/;
+    homepage = "https://sourceforge.net/p/glee/glee/";
     maintainers = with maintainers; [ nand0p ];
     platforms = platforms.linux;
     license = licenses.gpl3;

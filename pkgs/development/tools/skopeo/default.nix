@@ -50,7 +50,7 @@ buildGoPackage rec {
 
   meta = {
     description = "A command line utility for various operations on container images and image repositories";
-    homepage = https://github.com/projectatomic/skopeo;
+    homepage = "https://github.com/projectatomic/skopeo";
     maintainers = with stdenv.lib.maintainers; [ vdemeester lewo ];
     license = stdenv.lib.licenses.asl20;
   };

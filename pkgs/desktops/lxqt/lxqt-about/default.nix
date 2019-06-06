@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Dialogue window providing information about LXQt and the system it's running on";
-    homepage = https://github.com/lxqt/lxqt-about;
+    homepage = "https://github.com/lxqt/lxqt-about";
     license = licenses.lgpl21;
     platforms = with platforms; unix;
     maintainers = with maintainers; [ romildo ];

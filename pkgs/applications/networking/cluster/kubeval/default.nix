@@ -40,7 +40,7 @@ buildGoPackage rec {
 
   meta = with lib; {
     description = "Validate your Kubernetes configuration files";
-    homepage = https://github.com/garethr/kubeval;
+    homepage = "https://github.com/garethr/kubeval";
     license = licenses.asl20;
     maintainers = with maintainers; [ nicknovitski ];
     platforms = platforms.all;

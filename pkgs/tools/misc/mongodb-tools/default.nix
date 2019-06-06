@@ -41,7 +41,7 @@ buildGoPackage rec {
   '';
 
   meta = {
-    homepage = https://github.com/mongodb/mongo-tools;
+    homepage = "https://github.com/mongodb/mongo-tools";
     description = "Tools for the MongoDB";
     license = licenses.asl20;
   };

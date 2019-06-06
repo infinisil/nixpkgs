@@ -162,7 +162,7 @@ stdenv.mkDerivation {
   outputs = [ "dev" "lib" "out" "doc" ];
 
   meta = {
-    homepage = https://ceph.com/;
+    homepage = "https://ceph.com/";
     description = "Distributed storage system";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ adev ak ];

@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Broadcasts a who-has ARP packet on the network and prints answers";
-    homepage = https://github.com/ThomasHabets/arping;
+    homepage = "https://github.com/ThomasHabets/arping";
     license = with licenses; [ gpl2 ];
     maintainers = [ maintainers.michalrus ];
     platforms = platforms.unix;

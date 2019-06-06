@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Material Based Cursor";
-    homepage = https://github.com/KaizIqbal/Bibata_Cursor;
+    homepage = "https://github.com/KaizIqbal/Bibata_Cursor";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ rawkode ];

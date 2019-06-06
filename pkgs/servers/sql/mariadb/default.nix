@@ -86,7 +86,7 @@ common = rec { # attributes common to both builds
 
   meta = with stdenv.lib; {
     description = "An enhanced, drop-in replacement for MySQL";
-    homepage    = https://mariadb.org/;
+    homepage    = "https://mariadb.org/";
     license     = licenses.gpl2;
     maintainers = with maintainers; [ thoughtpolice ];
     platforms   = platforms.all;
@@ -257,7 +257,7 @@ galera = stdenv.mkDerivation rec {
 
   meta = {
     description = "Galera 3 wsrep provider library";
-    homepage = http://galeracluster.com/;
+    homepage = "http://galeracluster.com/";
     license = licenses.lgpl2;
     maintainers = with maintainers; [ izorkin ];
     platforms = platforms.all;

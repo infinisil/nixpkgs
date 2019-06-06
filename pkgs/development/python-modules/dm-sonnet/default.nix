@@ -77,7 +77,7 @@ in buildPythonPackage rec {
 
   meta = with lib; {
     description = "TensorFlow-based neural network library";
-    homepage = https://sonnet.dev;
+    homepage = "https://sonnet.dev";
     license = licenses.asl20;
     maintainers = with maintainers; [ timokau ];
     platforms = platforms.linux;

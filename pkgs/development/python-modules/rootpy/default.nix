@@ -22,7 +22,7 @@ buildPythonPackage rec {
   '';
 
   meta = with lib; {
-    homepage = http://www.rootpy.org;
+    homepage = "http://www.rootpy.org";
     license = licenses.bsd3;
     description = "Pythonic interface to the ROOT framework";
     maintainers = with maintainers; [ veprbl ];

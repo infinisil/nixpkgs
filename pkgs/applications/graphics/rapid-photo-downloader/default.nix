@@ -76,7 +76,7 @@ python3Packages.buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "Photo and video importer for cameras, phones, and memory cards";
-    homepage = http://www.damonlynch.net/rapid/;
+    homepage = "http://www.damonlynch.net/rapid/";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ jfrankenau ];

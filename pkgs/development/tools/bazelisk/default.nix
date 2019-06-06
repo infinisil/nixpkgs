@@ -15,7 +15,7 @@ buildGoModule rec {
 
   meta = with stdenv.lib; {
     description = "A user-friendly launcher for Bazel";
-    homepage = https://github.com/philwo/bazelisk;
+    homepage = "https://github.com/philwo/bazelisk";
     license = licenses.asl20;
     maintainers = with maintainers; [ elasticdog ];
   };

@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     # do not download a file during build
     ${xmlstarlet}/bin/xmlstarlet ed --inplace -P -d '//get[@src="http://download.processing.org/reference.zip"]' build/build.xml
     install -D -m0444 ${fetchurl {
-                          url    = http://download.processing.org/reference.zip;
+                          url    = "http://download.processing.org/reference.zip";
                           sha256 = "0ai0cr62gc7n6y22ki3qibyj1qnlaxv1miqxmmahfk3hpbyfqz9n";
                         }
                        } ./java/reference.zip
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A language and IDE for electronic arts";
-    homepage = https://processing.org;
+    homepage = "https://processing.org";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
   };

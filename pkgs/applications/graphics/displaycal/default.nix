@@ -9,7 +9,7 @@ buildPythonPackage {
   enableParallelBuilding = true;
 
   src = fetchurl {
-    url = mirror://sourceforge/project/dispcalgui/release/3.5.0.0/DisplayCAL-3.5.0.0.tar.gz;
+    url = "mirror://sourceforge/project/dispcalgui/release/3.5.0.0/DisplayCAL-3.5.0.0.tar.gz";
     sha256 = "1j496sv8pbhby5hkkbp07k6bs3f7mb1l3dijmn2iga3kmix0fn5q";
   };
 
@@ -51,7 +51,7 @@ buildPythonPackage {
 
   meta = {
     description = "Display Calibration and Characterization powered by Argyll CMS";
-    homepage = https://displaycal.net/;
+    homepage = "https://displaycal.net/";
     license = stdenv.lib.licenses.gpl3;
     maintainers = [stdenv.lib.maintainers.marcweber];
     platforms = stdenv.lib.platforms.linux;

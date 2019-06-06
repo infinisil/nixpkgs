@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   version = "0.18";
 
   src = fetchgit {
-    url = https://git.kernel.org/pub/scm/network/wireless/iwd.git;
+    url = "https://git.kernel.org/pub/scm/network/wireless/iwd.git";
     rev = version;
     sha256 = "19scrkdyfj92cycirm22in1jf6rb77sy419gki4m9j8zdyapcqm9";
   };
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://git.kernel.org/pub/scm/network/wireless/iwd.git;
+    homepage = "https://git.kernel.org/pub/scm/network/wireless/iwd.git";
     description = "Wireless daemon for Linux";
     license = licenses.lgpl21;
     platforms = platforms.linux;

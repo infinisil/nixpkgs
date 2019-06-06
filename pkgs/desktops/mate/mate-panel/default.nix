@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The MATE panel";
-    homepage = https://github.com/mate-desktop/mate-panel;
+    homepage = "https://github.com/mate-desktop/mate-panel";
     license = with licenses; [ gpl2 lgpl2 ];
     platforms = platforms.unix;
     maintainers = [ maintainers.romildo ];

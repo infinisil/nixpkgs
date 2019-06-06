@@ -65,7 +65,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Official Qt SoulSeek client";
-    homepage = http://www.soulseekqt.net;
+    homepage = "http://www.soulseekqt.net";
     license = licenses.unfree;
     maintainers = [ maintainers.genesis ];
     platforms = [ "x86_64-linux" ];

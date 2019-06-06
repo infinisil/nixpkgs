@@ -22,7 +22,7 @@ assert enableMongoDatabase -> (mongodb != null && mongodb-tools != null);
 stdenv.mkDerivation {
   name = "dysnomia-0.8";
   src = fetchurl {
-    url = https://github.com/svanderburg/dysnomia/files/1756700/dysnomia-0.8.tar.gz;
+    url = "https://github.com/svanderburg/dysnomia/files/1756700/dysnomia-0.8.tar.gz";
     sha256 = "0pc4zwmmlsz02a6a4srpwdwhqrfvn3wkn22sz3fg7lwxbdbd5k0z";
   };
 

@@ -75,7 +75,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Krita plugin for the G'MIC image processing framework";
-    homepage = http://gmic.eu/;
+    homepage = "http://gmic.eu/";
     license = licenses.gpl3;
     platforms = platforms.unix;
   };

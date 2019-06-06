@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   outputHash = "1l1sxmzp3gcd2d32nxar6xwd1v1w18a9gfh57zmsrfpspnfbz7y1";
 
   meta = with stdenv.lib; {
-    homepage = http://upperbounds.net;
+    homepage = "http://upperbounds.net";
     description = "A set of fixed-width screen fonts that are designed for code listings";
     license = licenses.mit;
     platforms = platforms.all;

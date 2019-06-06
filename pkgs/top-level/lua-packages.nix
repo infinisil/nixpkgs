@@ -286,7 +286,7 @@ with self; {
     ];
 
     meta = with stdenv.lib; {
-      homepage = https://github.com/mwild1/luadbi;
+      homepage = "https://github.com/mwild1/luadbi";
       license = licenses.mit;
       platforms = stdenv.lib.platforms.unix;
     };
@@ -549,7 +549,7 @@ with self; {
 
     meta = with stdenv.lib; {
       description = "Portable library for filesystem operations";
-      homepage = https://keplerproject.github.com/luafilesystem;
+      homepage = "https://keplerproject.github.com/luafilesystem";
       license = licenses.mit;
       maintainers = with maintainers; [ vcunat ];
       platforms = platforms.all;
@@ -607,7 +607,7 @@ with self; {
 
     meta = with stdenv.lib; {
       description = "A modular widget library for the awesome window manager";
-      homepage    = https://github.com/Mic92/vicious;
+      homepage    = "https://github.com/Mic92/vicious";
       license     = licenses.gpl2;
       maintainers = with maintainers; [ makefu mic92 ];
       platforms   = platforms.linux;

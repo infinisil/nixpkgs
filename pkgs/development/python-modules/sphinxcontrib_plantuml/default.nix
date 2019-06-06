@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Provides a Sphinx domain for embedding UML diagram with PlantUML";
-    homepage = https://bitbucket.org/birkenfeld/sphinx-contrib;
+    homepage = "https://bitbucket.org/birkenfeld/sphinx-contrib";
     license = with licenses; [ bsd2 ];
   };
 

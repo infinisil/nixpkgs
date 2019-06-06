@@ -21,7 +21,7 @@
 
     meta = with stdenv.lib; {
       description = "Official PostgreSQL ODBC Driver";
-      homepage =  https://odbc.postgresql.org/;
+      homepage =  "https://odbc.postgresql.org/";
       license = licenses.lgpl2;
       platforms = platforms.linux;
     };
@@ -50,7 +50,7 @@
 
     meta = with stdenv.lib; {
       description = "MariaDB ODBC database driver";
-      homepage =  https://downloads.mariadb.org/connector-odbc/;
+      homepage =  "https://downloads.mariadb.org/connector-odbc/";
       license = licenses.gpl2;
       platforms = platforms.linux;
     };
@@ -78,7 +78,7 @@
 
     meta = with stdenv.lib; {
       description = "MariaDB ODBC database driver";
-      homepage = https://dev.mysql.com/downloads/connector/odbc/;
+      homepage = "https://dev.mysql.com/downloads/connector/odbc/";
       license = licenses.gpl2;
       platforms = platforms.linux;
       broken = true;
@@ -113,7 +113,7 @@
 
     meta = with stdenv.lib; {
       description = "ODBC driver for SQLite";
-      homepage = http://www.ch-werner.de/sqliteodbc;
+      homepage = "http://www.ch-werner.de/sqliteodbc";
       license = licenses.bsd2;
       platforms = platforms.linux;
       maintainers = with maintainers; [ vlstill ];
@@ -154,7 +154,7 @@
 
     meta = with stdenv.lib; {
       description = "ODBC Driver 17 for SQL Server";
-      homepage = https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017;
+      homepage = "https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017";
       license = licenses.unfree;
       platforms = platforms.linux;
       maintainers = with maintainers; [ spencerjanssen ];

@@ -116,7 +116,7 @@ in buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "GPU-accelerated terminal emulator";
-    homepage = https://github.com/jwilm/alacritty;
+    homepage = "https://github.com/jwilm/alacritty";
     license = with licenses; [ asl20 ];
     maintainers = with maintainers; [ mic92 ];
     platforms = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" ];

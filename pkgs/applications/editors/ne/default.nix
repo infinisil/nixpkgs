@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "The nice editor";
-    homepage = https://github.com/vigna/ne;
+    homepage = "https://github.com/vigna/ne";
     longDescription = ''
       ne is a free (GPL'd) text editor based on the POSIX standard that runs
       (we hope) on almost any UN*X machine.  ne is easy to use for the beginner,

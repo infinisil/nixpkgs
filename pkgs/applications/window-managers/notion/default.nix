@@ -14,7 +14,7 @@ stdenv.mkDerivation {
   name = "${pname}-${version}";
   meta = with stdenv.lib; {
     description = "Tiling tabbed window manager, follow-on to the ion window manager";
-    homepage = http://notion.sourceforge.net;
+    homepage = "http://notion.sourceforge.net";
     platforms = platforms.linux;
     license   = licenses.notion_lgpl;
     maintainers = with maintainers; [jfb];

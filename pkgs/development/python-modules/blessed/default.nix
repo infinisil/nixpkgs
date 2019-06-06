@@ -19,7 +19,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [ wcwidth six ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/jquast/blessed;
+    homepage = "https://github.com/jquast/blessed";
     description = "A thin, practical wrapper around terminal capabilities in Python.";
     maintainers = with maintainers; [ eqyiel ];
     license = licenses.mit;

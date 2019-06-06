@@ -75,7 +75,7 @@ let
 
     meta = with stdenv.lib; {
       description = "Schematic editor and PCB layout tool from Autodesk (formerly CadSoft)";
-      homepage = https://www.autodesk.com/products/eagle/overview;
+      homepage = "https://www.autodesk.com/products/eagle/overview";
       license = licenses.unfree;
       platforms = [ "x86_64-linux" ];
       maintainers = [ maintainers.rittelle ];

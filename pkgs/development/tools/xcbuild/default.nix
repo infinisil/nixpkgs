@@ -59,7 +59,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Xcode-compatible build tool";
-    homepage = https://github.com/facebook/xcbuild;
+    homepage = "https://github.com/facebook/xcbuild";
     platforms = platforms.unix;
     maintainers = with maintainers; [ copumpkin matthewbauer ];
     license = with licenses; [ bsd2 bsd3 ];

@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/ludios/qolibri;
+    homepage = "https://github.com/ludios/qolibri";
     description = "EPWING reader for viewing Japanese dictionaries";
     platforms = platforms.linux;
     maintainers = with maintainers; [ ivan ];

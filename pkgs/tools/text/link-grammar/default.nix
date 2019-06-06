@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A Grammar Checking library";
-    homepage = https://www.abisource.com/projects/link-grammar/;
+    homepage = "https://www.abisource.com/projects/link-grammar/";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ jtojnar ];
     platforms = platforms.unix;

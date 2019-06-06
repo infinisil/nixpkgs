@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     '';
     # Upstream contact: maintainer is victorshoup on GitHub. Alternatively the
     # email listed on the homepage.
-    homepage = http://www.shoup.net/ntl/;
+    homepage = "http://www.shoup.net/ntl/";
     maintainers = with maintainers; [ timokau ];
     license = licenses.gpl2Plus;
     platforms = platforms.all;

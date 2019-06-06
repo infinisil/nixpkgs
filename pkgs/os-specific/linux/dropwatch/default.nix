@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Kernel dropped packet monitor";
-    homepage = https://github.com/nhorman/dropwatch;
+    homepage = "https://github.com/nhorman/dropwatch";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = [ maintainers.c0bw3b ];

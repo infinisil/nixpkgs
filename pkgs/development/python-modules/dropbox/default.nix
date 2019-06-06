@@ -18,7 +18,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "A Python library for Dropbox's HTTP-based Core and Datastore APIs";
-    homepage = https://www.dropbox.com/developers/core/docs;
+    homepage = "https://www.dropbox.com/developers/core/docs";
     license = licenses.mit;
   };
 }

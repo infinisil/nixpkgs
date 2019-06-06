@@ -16,7 +16,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [ zope_schema ];
 
   meta = with stdenv.lib; {
-    homepage = http://zopefilerepresentation.readthedocs.io/;
+    homepage = "http://zopefilerepresentation.readthedocs.io/";
     description = "File-system Representation Interfaces";
     license = licenses.zpl20;
     maintainers = with maintainers; [ goibhniu ];

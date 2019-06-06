@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "File manager for the MATE desktop";
-    homepage = https://mate-desktop.org;
+    homepage = "https://mate-desktop.org";
     license = with stdenv.lib.licenses; [ gpl2 lgpl2 ];
     platforms = stdenv.lib.platforms.unix;
     maintainers = [ stdenv.lib.maintainers.romildo ];

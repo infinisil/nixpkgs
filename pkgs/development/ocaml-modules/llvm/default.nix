@@ -10,7 +10,7 @@ stdenv.mkDerivation {
   buildInputs = [ python cmake llvm ocaml findlib ctypes ];
 
   patches = [ (fetchpatch {
-    url = https://raw.githubusercontent.com/ocaml/opam-repository/master/packages/llvm/llvm.3.9/files/cmake.patch;
+    url = "https://raw.githubusercontent.com/ocaml/opam-repository/master/packages/llvm/llvm.3.9/files/cmake.patch";
     sha256 = "1fcc6ylfiw1npdhx7mrsj7h0dx7cym7i9664kpr76zqazb52ikm9";
   })];
 

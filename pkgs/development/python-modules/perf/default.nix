@@ -36,7 +36,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Python module to generate and modify perf";
-    homepage = https://github.com/vstinner/perf;
+    homepage = "https://github.com/vstinner/perf";
     license = licenses.mit;
     maintainers = [ maintainers.costrouc ];
   };

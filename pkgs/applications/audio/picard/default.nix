@@ -32,7 +32,7 @@ in pythonPackages.buildPythonApplication rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://musicbrainz.org/doc/MusicBrainz_Picard;
+    homepage = "http://musicbrainz.org/doc/MusicBrainz_Picard";
     description = "The official MusicBrainz tagger";
     maintainers = with maintainers; [ ehmry ];
     license = licenses.gpl2;

@@ -19,7 +19,7 @@
 
       meta = with stdenv.lib; {
         description = "A cargo subcommand for checking and applying updates to installed executables";
-        homepage = https://github.com/nabijaczleweli/cargo-update;
+        homepage = "https://github.com/nabijaczleweli/cargo-update";
         license = with licenses; [ mit ];
         maintainers = with maintainers; [ gerschtli ];
         platforms = platforms.all;

@@ -19,7 +19,7 @@ if !(pythonOlder "3.3") then null else buildPythonPackage rec {
 
   meta = {
     description = "Backport of functools.lru_cache";
-    homepage = https://github.com/jaraco/backports.functools_lru_cache;
+    homepage = "https://github.com/jaraco/backports.functools_lru_cache";
     license = lib.licenses.mit;
   };
 }

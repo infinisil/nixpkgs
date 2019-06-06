@@ -54,7 +54,7 @@ in stdenv.mkDerivation {
     ++ optional withNinfod openssl; # TODO: Build with nettle
 
   meta = {
-    homepage = https://github.com/iputils/iputils;
+    homepage = "https://github.com/iputils/iputils";
     description = "A set of small useful utilities for Linux networking";
     license = with licenses; [ gpl2Plus bsd3 sunAsIsLicense ];
     platforms = platforms.linux;

@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Small ncurses-based file browser forked from noice";
-    homepage = https://github.com/jarun/nnn;
+    homepage = "https://github.com/jarun/nnn";
     license = licenses.bsd2;
     platforms = platforms.all;
     maintainers = with maintainers; [ jfrankenau ];

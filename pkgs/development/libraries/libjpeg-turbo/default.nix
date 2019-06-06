@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   installCheckTarget = "test";
 
   meta = with stdenv.lib; {
-    homepage = http://libjpeg-turbo.virtualgl.org/;
+    homepage = "http://libjpeg-turbo.virtualgl.org/";
     description = "A faster (using SIMD) libjpeg implementation";
     license = licenses.ijg; # and some parts under other BSD-style licenses
     maintainers = [ maintainers.vcunat ];

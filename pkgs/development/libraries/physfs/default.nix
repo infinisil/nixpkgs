@@ -28,7 +28,7 @@ let
     '';
 
     meta = with stdenv.lib; {
-      homepage = http://icculus.org/physfs/;
+      homepage = "http://icculus.org/physfs/";
       description = "Library to provide abstract access to various archives";
       license = licenses.free;
       platforms = platforms.linux;

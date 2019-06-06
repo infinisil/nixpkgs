@@ -42,7 +42,7 @@ buildPythonPackage rec {
       we're not alone in wanting tools like these.
     '';
 
-    homepage = http://allmydata.org/trac/pyutil;
+    homepage = "http://allmydata.org/trac/pyutil";
     license = licenses.gpl2Plus;
   };
 

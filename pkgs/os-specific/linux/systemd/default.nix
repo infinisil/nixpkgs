@@ -39,7 +39,7 @@ in stdenv.mkDerivation rec {
         # eventually causes the files to disappear.  While that was a good sign
         # for us to update our patch collection it does break reproducibility.
         name = "systemd-debian-patches.tar.xz";
-        url = http://snapshot.debian.org/archive/debian/20190301T035241Z/pool/main/s/systemd/systemd_239-12%7Ebpo9%2B1.debian.tar.xz;
+        url = "http://snapshot.debian.org/archive/debian/20190301T035241Z/pool/main/s/systemd/systemd_239-12%7Ebpo9%2B1.debian.tar.xz";
         sha256 = "0v9f62gyfiw5icdrdlcvjcipsqrsm49w6n8bqp9nb8s2ih6rsfhg";
       };
       # Note that we skip debian-specific patches, i.e. ./debian/patches/debian/*
@@ -216,7 +216,7 @@ in stdenv.mkDerivation rec {
   passthru.interfaceVersion = 2;
 
   meta = with stdenv.lib; {
-    homepage = http://www.freedesktop.org/wiki/Software/systemd;
+    homepage = "http://www.freedesktop.org/wiki/Software/systemd";
     description = "A system and service manager for Linux";
     license = licenses.lgpl21Plus;
     platforms = platforms.linux;

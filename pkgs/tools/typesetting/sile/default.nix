@@ -84,7 +84,7 @@ stdenv.mkDerivation rec {
       technologies and borrowing some ideas from graphical systems
       such as InDesign.
     '';
-    homepage = http://www.sile-typesetter.org;
+    homepage = "http://www.sile-typesetter.org";
     platforms = platforms.unix;
     license = licenses.mit;
   };

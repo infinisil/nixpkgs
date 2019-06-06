@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   makeFlags = "PREFIX=$(out)";
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/jarun/googler;
+    homepage = "https://github.com/jarun/googler";
     description = "Google Search, Google Site Search, Google News from the terminal";
     license = licenses.gpl3;
     maintainers = with maintainers; [ koral ];

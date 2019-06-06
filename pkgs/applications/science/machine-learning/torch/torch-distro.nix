@@ -6,7 +6,7 @@
 let
 
   common_meta = {
-    homepage = http://torch.ch;
+    homepage = "http://torch.ch";
     license = stdenv.lib.licenses.bsd3;
     maintainers = with stdenv.lib.maintainers; [ smironov ];
     platforms = stdenv.lib.platforms.gnu ++ stdenv.lib.platforms.linux;

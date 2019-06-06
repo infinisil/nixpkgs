@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A flat and light theme with a modern look";
-    homepage = https://github.com/EliverLara/Ant;
+    homepage = "https://github.com/EliverLara/Ant";
     license = licenses.gpl3;
     platforms = platforms.all;
     maintainers = [

@@ -21,7 +21,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "High-speed universal character encoding detector";
-    homepage = https://github.com/PyYoshi/cChardet;
+    homepage = "https://github.com/PyYoshi/cChardet";
     license = lib.licenses.mpl11;
     maintainers = with lib.maintainers; [ ivan ];
   };

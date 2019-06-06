@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/Glade;
+    homepage = "https://wiki.gnome.org/Apps/Glade";
     description = "User interface designer for GTK+ applications";
     maintainers = gnome3.maintainers;
     license = licenses.lgpl2;

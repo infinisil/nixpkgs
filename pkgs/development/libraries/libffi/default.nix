@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   patches = stdenv.lib.optional stdenv.isCygwin ./3.2.1-cygwin.patch
     ++ stdenv.lib.optional stdenv.isAarch64 (fetchpatch {
-      url = https://src.fedoraproject.org/rpms/libffi/raw/ccffc1700abfadb0969495a6e51b964117fc03f6/f/libffi-aarch64-rhbz1174037.patch;
+      url = "https://src.fedoraproject.org/rpms/libffi/raw/ccffc1700abfadb0969495a6e51b964117fc03f6/f/libffi-aarch64-rhbz1174037.patch";
       sha256 = "1vpirrgny43hp0885rswgv3xski8hg7791vskpbg3wdjdpb20wbc";
     })
     ++ stdenv.lib.optional stdenv.hostPlatform.isMusl (fetchpatch {
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     })
     ++ stdenv.lib.optional stdenv.hostPlatform.isRiscV (fetchpatch {
       name = "riscv-support.patch";
-      url = https://github.com/sorear/libffi-riscv/commit/e46492e8bb1695a19bc1053ed869e6c2bab02ff2.patch;
+      url = "https://github.com/sorear/libffi-riscv/commit/e46492e8bb1695a19bc1053ed869e6c2bab02ff2.patch";
       sha256 = "1vl1vbvdkigs617kckxvj8j4m2cwg62kxm1clav1w5rnw9afxg0y";
     })
     ++ stdenv.lib.optionals stdenv.isMips [
@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
       interface.  A layer must exist above libffi that handles type
       conversions for values passed between the two languages.
     '';
-    homepage = http://sourceware.org/libffi/;
+    homepage = "http://sourceware.org/libffi/";
     # See https://github.com/atgreen/libffi/blob/master/LICENSE .
     license = licenses.free;
     maintainers = [ ];

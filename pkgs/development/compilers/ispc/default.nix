@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     ];
 
   meta = with stdenv.lib; {
-    homepage = https://ispc.github.io/ ;
+    homepage = "https://ispc.github.io/" ;
     description = "Intel 'Single Program, Multiple Data' Compiler, a vectorised language";
     license = licenses.bsd3;
     platforms = ["x86_64-linux"]; # TODO: buildable on more platforms?

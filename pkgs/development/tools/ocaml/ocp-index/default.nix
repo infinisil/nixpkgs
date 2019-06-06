@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   inherit (dune) installPhase;
 
   meta = {
-    homepage = http://typerex.ocamlpro.com/ocp-index.html;
+    homepage = "http://typerex.ocamlpro.com/ocp-index.html";
     description = "A simple and light-weight documentation extractor for OCaml";
     license = stdenv.lib.licenses.lgpl3;
     platforms = ocaml.meta.platforms or [];

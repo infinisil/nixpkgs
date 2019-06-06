@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/wee-slack/wee-slack;
+    homepage = "https://github.com/wee-slack/wee-slack";
     license = licenses.mit;
     maintainers = with maintainers; [ ma27 ];
     description = ''

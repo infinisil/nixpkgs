@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Cuddly teddy bear for your X desktop";
-    homepage = https://weber.itn.liu.se/~stegu/xteddy/;
+    homepage = "https://weber.itn.liu.se/~stegu/xteddy/";
     license = licenses.gpl2;
     maintainers = [ maintainers.xaverdh ];
     platforms = platforms.linux;

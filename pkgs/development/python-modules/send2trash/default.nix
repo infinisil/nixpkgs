@@ -24,7 +24,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Send file to trash natively under macOS, Windows and Linux";
-    homepage = https://github.com/hsoft/send2trash;
+    homepage = "https://github.com/hsoft/send2trash";
     license = licenses.bsd3;
   };
 }

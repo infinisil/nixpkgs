@@ -38,7 +38,7 @@ let
       description = "SMT solver for Monotonic Theories";
       platforms   = platforms.unix;
       license     = if includeGplCode then licenses.gpl2 else licenses.mit;
-      homepage    = https://github.com/sambayless/monosat;
+      homepage    = "https://github.com/sambayless/monosat";
     };
   };
 

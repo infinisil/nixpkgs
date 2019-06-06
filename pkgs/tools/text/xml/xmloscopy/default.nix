@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "wtf is my docbook broken?";
-    homepage = https://github.com/grahamc/xmloscopy;
+    homepage = "https://github.com/grahamc/xmloscopy";
     license = stdenv.lib.licenses.mit;
     platforms = stdenv.lib.platforms.all;
   };

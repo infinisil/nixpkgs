@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A collection of tools that allows capturing TCP/IP packets and filtering them based on Lua policy files";
-    homepage = http://www.haka-security.org/;
+    homepage = "http://www.haka-security.org/";
     license = stdenv.lib.licenses.mpl20;
     maintainers = [ stdenv.lib.maintainers.tvestelind ];
     platforms = stdenv.lib.platforms.linux;

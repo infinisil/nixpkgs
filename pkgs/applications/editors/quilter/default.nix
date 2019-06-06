@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Focus on your writing - designed for elementary OS";
-    homepage = https://github.com/lainsce/quilter;
+    homepage = "https://github.com/lainsce/quilter";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ worldofpeace ];
     platforms = platforms.linux;

@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   preBuild="makeFlagsArray+=( PREFIX=$out )";
 
   meta = with stdenv.lib; {
-    homepage = http://piumarta.com/software/peg/;
+    homepage = "http://piumarta.com/software/peg/";
     platforms = platforms.all;
     license = licenses.mit;
   };

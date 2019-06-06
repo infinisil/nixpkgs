@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A documentation generator for generating API documentation from Vala source code";
-    homepage    = https://valadoc.org;
+    homepage    = "https://valadoc.org";
     license     = licenses.gpl2;
     maintainers = with maintainers; [ sternenseemann ];
     platforms   = platforms.linux;

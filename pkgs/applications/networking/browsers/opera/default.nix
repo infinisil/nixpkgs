@@ -39,7 +39,7 @@
 
 let
 
-  mirror = https://get.geo.opera.com/pub/opera/desktop;
+  mirror = "https://get.geo.opera.com/pub/opera/desktop";
   version = "60.0.3255.109";
 
   rpath = stdenv.lib.makeLibraryPath [
@@ -119,7 +119,7 @@ in stdenv.mkDerivation {
   '';
 
   meta = {
-    homepage = https://www.opera.com;
+    homepage = "https://www.opera.com";
     description = "Web browser";
     platforms = [ "x86_64-linux" ];
     license = stdenv.lib.licenses.unfree;

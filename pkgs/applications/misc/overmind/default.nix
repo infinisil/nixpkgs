@@ -19,7 +19,7 @@ buildGoPackage rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/DarthSim/overmind;
+    homepage = "https://github.com/DarthSim/overmind";
     description = "Process manager for Procfile-based applications and tmux";
     license = with licenses; [ mit ];
     maintainers = [ maintainers.adisbladis ];

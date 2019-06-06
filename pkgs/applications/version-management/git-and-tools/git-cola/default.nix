@@ -20,7 +20,7 @@ in buildPythonApplication rec {
   doCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/git-cola/git-cola;
+    homepage = "https://github.com/git-cola/git-cola";
     description = "A sleek and powerful Git GUI";
     license = licenses.gpl2;
     platforms = platforms.linux;

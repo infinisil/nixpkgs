@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   '';
   meta = with lib; {
     description = "Process fork/exec/exit monitoring tool";
-    homepage = https://kernel.ubuntu.com/~cking/forkstat/;
+    homepage = "https://kernel.ubuntu.com/~cking/forkstat/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ womfoo ];

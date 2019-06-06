@@ -90,7 +90,7 @@ stdenv.mkDerivation {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = https://be5invis.github.io/Iosevka/;
+    homepage = "https://be5invis.github.io/Iosevka/";
     downloadPage = "https://github.com/be5invis/Iosevka/releases";
     description = ''
       Slender monospace sans-serif and slab-serif typeface inspired by Pragmata

@@ -23,7 +23,7 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Python package to read and write geospatial raster data";
     license = licenses.bsd3;
-    homepage = https://rasterio.readthedocs.io/en/latest/;
+    homepage = "https://rasterio.readthedocs.io/en/latest/";
     maintainers = with maintainers; [ mredaelli ];
   };
 }

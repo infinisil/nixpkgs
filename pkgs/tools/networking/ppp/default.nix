@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
         sha256 = "1xnmqn02kc6g5y84xynjwnpv9cvrfn3nyv7h7r8j8xi7qf2aj4q8";
       })
       (fetchurl {
-        url = https://www.nikhef.nl/~janjust/ppp/ppp-2.4.7-eaptls-mppe-1.102.patch;
+        url = "https://www.nikhef.nl/~janjust/ppp/ppp-2.4.7-eaptls-mppe-1.102.patch";
         sha256 = "04war8l5szql53l36043hvzgfwqp3v76kj8brbz7wlf7vs2mlkia";
       })
       ./musl-fix-headers.patch
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://ppp.samba.org/;
+    homepage = "https://ppp.samba.org/";
     description = "Point-to-point implementation for Linux and Solaris";
     license = with licenses; [ bsdOriginal publicDomain gpl2 lgpl2 ];
     platforms = platforms.linux;

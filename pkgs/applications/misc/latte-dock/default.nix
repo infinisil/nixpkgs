@@ -21,7 +21,7 @@ mkDerivation rec {
 
   meta = with lib; {
     description = "Dock-style app launcher based on Plasma frameworks";
-    homepage = https://github.com/psifidotos/Latte-Dock;
+    homepage = "https://github.com/psifidotos/Latte-Dock";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = [ maintainers.benley maintainers.ysndr ];

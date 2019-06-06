@@ -29,7 +29,7 @@ mkDerivation rec {
 
   meta = with lib; {
     description = "DB Browser for SQLite";
-    homepage = http://sqlitebrowser.org/;
+    homepage = "http://sqlitebrowser.org/";
     license = licenses.gpl3;
     maintainers = with maintainers; [ ma27 ];
     platforms = platforms.linux; # can only test on linux

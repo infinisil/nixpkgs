@@ -41,7 +41,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "Python library for communicating with TREZOR Bitcoin Hardware Wallet";
-    homepage = https://github.com/trezor/python-trezor;
+    homepage = "https://github.com/trezor/python-trezor";
     license = lib.licenses.gpl3;
     maintainers = with lib.maintainers; [ np prusnak mmahut ];
   };

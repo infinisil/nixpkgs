@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
       the character device instead. This library encapsulates the ioctl calls and
       data structures behind a straightforward API.
     '';
-    homepage = https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/about/;
+    homepage = "https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/about/";
     license = licenses.lgpl2;
     maintainers = [ maintainers.expipiplus1 ];
     platforms = platforms.linux;

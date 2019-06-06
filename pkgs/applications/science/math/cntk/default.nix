@@ -82,7 +82,7 @@ in stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with lib; {
-    homepage = https://github.com/Microsoft/CNTK;
+    homepage = "https://github.com/Microsoft/CNTK";
     description = "An open source deep-learning toolkit";
     license = if onebitSGDSupport then licenses.unfreeRedistributable else licenses.mit;
     platforms = [ "x86_64-linux" ];

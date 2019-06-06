@@ -10,7 +10,7 @@ let
   # This is somewhat more flexible than preloading the key as an
   # embedded string.
   upstreamResolverListPubKey = pkgs.fetchurl {
-    url = https://raw.githubusercontent.com/dyne/dnscrypt-proxy/master/minisign.pub;
+    url = "https://raw.githubusercontent.com/dyne/dnscrypt-proxy/master/minisign.pub";
     sha256 = "18lnp8qr6ghfc2sd46nn1rhcpr324fqlvgsp4zaigw396cd7vnnh";
   };
 

@@ -30,7 +30,7 @@ rustPlatform.buildRustPackage rec {
 
     meta = {
         description = "Leftwm - A tiling window manager for the adventurer";
-        homepage = https://github.com/leftwm/leftwm;
+        homepage = "https://github.com/leftwm/leftwm";
         license = stdenv.lib.licenses.mit;
         platforms = stdenv.lib.platforms.linux;
         maintainers = with stdenv.lib.maintainers; [ mschneider ];

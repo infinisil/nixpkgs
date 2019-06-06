@@ -139,7 +139,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "G-code generator for 3D printer";
-    homepage = https://github.com/prusa3d/Slic3r;
+    homepage = "https://github.com/prusa3d/Slic3r";
     license = licenses.agpl3;
     maintainers = with maintainers; [ tweber ];
     broken = stdenv.hostPlatform.isAarch64;

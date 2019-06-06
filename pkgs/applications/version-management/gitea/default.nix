@@ -62,7 +62,7 @@ buildGoPackage rec {
 
   meta = {
     description = "Git with a cup of tea";
-    homepage = https://gitea.io;
+    homepage = "https://gitea.io";
     license = licenses.mit;
     maintainers = with maintainers; [ disassembler kolaente ];
   };

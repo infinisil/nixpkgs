@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
       for displaying PaX and security info on a large groups of
       binary files.
     '';
-    homepage = https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities;
+    homepage = "https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities";
     license = licenses.gpl2;
     platforms = platforms.unix;
     maintainers = with maintainers; [ thoughtpolice joachifm ];

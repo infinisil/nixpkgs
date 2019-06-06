@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A GTK VNC widget";
-    homepage = https://wiki.gnome.org/Projects/gtk-vnc;
+    homepage = "https://wiki.gnome.org/Projects/gtk-vnc";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ raskin offline ];
     platforms = platforms.linux;

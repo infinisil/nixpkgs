@@ -26,7 +26,7 @@ buildGoPackage rec {
     description = "A Make/Rake-like Build Tool Using Go";
     license = licenses.asl20;
     maintainers = [ maintainers.swdunlop ];
-    homepage = https://magefile.org/;
+    homepage = "https://magefile.org/";
     platforms = platforms.all;
   };
 }

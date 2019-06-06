@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://github.com/ocaml/dune;
+    homepage = "https://github.com/ocaml/dune";
     description = "A composable build system";
     maintainers = [ stdenv.lib.maintainers.vbgl ];
     license = stdenv.lib.licenses.mit;

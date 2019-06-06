@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    homepage = http://pawsa.fedorapeople.org/balsa/;
+    homepage = "http://pawsa.fedorapeople.org/balsa/";
     description = "An e-mail client for GNOME";
     license = licenses.gpl2Plus;
     platforms = platforms.unix;

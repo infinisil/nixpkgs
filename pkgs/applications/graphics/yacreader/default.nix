@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A comic reader for cross-platform reading and managing your digital comic collection";
-    homepage = http://www.yacreader.com;
+    homepage = "http://www.yacreader.com";
     license = stdenv.lib.licenses.gpl3;
   };
 }

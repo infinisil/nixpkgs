@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The Qt process manager";
-    homepage = https://github.com/lxqt/qps;
+    homepage = "https://github.com/lxqt/qps";
     license = licenses.gpl2;
     maintainers = with maintainers; [ romildo ];
     platforms = with platforms; unix;

@@ -25,7 +25,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "An API client for docker written in Python";
-    homepage = https://github.com/docker/docker-py;
+    homepage = "https://github.com/docker/docker-py";
     license = licenses.asl20;
     maintainers = with maintainers; [
     ];

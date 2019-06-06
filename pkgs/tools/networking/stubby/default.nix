@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
       Privacy resolver increasing end user privacy. Stubby is developed by
       the getdns team.
 '';
-    homepage = https://dnsprivacy.org/wiki/x/JYAT;
+    homepage = "https://dnsprivacy.org/wiki/x/JYAT";
     downloadPage = "https://github.com/getdnsapi/stubby";
     maintainers = with maintainers; [ leenaars ];
     license = licenses.bsd3; platforms = platforms.all;

@@ -20,7 +20,7 @@ buildPythonPackage rec {
 
   meta = {
     description = "Process and system utilization information interface for python";
-    homepage = https://github.com/giampaolo/psutil;
+    homepage = "https://github.com/giampaolo/psutil";
     license = stdenv.lib.licenses.bsd3;
   };
 }

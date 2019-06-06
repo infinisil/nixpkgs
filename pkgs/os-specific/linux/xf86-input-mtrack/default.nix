@@ -32,7 +32,7 @@ stdenv.mkDerivation {
   };
 
   meta = {
-    homepage = https://github.com/BlueDragonX/xf86-input-mtrack;
+    homepage = "https://github.com/BlueDragonX/xf86-input-mtrack";
 
     description = "An Xorg driver for multitouch trackpads";
 

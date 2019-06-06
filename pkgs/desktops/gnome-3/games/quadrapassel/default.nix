@@ -36,7 +36,7 @@ in stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Classic falling-block game, Tetris";
-    homepage = https://wiki.gnome.org/Apps/Quadrapassel;
+    homepage = "https://wiki.gnome.org/Apps/Quadrapassel";
     license = licenses.gpl2;
     maintainers = gnome3.maintainers;
     platforms = platforms.linux;

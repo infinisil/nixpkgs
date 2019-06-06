@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
 
   meta  = with stdenv.lib; {
     description = "A Python based monitoring and tracking tool for Plex Media Server.";
-    homepage = https://tautulli.com/;
+    homepage = "https://tautulli.com/";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with stdenv.lib.maintainers; [ csingley ];

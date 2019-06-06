@@ -23,7 +23,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://editorconfig.org;
+    homepage = "https://editorconfig.org";
     description = "EditorConfig File Locator and Interpreter for Python";
     license = licenses.psfl;
   };
