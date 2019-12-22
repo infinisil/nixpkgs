@@ -18,7 +18,7 @@ rec {
      it is to transparently move a set of modules to be a submodule of another
      config (as the proper arguments need to be replicated at each call to
      evalModules) and the less declarative the module set is. */
-  evalModules = { modules
+  evalModules = attrs@{ modules
                 , prefix ? []
                 , # This should only be used for special arguments that need to be evaluated
                   # when resolving module structure (like in imports). For everything else,
@@ -61,6 +61,9 @@ rec {
 
       closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options lib; } // specialArgs);
 
+      merging = xs: zipAttrsWith (name: values: if all isAttrs values then merging values else concatLists values) xs;
+      closedConditionals = merging (filter (x: x != {}) (map (m: m.conditionalImports) closed));
+
       options = mergeModules prefix (reverseList (filterModules (specialArgs.modulesPath or "") closed));
 
       # Traverse options and extract the option values into the final
@@ -70,22 +73,44 @@ rec {
       # without an infinite recursion. One way around this is to make the
       # 'config' passed around to the modules be unconditionally unchecked,
       # and only do the check in 'result'.
-      config = yieldConfig prefix options;
+      firstRes = yieldConfig prefix options;
+      config = firstRes.result;
+      additionalIncludes = unique firstRes.additionalIncludes;
+
       yieldConfig = prefix: set:
-        let res = removeAttrs (mapAttrs (n: v:
-          if isOption v then v.value
-          else yieldConfig (prefix ++ [n]) v) set) ["_definedNames"];
+        let
+          res = let
+            x = removeAttrs (mapAttrs (n: v:
+              if isOption v then {
+                result = v.value;
+                additionalIncludes = [];
+              } else yieldConfig (prefix ++ [n]) v) set) ["_definedNames"];
+          in {
+            result = mapAttrs (n: v: v.result) x;
+            additionalIncludes = concatLists (catAttrs "additionalIncludes" (attrValues x));
+          };
         in
         if options._module.check.value && set ? _definedNames then
           foldl' (res: m:
             foldl' (res: name:
-              if set ? ${name} then res else throw "The option `${showOption (prefix ++ [name])}' defined in `${m.file}' does not exist.")
-              res m.names)
-            res set._definedNames
+              if set ? ${name}
+              then res
+              else let
+                path = prefix ++ [ name ];
+                cond = attrByPath path null closedConditionals;
+              in if cond == null then
+                throw "The option `${showOption path}' defined in `${m.file}' does not exist."
+              else if isList cond then
+                res // {
+                  additionalIncludes = res.additionalIncludes ++ cond;
+                }
+              else throw "conditionalImports don't work within option sets ${toString path}"
+            ) res m.names
+          ) res set._definedNames
         else
           res;
       result = { inherit options config; };
-    in result;
+    in if additionalIncludes == [] then result else evalModules (attrs // { modules = attrs.modules ++ additionalIncludes; });
 
 
  # Filter disabled modules. Modules can be disabled allowing
@@ -113,6 +138,12 @@ rec {
         operator = m: toClosureList m.file m.key m.imports;
       };
 
+  genPrefixes = let g = x:
+  if isAttrs x then
+    if all isList (attrValues x) then {}
+    else mapAttrs (n: g) (filterAttrs (n: isAttrs) x)
+  else throw "${toString x}"; in g;
+
   /* Massage a module into canonical form, that is, a set consisting
      of ‘options’, ‘config’ and ‘imports’ attributes. */
   unifyModuleSyntax = file: key: m:
@@ -121,24 +152,26 @@ rec {
       else {};
     in
     if m ? config || m ? options then
-      let badAttrs = removeAttrs m ["_file" "key" "disabledModules" "imports" "options" "config" "meta"]; in
+      let badAttrs = removeAttrs m ["_file" "key" "disabledModules" "conditionalImports" "imports" "options" "config" "meta"]; in
       if badAttrs != {} then
         throw "Module `${key}' has an unsupported attribute `${head (attrNames badAttrs)}'. This is caused by assignments to the top-level attributes `config' or `options'."
       else
         { file = m._file or file;
           key = toString m.key or key;
           disabledModules = m.disabledModules or [];
+          conditionalImports = m.conditionalImports or {};
           imports = m.imports or [];
-          options = m.options or {};
+          options = recursiveUpdate (m.options or {}) (genPrefixes (m.conditionalImports or {}));
           config = mkMerge [ (m.config or {}) metaSet ];
         }
     else
       { file = m._file or file;
         key = toString m.key or key;
         disabledModules = m.disabledModules or [];
+        conditionalImports = m.conditionalImports or {};
         imports = m.require or [] ++ m.imports or [];
-        options = {};
-        config = mkMerge [ (removeAttrs m ["_file" "key" "disabledModules" "require" "imports"]) metaSet ];
+        options = genPrefixes (m.conditionalImports or {});
+        config = mkMerge [ (removeAttrs m ["_file" "key" "disabledModules" "conditionalImports" "require" "imports"]) metaSet ];
       };
 
   applyIfFunction = key: f: args@{ config, options, lib, ... }: if isFunction f then
