@@ -59,9 +59,12 @@ rec {
         };
       };
 
-      closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options lib; } // specialArgs);
+      collected = collectModules
+        (specialArgs.modulesPath or "")
+        (modules ++ [ internalModule ])
+        ({ inherit config options lib; } // specialArgs);
 
-      options = mergeModules prefix (reverseList (filterModules (specialArgs.modulesPath or "") closed));
+      options = mergeModules prefix (reverseList collected);
 
       # Traverse options and extract the option values into the final
       # config set.  At the same time, check whether all option
@@ -87,31 +90,70 @@ rec {
       result = { inherit options config; };
     in result;
 
+  # collectModules :: (modulesPath: String) -> (modules: [ Module ]) -> (args: Attrs) -> [ Module ]
+  #
+  # Collects all modules recursively through `import` statements, filtering out
+  # all modules in disabledModules.
+  collectModules = let
 
- # Filter disabled modules. Modules can be disabled allowing
- # their implementation to be replaced.
- filterModules = modulesPath: modules:
-   let
-     moduleKey = m: if isString m then toString modulesPath + "/" + m else toString m;
-     disabledKeys = map moduleKey (concatMap (m: m.disabledModules) modules);
-   in
-     filter (m: !(elem m.key disabledKeys)) modules;
+      # Like unifyModuleSyntax, but also imports paths and calls functions if necessary
+      loadModule = args: fallbackFile: fallbackKey: m:
+        if isFunction m || isAttrs m then
+          unifyModuleSyntax fallbackFile fallbackKey (applyIfFunction fallbackKey m args)
+        else loadModule args (toString m) (toString m) (import m);
 
-  /* Close a set of modules under the ‘imports’ relation. */
-  closeModules = modules: args:
-    let
-      toClosureList = file: parentKey: imap1 (n: x:
-        if isAttrs x || isFunction x then
-          let key = "${parentKey}:anon-${toString n}"; in
-          unifyModuleSyntax file key (applyIfFunction key x args)
-        else
-          let file = toString x; key = toString x; in
-          unifyModuleSyntax file key (applyIfFunction key (import x) args));
-    in
-      builtins.genericClosure {
-        startSet = toClosureList unknownModule "" modules;
-        operator = m: toClosureList m._file m.key m.imports;
-      };
+      # Collects all modules recursively into the form
+      #
+      #   {
+      #     disabled = [ <list of disabled modules> ];
+      #     keys.key1 = {
+      #       module = <module for key1>;
+      #       keys.key1-2 = {
+      #         module = <module for key1-2>;
+      #         keys = ...;
+      #       };
+      #     };
+      #   }
+      #
+      # - `disabled` contains the list of all disabled modules
+      # - `keys` is an attribute containing the module at each key along with all
+      #   modules keys that were imported by that module
+      collectStructuredModules =
+        let
+          collectResults = list: {
+            disabled = concatLists (catAttrs "disabled" list);
+            keys = listToAttrs list;
+          };
+        in parentFile: parentKey: modules: args: collectResults (imap1 (n: x:
+          let
+            module = loadModule args parentFile "${parentKey}:anon-${toString n}" x;
+            collectedImports = collectStructuredModules module._file module.key module.imports args;
+          in {
+            name = module.key;
+            disabled = module.disabledModules ++ collectedImports.disabled;
+            value = { module = module; keys = collectedImports.keys; };
+          }) modules);
+
+      # filterModules :: String -> { disabled, keys } -> [ Module ]
+      #
+      # Filters a structure as emitted by collectStructuredModules by removing all disabled
+      # modules recursively. It returns the final list of unique-by-key modules
+      filterModules = modulesPath: { disabled, keys }:
+        let
+          moduleKey = m: if isString m then toString modulesPath + "/" + m else toString m;
+          disabledKeys = map moduleKey disabled;
+          # Takes a recursive `keys` set as described in collectStructuredModules and flattens
+          # it out to a direct `key -> module` mapping while also filtering disabled
+          # keys
+          flattenKeys = keys:
+            let included = builtins.removeAttrs keys disabledKeys;
+            in mapAttrs (key: value: value.module) included
+              // foldl' (a: b: a // flattenKeys b.keys) {} (attrValues included);
+              # By using the //, we are deduplicating modules with the same key
+        in attrValues (flattenKeys keys);
+
+    in modulesPath: modules: args:
+      filterModules modulesPath (collectStructuredModules unknownModule "" modules args);
 
   /* Massage a module into canonical form, that is, a set consisting
      of ‘options’, ‘config’ and ‘imports’ attributes. */
