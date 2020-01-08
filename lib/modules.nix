@@ -120,18 +120,19 @@ rec {
       #   modules keys that were imported by that module
       collectStructuredModules =
         let
-          collectResults = list: {
-            disabled = concatLists (catAttrs "disabled" list);
-            keys = listToAttrs list;
+          collectResults = keys: {
+            disabled = concatLists (catAttrs "disabled" keys);
+            inherit keys;
           };
         in parentFile: parentKey: modules: args: collectResults (imap1 (n: x:
           let
             module = loadModule args parentFile "${parentKey}:anon-${toString n}" x;
             collectedImports = collectStructuredModules module._file module.key module.imports args;
           in {
-            name = module.key;
+            key = module.key;
             disabled = module.disabledModules ++ collectedImports.disabled;
-            value = { module = module; keys = collectedImports.keys; };
+            module = module;
+            keys = collectedImports.keys;
           }) modules);
 
       # filterModules :: String -> { disabled, keys } -> [ Module ]
@@ -145,12 +146,18 @@ rec {
           # Takes a recursive `keys` set as described in collectStructuredModules and flattens
           # it out to a direct `key -> module` mapping while also filtering disabled
           # keys
-          flattenKeys = keys:
-            let included = builtins.removeAttrs keys disabledKeys;
-            in mapAttrs (key: value: value.module) included
-              // foldl' (a: b: a // flattenKeys b.keys) {} (attrValues included);
-              # By using the //, we are deduplicating modules with the same key
-        in attrValues (flattenKeys keys);
+          # flattenKeys :: { <key> = { mod = <mod>; keys = ...; }; } -> { <key> = <mod>; }
+          #flattenKeys = keys:
+          #  let included = builtins.removeAttrs keys disabledKeys;
+          #  in mapAttrs (key: value: value.module) included
+          #    // foldl' (a: b: a // flattenKeys b.keys) {} (attrValues included);
+          #    # By using the //, we are deduplicating modules with the same key
+          #keyFilter = keys: mapAttrsToList (key: value: { inherit key value; }) (builtins.removeAttrs keys disabledKeys);
+          keyFilter = filter (k: ! elem k.key disabledKeys);
+        in map (x: x.module) (builtins.genericClosure {
+          startSet = keyFilter keys;
+          operator = { keys, ... }: keyFilter keys;
+        });
 
     in modulesPath: modules: args:
       filterModules modulesPath (collectStructuredModules unknownModule "" modules args);
