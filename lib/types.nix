@@ -461,6 +461,15 @@ rec {
       functor = (defaultFunctor name) // { wrapped = elemType; };
     };
 
+    partialSubmodule = allowedTypes: modules:
+      let atoms = oneOf allowedTypes;
+          t = attrsOf (either t atoms // {
+            description = "attribute set or ${atoms.description}";
+          });
+      in combination t recursiveUpdate (submoduleWith {
+        modules = toList modules ++ [{ _module.check = false; }];
+      });
+
     # A submodule (like typed attribute set). See NixOS manual.
     submodule = modules: submoduleWith {
       shorthandOnlyDefinesConfig = true;
