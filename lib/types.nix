@@ -559,6 +559,25 @@ rec {
         functor = (defaultFunctor name) // { payload = values; binOp = a: b: unique (a ++ b); };
       };
 
+    combination = t1: resultMerge: t2: mkOptionType rec {
+      name = "combination";
+      description = "${t1.description} and ${t2.description}";
+      check = x: t1.check x && t2.check x;
+      merge = loc: defs:
+        let
+          m1 = t1.merge loc defs;
+          m2 = t2.merge loc defs;
+        in resultMerge m1 m2;
+      typeMerge = f':
+        let mt1 = t1.typeMerge (elemAt f'.wrapped 0).functor;
+            mt2 = t2.typeMerge (elemAt f'.wrapped 1).functor;
+        in
+           if (name == f'.name) && (mt1 != null) && (mt2 != null)
+           then functor.type mt1 mt2
+           else null;
+      functor = (defaultFunctor name) // { wrapped = [ t1 t2 ]; };
+    };
+
     # Either value of type `t1` or `t2`.
     either = t1: t2: mkOptionType rec {
       name = "either";
