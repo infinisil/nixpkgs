@@ -480,6 +480,7 @@ rec {
       { modules
       , specialArgs ? {}
       , shorthandOnlyDefinesConfig ? false
+      , unstructuredType ? null
       }@attrs:
       let
         inherit (lib.modules) evalModules;
@@ -498,17 +499,18 @@ rec {
       in
       mkOptionType rec {
         name = "submodule";
+        description = unstructuredType.description or name;
         check = x: isAttrs x || isFunction x || path.check x;
         merge = loc: defs:
           (evalModules {
             modules = allModules defs;
-            inherit specialArgs;
+            inherit specialArgs unstructuredType;
             args.name = last loc;
             prefix = loc;
           }).config;
         emptyValue = { value = {}; };
         getSubOptions = prefix: (evalModules
-          { inherit modules prefix specialArgs;
+          { inherit modules prefix specialArgs unstructuredType;
             # This is a work-around due to the fact that some sub-modules,
             # such as the one included in an attribute set, expects a "args"
             # attribute to be given to the sub-module. As the option
@@ -533,10 +535,9 @@ rec {
         functor = defaultFunctor name // {
           type = types.submoduleWith;
           payload = {
-            modules = modules;
-            specialArgs = specialArgs;
-            shorthandOnlyDefinesConfig = shorthandOnlyDefinesConfig;
+            inherit modules specialArgs shorthandOnlyDefinesConfig;
           };
+          wrapped = unstructuredType;
           binOp = lhs: rhs: {
             modules = lhs.modules ++ rhs.modules;
             specialArgs =
@@ -550,6 +551,20 @@ rec {
               else throw "A submoduleWith option is declared multiple times with conflicting shorthandOnlyDefinesConfig values";
           };
         };
+        typeMerge = f':
+          # cannot merge different types
+          if functor.name != f'.name then null
+          else
+            let wrapped = functor.wrapped.typeMerge f'.wrapped.functor;
+                payload = functor.binOp functor.payload f'.payload;
+            in functor.type (payload // {
+              unstructuredType =
+                if functor.wrapped == null && f'.wrapped == null
+                then null
+                else if functor.wrapped != null && f'.wrapped != null && wrapped != null
+                then wrapped
+                else throw "A submoduleWith option is declared multiple times with conflicting unstructuredType values";
+            });
       };
 
     # A value from a set of allowed ones.

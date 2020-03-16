@@ -29,6 +29,12 @@ rec {
                   args ? {}
                 , # This would be remove in the future, Prefer _module.check option instead.
                   check ? true
+                , # For unstructured definitions (ones that don't have an
+                  # associated option) this type should be used instead. Needs
+                  # to support attribute values (see attrValueType) if it should
+                  # be combinable with structured options. If null, no
+                  # unstructured definitions are allowed.
+                  unstructuredType ? null
                 }:
     let
       # This internal module declare internal options under the `_module'
@@ -70,7 +76,7 @@ rec {
         (modules ++ [ internalModule ])
         ({ inherit config options lib; } // specialArgs);
 
-      options = mergeModules prefix (reverseList collected);
+      options = mergeModules unstructuredType prefix (reverseList collected);
 
       # Traverse options and extract the option values into the final
       # config set.  At the same time, check whether all option
@@ -234,11 +240,11 @@ rec {
      At the same time, for each option declaration, it will merge the
      corresponding option definitions in all machines, returning them
      in the ‘value’ attribute of each option. */
-  mergeModules = prefix: modules:
-    mergeModules' prefix modules
+  mergeModules = unstructuredType: prefix: modules:
+    mergeModules' (if unstructuredType == null then null else { type = unstructuredType; }) prefix modules
       (concatMap (m: map (config: { file = m._file; inherit config; }) (pushDownProperties m.config)) modules);
 
-  mergeModules' = prefix: options: configs:
+  mergeModules' = unstructured: prefix: options: configs:
     let
      /* byName is like foldAttrs, but will look for attributes to merge in the
         specified attribute name.
@@ -280,16 +286,49 @@ rec {
       defnsByName' = byName "config" (module: value:
           [{ inherit (module) file; inherit value; }]
         ) configs;
+
+      subUnstructured =
+        # If this option doesn't support unstructured values, then all sub
+        # options don't either
+        if unstructured == null then null
+        # If unstructured values are supported, but an error would be thrown if
+        # used, propagate that error
+        else if unstructured ? error then unstructured
+        # If unstructured values are supported, but the type at this level
+        # doesn't support any deeper nesting, thrown an error (if such deep of a
+        # a nesting is used)
+        else if unstructured.type.attrValueType == null then {
+          error = loc: defs: throw ("The option `${showOption loc}' defined in `${(head defs).file}' does not exist "
+            + "and the unstructured type `${unstructured.type.description}' of `${showOption prefix}' does not support attribute sets.");
+          }
+        # If unstructured values are supported and the type at this level does
+        # support deeper nesting, indicate that the attribute value type of that
+        # type should be used for the next level of nesting
+        else { type = unstructured.type.attrValueType; };
+
+      # Only generate options for definitions if unstructured values are supported
+      # TODO: This leads to infinite recursion in NixOS if it's always turned on, so some use cases won't be supported anymore because of unstructured attrs. Figure out what they are.
+      optionNames = optionals (unstructured != null) (attrNames defnsByName) ++ attrNames declsByName;
     in
-    (flip mapAttrs declsByName (name: decls:
+    (genAttrs optionNames (name:
       # We're descending into attribute ‘name’.
         let
           loc = prefix ++ [name];
+          decls = declsByName.${name} or [];
           defns = defnsByName.${name} or [];
           defns' = defnsByName'.${name} or [];
           nrOptions = count (m: isOption m.options) decls;
-        in
-          if nrOptions == length decls then
+        in if length decls == 0 then
+            # We're dealing with a definition without corresponding option
+            # declaration, which because of above code means that
+            # subUnstructured is never null
+            if subUnstructured ? error
+            # Depending on above evaluation on whether the unstructured type
+            # supports nesting, throw the error or evaluate the definitions with
+            # the nested type
+            then subUnstructured.error loc defns'
+            else evalOptionValue loc (mkOption { type = subUnstructured.type; }) defns'
+          else if nrOptions == length decls then
             let opt = fixupOptionType loc (mergeOptionDecls loc decls);
             in evalOptionValue loc opt defns'
           else if nrOptions != 0 then
@@ -299,7 +338,7 @@ rec {
             in
               throw "The option `${showOption loc}' in `${firstOption._file}' is a prefix of options in `${firstNonOption._file}'."
           else
-            if all (def: isAttrs def.value) defns' then mergeModules' loc decls defns
+            if all (def: isAttrs def.value) defns' then mergeModules' subUnstructured loc decls defns
             else let firstInvalid = findFirst (def: ! isAttrs def.value) null defns';
             in throw "The option path `${showOption loc}' is an attribute set of options, but it is defined to not be an attribute set in `${firstInvalid.file}'. Did you define its value at the correct and complete path?"
       ))
