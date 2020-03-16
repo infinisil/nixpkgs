@@ -75,6 +75,9 @@ rec {
       getSubOptions ? prefix: {}
     , # List of modules if any, or null if none.
       getSubModules ? null
+    , # If this type allows attribute set values, this gives the type of
+      # attribute values, otherwise this is null
+      attrValueType ? null
     , # Function for building the same option type with a different list of
       # modules.
       substSubModules ? m: null
@@ -93,7 +96,7 @@ rec {
       functor ? defaultFunctor name
     }:
     { _type = "option-type";
-      inherit name check merge emptyValue getSubOptions getSubModules substSubModules typeMerge functor;
+      inherit name check merge emptyValue getSubOptions getSubModules attrValueType substSubModules typeMerge functor;
       description = if description == null then name else description;
     };
 
@@ -103,6 +106,7 @@ rec {
   types = rec {
     unspecified = mkOptionType {
       name = "unspecified";
+      attrValueType = unspecified;
     };
 
     bool = mkOptionType {
@@ -298,6 +302,7 @@ rec {
       emptyValue = { value = {}; };
       getSubOptions = prefix: elemType.getSubOptions (prefix ++ ["<name>"]);
       getSubModules = elemType.getSubModules;
+      attrValueType = elemType;
       substSubModules = m: attrsOf (elemType.substSubModules m);
       functor = (defaultFunctor name) // { wrapped = elemType; };
     };
@@ -322,6 +327,7 @@ rec {
       emptyValue = { value = {}; };
       getSubOptions = prefix: elemType.getSubOptions (prefix ++ ["<name>"]);
       getSubModules = elemType.getSubModules;
+      attrValueType = elemType;
       substSubModules = m: lazyAttrsOf (elemType.substSubModules m);
       functor = (defaultFunctor name) // { wrapped = elemType; };
     };
@@ -427,6 +433,7 @@ rec {
         emptyValue = { value = {}; };
         getSubOptions = prefix: elemType.getSubOptions (prefix ++ ["<name?>"]);
         getSubModules = elemType.getSubModules;
+        attrValueType = elemType;
         substSubModules = m: loaOf (elemType.substSubModules m);
         functor = (defaultFunctor name) // { wrapped = elemType; };
       };
@@ -439,6 +446,7 @@ rec {
       emptyValue = elemType.emptyValue;
       getSubOptions = elemType.getSubOptions;
       getSubModules = elemType.getSubModules;
+      attrValueType = elemType.attrValueType;
       substSubModules = m: uniq (elemType.substSubModules m);
       functor = (defaultFunctor name) // { wrapped = elemType; };
     };
@@ -457,6 +465,7 @@ rec {
       emptyValue = { value = null; };
       getSubOptions = elemType.getSubOptions;
       getSubModules = elemType.getSubModules;
+      attrValueType = elemType.attrValueType;
       substSubModules = m: nullOr (elemType.substSubModules m);
       functor = (defaultFunctor name) // { wrapped = elemType; };
     };
@@ -564,6 +573,7 @@ rec {
       name = "either";
       description = "${t1.description} or ${t2.description}";
       check = x: t1.check x || t2.check x;
+      attrValueType = if t1.attrValueType != null then t1.attrValueType else t2.attrValueType;
       merge = loc: defs:
         let
           defList = map (d: d.value) defs;
@@ -609,6 +619,7 @@ rec {
         emptyValue = finalType.emptyValue;
         getSubOptions = finalType.getSubOptions;
         getSubModules = finalType.getSubModules;
+        attrValueType = finalType.attrValueType;
         substSubModules = m: coercedTo coercedType coerceFunc (finalType.substSubModules m);
         typeMerge = t1: t2: null;
         functor = (defaultFunctor name) // { wrapped = finalType; };
