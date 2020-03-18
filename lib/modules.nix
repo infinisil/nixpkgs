@@ -80,13 +80,24 @@ rec {
       # without an infinite recursion. One way around this is to make the
       # 'config' passed around to the modules be unconditionally unchecked,
       # and only do the check in 'result'.
-      config = yieldConfig prefix options;
+      structuredConfig = yieldConfig prefix options;
+
+      unstructuredConfig =
+        let
+          defs = map (value: {
+            file = value.file;
+            value = setAttrByPath value.prefix value.value;
+          }) merged.unmatched;
+        in unstructuredType.merge prefix defs;
+
+      config = if unstructuredType != null then recursiveUpdate unstructuredConfig structuredConfig else structuredConfig;
+
       yieldConfig = prefix: set: mapAttrs (n: v:
         if isOption v then v.value else yieldConfig (prefix ++ [n]) v
       ) set;
 
       checkUnmatched =
-        if options._module.check.value && merged.unmatched != [] then
+        if options._module.check.value && unstructuredType == null && merged.unmatched != [] then
           let inherit (head merged.unmatched) file prefix;
           in throw "The option `${showOption prefix}' defined in `${file}' does not exist."
         else null;
