@@ -70,7 +70,8 @@ rec {
         (modules ++ [ internalModule ])
         ({ inherit config options lib; } // specialArgs);
 
-      options = mergeModules prefix (reverseList collected);
+      merged = mergeModules prefix (reverseList collected);
+      options = merged.matched;
 
       # Traverse options and extract the option values into the final
       # config set.  At the same time, check whether all option
@@ -80,20 +81,17 @@ rec {
       # 'config' passed around to the modules be unconditionally unchecked,
       # and only do the check in 'result'.
       config = yieldConfig prefix options;
-      yieldConfig = prefix: set:
-        let res = removeAttrs (mapAttrs (n: v:
-          if isOption v then v.value
-          else yieldConfig (prefix ++ [n]) v) set) ["_definedNames"];
-        in
-        if options._module.check.value && set ? _definedNames then
-          foldl' (res: m:
-            foldl' (res: name:
-              if set ? ${name} then res else throw "The option `${showOption (prefix ++ [name])}' defined in `${m.file}' does not exist.")
-              res m.names)
-            res set._definedNames
-        else
-          res;
-      result = {
+      yieldConfig = prefix: set: mapAttrs (n: v:
+        if isOption v then v.value else yieldConfig (prefix ++ [n]) v
+      ) set;
+
+      checkUnmatched =
+        if options._module.check.value && merged.unmatched != [] then
+          let inherit (head merged.unmatched) file prefix;
+          in throw "The option `${showOption prefix}' defined in `${file}' does not exist."
+        else null;
+
+      result = builtins.seq checkUnmatched {
         inherit options;
         config = removeAttrs config [ "_module" ];
         inherit (config) _module;
@@ -280,9 +278,9 @@ rec {
       defnsByName' = byName "config" (module: value:
           [{ inherit (module) file; inherit value; }]
         ) configs;
-    in
-    (flip mapAttrs declsByName (name: decls:
-      # We're descending into attribute ‘name’.
+
+      res = flip mapAttrs declsByName (name: decls:
+        # We're descending into attribute ‘name’.
         let
           loc = prefix ++ [name];
           defns = defnsByName.${name} or [];
@@ -291,7 +289,10 @@ rec {
         in
           if nrOptions == length decls then
             let opt = fixupOptionType loc (mergeOptionDecls loc decls);
-            in evalOptionValue loc opt defns'
+            in {
+              matched = evalOptionValue loc opt defns';
+              unmatched = [];
+            }
           else if nrOptions != 0 then
             let
               firstOption = findFirst (m: isOption m.options) "" decls;
@@ -301,9 +302,20 @@ rec {
           else
             if all (def: isAttrs def.value) defns' then mergeModules' loc decls defns
             else let firstInvalid = findFirst (def: ! isAttrs def.value) null defns';
-            in throw "The option path `${showOption loc}' is an attribute set of options, but it is defined to not be an attribute set in `${firstInvalid.file}'. Did you define its value at the correct and complete path?"
-      ))
-    // { _definedNames = map (m: { inherit (m) file; names = attrNames m.config; }) configs; };
+            in throw "The option path `${showOption loc}' is an attribute set of options, but it is defined to not be an attribute set in `${firstInvalid.file}'. Did you define its value at the correct and complete path?");
+
+      matched = mapAttrs (n: v: v.matched) res;
+
+      unmatchedDefns = mapAttrs (n: v: v.unmatched) res // removeAttrs defnsByName' (attrNames matched);
+    in {
+      inherit matched;
+      # { x = [ a b ]; y = [ c d ]; }  =>  [ { x = a; } { x = b; } { y = c; } { y = d; } ]
+      unmatched = concatLists (mapAttrsToList (name: values:
+        map (value: value // {
+          prefix = [name] ++ (value.prefix or []);
+        }) values
+      ) unmatchedDefns);
+    };
 
   /* Merge multiple option declarations into a single declaration.  In
      general, there should be only one declaration of each option.
