@@ -29,6 +29,12 @@ rec {
                   args ? {}
                 , # This would be remove in the future, Prefer _module.check option instead.
                   check ? true
+                , # For unstructured definitions (ones that don't have an
+                  # associated option) this type should be used instead. Needs
+                  # to support attribute values (see attrValueType) if it should
+                  # be combinable with structured options. If null, no
+                  # unstructured definitions are allowed.
+                  unstructuredType ? null
                 }:
     let
       # This internal module declare internal options under the `_module'
