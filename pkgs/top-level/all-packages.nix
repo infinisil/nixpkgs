@@ -5889,6 +5889,8 @@ in
 
   pgmetrics = callPackage ../tools/misc/pgmetrics { };
 
+  pgweb = callPackage ../development/tools/database/pgweb { };
+
   pdsh = callPackage ../tools/networking/pdsh {
     rsh = true;          # enable internal rsh implementation
     ssh = openssh;
@@ -23615,7 +23617,7 @@ in
   };
 
   nethack-x11 = callPackage ../games/nethack { x11Mode = true; };
-  
+
   netris = callPackage ../games/netris { };
 
   neverball = callPackage ../games/neverball { };
