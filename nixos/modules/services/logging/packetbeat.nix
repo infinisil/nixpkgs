@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.services.packetbeat;
-  format = pkgs.formats.yaml;
+  format = pkgs.formats.yaml {};
 in
 {
   options = {
@@ -47,36 +47,7 @@ in
 
       settings = mkOption {
         type = format.type;
-        default = {
-          packetbeat.interfaces.device = "any";
-          setup = {
-            template = {
-              settings = {
-                index.number_of_shards = 1;
-              };
-            };
-            kibana = {
-              host = "localhost:5601";
-            };
-          };
-          output = {
-            elasticsearch = {
-              hosts = [ "localhost:9200" ];
-            };
-          };
-          processors = [
-            ''
-              if.contains.tags: forwarded
-              then:
-                - drop_fields:
-                  fields: [host]
-              else:
-                - add_host_metadata: ~
-            ''
-            "add_cloud_metadata: ~"
-            "add_docker_metadata: ~"
-          ];
-        };
+        default = {};
         description = ''
           Any other configuration options you want to add.
         '';
@@ -129,13 +100,44 @@ in
   };
 
   config = mkIf cfg.enable {
+
     services.packetbeat.settings = {
       name = cfg.name;
       tags = cfg.tags;
       packetbeat = {
-        flows = cfg.flows;
-        protocols = cfg.protocols;
+        interfaces.device = "any";
+
+        # FIXME: these are the 2 problem lines
+        # flows = cfg.flows;
+        # protocols = cfg.protocols;
       };
+      output = {
+        elasticsearch = {
+          hosts = [ "localhost:9200" ];
+        };
+      };
+      setup = {
+        template = {
+          settings = {
+            index.number_of_shards = 1;
+          };
+        };
+        kibana = {
+          host = "localhost:5601";
+        };
+      };
+      processors = [
+        ''
+          if.contains.tags: forwarded
+          then:
+            - drop_fields:
+              fields: [host]
+          else:
+            - add_host_metadata: ~
+        ''
+        "add_cloud_metadata: ~"
+        "add_docker_metadata: ~"
+      ];
     };
 
     systemd.services.packetbeat = {
