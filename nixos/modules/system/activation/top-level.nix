@@ -120,18 +120,10 @@ let
     perl = pkgs.perl.withPackages (p: with p; [ ConfigIniFiles FileSlurp NetDBus ]);
   };
 
-  # Handle assertions and warnings
-
-  failedAssertions = map (x: x.message) (filter (x: !x.assertion) config.assertions);
-
-  baseSystemAssertWarn = if failedAssertions != []
-    then throw "\nFailed assertions:\n${concatStringsSep "\n" (map (x: "- ${x}") failedAssertions)}"
-    else showWarnings config.warnings baseSystem;
-
   # Replace runtime dependencies
   system = foldr ({ oldDependency, newDependency }: drv:
       pkgs.replaceDependency { inherit oldDependency newDependency drv; }
-    ) baseSystemAssertWarn config.system.replaceRuntimeDependencies;
+    ) baseSystem config.system.replaceRuntimeDependencies;
 
   /* Workaround until https://github.com/NixOS/nixpkgs/pull/156533
      Call can be replaced by argument when that's merged.

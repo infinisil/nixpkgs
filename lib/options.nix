@@ -241,7 +241,7 @@ rec {
         subOptions =
           let ss = opt.type.getSubOptions opt.loc;
           in if ss != {} then optionAttrSetToDocList' opt.loc ss else [];
-        subOptionsVisible = docOption.visible && opt.visible or null != "shallow";
+        subOptionsVisible = docOption.visible && opt.visible or null != "shallow" && ! docOption.internal;
       in
         [ docOption ] ++ optionals subOptionsVisible subOptions) (collect isOption options);
 

@@ -30,32 +30,51 @@ reportFailure() {
     ((++fail))
 }
 
+checkConfigCodeOutErr() {
+    local expectedExit=$1
+    shift
+    local outputContains=$1
+    shift
+    local errorContains=$1
+    shift
+    local tmp=$(mktemp -d)
+    set +o errexit
+    evalConfig "$@" 1>"$tmp/out" 2>"$tmp/err"
+    local exitCode=$?
+    set -o errexit
+    if [[ "$exitCode" -ne "$expectedExit" ]]; then
+        echo 2>&1 "error: Expected exit code $expectedExit, while evaluating"
+        reportFailure "$@"
+        return
+    fi
+
+    if [[ -n "$outputContains" ]] && ! grep --silent "$outputContains" "$tmp/out"; then
+        echo 2>&1 "error: Expected result matching '$outputContains', while evaluating"
+        reportFailure "$@"
+        return
+    fi
+
+    if [[ -n "$errorContains" ]] && ! grep -zP --silent "$errorContains" "$tmp/err"; then
+        echo 2>&1 "error: Expected error matching '$errorContains', while evaluating"
+        reportFailure "$@"
+        return
+    fi
+
+    ((++pass))
+
+    rm -rf "$tmp"
+}
+
 checkConfigOutput() {
     local outputContains=$1
     shift
-    if evalConfig "$@" 2>/dev/null | grep --silent "$outputContains" ; then
-        ((++pass))
-    else
-        echo 2>&1 "error: Expected result matching '$outputContains', while evaluating"
-        reportFailure "$@"
-    fi
+    checkConfigCodeOutErr 0 "$outputContains" "" "$@"
 }
 
 checkConfigError() {
     local errorContains=$1
-    local err=""
     shift
-    if err="$(evalConfig "$@" 2>&1 >/dev/null)"; then
-        echo 2>&1 "error: Expected error code, got exit code 0, while evaluating"
-        reportFailure "$@"
-    else
-        if echo "$err" | grep -zP --silent "$errorContains" ; then
-            ((++pass))
-        else
-            echo 2>&1 "error: Expected error matching '$errorContains', while evaluating"
-            reportFailure "$@"
-        fi
-    fi
+    checkConfigCodeOutErr 1 "" "$errorContains" "$@"
 }
 
 # Check boolean option.
@@ -310,6 +329,29 @@ checkConfigOutput '^"hello"$' config.theOption.str ./optionTypeMerging.nix
 
 # Test that types.optionType correctly annotates option locations
 checkConfigError 'The option .theOption.nested. in .other.nix. is already declared in .optionTypeFile.nix.' config.theOption.nested ./optionTypeFile.nix
+
+## Module assertions
+# Check that assertions are triggered by default for just evaluating config
+checkConfigError 'Failed checks:\n       - \[test\] Assertion failed' config ./assertions/simple.nix
+
+# Assertion is not triggered when enable is false or condition is true
+checkConfigOutput '{ }' config ./assertions/condition-true.nix
+checkConfigOutput '{ }' config ./assertions/enable-false.nix
+
+# Warnings should be displayed on standard error
+checkConfigCodeOutErr 0 '{ }' 'warning: \[test\] Warning message' config ./assertions/warning.nix
+
+# Check that multiple assertions and warnings can be triggered at once
+checkConfigError 'Failed checks:\n       - \[test1\] Assertion 1 failed\n       - \[test2\] Assertion 2 failed' config ./assertions/multi.nix
+checkConfigError 'trace: warning: \[test3\] Warning 3 failed\ntrace: warning: \[test4\] Warning 4 failed' config ./assertions/multi.nix
+
+# Submodules should be able to trigger assertions and display the submodule prefix in their error
+checkConfigError 'Failed checks:\n       - \[foo/test\] Assertion failed' config.foo ./assertions/submodule.nix
+checkConfigError 'Failed checks:\n       - \[foo.bar/test\] Assertion failed' config.foo.bar ./assertions/submodule-attrsOf.nix
+checkConfigError 'Failed checks:\n       - \[foo.bar.baz/test\] Assertion failed' config.foo.bar.baz ./assertions/submodule-attrsOf-attrsOf.nix
+
+# Assertions with an attribute starting with _ shouldn't have their name displayed
+checkConfigError 'Failed checks:\n       - Assertion failed' config ./assertions/underscore-attributes.nix
 
 cat <<EOF
 ====== module tests ======
