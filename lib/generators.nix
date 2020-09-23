@@ -218,7 +218,7 @@ rec {
   tracer = line: next: builtins.trace line next;
   collector = line: next: { value = line; next = next; };
 
-  streamingToPretty = { recursionLimit ? 2 }:
+  streamingToPretty = line: { recursionLimit ? 2, lineLimit ? 5 }:
     let
       # Should take a stream and append what it needs, returning a new stream
       # Appending can be done with
@@ -227,7 +227,7 @@ rec {
       #append = acc: str: next: acc { value = str; inherit next; };
 
       # Takes a buildup, prints all lines it produces, and returns a new buildup
-      go = buildup: depth: v:
+      go = linesleft: buildup: depth: v:
         let
           indent = lib.concatStrings (lib.genList (_: "  ") depth);
           introSpace = "\n${indent}  ";
@@ -258,20 +258,21 @@ rec {
             else multilineResult
           else buildup + singlelineResult
         else if builtins.isBool v then buildup + (if v then "true" else "false")
-        else if builtins.isInt v then buildup + toString v
+        else if builtins.isInt v then { buildup = buildup + toString v; linesleft = linesleft; }
         else if builtins.isFunction v then buildup + "<function>"
         else if builtins.isNull v then buildup + "null"
         else if builtins.isPath v then buildup + toString v
         else if builtins.isList v then
           let
-            mid = lib.foldr (el: builtins.trace (go "${indent}  " (depth + 1) el)) "${indent}]" v;
-            mid' = builtins.foldl' (acc: el: builtins.trace (go "${indent}  " (depth + 1) el) acc) null v;
-          in builtins.trace (buildup + "[") (builtins.seq mid' "${indent}]")
+            mid' = builtins.foldl' (acc: el: builtins.trace (go linesleft "${indent}  " (depth + 1) el) acc) "${indent}]" v;
+          in builtins.trace (buildup + "[") mid'
         else if builtins.isAttrs v then
           let
-            mid = lib.foldr (el: builtins.trace (go "${indent}  ${el} = " (depth + 1) v.${el} + ";")) "${indent}}" (builtins.attrNames v);
-            mid' = builtins.foldl' (acc: el: builtins.trace (go "${indent}  ${el} = " (depth + 1) v.${el} + ";") acc) null (builtins.attrNames v);
-          in builtins.trace (buildup + "{") (builtins.seq mid' "${indent}}")
+            mid' = builtins.foldl' (acc: el:
+              let res = go (acc.linesleft - 1) "${indent}  ${el} = " (depth + 1) v.${el};
+              in if acc.linesleft <= 0 then acc else builtins.trace (res.buildup + ";") (acc // { inherit (res) linesleft; })
+            ) { buildup = "${indent}}"; linesleft = linesleft - 1; } (builtins.attrNames v);
+          in builtins.trace (buildup + "{") mid'
         # str: lib.foldr go str v
         #if builtins.isInt v then next: result { value = " " + toString v + " "; inherit next; }
         #else if builtins.isString v then next: result { value = v; inherit next; }
@@ -286,7 +287,7 @@ rec {
         #) (append result "{\n") (builtins.attrNames v)) "${indent}}"
         ##else if builtins.isList v then lib.foldr (el: acc: (next: { value = el; next = next; })) (next: next) v
         else throw "not implemented: ${builtins.typeOf v}";
-    in v: builtins.trace (go "" 0 v) (throw "end");
+    in v: let res = go lineLimit "" 0 v; in if res.linesleft <= 0 then null else builtins.trace res.buildup null;
 
   unroll = stream: if stream == null then "" else stream.value + unroll stream.next;
   traceUnroll = stream: if stream == null then "" else builtins.trace stream.value (traceUnroll stream.next);
