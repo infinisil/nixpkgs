@@ -218,8 +218,13 @@ rec {
   tracer = line: next: builtins.trace line next;
   collector = line: next: { value = line; next = next; };
 
-  streamingToPretty = line: { recursionLimit ? 2, lineLimit ? 5 }:
+  streamingToPretty = { continue ? (x: true), line, start ? null }: { recursionLimit ? null }:
     let
+      verifiedLine = str: state: cont:
+        let res = line str state;
+        in if continue state
+          then builtins.seq res (cont res)
+          else state;
       # Should take a stream and append what it needs, returning a new stream
       # Appending can be done with
       # The first argument is a function that takes a stream and returns a stream
@@ -227,67 +232,83 @@ rec {
       #append = acc: str: next: acc { value = str; inherit next; };
 
       # Takes a buildup, prints all lines it produces, and returns a new buildup
-      go = linesleft: buildup: depth: v:
+      go = state: buildup: depth: v:
         let
           indent = lib.concatStrings (lib.genList (_: "  ") depth);
-          introSpace = "\n${indent}  ";
-          outroSpace = "\n${indent}";
-        in
-        if depth >= recursionLimit then buildup + "..."
-        else if ! (builtins.tryEval v).success then buildup + "<failure>"
-        else if builtins.isString v then
-          let
-            # Separate a string into its lines
-            newlineSplits = lib.filter (v: ! lib.isList v) (builtins.split "\n" v);
-            # For a '' string terminated by a \n, which happens when the closing '' is on a new line
-            multilineResult =
-              let
-                first = buildup + "''";
-                mid = map (s: indent + "  " + s) (lib.init newlineSplits);
-                last = "${indent}''";
-              in builtins.trace first (lib.foldr builtins.trace last mid);
-              #"''" + introSpace + lib.concatStringsSep introSpace (lib.init newlineSplits) + outroSpace + "''";
-            # For a '' string not terminated by a \n, which happens when the closing '' is not on a new line
-            multilineResult' = "''" + introSpace + lib.concatStringsSep introSpace newlineSplits + "''";
+          result =
+            if ! continue state then { inherit buildup state; }
+            else if recursionLimit != null && depth >= recursionLimit then { buildup = buildup + "..."; inherit state; }
+            #else if ! (builtins.tryEval v).success then { buildup = buildup + "<failure>"; inherit state; }
+            else if builtins.isString v then { buildup = buildup + "\"" + v + "\""; inherit state; }
+            else if builtins.isNull v then { buildup = buildup + "null"; inherit state; }
+            #else if lib.strings.isCoercibleToString v then { buildup = buildup + toString v; inherit state; }
+            #else if builtins.isString v then
+            #  let
+            #    # Separate a string into its lines
+            #    newlineSplits = lib.filter (v: ! lib.isList v) (builtins.split "\n" v);
+            #    # For a '' string terminated by a \n, which happens when the closing '' is on a new line
+            #    multilineResult =
+            #      let
+            #        first = buildup + "''";
+            #        mid = map (s: indent + "  " + s) (lib.init newlineSplits);
+            #        last = "${indent}''";
+            #      in builtins.trace first (lib.foldr builtins.trace last mid);
+            #      #"''" + introSpace + lib.concatStringsSep introSpace (lib.init newlineSplits) + outroSpace + "''";
+            #    # For a '' string not terminated by a \n, which happens when the closing '' is not on a new line
+            #    #multilineResult' = "''" + introSpace + lib.concatStringsSep introSpace newlineSplits + "''";
 
-            # For single lines, replace all newlines with their escaped representation
-            singlelineResult = "\"" + libStr.escape [ "\"" ] (lib.concatStringsSep "\\n" newlineSplits) + "\"";
-          in if lib.length newlineSplits > 1 then
-            if lib.last newlineSplits == ""
-            then multilineResult
-            else multilineResult
-          else buildup + singlelineResult
-        else if builtins.isBool v then buildup + (if v then "true" else "false")
-        else if builtins.isInt v then { buildup = buildup + toString v; linesleft = linesleft; }
-        else if builtins.isFunction v then buildup + "<function>"
-        else if builtins.isNull v then buildup + "null"
-        else if builtins.isPath v then buildup + toString v
-        else if builtins.isList v then
-          let
-            mid' = builtins.foldl' (acc: el: builtins.trace (go linesleft "${indent}  " (depth + 1) el) acc) "${indent}]" v;
-          in builtins.trace (buildup + "[") mid'
-        else if builtins.isAttrs v then
-          let
-            mid' = builtins.foldl' (acc: el:
-              let res = go (acc.linesleft - 1) "${indent}  ${el} = " (depth + 1) v.${el};
-              in if acc.linesleft <= 0 then acc else builtins.trace (res.buildup + ";") (acc // { inherit (res) linesleft; })
-            ) { buildup = "${indent}}"; linesleft = linesleft - 1; } (builtins.attrNames v);
-          in builtins.trace (buildup + "{") mid'
-        # str: lib.foldr go str v
-        #if builtins.isInt v then next: result { value = " " + toString v + " "; inherit next; }
-        #else if builtins.isString v then next: result { value = v; inherit next; }
-        ##else if builtins.isList v then lib.foldl (acc: el: go acc (indent + "  ") el) (append result "hello") v
-        #else if builtins.isList v then go (append result "hello") "" (throw "hi")#lib.foldl (acc: el: go acc (indent + "  ") el) (append result "hello") v
-        #else if builtins.isAttrs v then append (lib.foldl (acc: el:
-        #let
-        #  start = append acc "${indent}  ${el} = ";
-        #  mid = go start (indent + "  ") v.${el};
-        #  end = append mid ";\n";
-        #  in end
-        #) (append result "{\n") (builtins.attrNames v)) "${indent}}"
-        ##else if builtins.isList v then lib.foldr (el: acc: (next: { value = el; next = next; })) (next: next) v
-        else throw "not implemented: ${builtins.typeOf v}";
-    in v: let res = go lineLimit "" 0 v; in if res.linesleft <= 0 then null else builtins.trace res.buildup null;
+            #    # For single lines, replace all newlines with their escaped representation
+            #    singlelineResult = "\"" + libStr.escape [ "\"" ] (lib.concatStringsSep "\\n" newlineSplits) + "\"";
+            #  in throw "unimplemented" /*if lib.length newlineSplits > 1 then
+            #    if lib.last newlineSplits == ""
+            #    then multilineResult
+            #    else multilineResult
+            #  else buildup + singlelineResult*/
+            else if builtins.isBool v then { buildup = buildup + (if v then "true" else "false"); inherit state; }
+            else if builtins.isInt v then { buildup = buildup + toString v; inherit state; }
+            else if builtins.isFunction v then { buildup = buildup + "<function>"; inherit state; }
+            else if builtins.isPath v then { buildup = buildup + toString v; inherit state; }
+            #else if builtins.isList v then
+            #  let
+            #    res = if continue state then line (buildup + "[") state else state;
+            #    mid' = builtins.foldl' (acc: el:
+            #      let res = go acc "${indent}  " (depth + 1) el;
+            #      in if continue acc then if continue res.state then line res.buildup res.state else res.state else acc
+            #    ) res v;
+            #  in {
+            #    state = mid';
+            #    buildup = "${indent}]";
+            #  }
+            else if builtins.isAttrs v then {
+              state = verifiedLine (buildup + "{") state (state':
+                builtins.foldl' (state': el:
+                  let res = go state' "${indent}  ${el} = " (depth + 1) v.${el};
+                  in verifiedLine (res.buildup + ";") res.state lib.id
+                ) state' (builtins.attrNames v)
+              );
+              buildup = "${indent}}";
+            }
+            else if builtins.isList v then {
+              state = verifiedLine (buildup + "[") state (state':
+                builtins.foldl' (state': el:
+                  let res = go state' "${indent}  " (depth + 1) el;
+                  in verifiedLine res.buildup res.state lib.id
+                ) state' v
+              );
+              buildup = "${indent}]";
+            }
+            else throw "not implemented: ${builtins.typeOf v}";
+          final = builtins.tryEval (builtins.deepSeq result null);
+        in if final.success then result
+          else { buildup = buildup + "<failure>"; inherit state; };
+    in v:
+      let
+        res = go start "" 0 v;
+      in
+        verifiedLine res.buildup res.state lib.id;
+        #/*if ! continue start then start
+        #else if ! continue res.state then res.state
+        #else */builtins.seq res.state (if res.buildup == null then res.state else line res.buildup res.state);
 
   unroll = stream: if stream == null then "" else stream.value + unroll stream.next;
   traceUnroll = stream: if stream == null then "" else builtins.trace stream.value (traceUnroll stream.next);
@@ -331,8 +352,8 @@ rec {
             introSpace = if multiline then "\n${indent}  " else " ";
             outroSpace = if multiline then "\n${indent}" else " ";
 
-    in   if recursionLimit != null && depth >= recursionLimit then "..."
-    else if ! (builtins.tryEval v).success then "<failure>"
+      result =
+    if recursionLimit != null && depth >= recursionLimit then "..."
     else if isInt      v then toString v
     else if isFloat    v then "~${toString v}"
     else if isString   v then
@@ -382,7 +403,8 @@ rec {
                 builtins.addErrorContext "while lib.generators.toPretty descended into the `${name}' attribute"
                 "${libStr.escapeNixIdentifier name} = ${go (depth + 1) value};") v)
         + outroSpace + "}"
-    else abort "generators.toPretty: should never happen (v = ${v})";
+        else abort "generators.toPretty: should never happen (v = ${v})";
+    in let final = builtins.tryEval result; in if final.success then final.value else "<failure>";
   in go 0;
 
   # PLIST handling
