@@ -48,15 +48,16 @@ rec {
        strange = foldr (int: str: toString (int + 1) + str) "a"
        strange [ 1 2 3 4 ]
        => "2345a"
-  */
-  foldr = op: nul: list:
-    let
-      len = length list;
-      fold' = n:
-        if n == len
-        then nul
-        else op (elemAt list n) (fold' (n + 1));
-    in fold' 0;
+       */
+  foldr = f: a: bs: builtins.foldl' (g: b: x: g (f b x)) (x: x) bs a;
+  #foldr = op: nul: list:
+  #  let
+  #    len = length list;
+  #    fold' = n:
+  #      if n == len
+  #      then nul
+  #      else op (elemAt list n) (fold' (n + 1));
+  #  in fold' 0;
 
   /* `fold` is an alias of `foldr` for historic reasons */
   # FIXME(Profpatsch): deprecate?

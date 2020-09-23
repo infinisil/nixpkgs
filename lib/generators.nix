@@ -195,6 +195,104 @@ rec {
     */
   toYAML = {}@args: toJSON args;
 
+  /*
+  stream:
+    {
+      value = ...;
+      next = {
+        value = ...;
+        next = null;
+      };
+    }
+    */
+
+  /*
+  showS :: String -> String
+  */
+
+  pure = str: str': { value = str; next = str'; };
+  streamConcat = list: str: lib.foldr (el: acc: el acc) str list;
+  cons = value: next: { inherit value next; };
+
+
+  tracer = line: next: builtins.trace line next;
+  collector = line: next: { value = line; next = next; };
+
+  streamingToPretty = cons: { recursionLimit ? 2 }:
+    let
+      # Should take a stream and append what it needs, returning a new stream
+      # Appending can be done with
+      # The first argument is a function that takes a stream and returns a stream
+      # By default: result = stream: stream;
+      #append = acc: str: next: acc { value = str; inherit next; };
+
+      go = depth: v:
+        let
+          indent = lib.concatStrings (lib.genList (_: "  ") depth);
+          introSpace = "\n${indent}  ";
+          outroSpace = "\n${indent}";
+        in
+        if depth >= recursionLimit then cons "..."
+        else if ! (builtins.tryEval v).success then cons "<failure>"
+        else if builtins.isString v then
+          let
+            # Separate a string into its lines
+            newlineSplits = lib.filter (v: ! lib.isList v) (builtins.split "\n" v);
+            # For a '' string terminated by a \n, which happens when the closing '' is on a new line
+            multilineResult = "''" + introSpace + lib.concatStringsSep introSpace (lib.init newlineSplits) + outroSpace + "''";
+            # For a '' string not terminated by a \n, which happens when the closing '' is not on a new line
+            multilineResult' = "''" + introSpace + lib.concatStringsSep introSpace newlineSplits + "''";
+            # For single lines, replace all newlines with their escaped representation
+            singlelineResult = "\"" + libStr.escape [ "\"" ] (lib.concatStringsSep "\\n" newlineSplits) + "\"";
+          in cons (if lib.length newlineSplits > 1 then
+            if lib.last newlineSplits == "" then multilineResult else multilineResult'
+          else singlelineResult)
+        else if builtins.isBool v then cons (if v then "true" else "false")
+        else if builtins.isInt v then cons (toString v)
+        else if builtins.isFunction v then cons "<function>"
+        else if builtins.isNull v then cons "null"
+        else if builtins.isPath v then cons (toString v)
+        else if builtins.isList v then str: cons "[" (lib.foldr (el: acc: cons "\n${indent}  " (go (depth + 1) el acc)) (cons "\n${indent}]" str) v)
+        else if builtins.isAttrs v then str: cons "{" (lib.foldr (el: acc: cons "\n${indent}  ${el} = " (go (depth + 1) v.${el} (cons ";" acc))) (cons "\n${indent}}" str) (builtins.attrNames v))
+        # str: lib.foldr go str v
+        #if builtins.isInt v then next: result { value = " " + toString v + " "; inherit next; }
+        #else if builtins.isString v then next: result { value = v; inherit next; }
+        ##else if builtins.isList v then lib.foldl (acc: el: go acc (indent + "  ") el) (append result "hello") v
+        #else if builtins.isList v then go (append result "hello") "" (throw "hi")#lib.foldl (acc: el: go acc (indent + "  ") el) (append result "hello") v
+        #else if builtins.isAttrs v then append (lib.foldl (acc: el:
+        #let
+        #  start = append acc "${indent}  ${el} = ";
+        #  mid = go start (indent + "  ") v.${el};
+        #  end = append mid ";\n";
+        #  in end
+        #) (append result "{\n") (builtins.attrNames v)) "${indent}}"
+        ##else if builtins.isList v then lib.foldr (el: acc: (next: { value = el; next = next; })) (next: next) v
+        else throw "not implemented: ${builtins.typeOf v}";
+    in v: go 0 v "";
+
+  unroll = stream: if stream == null then "" else stream.value + unroll stream.next;
+  traceUnroll = stream: if stream == null then "" else builtins.trace stream.value (traceUnroll stream.next);
+
+  lineStream =
+    let
+      go = buildup: stream: if stream == null then { value = buildup; next = stream; } else
+        let
+          lines = builtins.filter (v: ! builtins.isList v) (builtins.split "\n" stream.value);
+        in
+          if builtins.length lines == 1
+          then go (buildup + stream.value) stream.next
+          else
+            let
+              first = buildup + lib.head lines;
+              mid = lib.init (lib.tail lines);
+              last = lib.last lines;
+            in {
+              value = first;
+              next = lib.foldr (el: acc: { value = el; next = acc; }) (go last stream.next) mid;
+            };
+
+    in go "";
+
 
   /* Pretty print a value, akin to `builtins.trace`.
     * Should probably be a builtin as well.
@@ -214,7 +312,9 @@ rec {
             introSpace = if multiline then "\n${indent}  " else " ";
             outroSpace = if multiline then "\n${indent}" else " ";
 
-    in   if isInt      v then toString v
+    in   if recursionLimit != null && depth >= recursionLimit then "..."
+    else if ! (builtins.tryEval v).success then "<failure>"
+    else if isInt      v then toString v
     else if isFloat    v then "~${toString v}"
     else if isString   v then
       let
@@ -242,13 +342,13 @@ rec {
             (go (depth + 1) value)
           ) v)
         + outroSpace + "]"
-    else if isFunction v then
-      let fna = lib.functionArgs v;
-          showFnas = concatStringsSep ", " (libAttr.mapAttrsToList
-                       (name: hasDefVal: if hasDefVal then name + "?" else name)
-                       fna);
-      in if fna == {}    then "<function>"
-                         else "<function, args: {${showFnas}}>"
+    else if isFunction v then "<function>"
+      #let fna = lib.functionArgs v;
+      #    showFnas = concatStringsSep ", " (libAttr.mapAttrsToList
+      #                 (name: hasDefVal: if hasDefVal then name + "?" else name)
+      #                 fna);
+      #in if fna == {}    then "<function>"
+      #                   else "<function, args: {${showFnas}}>"
     else if isAttrs    v then
       # apply pretty values if allowed
       if attrNames v == [ "__pretty" "val" ] && allowPrettyValues
