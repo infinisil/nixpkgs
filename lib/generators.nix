@@ -218,101 +218,68 @@ rec {
   tracer = line: next: builtins.trace line next;
   collector = line: next: { value = line; next = next; };
 
-  streamingToPretty = { next ? line: state: cont: stop: builtins.trace line (cont state), start ? null }: { recursionLimit ? null }:
+  streamingToPretty = { nextState ? builtins.trace, initialState ? null, recursionLimit ? null }:
     let
-      checkedNext = line: state: cont: next line state cont { frozen = state; };
-      # state: Either { frozen = state; } or { continue = state; }
-      go = state: buildup: depth: v:
+      yield = line: state:
+        if state ? return then state
+        else nextState line state;
+
+      go = buildup: state: depth: v:
         let
           indent = lib.concatStrings (lib.genList (_: "  ") depth);
-          result =
-            if ! state ? continue then { inherit buildup state; }
-            else if recursionLimit != null && depth >= recursionLimit then { buildup = buildup + "..."; inherit state; }
-            else if builtins.isString v then { buildup = buildup + "\"" + v + "\""; inherit state; }
-            else if builtins.isNull v then { buildup = buildup + "null"; inherit state; }
-            #else if builtins.isString v then
-            #  let
-            #    # Separate a string into its lines
-            #    newlineSplits = lib.filter (v: ! lib.isList v) (builtins.split "\n" v);
-            #    # For a '' string terminated by a \n, which happens when the closing '' is on a new line
-            #    multilineResult =
-            #      let
-            #        first = buildup + "''";
-            #        mid = map (s: indent + "  " + s) (lib.init newlineSplits);
-            #        last = "${indent}''";
-            #      in builtins.trace first (lib.foldr builtins.trace last mid);
-            #      #"''" + introSpace + lib.concatStringsSep introSpace (lib.init newlineSplits) + outroSpace + "''";
-            #    # For a '' string not terminated by a \n, which happens when the closing '' is not on a new line
-            #    #multilineResult' = "''" + introSpace + lib.concatStringsSep introSpace newlineSplits + "''";
+          valueResult =
+            if builtins.isNull v then { buildup = buildup + "null"; inherit state; }
+            else if builtins.isString v then
+              let
+                # Separate a string into its lines
+                newlineSplits = lib.filter (v: ! lib.isList v) (builtins.split "\n" v);
 
-            #    # For single lines, replace all newlines with their escaped representation
-            #    singlelineResult = "\"" + libStr.escape [ "\"" ] (lib.concatStringsSep "\\n" newlineSplits) + "\"";
-            #  in throw "unimplemented" /*if lib.length newlineSplits > 1 then
-            #    if lib.last newlineSplits == ""
-            #    then multilineResult
-            #    else multilineResult
-            #  else buildup + singlelineResult*/
+                multilineResult = {
+                  state =
+                    builtins.foldl' (acc: el:
+                      yield (indent + "  " + el) acc
+                    ) (yield (buildup + "''") state) (lib.init newlineSplits);
+
+                  buildup =
+                    if lib.last newlineSplits == ""
+                    then "${indent}''"
+                    else "${indent}  ${lib.last newlineSplits}''";
+                };
+                singlelineResult = {
+                  inherit state;
+                  buildup = buildup + "\"" + libStr.escape [ "\"" ] v + "\"";
+                };
+              in if lib.length newlineSplits > 1 then multilineResult else singlelineResult
             else if builtins.isBool v then { buildup = buildup + (if v then "true" else "false"); inherit state; }
             else if builtins.isInt v then { buildup = buildup + toString v; inherit state; }
             else if builtins.isFunction v then { buildup = buildup + "<function>"; inherit state; }
             else if builtins.isPath v then { buildup = buildup + toString v; inherit state; }
-            #else if builtins.isList v then
-            #  let
-            #    res = if continue state then line (buildup + "[") state else state;
-            #    mid' = builtins.foldl' (acc: el:
-            #      let res = go acc "${indent}  " (depth + 1) el;
-            #      in if continue acc then if continue res.state then line res.buildup res.state else res.state else acc
-            #    ) res v;
-            #  in {
-            #    state = mid';
-            #    buildup = "${indent}]";
-            #  }
             else if builtins.isAttrs v then {
-              state = checkedNext (buildup + "{") state.continue (state':
-                builtins.foldl' (acc: el:
-                  let
-                    start = go acc "${indent}  ${el} = " (depth + 1) v.${el};
-                    end = checkedNext (start.buildup + ";") start.state.continue
-                      (newState: { continue = newState; });
-                  in if ! start.state ? continue then start.state else end
-                ) { continue = state'; } (builtins.attrNames v)
-              );
-
-              # Causes stack overflow
-              #state =
-              #  next (buildup + "{") state (lib.foldr (el: acc: state:
-              #    let res = go state "${indent}  ${el} = " (depth + 1) v.${el};
-              #    in next (res.buildup + ";") res.state acc
-              #  ) lib.id (lib.attrNames v));
+              state = builtins.foldl' (acc: el:
+                  let start = go "${indent}  ${el} = " acc (depth + 1) v.${el};
+                  in yield (start.buildup + ";") start.state
+                ) (yield (buildup + "{") state) (builtins.attrNames v);
               buildup = "${indent}}";
             }
-            #else if builtins.isList v then {
-            #  state =
-            #    next (buildup + "[") state (lib.foldr (el: acc: state:
-            #      let res = go state "${indent}  " (depth + 1) el;
-            #      in next res.buildup res.state acc
-            #    ) lib.id v);
-            #  #state = next (buildup + "[") state (state':
-            #  #  builtins.foldl' (state': el:
-            #  #    let res = go state' "${indent}  " (depth + 1) el;
-            #  #    in next res.buildup res.state lib.id
-            #  #  ) state' v
-            #  #);
-            #  buildup = "${indent}]";
-            #}
-            else throw "not implemented: ${builtins.typeOf v}";
-          final = builtins.tryEval (builtins.deepSeq result null);
-        in if final.success then result
-          else { buildup = buildup + "<failure>"; inherit state; };
+            else if builtins.isList v then {
+              state = builtins.foldl' (acc: el:
+                  let start = go "${indent}  " acc (depth + 1) el;
+                  in yield start.buildup start.state
+                ) (yield (buildup + "[") state) v;
+              buildup = "${indent}]";
+            }
+            else abort "not implemented: ${builtins.typeOf v}";
+
+          result =
+            if state ? return then { inherit buildup state; }
+            else if recursionLimit != null && depth >= recursionLimit then { buildup = buildup + "..."; inherit state; }
+            else let res = builtins.tryEval (builtins.deepSeq valueResult valueResult); in if res.success then res.value else { buildup = buildup + "<failure>"; inherit state; };
+        in result;
     in v:
       let
-        res = go { continue = start; } "" 0 v;
-      in
-        if ! res.state ? continue then res.state.frozen
-        else next res.buildup res.state.continue lib.id res.state.continue;
-        #/*if ! continue start then start
-        #else if ! continue res.state then res.state
-        #else */builtins.seq res.state (if res.buildup == null then res.state else line res.buildup res.state);
+        res = go "" initialState 0 v;
+        final = yield res.buildup res.state;
+      in final;
 
   unroll = stream: if stream == null then "" else stream.value + unroll stream.next;
   traceUnroll = stream: if stream == null then "" else builtins.trace stream.value (traceUnroll stream.next);
