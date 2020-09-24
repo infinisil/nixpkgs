@@ -218,30 +218,18 @@ rec {
   tracer = line: next: builtins.trace line next;
   collector = line: next: { value = line; next = next; };
 
-  streamingToPretty = { continue ? (x: true), line, start ? null }: { recursionLimit ? null }:
+  streamingToPretty = { next ? line: state: cont: stop: builtins.trace line (cont state), start ? null }: { recursionLimit ? null }:
     let
-      verifiedLine = str: state: cont:
-        let res = line str state;
-        in if continue state
-          then builtins.seq res (cont res)
-          else state;
-      # Should take a stream and append what it needs, returning a new stream
-      # Appending can be done with
-      # The first argument is a function that takes a stream and returns a stream
-      # By default: result = stream: stream;
-      #append = acc: str: next: acc { value = str; inherit next; };
-
-      # Takes a buildup, prints all lines it produces, and returns a new buildup
+      checkedNext = line: state: cont: next line state cont { frozen = state; };
+      # state: Either { frozen = state; } or { continue = state; }
       go = state: buildup: depth: v:
         let
           indent = lib.concatStrings (lib.genList (_: "  ") depth);
           result =
-            if ! continue state then { inherit buildup state; }
+            if ! state ? continue then { inherit buildup state; }
             else if recursionLimit != null && depth >= recursionLimit then { buildup = buildup + "..."; inherit state; }
-            #else if ! (builtins.tryEval v).success then { buildup = buildup + "<failure>"; inherit state; }
             else if builtins.isString v then { buildup = buildup + "\"" + v + "\""; inherit state; }
             else if builtins.isNull v then { buildup = buildup + "null"; inherit state; }
-            #else if lib.strings.isCoercibleToString v then { buildup = buildup + toString v; inherit state; }
             #else if builtins.isString v then
             #  let
             #    # Separate a string into its lines
@@ -280,32 +268,48 @@ rec {
             #    buildup = "${indent}]";
             #  }
             else if builtins.isAttrs v then {
-              state = verifiedLine (buildup + "{") state (state':
-                builtins.foldl' (state': el:
-                  let res = go state' "${indent}  ${el} = " (depth + 1) v.${el};
-                  in verifiedLine (res.buildup + ";") res.state lib.id
-                ) state' (builtins.attrNames v)
+              state = checkedNext (buildup + "{") state.continue (state':
+                builtins.foldl' (acc: el:
+                  let
+                    start = go acc "${indent}  ${el} = " (depth + 1) v.${el};
+                    end = checkedNext (start.buildup + ";") start.state.continue
+                      (newState: { continue = newState; });
+                  in if ! start.state ? continue then start.state else end
+                ) { continue = state'; } (builtins.attrNames v)
               );
+
+              # Causes stack overflow
+              #state =
+              #  next (buildup + "{") state (lib.foldr (el: acc: state:
+              #    let res = go state "${indent}  ${el} = " (depth + 1) v.${el};
+              #    in next (res.buildup + ";") res.state acc
+              #  ) lib.id (lib.attrNames v));
               buildup = "${indent}}";
             }
-            else if builtins.isList v then {
-              state = verifiedLine (buildup + "[") state (state':
-                builtins.foldl' (state': el:
-                  let res = go state' "${indent}  " (depth + 1) el;
-                  in verifiedLine res.buildup res.state lib.id
-                ) state' v
-              );
-              buildup = "${indent}]";
-            }
+            #else if builtins.isList v then {
+            #  state =
+            #    next (buildup + "[") state (lib.foldr (el: acc: state:
+            #      let res = go state "${indent}  " (depth + 1) el;
+            #      in next res.buildup res.state acc
+            #    ) lib.id v);
+            #  #state = next (buildup + "[") state (state':
+            #  #  builtins.foldl' (state': el:
+            #  #    let res = go state' "${indent}  " (depth + 1) el;
+            #  #    in next res.buildup res.state lib.id
+            #  #  ) state' v
+            #  #);
+            #  buildup = "${indent}]";
+            #}
             else throw "not implemented: ${builtins.typeOf v}";
           final = builtins.tryEval (builtins.deepSeq result null);
         in if final.success then result
           else { buildup = buildup + "<failure>"; inherit state; };
     in v:
       let
-        res = go start "" 0 v;
+        res = go { continue = start; } "" 0 v;
       in
-        verifiedLine res.buildup res.state lib.id;
+        if ! res.state ? continue then res.state.frozen
+        else next res.buildup res.state.continue lib.id res.state.continue;
         #/*if ! continue start then start
         #else if ! continue res.state then res.state
         #else */builtins.seq res.state (if res.buildup == null then res.state else line res.buildup res.state);
