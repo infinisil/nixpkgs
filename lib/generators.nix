@@ -224,7 +224,7 @@ rec {
       # - collecting a list of lines:
       #     nextState = line: list: list ++ [ line ]
       #     initialState = []
-    , nextState ? line: state: (if state == null then "" else state + "\n") + line
+    , nextState ? line: state: if state == null then line else state + "\n" + line
       # The initial state for the transition function
     , initialState ? null
     }: let
