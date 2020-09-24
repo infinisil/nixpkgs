@@ -93,8 +93,12 @@ rec {
        traceSeqN 2 { a.b.c = 3; } null
        trace: { a = { b = {…}; }; }
        => null
-   */
-  traceSeqN = depth: x: y: trace (lib.generators.toPretty { recursionLimit = depth; } x) y;
+  */
+  traceSeqN = depth: x: y: lib.generators.toPretty {
+    nextState = builtins.trace;
+    initialState = y;
+    recursionLimit = depth;
+  } x;
 
   /* A combination of `traceVal` and `traceSeq` that applies a
      provided function to the value to be traced after `deepSeq`ing
