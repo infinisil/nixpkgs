@@ -195,188 +195,135 @@ rec {
     */
   toYAML = {}@args: toJSON args;
 
-  /*
-  stream:
-    {
-      value = ...;
-      next = {
-        value = ...;
-        next = null;
-      };
-    }
+  /* Pretty print a value, akin to `builtins.trace`.
+    * Should probably be a builtin as well.
     */
+  toPretty =
+    { # The maximum depth of recursion into attribute sets and lists. No limit if null
+      recursionLimit ? null
+      # The state transition function to be called for every resulting line. It takes two arguments:
+      # - line: A string, this is the line that was generated and should be processed
+      # - state: The state as returned by the previous invocation of this function
+      #          (from the previous line, or initialState for invocation)
+      #
+      # The function should then return the new state, incorporating the given
+      # line into it. The function may also abort printing by returning an
+      # attribute set with a `return` attribute.
+      #
+      # The result of the toPretty call will be the state returned by the last
+      # call to this transition function
+      #
+      # Examples:
+      # - tracing lines:
+      #     nextState = builtins.trace;
+      # - tracing only 10 lines:
+      #     nextState = line: left:
+      #       if left == 0 then { return = null; }
+      #       else builtins.trace line (left - 1)
+      #     initialState = 10
+      # - collecting a list of lines:
+      #     nextState = line: list: list ++ [ line ]
+      #     initialState = []
+    , nextState ? line: state: (if state == null then "" else state + "\n") + line
+      # The initial state for the transition function
+    , initialState ? null
+    }: let
 
-  /*
-  showS :: String -> String
-  */
-
-  pure = str: str': { value = str; next = str'; };
-  streamConcat = list: str: lib.foldr (el: acc: el acc) str list;
-  cons = value: next: { inherit value next; };
-
-
-  tracer = line: next: builtins.trace line next;
-  collector = line: next: { value = line; next = next; };
-
-  streamingToPretty = { nextState ? builtins.trace, initialState ? null, recursionLimit ? null }:
-    let
       yield = line: state:
         if state ? return then state
         else nextState line state;
 
-      go = buildup: state: depth: v:
-        let
-          indent = lib.concatStrings (lib.genList (_: "  ") depth);
-          valueResult =
-            if builtins.isNull v then { buildup = buildup + "null"; inherit state; }
-            else if builtins.isString v then
-              let
-                # Separate a string into its lines
-                newlineSplits = lib.filter (v: ! lib.isList v) (builtins.split "\n" v);
+      go = buildup: state: depth: value: let
 
-                multilineResult = {
-                  state =
-                    builtins.foldl' (acc: el:
-                      yield (indent + "  " + el) acc
-                    ) (yield (buildup + "''") state) (lib.init newlineSplits);
+        indent = lib.concatStrings (lib.genList (_: "  ") depth);
+        canRecurse = recursionLimit == null || depth < recursionLimit;
+        printLiteral = lit: { buildup = buildup + lit; inherit state; };
 
-                  buildup =
-                    if lib.last newlineSplits == ""
-                    then "${indent}''"
-                    else "${indent}  ${lib.last newlineSplits}''";
-                };
-                singlelineResult = {
-                  inherit state;
-                  buildup = buildup + "\"" + libStr.escape [ "\"" ] v + "\"";
-                };
-              in if lib.length newlineSplits > 1 then multilineResult else singlelineResult
-            else if builtins.isBool v then { buildup = buildup + (if v then "true" else "false"); inherit state; }
-            else if builtins.isInt v then { buildup = buildup + toString v; inherit state; }
-            else if builtins.isFunction v then { buildup = buildup + "<function>"; inherit state; }
-            else if builtins.isPath v then { buildup = buildup + toString v; inherit state; }
-            else if builtins.isAttrs v then {
-              state = builtins.foldl' (acc: el:
-                  let start = go "${indent}  ${el} = " acc (depth + 1) v.${el};
-                  in yield (start.buildup + ";") start.state
-                ) (yield (buildup + "{") state) (builtins.attrNames v);
-              buildup = "${indent}}";
-            }
-            else if builtins.isList v then {
-              state = builtins.foldl' (acc: el:
-                  let start = go "${indent}  " acc (depth + 1) el;
-                  in yield start.buildup start.state
-                ) (yield (buildup + "[") state) v;
-              buildup = "${indent}]";
-            }
-            else abort "not implemented: ${builtins.typeOf v}";
+        # FIXME: Handle escaping better
+        printStr = str: let
+          # Separate a string into its lines
+          newlineSplits = lib.filter (r: ! lib.isList r) (builtins.split "\n" str);
 
-          result =
-            if state ? return then { inherit buildup state; }
-            else if recursionLimit != null && depth >= recursionLimit then { buildup = buildup + "..."; inherit state; }
-            else let res = builtins.tryEval (builtins.deepSeq valueResult valueResult); in if res.success then res.value else { buildup = buildup + "<failure>"; inherit state; };
-        in result;
+          multilineResult = {
+            state =
+              builtins.foldl' (acc: el:
+                yield (indent + "  " + el) acc
+              ) (yield (buildup + "''") state) (lib.init newlineSplits);
+            buildup =
+              if lib.last newlineSplits == ""
+              then "${indent}''"
+              else "${indent}  ${lib.last newlineSplits}''";
+          };
+          singlelineResult = printLiteral ("\"" + libStr.escape [ "\"" ] str + "\"");
+        in if lib.length newlineSplits > 1 then multilineResult else singlelineResult;
+
+        printList = list:
+          if list == [] then printLiteral "[ ]"
+          else if ! canRecurse then printLiteral ("[ <" + toString (lib.length list) + " elements> ]")
+          else {
+            state = builtins.foldl' (acc: el:
+                let start = go "${indent}  " acc (depth + 1) el;
+                in yield start.buildup start.state
+              ) (yield (buildup + "[") state) list;
+            buildup = "${indent}]";
+          };
+
+        printAttrs = attrs:
+          if attrs == {} then printLiteral "{ }"
+          else if ! canRecurse then printLiteral ("{ <" + toString (lib.length (lib.attrNames attrs)) + " attributes> }")
+          else {
+            state = builtins.foldl' (acc: el:
+                let start = go "${indent}  ${libStr.escapeNixIdentifier el} = " acc (depth + 1) attrs.${el};
+                in yield (start.buildup + ";") start.state
+              ) (yield (buildup + "{") state) (builtins.attrNames attrs);
+            buildup = "${indent}}";
+          };
+
+        printFun = args:
+          let
+            # Move non-default arguments to the front
+            argSort = a: b: if args.${a} == args.${b} then a < b else args.${b};
+            sortedArgs = lib.sort argSort (lib.attrNames args);
+            singleArg = name: if args.${name} then name + "?" else name;
+            allArgs = lib.concatStringsSep ", " (map singleArg sortedArgs);
+            result = if args == {} then "<function>" else "<function, args: {${allArgs}}>";
+          in printLiteral result;
+
+        eval = value: cont:
+          let result = builtins.tryEval value; in
+          if result.success then cont result.value
+          else printLiteral "<failure>";
+
+        result = eval (builtins.typeOf value) (type: {
+          null = printLiteral "null";
+          bool = printLiteral (if value then "true" else "false");
+          int = printLiteral (toString value);
+          float = printLiteral "~${toString value}";
+          path = printLiteral (toString value);
+          string = printStr value;
+          lambda = printFun (builtins.functionArgs value);
+          list = printList value;
+          set =
+            eval (value ? __prettyValue) (isPretty:
+            if allowPrettyValues && isPretty then eval value.__prettyValue printLiteral
+
+            else eval (value ? type && value.type == "derivation") (isDrv:
+            if isDrv then eval "<derivation ${value.drvPath}>" printLiteral
+
+            else eval (value ? __functor) (isFunctor:
+            if isFunctor then eval (value.__functionArgs or {}) printFun
+
+            else eval (value ? __toString || value ? outPath) (isStringCoercible:
+            if isStringCoercible then eval (toString value) printStr
+
+            else printAttrs value))));
+        }.${type} or (throw "Type not implemented: ${type}"));
+
+      in if state ? return then { inherit buildup state; } else result;
+
     in v:
-      let
-        res = go "" initialState 0 v;
-        final = yield res.buildup res.state;
-      in final;
-
-  unroll = stream: if stream == null then "" else stream.value + unroll stream.next;
-  traceUnroll = stream: if stream == null then "" else builtins.trace stream.value (traceUnroll stream.next);
-
-  lineStream =
-    let
-      go = buildup: stream: if stream == null then { value = buildup; next = stream; } else
-        let
-          lines = builtins.filter (v: ! builtins.isList v) (builtins.split "\n" stream.value);
-        in
-          if builtins.length lines == 1
-          then go (buildup + stream.value) stream.next
-          else
-            let
-              first = buildup + lib.head lines;
-              mid = lib.init (lib.tail lines);
-              last = lib.last lines;
-            in {
-              value = first;
-              next = lib.foldr (el: acc: { value = el; next = acc; }) (go last stream.next) mid;
-            };
-
-    in go "";
-
-
-  /* Pretty print a value, akin to `builtins.trace`.
-    * Should probably be a builtin as well.
-    */
-  toPretty = {
-    /* If this option is true, attrsets like { __pretty = fn; val = …; }
-       will use fn to convert val to a pretty printed representation.
-       (This means fn is type Val -> String.) */
-    allowPrettyValues ? false,
-    /* If this option is true, the output is indented with newlines for attribute sets and lists */
-    multiline ? true,
-    recursionLimit ? null,
-  }@args: let
-    go = depth: v: with builtins;
-    let     isPath   = v: typeOf v == "path";
-            indent = lib.concatStrings (lib.genList (_: "  ") depth);
-            introSpace = if multiline then "\n${indent}  " else " ";
-            outroSpace = if multiline then "\n${indent}" else " ";
-
-      result =
-    if recursionLimit != null && depth >= recursionLimit then "..."
-    else if isInt      v then toString v
-    else if isFloat    v then "~${toString v}"
-    else if isString   v then
-      let
-        # Separate a string into its lines
-        newlineSplits = filter (v: ! isList v) (builtins.split "\n" v);
-        # For a '' string terminated by a \n, which happens when the closing '' is on a new line
-        multilineResult = "''" + introSpace + concatStringsSep introSpace (lib.init newlineSplits) + outroSpace + "''";
-        # For a '' string not terminated by a \n, which happens when the closing '' is not on a new line
-        multilineResult' = "''" + introSpace + concatStringsSep introSpace newlineSplits + "''";
-        # For single lines, replace all newlines with their escaped representation
-        singlelineResult = "\"" + libStr.escape [ "\"" ] (concatStringsSep "\\n" newlineSplits) + "\"";
-      in if multiline && length newlineSplits > 1 then
-        if lib.last newlineSplits == "" then multilineResult else multilineResult'
-      else singlelineResult
-    else if true  ==   v then "true"
-    else if false ==   v then "false"
-    else if null  ==   v then "null"
-    else if isPath     v then toString v
-    else if isList     v then
-      if v == [] then "[ ]"
-      else if recursionLimit != null && depth >= recursionLimit then "[ ... ]"
-      else "[" + introSpace
-        + libStr.concatStringsSep introSpace (lib.imap0 (n: value:
-            builtins.addErrorContext "while lib.generators.toPretty descended into list index `${toString n}'"
-            (go (depth + 1) value)
-          ) v)
-        + outroSpace + "]"
-    else if isFunction v then "<function>"
-      #let fna = lib.functionArgs v;
-      #    showFnas = concatStringsSep ", " (libAttr.mapAttrsToList
-      #                 (name: hasDefVal: if hasDefVal then name + "?" else name)
-      #                 fna);
-      #in if fna == {}    then "<function>"
-      #                   else "<function, args: {${showFnas}}>"
-    else if isAttrs    v then
-      # apply pretty values if allowed
-      if attrNames v == [ "__pretty" "val" ] && allowPrettyValues
-         then v.__pretty v.val
-      else if v == {} then "{ }"
-      else if v ? type && v.type == "derivation" then
-        "<derivation ${v.drvPath}>"
-      else if recursionLimit != null && depth >= recursionLimit then "{ ... }"
-      else "{" + introSpace
-          + libStr.concatStringsSep introSpace (libAttr.mapAttrsToList
-              (name: value:
-                builtins.addErrorContext "while lib.generators.toPretty descended into the `${name}' attribute"
-                "${libStr.escapeNixIdentifier name} = ${go (depth + 1) value};") v)
-        + outroSpace + "}"
-        else abort "generators.toPretty: should never happen (v = ${v})";
-    in let final = builtins.tryEval result; in if final.success then final.value else "<failure>";
-  in go 0;
+      let res = go "" initialState 0 v;
+      in yield res.buildup res.state;
 
   # PLIST handling
   toPlist = {}: v: let
