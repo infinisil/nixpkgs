@@ -259,7 +259,9 @@ rec {
 
         printList = list:
           if list == [] then printLiteral "[ ]"
-          else if ! canRecurse then printLiteral ("[ <" + toString (lib.length list) + " elements> ]")
+          else if ! canRecurse then
+            if lib.length list == 1 then printLiteral "[ <1 element> ]"
+            else printLiteral ("[ <" + toString (lib.length list) + " elements> ]")
           else {
             state = builtins.foldl' (acc: el:
                 let start = go "${indent}  " acc (depth + 1) el;
@@ -270,7 +272,9 @@ rec {
 
         printAttrs = attrs:
           if attrs == {} then printLiteral "{ }"
-          else if ! canRecurse then printLiteral ("{ <" + toString (lib.length (lib.attrNames attrs)) + " attributes> }")
+          else if ! canRecurse then
+            if lib.length (lib.attrNames attrs) == 1 then printLiteral "{ <1 attribute> }"
+            else printLiteral ("{ <" + toString (lib.length (lib.attrNames attrs)) + " attributes> }")
           else {
             state = builtins.foldl' (acc: el:
                 let start = go "${indent}  ${libStr.escapeNixIdentifier el} = " acc (depth + 1) attrs.${el};
@@ -304,10 +308,7 @@ rec {
           lambda = printFun (builtins.functionArgs value);
           list = printList value;
           set =
-            eval (value ? __prettyValue) (isPretty:
-            if allowPrettyValues && isPretty then eval value.__prettyValue printLiteral
-
-            else eval (value ? type && value.type == "derivation") (isDrv:
+            eval (value ? type && value.type == "derivation") (isDrv:
             if isDrv then eval "<derivation ${value.drvPath}>" printLiteral
 
             else eval (value ? __functor) (isFunctor:
@@ -316,7 +317,7 @@ rec {
             else eval (value ? __toString || value ? outPath) (isStringCoercible:
             if isStringCoercible then eval (toString value) printStr
 
-            else printAttrs value))));
+            else printAttrs value)));
         }.${type} or (throw "Type not implemented: ${type}"));
 
       in if state ? return then { inherit buildup state; } else result;
