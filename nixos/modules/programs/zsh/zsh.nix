@@ -251,13 +251,13 @@ in
           autoload -U bashcompinit && bashcompinit
         ''}
 
+        # Setup aliases.
+        ${zshAliases}
+
         # Setup custom interactive shell init stuff.
         ${cfge.interactiveShellInit}
 
         ${cfg.interactiveShellInit}
-
-        # Setup aliases.
-        ${zshAliases}
 
         # Setup prompt.
         ${cfg.promptInit}
