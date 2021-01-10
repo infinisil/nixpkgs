@@ -57,3 +57,19 @@ index 2acc4d14..59195e35 100755
      if test "$mpath" = yes; then
        error_exit "Multipath is supported only on Linux"
      fi
+diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+index f2f7772c..8c78c2d4 100644
+--- a/fsdev/file-op-9p.h
++++ b/fsdev/file-op-9p.h
+@@ -16,7 +16,11 @@
+ 
+ #include <dirent.h>
+ #include <utime.h>
++#ifdef __APPLE__
++#include <sys/mount.h>
++#else
+ #include <sys/vfs.h>
++#endif
+ #include "qemu-fsdev-throttle.h"
+ 
+ #define SM_LOCAL_MODE_BITS    0600
