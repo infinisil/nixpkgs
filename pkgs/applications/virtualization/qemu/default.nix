@@ -3,7 +3,7 @@
 , bison, lzo, snappy, libaio, gnutls, nettle, curl
 , makeWrapper
 , attr, libcap, libcap_ng
-, CoreServices, Cocoa, Hypervisor, rez, setfile
+, CoreServices, Cocoa, Hypervisor, rez, setfile, linuxHeaders
 , numaSupport ? stdenv.isLinux && !stdenv.isAarch32, numactl
 , seccompSupport ? stdenv.isLinux, libseccomp
 , alsaSupport ? stdenv.lib.hasSuffix "linux" stdenv.hostPlatform.system && !nixosTestRunner
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
       gnutls nettle curl
     ]
     ++ optionals ncursesSupport [ ncurses ]
-    ++ optionals stdenv.isDarwin [ CoreServices Cocoa Hypervisor rez setfile ]
+    ++ optionals stdenv.isDarwin [ CoreServices Cocoa Hypervisor rez setfile linuxHeaders ]
     ++ optionals seccompSupport [ libseccomp ]
     ++ optionals numaSupport [ numactl ]
     ++ optionals pulseSupport [ libpulseaudio ]
