@@ -57,3 +57,22 @@ index 2acc4d14..f5a58128 100755
      if test "$mpath" = yes; then
        error_exit "Multipath is supported only on Linux"
      fi
+diff --git a/fsdev/virtfs-proxy-helper.c b/fsdev/virtfs-proxy-helper.c
+index de061a8a..8f25a703 100644
+--- a/fsdev/virtfs-proxy-helper.c
++++ b/fsdev/virtfs-proxy-helper.c
+@@ -13,14 +13,10 @@
+ #include <sys/resource.h>
+ #include <getopt.h>
+ #include <syslog.h>
+-#include <sys/fsuid.h>
+-#include <sys/vfs.h>
+ #include <sys/ioctl.h>
+-#include <linux/fs.h>
+ #ifdef CONFIG_LINUX_MAGIC_H
+ #include <linux/magic.h>
+ #endif
+-#include <cap-ng.h>
+ #include "qemu-common.h"
+ #include "qemu/sockets.h"
+ #include "qemu/xattr.h"
