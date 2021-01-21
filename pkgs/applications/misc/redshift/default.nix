@@ -70,6 +70,8 @@ let
       # TODO: Enable for redshift-wlr/gammstep
       passthru.tests.redshift = lib.mkIf (pname == "redshift") nixosTests.redshift;
 
+      passthru.redshiftBinaryPath = if pname == "gammastep" then "/bin/gammastep" else "/bin/redshift";
+
       # the geoclue agent may inspect these paths and expect them to be
       # valid without having the correct $PATH set
       postInstall = if (pname == "gammastep") then ''

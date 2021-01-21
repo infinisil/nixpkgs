@@ -94,22 +94,19 @@ in {
       type = types.package;
       default = pkgs.redshift;
       defaultText = "pkgs.redshift";
+      example = literalExample "pkgs.gammastep";
       description = ''
         Redshift derivation to use.
-
-        To use Gammastep, pass <package>gammastep</package>.
       '';
     };
 
     executable = mkOption {
       type = types.str;
-      default = "/bin/redshift";
+      default = cfg.package.redshiftBinaryPath or "/bin/redshift";
+      defaultText = "package.redshiftBinaryPath or \"/bin/redshift\"";
       example = "/bin/redshift-gtk";
       description = ''
         Redshift executable to use within the package.
-
-        To use Gammastep, pass either <literal>/bin/gammastep</literal>
-        or <literal>/bin/gammastep-indicator</literal>.
       '';
     };
 
@@ -117,9 +114,7 @@ in {
       type = types.submodule ({ options, ... }: {
         freeformType = settingsFormat.type;
 
-        options.redshift = mkOption {
-          type = settingsFormat.type.functor.wrapped;
-          description = "Main Redshift/Gammastep configuration.";
+        options.redshift = {
         };
 
         # Copy all redshift definitions to general, such that in case of gammastep,
@@ -171,8 +166,6 @@ in {
     # needed so that .desktop files are installed, which geoclue cares about
     environment.systemPackages = [ cfg.package ];
 
-    location.provider = mkIf cfg.useGeoclue "geoclue2";
-
     services.geoclue2.appConfig.redshift = mkIf cfg.useGeoclue {
       isAllowed = true;
       isSystem = true;
@@ -181,34 +174,46 @@ in {
     assertions = [
       {
         assertion = (cfg.settings ? redshift.dawn-time) == (cfg.settings ? redshift.dusk-time);
-        message = "Time of dawn and time of dusk must be provided together.";
+        message = "services.redshift.settings.redshift.dawn-time and .dusk-time must be provided together.";
       }
       {
-        assertion = (cfg.settings ? redshift.lat) == (cfg.settings ? redshift.lon);
-        message = "Latitude and longitude must be provided together.";
+        assertion = (cfg.settings ? manual.lat) == (cfg.settings ? manual.lon);
+        message = "services.redshift.settings.manual.lat and .lon must be provided together.";
       }
       # Only checking for dawn-time or lat because the above two assertions cover the dusk-time/lon.
       {
-        assertion = (cfg.settings ? redshift.dawn-time) ||
+        assertion = (cfg.settings ? redshift.dawn-time || cfg.settings ? redshift.dusk-time) ||
                     (cfg.settings.redshift.location-provider or "") == "geoclue2" ||
-                    ((cfg.settings.redshift.location-provider or "") == "manual" && (cfg.settings ? manual.lat));
-        message = ''Either set "redshift.dawnTime" and "redshift.duskTime" OR "redshift.latitude" and "redshift.longitude" OR "redshift.useGeoclue".'' ;
+                    ((cfg.settings.redshift.location-provider or "") == "manual" && (cfg.settings ? manual.lat || cfg.settings ? manual.lon));
+        message = ''
+          In order for redshift to know the time of action, you need to set one of
+            - services.redshift.useGeoclue = true  for automatically inferring your location
+            - services.redshift.longitude and .latitude  for specifying your location manually
+            - services.redshift.dawnTime and .duskTime  for specifying the times manually
+        '';
       }
     ];
 
     services.redshift.settings = {
       redshift = {
-        location-provider = if cfg.useGeoclue then "geoclue2" else "manual";
-        dawn-time = mkIf (cfg.dawnTime != null) cfg.dawnTime;
-        dusk-time = mkIf (cfg.duskTime != null) cfg.duskTime;
+        location-provider = mkMerge [
+          (mkIf cfg.useGeoclue "geoclue2")
+          (mkIf (cfg.latitude != null || cfg.longitude != null) "manual")
+          (mkIf (lcfg.provider == "geoclue2") (mkDefault "geoclue2"))
+        ];
+
+        dawn-time = mkIf (! cfg.useGeoclue && cfg.dawnTime != null) cfg.dawnTime;
+        dusk-time = mkIf (! cfg.useGeoclue && cfg.duskTime != null) cfg.duskTime;
       };
       manual = {
-        lat = if (lcfg.provider == "manual" && options.location.latitude.isDefined)
-              then lcfg.latitude
-              else mkIf (cfg.latitude != null) cfg.latitude;
-        lon = if (lcfg.provider == "manual" && options.location.longitude.isDefined)
-              then lcfg.longitude
-              else mkIf (cfg.longitude != null) cfg.longitude;
+        lat = mkMerge [
+          (mkIf (cfg.latitude != null) cfg.latitude)
+          (mkIf (lcfg.provider == "manual" && builtins.trace options.location.latitude.isDefined options.location.latitude.isDefined) (mkDefault lcfg.latitude))
+        ];
+        lon = mkMerge [
+          (mkIf (cfg.longitude != null) cfg.longitude)
+          (mkIf (lcfg.provider == "manual" && options.location.longitude.isDefined) (mkDefault lcfg.longitude))
+        ];
       };
     };
 
