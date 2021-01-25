@@ -43,7 +43,8 @@ in
     location = {
 
       latitude = mkOption {
-        type = types.float;
+        type = types.nullOr types.float;
+        default = null;
         description = ''
           Your current latitude, between
           <literal>-90.0</literal> and <literal>90.0</literal>. Must be provided
@@ -52,7 +53,8 @@ in
       };
 
       longitude = mkOption {
-        type = types.float;
+        type = types.nullOr types.float;
+        default = null;
         description = ''
           Your current longitude, between
           between <literal>-180.0</literal> and <literal>180.0</literal>. Must be
@@ -60,9 +62,14 @@ in
         '';
       };
 
+      useGeoclue = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       provider = mkOption {
-        type = types.enum [ "manual" "geoclue2" ];
-        default = "manual";
+        type = types.nullOr (types.enum [ "manual" "geoclue2" ]);
+        default = null;
         description = ''
           The location provider to use for determining your location. If set to
           <literal>manual</literal> you must also provide latitude/longitude.
@@ -73,6 +80,16 @@ in
   };
 
   config = {
+
+    assertions = [{
+      assertion = lcfg.provider == "manual" -> (lcfg.latitude != null && lcfg.longitude != null);
+      message = "If you set location.provider = manual you need to define a location.latitude and location.longitude";
+    }];
+
+    location.provider = lib.mkMerge [
+      (lib.mkIf lcfg.useGeoclue "geoclue2")
+      (lib.mkIf (lcfg.longitude != null || lcfg.latitude != null) "manual")
+    ];
 
     environment.sessionVariables.TZDIR = "/etc/zoneinfo";
 

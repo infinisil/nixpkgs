@@ -37,6 +37,12 @@ in {
       '';
     };
 
+    mode = mkOption {
+      # Providing dawnTime/duskTime sets "time"
+      # If location.provider is not null, sets "location"
+      type = types.nullOr (types.enum [ "time" "location" ]);
+    };
+
     dawnTime = mkOption {
       type = types.nullOr types.str;
       default = null;
