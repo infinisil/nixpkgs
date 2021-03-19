@@ -334,6 +334,7 @@ declare -a propagatedDepFilesVars=(
 # Platform offsets: build = -1, host = 0, target = 1
 declare -a allPlatOffsets=(-1 0 1)
 
+declare -a attributeDepsArr=($attributeDeps)
 
 # Mutually-recursively find all build inputs. See the dependency section of the
 # stdenv chapter of the Nixpkgs manual for the specification this algorithm
@@ -427,6 +428,12 @@ findInputs() {
             done
         done
     done
+
+    if [[ -f "$pkg"/nix-support/attribute-deps ]]; then
+        for p in $(cat "$pkg/nix-support/attribute-deps"); do
+            attributeDepsArr+=("$p")
+        done
+    fi
 }
 
 # Make sure all are at least defined as empty
@@ -1159,6 +1166,13 @@ fixupPhase() {
         mkdir -p "${!outputDev}/nix-support"
         substituteAll "$setupHook" "${!outputDev}/nix-support/setup-hook"
     fi
+
+    for a in "${attributeDepsArr[@]}"; do
+        for output in $outputs; do
+            mkdir -p "${!output}/nix-support"
+            echo "$a" >> "${!output}/nix-support/attribute-deps"
+        done
+    done
 
     # TODO(@Ericson2314): Remove after https://github.com/NixOS/nixpkgs/pull/31414
     if [ -n "${setupHooks:-}" ]; then

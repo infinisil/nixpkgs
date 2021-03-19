@@ -115,6 +115,22 @@ in rec {
         else lib.subtractLists hardeningDisable (defaultHardeningFlags ++ hardeningEnable);
       # hardeningDisable additionally supports "all".
       erroneousHardeningFlags = lib.subtractLists supportedHardeningFlags (hardeningEnable ++ lib.remove "all" hardeningDisable);
+
+      allDeps = depsBuildBuild
+        ++ depsBuildBuildPropagated
+        ++ nativeBuildInputs
+        ++ propagatedNativeBuildInputs
+        ++ depsBuildTarget
+        ++ depsBuildTargetPropagated
+        ++ depsHostHost
+        ++ depsHostHostPropagated
+        ++ buildInputs
+        ++ propagatedBuildInputs
+        ++ depsTargetTarget
+        ++ depsTargetTargetPropagated;
+
+      attributeDeps = map (d: lib.concatStringsSep "." d.__path) (lib.filter (d: d ? __path) allDeps);
+
     in if builtins.length erroneousHardeningFlags != 0
     then abort ("mkDerivation was called with unsupported hardening flags: " + lib.generators.toPretty {} {
       inherit erroneousHardeningFlags hardeningDisable hardeningEnable supportedHardeningFlags;
@@ -200,6 +216,7 @@ in rec {
           builder = attrs.realBuilder or stdenv.shell;
           args = attrs.args or ["-e" (attrs.builder or ./default-builder.sh)];
           inherit stdenv;
+          inherit attributeDeps;
 
           # The `system` attribute of a derivation has special meaning to Nix.
           # Derivations set it to choose what sort of machine could be used to
