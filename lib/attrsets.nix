@@ -59,6 +59,13 @@ rec {
     else listToAttrs
       [ { name = head attrPath; value = setAttrByPath (tail attrPath) value; } ];
 
+  # Recursively adds a __path attribute to all attribute sets, corresponding to
+  # the attribute path to this value
+  mapPaths = path: attrs:
+    if lib.isDerivation attrs then lib.extendDerivation true { __path = path; } attrs
+    else lib.mapAttrs (n: v:
+      if lib.isAttrs v then mapPaths (path ++ [ n ]) v else v
+    ) attrs;
 
   /* Like `attrByPath' without a default value. If it doesn't find the
      path it will throw.
