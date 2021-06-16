@@ -680,9 +680,13 @@ rec {
         else if optionSetIn "listOf"  then types.listOf  (types.submodule options)
         else if optionSetIn "nullOr"  then types.nullOr  (types.submodule options)
         else tp;
+
+      fallbackType = lib.warnIf (! (opt.internal or false) && (opt.visible or true))
+        "Option `${showOption loc}' defined in ${showFiles opt.declarations} has no type."
+        types.unspecified;
     in
       if opt.type.getSubModules or null == null
-      then opt // { type = f (opt.type or types.unspecified); }
+      then opt // { type = f (opt.type or fallbackType); }
       else opt // { type = opt.type.substSubModules opt.options; options = []; };
 
 
