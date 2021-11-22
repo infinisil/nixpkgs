@@ -777,4 +777,111 @@ runTests {
     ];
     expected = "\".\".foo.\"2\".a2-b._bc'de";
   };
+
+  # If there are no updates, the value is passed through
+  testUpdateManyAttrPathsNone = {
+    expr = updateManyAttrPaths [] "something";
+    expected = "something";
+  };
+
+  # A single update to the root path is just like applying the function directly
+  testUpdateManyAttrPathsSingleIncrement = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ ];
+        update = old: old + 1;
+      }
+    ] 0;
+    expected = 1;
+  };
+
+  # Multiple updates can be applied are done in order
+  testUpdateManyAttrPathsMultipleIncrements = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ ];
+        update = old: old + "a";
+      }
+      {
+        path = [ ];
+        update = old: old + "b";
+      }
+      {
+        path = [ ];
+        update = old: old + "c";
+      }
+    ] "";
+    expected = "abc";
+  };
+
+  # If an update doesn't use the value, all previous updates are not evaluated
+  testUpdateManyAttrPathsLazy = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ ];
+        update = old: old + throw "nope";
+      }
+      {
+        path = [ ];
+        update = old: "untainted";
+      }
+    ] (throw "start");
+    expected = "untainted";
+  };
+
+  # Deeply nested attributes can be updated without affecting others
+  testUpdateManyAttrPathsDeep = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ "a" "b" "c" ];
+        update = old: old + 1;
+      }
+    ] {
+      a.b.c = 0;
+
+      a.b.z = 0;
+      a.y.z = 0;
+      x.y.z = 0;
+    };
+    expected = {
+      a.b.c = 1;
+
+      a.b.z = 0;
+      a.y.z = 0;
+      x.y.z = 0;
+    };
+  };
+
+  # Nested attributes are updated first
+  testUpdateManyAttrPathsNestedBeforehand = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ "a" ];
+        update = old: old // { x = old.b; };
+      }
+      {
+        path = [ "a" "b" ];
+        update = old: old + 1;
+      }
+    ] {
+      a.b = 0;
+    };
+    expected = {
+      a.b = 1;
+      a.x = 1;
+    };
+  };
+
+  # If an attribute doesn't exist, it is treated as if it did with a value of {}
+  testUpdateManyAttrPathsNonexistent = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ "a" ];
+        update = old: old;
+      }
+    ] {};
+    expected = {
+      a = {};
+    };
+  };
 }

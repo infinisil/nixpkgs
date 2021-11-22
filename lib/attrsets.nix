@@ -5,7 +5,7 @@ let
   inherit (builtins) head tail length;
   inherit (lib.trivial) and;
   inherit (lib.strings) concatStringsSep concatMapStringsSep escapeNixIdentifier sanitizeDerivationName;
-  inherit (lib.lists) foldr foldl' concatMap concatLists elemAt;
+  inherit (lib.lists) foldr foldl' concatMap concatLists elemAt partition groupBy take foldl;
 in
 
 rec {
@@ -77,6 +77,87 @@ rec {
     let errorMsg = "cannot find attribute `" + concatStringsSep "." attrPath + "'";
     in attrByPath attrPath (abort errorMsg) set;
 
+
+  /* Update or set specific paths of an attribute set.
+
+     Takes a list of updates to apply and an attribute set to apply them to,
+     and returns the attribute set with the updates applied. Updates are
+     represented as a { path = ...; update = ...; } value, where `path` is a
+     list of strings representing the attribute path that should be updated,
+     and `update` is a function that takes the old value at that attribute path
+     as an argument (or `{}` if the path doesn't exist) and returns the new
+     value it should be.
+
+     Properties:
+     - Updates to deeper attribute paths are applied before updates to more
+       shallow attribute paths
+     - Multiple updates to the same attribute path are applied in the order
+       they appear in the update list
+     - If there is an update for an attribute path that would recurse into an
+       existing value that's not an attribute set, an error is thrown
+     - If there is an update for an attribute path that doesn't exist, it is
+       created by calling the update function with the value `{}`
+
+     Example:
+       updateManyAttrPaths [
+         {
+           path = [ "a" "b" ];
+           update = old: { d = old.c; };
+         }
+         {
+           path = [ "a" "b" "c" ];
+           update = old: old + 1;
+         }
+         {
+           path = [ "x" "y" ];
+           update = old: "xy";
+         }
+       ] { a.b.c = 0; }
+       => { a = { b = { d = 1; }; }; x = { y = "xy"; }; }
+  */
+  updateManyAttrPaths = let
+    # When recursing into attributes, instead of updating the `path` of each
+    # update using `lib.tail`, which needs to allocate an entirely new list,
+    # we just pass a prefix length to use and make sure to only look at the
+    # path without the prefix length, so that we can reuse the original list
+    # entries.
+    # Invariant: lib.length (lib.elemAt updates i).path >= prefixLength
+    go = prefixLength: updates: input:
+      let
+        # Splits updates into ones on this level (split.right)
+        # and ones on levels further down (split.wrong)
+        split = partition (el: length el.path == prefixLength) updates;
+
+        # groups updates on further down levels into the attributes they modify
+        nested = groupBy (el: elemAt el.path prefixLength) split.wrong;
+
+        # Recurses into the attribute set, passing the updates for each
+        # attribute respectively
+        withNestedMods =
+          if length split.wrong == 0 then
+            # Return the input if we don't have any nested modifications
+            input
+          else
+            # Otherwise, map over the attribute set and apply modifications for
+            # each of them
+            if isAttrs input then
+              input //
+              mapAttrs (name: value: go (prefixLength + 1) value (input.${name} or {})) nested
+            else
+              let updatePath = (head split.wrong).path; in
+              throw
+              ( "updateManyAttrPaths: Path ${showAttrPath updatePath} needs to "
+              + "be updated, but path ${showAttrPath (take prefixLength updatePath)} "
+              + "of the given input is not an attribute set and therefore "
+              + "can't be recursed into");
+
+        # We get the final result by applying all the updates on this level
+        # after having applied all the nested updates
+        # We use foldl instead of foldl' so that in case of multiple updates,
+        # intermediate values aren't evaluated if not needed
+      in foldl (acc: el: el.update acc) withNestedMods split.right;
+
+  in go 0;
 
   /* Return the specified attributes from a set.
 
