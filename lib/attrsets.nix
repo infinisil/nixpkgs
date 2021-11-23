@@ -5,7 +5,7 @@ let
   inherit (builtins) head tail length;
   inherit (lib.trivial) and;
   inherit (lib.strings) concatStringsSep sanitizeDerivationName;
-  inherit (lib.lists) foldr foldl' concatMap concatLists elemAt;
+  inherit (lib.lists) foldr foldl' concatMap concatLists elemAt lexicalLessThan;
 in
 
 rec {
@@ -93,12 +93,16 @@ rec {
      Multiple updates to the same attribute path are applied in the order they
      appear in the update list.
 
+     If there is an update for an attribute path that would recurse into a
+     value that's not an attribute set exists, an error is thrown. Otherwise,
+     if the attribute path doesn't exist, the attribute path is created, and
+     `{}` is passed as the old value.
 
+     m: total attribute path length
+     n: number of updates
+     Time Complexity O(m * n * log n)
 
-     An update
-     If there is an update for an attribute path
-     If there is an update for an attribute path that doesn't exist, an error
-     is thrown.
+     Space Complexity O(n + m)
 
      Example:
        updateManyAttrPaths [
@@ -113,7 +117,10 @@ rec {
        ] { a.b.c = 0; }
        => { a = { b = { c = 1; x = 2; }; }; }
   */
-  updateManyAttrPaths = let
+  updateManyAttrPaths = updates: let
+
+    sortedUpdates = lib.sort (a: b: lexicalLessThan a.path b.path) updates;
+
     # When recursing into attributes, instead of updating the `path` of each
     # update using `lib.tail`, which needs to allocate an entirely new list,
     # we just pass a prefix length to use and make sure to only look at the
@@ -121,29 +128,48 @@ rec {
     # entries.
     # Invariant: lib.length (lib.elemAt updates i).path >= prefixLength
     # TODO: Invariant: Don't modify update list at all. Only sort it once in the beginning
-    go = prefixLength: updates: input:
+    go = prefixLength: start: end: input:
       let
-        # Splits updates into ones on this level (split.right)
-        # and ones on levels further down (split.wrong)
-        split = lib.partition (el: lib.length el.path == prefixLength) updates;
+        midFun = i:
+          if i == end then end
+          else if lib.length (lib.elemAt sortedUpdates i).path > prefixLength then i
+          else midFun (i + 1);
 
-        # groups updates on further down levels into the attributes they modify
-        nested = lib.groupBy (el: lib.elemAt el.path prefixLength) split.wrong;
+        mid = midFun start;
+
+        attrAt = i: lib.elemAt (lib.elemAt sortedUpdates i).path prefixLength;
+
+        nested = lib.genList (i:
+          let
+            pos = mid + i;
+            name = attrAt pos;
+            start' =
+              if pos == mid then mid
+              else if name == attrAt (pos - 1) then (lib.elemAt nested (i - 1)).start'
+              else mid + i;
+            end' =
+              if pos + 1 == end then end
+              else if name == attrAt (pos + 1) then (lib.elemAt nested (i + 1)).end'
+              else pos;
+            value = go (prefixLength + 1) start' end' (input.${name} or {});
+          in {
+            inherit name start' end' value;
+          }
+        ) (end - mid);
 
         # Recurses into the attribute set, passing the updates for each
         # attribute respectively
         withNestedMods =
-          if lib.length split.wrong == 0 then
+          if mid == end then
             # Return the input if we don't have any nested modifications
             input
           else
             # Otherwise, map over the attribute set and apply modifications for
             # each of them
             if lib.isAttrs input then
-              input //
-              lib.mapAttrs (name: value: go (prefixLength + 1) value (input.${name} or {})) nested
+              input // builtins.listToAttrs nested
             else
-              let updatePath = (lib.head split.wrong).path; in
+              let updatePath = (lib.elemAt sortedUpdates (lib.head nested).start').path; in
               throw
               ( "updateManyAttrPaths: Path ${showPath updatePath} needs to "
               + "be updated, but path ${showPath (lib.take prefixLength updatePath)} "
@@ -154,10 +180,13 @@ rec {
         # after having applied all the nested updates
         # We use foldl instead of foldl' so that in case of multiple updates,
         # intermediate values aren't evaluated if not needed
-        output = lib.foldl (acc: el: el.update acc) withNestedMods split.right;
-      in output;
+        # output = lib.foldl (acc: el: el.update acc) withNestedMods split.right;
+        output = i: value:
+          if i == mid then value
+          else output (i + 1) ((lib.elemAt sortedUpdates i).update value);
+      in output start withNestedMods;
 
-  in go 0;
+  in go 0 0 (lib.length updates);
 
   showPath = path: "[" + lib.concatMapStrings (p: " " + lib.strings.escapeNixString p) path + " ]";
 
