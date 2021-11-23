@@ -80,29 +80,27 @@ rec {
 
   /* Update or set specific paths of an attribute set.
 
-     Takes a list of updates to apply and an attribute set to apply them to,
-     and returns the attribute set with the updates applied. Updates are
-     represented as a { path = ...; update = ...; } value, where `path` is a
-     list of strings representing the attribute path that should be updated,
-     and `update` is a function that takes the old value at that attribute path
-     as an argument and returns the new value it should be.
+     Takes a list of updates and an attribute set to apply them to, and returns
+     the attribute set with the updates applied. Updates are represented as a
+     { path = ...; update = ...; } value, where `path` is a list of strings
+     representing the attribute path that should be updated, and `update` is a
+     function that takes the old value at that attribute path as an argument
+     and returns the new value for it.
 
-     Updates to deeper attribute paths are applied before updates to more
-     shallow attribute paths.
+     Properties:
+     - Updates to deeper attribute paths are applied before updates to more
+       shallow attribute paths
+     - Multiple updates to the same attribute path are applied in the order
+       they appear in the update list
+     - If there is an update for an attribute path that would recurse into an
+       existing value that's not an attribute set, an error is thrown.
+     - If there is an update for an attribute path that doesn't exist, it is
+       created by calling the update function with the value `{}`
 
-     Multiple updates to the same attribute path are applied in the order they
-     appear in the update list.
-
-     If there is an update for an attribute path that would recurse into a
-     value that's not an attribute set exists, an error is thrown. Otherwise,
-     if the attribute path doesn't exist, the attribute path is created, and
-     `{}` is passed as the old value.
-
+     Complexity:
      m: total attribute path length
      n: number of updates
-     Time Complexity O(m * n * log n)
-
-     Space Complexity O(n + m)
+     Complexity O(m * n * log n)
 
      Example:
        updateManyAttrPaths [
@@ -119,44 +117,110 @@ rec {
   */
   updateManyAttrPaths = updates: let
 
+    /*
+    The implementation of this function is very efficient by limiting
+    allocations to a minimum.
+
+    This is achieved by first sorting the list of updates in lexicographic
+    order of their path, giving us a list of updates like
+    [                                     # index
+      { path = [];        update = ...; } # 0
+      { path = ["a"];     update = ...; } # 1
+      { path = ["a" "x"]; update = ...; } # 2
+      { path = ["a" "y"]; update = ...; } # 3
+      { path = ["b"];     update = ...; } # 4
+      { path = ["b" "x"]; update = ...; } # 5
+      { path = ["b" "y"]; update = ...; } # 6
+    ]                                     # 7 (length)
+    */
     sortedUpdates = lib.sort (a: b: lexicalLessThan a.path b.path) updates;
 
-    # When recursing into attributes, instead of updating the `path` of each
-    # update using `lib.tail`, which needs to allocate an entirely new list,
-    # we just pass a prefix length to use and make sure to only look at the
-    # path without the prefix length, so that we can reuse the original list
-    # entries.
-    # Invariant: lib.length (lib.elemAt updates i).path >= prefixLength
-    # TODO: Invariant: Don't modify update list at all. Only sort it once in the beginning
-    go = prefixLength: start: end: input:
+    /*
+    The `updatePrefix` function applies all updates to the value at a specific
+    prefix, returning the new value. It takes these arguments:
+    - The `prefixLength` argument is the length of the prefix that is being
+      processed
+    - The `start` and `end` arguments indicate the `start` (inclusive) and
+      `end` (exclusive) indices in the sorted update list containing the
+      updates to this prefix (and any further nested prefixes)
+    - The `input` argument is the old value at this prefix
+
+    With the above example these calls to `updatePrefix` are made:
+    - updatePrefix 0 0 7: The initial call, processes all entries, aka the [] prefix
+    - updatePrefix 1 1 4: The recursive call to process the ["a"] prefix
+    - updatePrefix 2 2 3: The recursive call to process the ["a" "x"] prefix
+    - updatePrefix 2 3 4: The recursive call to process the ["a" "y"] prefix
+    - updatePrefix 1 4 7: The recursive call to process the ["b"] prefix
+    - updatePrefix 2 5 6: The recursive call to process the ["b" "x"] prefix
+    - updatePrefix 2 6 7: The recursive call to process the ["b" "y"] prefix
+
+    These integer arguments are very cheap and give the function all the
+    information it needs to process the updates for each prefix
+
+    Invariant: There exists a mid value such that both of these conditions hold:
+    - forall start <= i < mid:
+      prefixLength == lib.length (lib.elemAt sortedUpdates i).path
+    - forall mid <= i < end:
+      prefixLength < lib.length (lib.elemAt sortedUpdates i).path)
+
+    */
+    updatePrefix = prefixLength: start: end: input:
       let
-        midFun = i:
+        # Iterates through the sortedUpdates until it finds the mid value from
+        # the invariant
+        findMid = i:
           if i == end then end
-          else if lib.length (lib.elemAt sortedUpdates i).path > prefixLength then i
-          else midFun (i + 1);
+          else if prefixLength < lib.length (lib.elemAt sortedUpdates i).path then i
+          else findMid (i + 1);
 
-        mid = midFun start;
+        # The mid value from the invariant, indicating the point at which
+        # nested updates for this prefix start
+        mid = findMid start;
 
+        # For an index i >= mid in sortedUpdates, returns the first attribute
+        # past the prefix
         attrAt = i: lib.elemAt (lib.elemAt sortedUpdates i).path prefixLength;
 
+        /*
+        An array of end - mid elements (one for each nested update) where each
+        element has these attributes:
+        - name: The nested attribute name that needs to be updated, so either
+          "a" or "b" in the toplevel updatePrefix call
+        - value: The updated value of the attribute name that needs to be
+          updated, this is the nested updatePrefix result
+        - end': The index of the first sortedUpdates entry that updates the
+          next nested attribute name. This is used for memoization
+
+        The name and value attributes allow this list to be used to construct
+        an attribute set with builtins.listToAttrs, which notably only looks
+        at the _first_ entry in the list for each attribute name
+        */
         nested = lib.genList (i:
-          let
-            pos = mid + i;
+          # i represents the index in this list, but pos is the index in sortedUpdates
+          let pos = mid + i;
+          # TODO: Does rec save us anything over a `let in` + `inherit`?
+          in rec {
             name = attrAt pos;
-            start' =
-              if pos == mid then mid
-              else if name == attrAt (pos - 1) then (lib.elemAt nested (i - 1)).start'
-              else mid + i;
+            # Passing pos as the start only works because builtins.listToAttrs
+            # only processes the first entry for each attribute name, which is
+            # exactly the position we need here
+            value = updatePrefix (prefixLength + 1) pos end' (input.${name} or {});
+            # The first index of the next attribute name that gets updated
             end' =
+              # If we're at the end, there's no more, we return the end
               if pos + 1 == end then end
-              else if name == attrAt (pos + 1) then (lib.elemAt nested (i + 1)).end'
-              else pos;
-            value = go (prefixLength + 1) start' end' (input.${name} or {});
-          in {
-            inherit name start' end' value;
+              # Otherwise, we check the next update
+              else let next = lib.elemAt nested (i + 1); in
+              # If the next update updates the same attribute name, we can copy
+              # its end
+              if name == next.name then next.end'
+              # Otherwise, this is the last update for this attribute name, so
+              # return the next index
+              else pos + 1;
           }
         ) (end - mid);
 
+        # CONTINUE HERE
         # Recurses into the attribute set, passing the updates for each
         # attribute respectively
         withNestedMods =
@@ -169,7 +233,7 @@ rec {
             if lib.isAttrs input then
               input // builtins.listToAttrs nested
             else
-              let updatePath = (lib.elemAt sortedUpdates (lib.head nested).start').path; in
+              let updatePath = (lib.elemAt sortedUpdates mid).path; in
               throw
               ( "updateManyAttrPaths: Path ${showPath updatePath} needs to "
               + "be updated, but path ${showPath (lib.take prefixLength updatePath)} "
@@ -186,7 +250,7 @@ rec {
           else output (i + 1) ((lib.elemAt sortedUpdates i).update value);
       in output start withNestedMods;
 
-  in go 0 0 (lib.length updates);
+  in updatePrefix 0 0 (lib.length updates);
 
   showPath = path: "[" + lib.concatMapStrings (p: " " + lib.strings.escapeNixString p) path + " ]";
 

@@ -226,30 +226,14 @@ rec {
   */
   all = builtins.all or (pred: foldr (x: y: if pred x then y else false) true);
 
-  #lexicalLessThan = a: b:
-  #  let
-  #    alen = lib.length a;
-  #    compareElements = index:
-  #      if index == alen then false
-  #      else if lib.elemAt a index == lib.elemAt b index then compareElements (index + 1)
-  #      else lib.elemAt a index < lib.elemAt b index;
-  #  in
-  #  if alen == lib.length b then compareElements 0
-  #  else alen < lib.length b;
-
-  lexicalLessThan =
+  lexicalLessThan = a: b:
     let
-      lexicalLessThan' = whenEqual: smaller: bigger:
-        let
-          go = index:
-            if index == lib.length smaller then index == lib.length bigger -> whenEqual
-            else if lib.elemAt smaller index == lib.elemAt bigger index then go (index + 1)
-            else lib.elemAt smaller index < lib.elemAt bigger index;
-        in go 0;
-    in a: b:
-      if lib.length a < lib.length b
-      then lexicalLessThan' false a b
-      else ! lexicalLessThan' true b a;
+      go = i:
+        if i == lib.length b then false
+        else if i == lib.length a then true
+        else if lib.elemAt a i != lib.elemAt b i then lib.elemAt a i < lib.elemAt b i
+        else go (i + 1);
+    in go 0;
 
   /* Count how many elements of `list` match the supplied predicate
      function.
