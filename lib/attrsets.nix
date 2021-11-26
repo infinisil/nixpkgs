@@ -5,7 +5,7 @@ let
   inherit (builtins) head tail length;
   inherit (lib.trivial) and;
   inherit (lib.strings) concatStringsSep sanitizeDerivationName;
-  inherit (lib.lists) foldr foldl' concatMap concatLists elemAt lexicalLessThan;
+  inherit (lib.lists) foldr foldl' concatMap concatLists elemAt lexicalLessThan genList;
 in
 
 rec {
@@ -114,7 +114,7 @@ rec {
        ] { a.b.c = 0; }
        => { a = { b = { c = 1; x = 2; }; }; x = { y = 10; }; }
   */
-  updateManyAttrPaths = updates: let
+  updateManyAttrPaths = unsortedInput: let
 
     /*
     The implementation of this function is very efficient by limiting
@@ -132,7 +132,20 @@ rec {
       { path = ["b" "y"]; update = ...; } # 6
     ]                                     # 7 (length)
     */
-    sortedUpdates = lib.sort (a: b: lexicalLessThan a.path b.path) updates;
+    sortedInput = lib.sort (a: b: a.path < b.path) unsortedInput;
+
+    paths' = builtins.catAttrs "path" sortedInput;
+    updates = builtins.catAttrs "update" sortedInput;
+
+    pathLengths = map length paths';
+
+    transPaths =
+      let
+        go = n: {
+          paths = map (x: elemAt x n) paths';
+          nextPaths = go (n + 1);
+        };
+      in go 0;
 
     /*
     The `updatePrefix` function applies all updates to the value at a specific
@@ -162,13 +175,13 @@ rec {
     - forall mid <= i < end:
       prefixLength < lib.length (lib.elemAt sortedUpdates i).path)
     */
-    updatePrefix = prefixLength: start: end: old:
+    updatePrefix = prefixLength: { paths, nextPaths }: start: end: old:
       let
         # Iterates through the sortedUpdates until it finds the mid value from
         # the invariant
         findMid = i:
           if i == end then end
-          else if prefixLength < lib.length (lib.elemAt sortedUpdates i).path then i
+          else if prefixLength < elemAt pathLengths i then i
           else findMid (i + 1);
 
         # The mid value from the invariant, indicating the point at which
@@ -177,7 +190,7 @@ rec {
 
         # For an index i >= mid in sortedUpdates, returns the first attribute
         # past the prefix
-        attrAt = i: lib.elemAt (lib.elemAt sortedUpdates i).path prefixLength;
+        #attrAt = i: lib.elemAt (lib.elemAt sortedUpdates i).path prefixLength;
 
         /*
         An array of end - mid elements (one for each nested update) where each
@@ -193,23 +206,27 @@ rec {
         an attribute set with builtins.listToAttrs, which notably only looks
         at the _first_ entry in the list for each attribute name
         */
-        nestedList = lib.genList (i:
+
+
+        # TODO: Optimization: Instead of constructing multiple of these lists
+        # for recursion case, only construct a single one per level
+        nestedList = genList (i:
           # i represents the index in this list, but pos is the index in
           # sortedUpdates
           let pos = mid + i;
           # TODO: Does rec save us anything over a `let in` + `inherit`?
           in rec {
-            name = attrAt pos;
+            name = elemAt paths pos;
             # Passing pos as the start only works because builtins.listToAttrs
             # only processes the first entry for each attribute name, which is
             # exactly the position we need here
-            value = updatePrefix (prefixLength + 1) pos end' (old.${name} or {});
+            value = updatePrefix (prefixLength + 1) nextPaths pos end' (old.${name} or {});
             # The first index of the next attribute name that gets updated
             end' =
               # If we're at the end, there's no more, we return the end
               if pos + 1 == end then end
               # Otherwise, we check the next update
-              else let next = lib.elemAt nestedList (i + 1); in
+              else let next = elemAt nestedList (i + 1); in
               # If the next update updates the same attribute name, we can copy
               # its end
               if name == next.name then next.end'
@@ -226,16 +243,16 @@ rec {
             # evaluation of the old input if not needed
             old
           else
-            if lib.isAttrs old then
+            if isAttrs old then
               old // builtins.listToAttrs nestedList
             else
-              let updatePath = (lib.elemAt sortedUpdates mid).path; in
-              throw
-              ( "updateManyAttrPaths: Path ${showAttributePath updatePath} "
-              + "needs to be updated, but path ${
-                showAttributePath (lib.take prefixLength updatePath)
-              } of the given value is not an attribute set and therefore "
-              + "can't be recursed into");
+              let updatePath = elemAt paths' mid; in
+              throw "null";
+              #( "updateManyAttrPaths: Path ${showAttributePath updatePath} "
+              #+ "needs to be updated, but path ${
+              #  showAttributePath (lib.take prefixLength updatePath)
+              #} of the given value is not an attribute set and therefore "
+              #+ "can't be recursed into");
 
         # After having applied all the nested updates, apply the non-nested
         # updates, which is done by just (lazily) iterating over start to mid
@@ -244,10 +261,10 @@ rec {
           # If we arrived at mid, return the accumulated value
           if i == mid then value
           # Otherwise apply the update and recurse to the next one
-          else result (i + 1) ((lib.elemAt sortedUpdates i).update value);
+          else result (i + 1) (elemAt updates i value);
       in result start nested;
 
-  in updatePrefix 0 0 (lib.length updates);
+  in updatePrefix 0 transPaths 0 (length updates);
 
   showAttributePath = path: "[" + lib.concatMapStrings (p: " " + lib.strings.escapeNixString p) path + " ]";
 
