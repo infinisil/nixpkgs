@@ -213,9 +213,9 @@ rec {
         nestedList = genList (i:
           # i represents the index in this list, but pos is the index in
           # sortedUpdates
-          let pos = mid + i;
           # TODO: Does rec save us anything over a `let in` + `inherit`?
-          in rec {
+          rec {
+            pos = mid + i;
             name = elemAt paths pos;
             # Passing pos as the start only works because builtins.listToAttrs
             # only processes the first entry for each attribute name, which is
