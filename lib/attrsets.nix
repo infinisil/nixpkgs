@@ -137,7 +137,7 @@ rec {
     paths' = builtins.catAttrs "path" sortedInput;
     updates = builtins.catAttrs "update" sortedInput;
 
-    pathLengths = map length paths';
+    #pathLengths = map length paths';
 
     transPaths =
       let
@@ -181,7 +181,7 @@ rec {
         # the invariant
         findMid = i:
           if i == end then end
-          else if prefixLength < elemAt pathLengths i then i
+          else if prefixLength < length (elemAt paths' i) then i
           else findMid (i + 1);
 
         # The mid value from the invariant, indicating the point at which
