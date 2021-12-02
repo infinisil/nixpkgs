@@ -761,4 +761,20 @@ runTests {
       { a = 3; b = 30; c = 300; }
     ];
   };
+
+  testShowAttrPathEmpty = {
+    expr = showAttrPath [];
+    expected = "<root attribute path>";
+  };
+
+  testShowAttrPathVarious = {
+    expr = showAttrPath [
+      "."
+      "foo"
+      "2"
+      "a2-b"
+      "_bc'de"
+    ];
+    expected = "\".\".foo.\"2\".a2-b._bc'de";
+  };
 }
