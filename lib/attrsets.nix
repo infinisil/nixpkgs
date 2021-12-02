@@ -135,14 +135,13 @@ rec {
     sortedInput = lib.sort (a: b: a.path < b.path) unsortedInput;
 
     paths' = builtins.catAttrs "path" sortedInput;
-    updates = builtins.catAttrs "update" sortedInput;
 
     #pathLengths = map length paths';
 
     transPaths =
       let
         go = n: {
-          paths = map (x: elemAt x n) paths';
+          paths = elemAt (map (x: elemAt x n) paths');
           nextPaths = go (n + 1);
         };
       in go 0;
@@ -216,7 +215,7 @@ rec {
           # TODO: Does rec save us anything over a `let in` + `inherit`?
           rec {
             pos = mid + i;
-            name = elemAt paths pos;
+            name = paths pos;
             # Passing pos as the start only works because builtins.listToAttrs
             # only processes the first entry for each attribute name, which is
             # exactly the position we need here
@@ -261,10 +260,10 @@ rec {
           # If we arrived at mid, return the accumulated value
           if i == mid then value
           # Otherwise apply the update and recurse to the next one
-          else result (i + 1) (elemAt updates i value);
+          else result (i + 1) ((elemAt sortedInput i).update value);
       in result start nested;
 
-  in updatePrefix 0 transPaths 0 (length updates);
+  in updatePrefix 0 transPaths 0 (length unsortedInput);
 
   showAttributePath = path: "[" + lib.concatMapStrings (p: " " + lib.strings.escapeNixString p) path + " ]";
 
