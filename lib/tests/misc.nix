@@ -877,11 +877,31 @@ runTests {
     expr = updateManyAttrPaths [
       {
         path = [ "a" ];
-        update = old: old;
+        update = old: old + "-mod";
+        fallback = "fallback";
       }
     ] {};
     expected = {
-      a = {};
+      a = "fallback-mod";
+    };
+  };
+
+  # If an attribute doesn't exist, it is treated as if it did with a value of {}
+  testUpdateManyAttrPathsNonexistentPath = {
+    expr = updateManyAttrPaths [
+      {
+        path = [ "a" ];
+        update = old: old // { x = 10; };
+      }
+      {
+        path = [ "a" "b" ];
+        update = old: old + "-mod";
+        fallback = "fallback";
+      }
+    ] {};
+    expected = {
+      a.b = "fallback-mod";
+      a.x = 10;
     };
   };
 

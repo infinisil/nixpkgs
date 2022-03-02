@@ -122,7 +122,7 @@ rec {
     # path without the prefix length, so that we can reuse the original list
     # entries.
     # Invariant: lib.length (lib.elemAt updates i).path >= prefixLength
-    go = prefixLength: updates: input:
+    go = prefixLength: hasInput: updates: input:
       let
         # Splits updates into ones on this level (split.right)
         # and ones on levels further down (split.wrong)
@@ -136,13 +136,16 @@ rec {
         withNestedMods =
           if length split.wrong == 0 then
             # Return the input if we don't have any nested modifications
-            input
+            if hasInput then input
+            else (head split.right).fallback or (throw "Nope!")
           else
+            if ! hasInput then
+              mapAttrs (name: value: go (prefixLength + 1) false value null) nested
             # Otherwise, map over the attribute set and apply modifications for
             # each of them
-            if isAttrs input then
+            else if isAttrs input then
               input //
-              mapAttrs (name: value: go (prefixLength + 1) value (input.${name} or {})) nested
+              mapAttrs (name: value: go (prefixLength + 1) (input ? ${name}) value input.${name}) nested
             else
               let updatePath = (head split.wrong).path; in
               throw
@@ -157,7 +160,7 @@ rec {
         # intermediate values aren't evaluated if not needed
       in foldl (acc: el: el.update acc) withNestedMods split.right;
 
-  in go 0;
+  in go 0 true;
 
   /* Return the specified attributes from a set.
 
