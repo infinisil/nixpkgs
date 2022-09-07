@@ -263,6 +263,13 @@ let
     });
   };
 
+  autoCalledPaths = builtins.readDir ../auto;
+
+  autoCalledPackages = self: super:
+    lib.mapAttrs (name: type:
+      self.callPackage (../auto + "/${name}") {}
+    ) autoCalledPaths;
+
   # The complete chain of package set builders, applied from top to bottom.
   # stdenvOverlays must be last as it brings package forward from the
   # previous bootstrapping phases which have already been overlayed.
@@ -272,6 +279,7 @@ let
     stdenvAdapters
     trivialBuilders
     splice
+    autoCalledPackages
     allPackages
     otherPackageSets
     aliases
