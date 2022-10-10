@@ -285,17 +285,17 @@ in rec {
                 build = ''
                     mkdir $out
                     cd $all_src
-                    PIDS=()
+                    #PIDS=()
                     for source_file in $(find -L . -type f \( -name '*.c' -or -name '*.cpp' -or -name '*.cc' \) -print | sort); do
                         echo $source_file >> $modules
                         dep_file=$out/$source_file.d
                         dep_dir=''${dep_file%/*}
                         mkdir -p "$dep_dir"
                         [[ $source_file =~ .*\.c$ ]] && COMPILER=$CC || COMPILER=$CXX
-                        $COMPILER -M ${preprocessor_flags} ${include_path} $source_file > $dep_file &
-                        PIDS+=($!)
+                        $COMPILER -M ${preprocessor_flags} ${include_path} $source_file > $dep_file
+                        #PIDS+=($!)
                     done
-                    wait ''${PIDS[@]}
+                    #wait ''${PIDS[@]}
                 '';
             };
 
