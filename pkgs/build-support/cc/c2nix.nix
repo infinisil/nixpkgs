@@ -3,7 +3,7 @@
 {
     pkgs,
     # TODO drop this when it's in nixpkgs main
-    sourcesLib ? (import ./pinned_nixpkgs.nix).sources
+    sourcesLib ? import (import ./pinned_nixpkgs.nix + "/lib")
 }:
 let
     inherit (sourcesLib) sources filesystem;
