@@ -8,16 +8,6 @@
 let
   version = "1.9";
 
-  targetArch =
-    if stdenv.isi686 then
-      "IA32"
-    else if stdenv.isx86_64 then
-      "X64"
-    else if stdenv.isAarch64 then
-      "AARCH64"
-    else
-      throw "Unsupported architecture";
-
   efifsSrc = fetchFromGitHub {
     owner = "pbatard";
     repo = "efifs";
@@ -45,13 +35,13 @@ edk2.mkDerivation "EfiFsPkg/EfiFsPkg.dsc" {
 
   preBuild = ''
     patchShebangs --build ./EfiFsPkg/set_grub_cpu.sh
-    ./EfiFsPkg/set_grub_cpu.sh ${targetArch}
+    ./EfiFsPkg/set_grub_cpu.sh ${edk2.targetArch}
   '';
 
   installPhase = ''
     runHook preInstall
     mkdir -p $out
-    install -D Build/EfiFs/*/${targetArch}/*.efi $out
+    install -D Build/EfiFs/*/${edk2.targetArch}/*.efi $out
     runHook postInstall
   '';
 
