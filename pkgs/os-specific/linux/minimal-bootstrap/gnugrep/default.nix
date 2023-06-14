@@ -1,9 +1,4 @@
-{ lib
-, fetchurl
-, bash
-, tinycc
-, gnumake
-}:
+{ lib, fetchurl, bash, tinycc, gnumake }:
 let
   pname = "gnugrep";
   version = "2.4";
@@ -16,20 +11,17 @@ let
   # Thanks to the live-bootstrap project!
   # See https://github.com/fosslinux/live-bootstrap/blob/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/grep-2.4
   makefile = fetchurl {
-    url = "https://github.com/fosslinux/live-bootstrap/raw/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/grep-2.4/mk/main.mk";
+    url =
+      "https://github.com/fosslinux/live-bootstrap/raw/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/grep-2.4/mk/main.mk";
     sha256 = "08an9ljlqry3p15w28hahm6swnd3jxizsd2188przvvsj093j91k";
   };
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake ];
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/grep --version
       mkdir ''${out}
     '';

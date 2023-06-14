@@ -1,26 +1,6 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, buildGoModule
-, makeWrapper
-, cacert
-, moreutils
-, jq
-, git
-, pkg-config
-, yarn
-, python3
-, esbuild
-, nodejs
-, libsecret
-, xorg
-, ripgrep
-, AppKit
-, Cocoa
-, Security
-, cctools
-, nixosTests
-}:
+{ lib, stdenv, fetchFromGitHub, buildGoModule, makeWrapper, cacert, moreutils
+, jq, git, pkg-config, yarn, python3, esbuild, nodejs, libsecret, xorg, ripgrep
+, AppKit, Cocoa, Security, cctools, nixosTests }:
 
 let
   system = stdenv.hostPlatform.system;
@@ -36,16 +16,17 @@ let
   }.${system} or (throw "Unsupported system ${system}");
 
   esbuild' = esbuild.override {
-    buildGoModule = args: buildGoModule (args // rec {
-      version = "0.16.17";
-      src = fetchFromGitHub {
-        owner = "evanw";
-        repo = "esbuild";
-        rev = "v${version}";
-        hash = "sha256-8L8h0FaexNsb3Mj6/ohA37nYLFogo5wXkAhGztGUUsQ=";
-      };
-      vendorHash = "sha256-+BfxCyg0KkDQpHt/wycy/8CTG6YBA/VJvJFhhzUnSiQ=";
-    });
+    buildGoModule = args:
+      buildGoModule (args // rec {
+        version = "0.16.17";
+        src = fetchFromGitHub {
+          owner = "evanw";
+          repo = "esbuild";
+          rev = "v${version}";
+          hash = "sha256-8L8h0FaexNsb3Mj6/ohA37nYLFogo5wXkAhGztGUUsQ=";
+        };
+        vendorHash = "sha256-+BfxCyg0KkDQpHt/wycy/8CTG6YBA/VJvJFhhzUnSiQ=";
+      });
   };
 
   # replaces esbuild's download script with a binary from nixpkgs
@@ -55,8 +36,7 @@ let
     sed -i 's/${version}/${esbuild'.version}/g' ${path}/node_modules/esbuild/lib/main.js
     ln -s -f ${esbuild'}/bin/esbuild ${path}/node_modules/esbuild/bin/esbuild
   '';
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "openvscode-server";
   version = "1.79.0";
 
@@ -90,24 +70,11 @@ stdenv.mkDerivation (finalAttrs: {
     outputHash = "sha256-P6mzeE3HnS/KoP7kCXJlDkFWkTKiGjJkOUXfGOru/xE=";
   };
 
-  nativeBuildInputs = [
-    nodejs
-    yarn'
-    python3
-    pkg-config
-    makeWrapper
-    git
-    jq
-    moreutils
-  ];
+  nativeBuildInputs =
+    [ nodejs yarn' python3 pkg-config makeWrapper git jq moreutils ];
   buildInputs = lib.optionals (!stdenv.isDarwin) [ libsecret ]
     ++ (with xorg; [ libX11 libxkbfile ])
-    ++ lib.optionals stdenv.isDarwin [
-    AppKit
-    Cocoa
-    Security
-    cctools
-  ];
+    ++ lib.optionals stdenv.isDarwin [ AppKit Cocoa Security cctools ];
 
   patches = [
     # Patch out remote download of nodejs from build script
@@ -204,9 +171,7 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  passthru.tests = {
-    inherit (nixosTests) openvscode-server;
-  };
+  passthru.tests = { inherit (nixosTests) openvscode-server; };
 
   meta = {
     description = "Run VS Code on a remote machine";
@@ -217,6 +182,7 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://github.com/gitpod-io/openvscode-server";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ dguenther ghuntley emilytrau ];
-    platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+    platforms =
+      [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
   };
 })

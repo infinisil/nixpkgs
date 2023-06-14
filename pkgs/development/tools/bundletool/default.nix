@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation rec {
   version = "1.15.1";
 
   src = fetchurl {
-    url = "https://github.com/google/bundletool/releases/download/${version}/bundletool-all-${version}.jar";
+    url =
+      "https://github.com/google/bundletool/releases/download/${version}/bundletool-all-${version}.jar";
     sha256 = "sha256-rsncZPslrMZOtmi0XA7GoOu6MNtKLghLYbevCnOAoOE=";
   };
 

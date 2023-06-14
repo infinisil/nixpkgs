@@ -1,11 +1,5 @@
-{ stdenvNoCC
-, lib
-, fetchFromGitHub
-, gtk3
-, getent
-, papirus-icon-theme
-, accent ? "frostblue1"
-}:
+{ stdenvNoCC, lib, fetchFromGitHub, gtk3, getent, papirus-icon-theme
+, accent ? "frostblue1" }:
 let
   validAccents = [
     "auroragreen"
@@ -31,8 +25,7 @@ let
   ];
   pname = "papirus-nord";
   version = "3.2.0";
-in
-lib.checkListOfEnum "${pname}: accent colors" validAccents [ accent ]
+in lib.checkListOfEnum "${pname}: accent colors" validAccents [ accent ]
 
 stdenvNoCC.mkDerivation {
   inherit pname version;

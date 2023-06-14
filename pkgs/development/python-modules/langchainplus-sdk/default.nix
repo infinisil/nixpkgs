@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, poetry-core
-, pydantic
-, pythonOlder
-, requests
-, tenacity
-}:
+{ lib, buildPythonPackage, fetchPypi, poetry-core, pydantic, pythonOlder
+, requests, tenacity }:
 
 buildPythonPackage rec {
   pname = "langchainplus-sdk";
@@ -21,25 +14,18 @@ buildPythonPackage rec {
     hash = "sha256-yRGpj9LQK6pI90K31wD9alXxHJpUXuXWawiCWUDJoy4=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  propagatedBuildInputs = [
-    pydantic
-    requests
-    tenacity
-  ];
+  propagatedBuildInputs = [ pydantic requests tenacity ];
 
   # upstrem has no tests
   doCheck = false;
 
-  pythonImportsCheck = [
-    "langchainplus_sdk"
-  ];
+  pythonImportsCheck = [ "langchainplus_sdk" ];
 
   meta = {
-    description = "Client library to connect to the LangChainPlus LLM Tracing and Evaluation Platform";
+    description =
+      "Client library to connect to the LangChainPlus LLM Tracing and Evaluation Platform";
     homepage = "https://pypi.org/project/langchainplus-sdk/";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ natsukium ];

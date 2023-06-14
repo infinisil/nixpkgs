@@ -1,8 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, freetype
-}:
+{ lib, stdenv, fetchFromGitHub, freetype }:
 
 stdenv.mkDerivation rec {
   pname = "otf2bdf";
@@ -12,9 +8,9 @@ stdenv.mkDerivation rec {
   # This is a mirror.
   src = fetchFromGitHub {
     owner = "jirutka";
-    repo  = "otf2bdf";
-    rev   = "v${version}";
-    hash  = "sha256-HK9ZrnwKhhYcBvSl+3RwFD7m/WSaPkGKX6utXnk5k+A=";
+    repo = "otf2bdf";
+    rev = "v${version}";
+    hash = "sha256-HK9ZrnwKhhYcBvSl+3RwFD7m/WSaPkGKX6utXnk5k+A=";
   };
 
   buildInputs = [ freetype ];

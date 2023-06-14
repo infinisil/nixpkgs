@@ -1,24 +1,16 @@
-{ lib
-, stdenvNoCC
-, callPackage
-, fetchurl
-, autoPatchelfHook
-, unzip
-, openssl
-, writeShellScript
-, curl
-, jq
-, common-updater-scripts
-}:
+{ lib, stdenvNoCC, callPackage, fetchurl, autoPatchelfHook, unzip, openssl
+, writeShellScript, curl, jq, common-updater-scripts }:
 
 stdenvNoCC.mkDerivation rec {
   version = "0.6.7";
   pname = "bun";
 
-  src = passthru.sources.${stdenvNoCC.hostPlatform.system} or (throw "Unsupported system: ${stdenvNoCC.hostPlatform.system}");
+  src = passthru.sources.${stdenvNoCC.hostPlatform.system} or (throw
+    "Unsupported system: ${stdenvNoCC.hostPlatform.system}");
 
   strictDeps = true;
-  nativeBuildInputs = [ unzip ] ++ lib.optionals stdenvNoCC.isLinux [ autoPatchelfHook ];
+  nativeBuildInputs = [ unzip ]
+    ++ lib.optionals stdenvNoCC.isLinux [ autoPatchelfHook ];
   buildInputs = [ openssl ];
 
   dontConfigure = true;
@@ -32,19 +24,23 @@ stdenvNoCC.mkDerivation rec {
   passthru = {
     sources = {
       "aarch64-darwin" = fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-darwin-aarch64.zip";
+        url =
+          "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-darwin-aarch64.zip";
         sha256 = "g3DuKv8K2+PtMkLb5wK4m85tMsB5z7KzgJwWsFJ9abg=";
       };
       "aarch64-linux" = fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-aarch64.zip";
+        url =
+          "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-aarch64.zip";
         sha256 = "P5dK+uWiZZ0F3hy40oiNKnFOQTcHHrl3QcIMIXKFp5I=";
       };
       "x86_64-darwin" = fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-darwin-x64.zip";
+        url =
+          "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-darwin-x64.zip";
         sha256 = "uOqUagzkvJ1vcxgDLkTdJanzFpSdOT9HqBa+0EMKy1U=";
       };
       "x86_64-linux" = fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-x64.zip";
+        url =
+          "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-x64.zip";
         sha256 = "bX3gV3wR2ZJabP6LXT4Tg3T+061aghktXD2YOrQfmWo=";
       };
     };
@@ -64,8 +60,10 @@ stdenvNoCC.mkDerivation rec {
   };
   meta = with lib; {
     homepage = "https://bun.sh";
-    changelog = "https://github.com/Jarred-Sumner/bun/releases/tag/bun-v${version}";
-    description = "Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one";
+    changelog =
+      "https://github.com/Jarred-Sumner/bun/releases/tag/bun-v${version}";
+    description =
+      "Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one";
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     longDescription = ''
       All in one fast & easy-to-use tool. Instead of 1,000 node_modules for development, you only need bun.

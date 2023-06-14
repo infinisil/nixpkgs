@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, poetry-core
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, poetry-core, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "pfzy";
@@ -19,13 +14,9 @@ buildPythonPackage rec {
     hash = "sha256-+Ba/yLUfT0SPPAJd+pKyjSvNrVpEwxW3xEKFx4JzpYk=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  pythonImportsCheck = [
-    "pfzy"
-  ];
+  pythonImportsCheck = [ "pfzy" ];
 
   meta = with lib; {
     description = "Python port of the fzy fuzzy string matching algorithm";

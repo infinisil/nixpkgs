@@ -1,15 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
-, pythonRelaxDepsHook
-, h5py
-, nibabel
-, numpy
-, scipy
-, setuptools-scm
-, toml
-}:
+{ lib, buildPythonPackage, fetchPypi, pythonOlder, pythonRelaxDepsHook, h5py
+, nibabel, numpy, scipy, setuptools-scm, toml }:
 
 buildPythonPackage rec {
   pname = "nitransforms";

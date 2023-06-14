@@ -1,10 +1,5 @@
-{ lib, beamPackages
-, fetchFromGitHub, fetchFromGitLab, fetchHex
-, file, cmake
-, libxcrypt-legacy
-, nixosTests, writeText
-, ...
-}:
+{ lib, beamPackages, fetchFromGitHub, fetchFromGitLab, fetchHex, file, cmake
+, libxcrypt-legacy, nixosTests, writeText, ... }:
 
 beamPackages.mixRelease rec {
   pname = "pleroma";
@@ -82,7 +77,7 @@ beamPackages.mixRelease rec {
 
         preBuild = ''
           touch config/prod.exs
-       '';
+        '';
         src = fetchFromGitLab {
           domain = "git.pleroma.social";
           group = "pleroma";
@@ -93,9 +88,7 @@ beamPackages.mixRelease rec {
         };
         beamDeps = with final; [ prometheus_ex ];
       };
-      majic = prev.majic.override {
-        buildInputs = [ file ];
-      };
+      majic = prev.majic.override { buildInputs = [ file ]; };
       # Some additional build inputs and build fixes
       http_signatures = prev.http_signatures.override {
         patchPhase = ''
@@ -106,9 +99,8 @@ beamPackages.mixRelease rec {
         nativeBuildInputs = [ cmake ];
         dontUseCmakeConfigure = true;
       };
-      syslog = prev.syslog.override {
-        buildPlugins = with beamPackages; [ pc ];
-      };
+      syslog =
+        prev.syslog.override { buildPlugins = with beamPackages; [ pc ]; };
 
       # This needs a different version (1.0.14 -> 1.0.18) to build properly with
       # our Erlang/OTP version.
@@ -140,7 +132,7 @@ beamPackages.mixRelease rec {
           sha256 = "120znzz0yw1994nk6v28zql9plgapqpv51n9g6qm6md1f4x7gj0z";
         };
 
-        beamDeps = [];
+        beamDeps = [ ];
       };
 
       mime = prev.mime.override {

@@ -1,28 +1,7 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, pkg-config
-, python3Packages
-, ffmpeg
-, flac
-, libjxl
-, librsvg
-, gobject-introspection
-, gtk3
-, kissfft
-, libappindicator
-, libnotify
-, libsamplerate
-, libvorbis
-, miniaudio
-, mpg123
-, libopenmpt
-, opusfile
-, wavpack
-, pango
-, pulseaudio
-, withDiscordRPC ? false
-}:
+{ lib, stdenv, fetchFromGitHub, pkg-config, python3Packages, ffmpeg, flac
+, libjxl, librsvg, gobject-introspection, gtk3, kissfft, libappindicator
+, libnotify, libsamplerate, libvorbis, miniaudio, mpg123, libopenmpt, opusfile
+, wavpack, pango, pulseaudio, withDiscordRPC ? false }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tauon";
@@ -46,7 +25,9 @@ stdenv.mkDerivation (finalAttrs: {
   postPatch = ''
     substituteInPlace tauon.py \
       --replace 'install_mode = False' 'install_mode = True' \
-      --replace 'install_directory = os.path.dirname(os.path.abspath(__file__))' 'install_directory = "${placeholder "out"}/share/tauon"'
+      --replace 'install_directory = os.path.dirname(os.path.abspath(__file__))' 'install_directory = "${
+        placeholder "out"
+      }/share/tauon"'
 
     substituteInPlace t_modules/t_main.py \
       --replace 'install_mode = False' 'install_mode = True' \
@@ -60,17 +41,16 @@ stdenv.mkDerivation (finalAttrs: {
 
     substituteInPlace compile-phazor.sh --replace 'gcc' '${stdenv.cc.targetPrefix}cc'
 
-    substituteInPlace extra/tauonmb.desktop --replace 'Exec=/opt/tauon-music-box/tauonmb.sh' 'Exec=${placeholder "out"}/bin/tauon'
+    substituteInPlace extra/tauonmb.desktop --replace 'Exec=/opt/tauon-music-box/tauonmb.sh' 'Exec=${
+      placeholder "out"
+    }/bin/tauon'
   '';
 
   postBuild = ''
     ./compile-phazor.sh
   '';
 
-  nativeBuildInputs = [
-    pkg-config
-    python3Packages.wrapPython
-  ];
+  nativeBuildInputs = [ pkg-config python3Packages.wrapPython ];
 
   buildInputs = [
     flac
@@ -88,31 +68,32 @@ stdenv.mkDerivation (finalAttrs: {
     wavpack
   ];
 
-  pythonPath = with python3Packages; [
-    beautifulsoup4
-    gst-python
-    dbus-python
-    isounidecode
-    libjxl
-    musicbrainzngs
-    mutagen
-    natsort
-    pillow
-    plexapi
-    pycairo
-    pychromecast
-    pylast
-    pygobject3
-    pylyrics
-    pysdl2
-    requests
-    send2trash
-    setproctitle
-  ] ++ lib.optional withDiscordRPC pypresence
+  pythonPath = with python3Packages;
+    [
+      beautifulsoup4
+      gst-python
+      dbus-python
+      isounidecode
+      libjxl
+      musicbrainzngs
+      mutagen
+      natsort
+      pillow
+      plexapi
+      pycairo
+      pychromecast
+      pylast
+      pygobject3
+      pylyrics
+      pysdl2
+      requests
+      send2trash
+      setproctitle
+    ] ++ lib.optional withDiscordRPC pypresence
     ++ lib.optional stdenv.isLinux pulsectl;
 
   makeWrapperArgs = [
-    "--prefix PATH : ${lib.makeBinPath [ffmpeg]}"
+    "--prefix PATH : ${lib.makeBinPath [ ffmpeg ]}"
     "--prefix LD_LIBRARY_PATH : ${pulseaudio}/lib"
     "--prefix PYTHONPATH : $out/share/tauon"
     "--set GI_TYPELIB_PATH $GI_TYPELIB_PATH"
@@ -135,7 +116,8 @@ stdenv.mkDerivation (finalAttrs: {
   meta = with lib; {
     description = "The Linux desktop music player from the future";
     homepage = "https://tauonmusicbox.rocks/";
-    changelog = "https://github.com/Taiko2k/TauonMusicBox/releases/tag/v${finalAttrs.version}";
+    changelog =
+      "https://github.com/Taiko2k/TauonMusicBox/releases/tag/v${finalAttrs.version}";
     license = licenses.gpl3;
     maintainers = with maintainers; [ jansol ];
     platforms = platforms.linux ++ platforms.darwin;

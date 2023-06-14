@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, pytestCheckHook
-, numpy
-, scipy
-, sympy
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, pytestCheckHook, numpy
+, scipy, sympy }:
 
 buildPythonPackage rec {
   pname = "transforms3d";

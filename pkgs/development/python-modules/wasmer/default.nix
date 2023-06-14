@@ -1,25 +1,10 @@
-{ stdenv
-, lib
-, rustPlatform
-, rustc
-, callPackage
-, fetchFromGitHub
-, buildPythonPackage
-, libiconv
-, libffi
-, libxml2
-, ncurses
-, zlib
-}:
+{ stdenv, lib, rustPlatform, rustc, callPackage, fetchFromGitHub
+, buildPythonPackage, libiconv, libffi, libxml2, ncurses, zlib }:
 
 let
-  common =
-    { pname
-    , buildAndTestSubdir
-    , cargoHash
-    , extraNativeBuildInputs ? [ ]
-    , extraBuildInputs ? [ ]
-    }: buildPythonPackage rec {
+  common = { pname, buildAndTestSubdir, cargoHash, extraNativeBuildInputs ? [ ]
+    , extraBuildInputs ? [ ] }:
+    buildPythonPackage rec {
       inherit pname;
       version = "1.1.0";
       format = "pyproject";
@@ -39,7 +24,8 @@ let
         sha256 = cargoHash;
       };
 
-      nativeBuildInputs = (with rustPlatform; [ cargoSetupHook maturinBuildHook ])
+      nativeBuildInputs =
+        (with rustPlatform; [ cargoSetupHook maturinBuildHook ])
         ++ extraNativeBuildInputs;
 
       postPatch = ''
@@ -65,7 +51,7 @@ let
         pytest = callPackage ./tests.nix { };
       };
 
-      pythonImportsCheck = [ "${lib.replaceStrings ["-"] ["_"] pname}" ];
+      pythonImportsCheck = [ "${lib.replaceStrings [ "-" ] [ "_" ] pname}" ];
 
       meta = with lib; {
         broken = stdenv.isDarwin;
@@ -76,8 +62,7 @@ let
         maintainers = with maintainers; [ SuperSandro2000 ];
       };
     };
-in
-rec {
+in rec {
   wasmer = common {
     pname = "wasmer";
     buildAndTestSubdir = "packages/api";

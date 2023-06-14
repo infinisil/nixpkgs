@@ -1,17 +1,6 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, pythonOlder
-, fetchPypi
-, babel
-, markupsafe
-, pytestCheckHook
-, sphinxHook
-, pallets-sphinx-themes
-, sphinxcontrib-log-cabinet
-, sphinx-issues
-, enableDocumentation ? false
-}:
+{ lib, stdenv, buildPythonPackage, pythonOlder, fetchPypi, babel, markupsafe
+, pytestCheckHook, sphinxHook, pallets-sphinx-themes, sphinxcontrib-log-cabinet
+, sphinx-issues, enableDocumentation ? false }:
 
 buildPythonPackage rec {
   pname = "Jinja2";
@@ -27,10 +16,7 @@ buildPythonPackage rec {
 
   patches = lib.optionals enableDocumentation [ ./patches/import-order.patch ];
 
-  propagatedBuildInputs = [
-    babel
-    markupsafe
-  ];
+  propagatedBuildInputs = [ babel markupsafe ];
 
   nativeBuildInputs = lib.optionals enableDocumentation [
     sphinxHook
@@ -43,9 +29,7 @@ buildPythonPackage rec {
   # See https://github.com/pallets/jinja/issues/1158
   doCheck = !stdenv.is32bit;
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   pytestFlagsArray = [
     # Avoid failure due to deprecation warning

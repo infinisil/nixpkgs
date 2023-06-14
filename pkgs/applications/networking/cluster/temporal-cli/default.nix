@@ -18,11 +18,8 @@ let
 
     excludedPackages = [ "./cmd/docgen" "./tests" ];
 
-    ldflags = [
-      "-s"
-      "-w"
-      "-X github.com/temporalio/cli/headers.Version=${version}"
-    ];
+    ldflags =
+      [ "-s" "-w" "-X github.com/temporalio/cli/headers.Version=${version}" ];
 
     preCheck = ''
       export HOME=$(mktemp -d)
@@ -64,16 +61,12 @@ let
         --zsh <($out/bin/tctl completion zsh)
     '';
   };
-in
-symlinkJoin rec {
+in symlinkJoin rec {
   pname = "temporal-cli";
   inherit (tctl) version;
   name = "${pname}-${version}";
 
-  paths = [
-    tctl-next
-    tctl
-  ];
+  paths = [ tctl-next tctl ];
 
   meta = with lib; {
     description = "Temporal CLI";

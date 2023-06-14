@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, meson
-, ninja
-}:
+{ lib, stdenv, fetchFromGitHub, meson, ninja }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hyprland-protocols";
   version = "0.2";
@@ -15,10 +10,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-QPzwwlGKX95tl6ZEshboZbEwwAXww6lNLdVYd6T9Mrc=";
   };
 
-  nativeBuildInputs = [
-    meson
-    ninja
-  ];
+  nativeBuildInputs = [ meson ninja ];
 
   meta = {
     homepage = "https://github.com/hyprwm/hyprland-protocols";

@@ -17,9 +17,7 @@ stdenv.mkDerivation rec {
 
   preConfigure = "./autogen.sh";
 
-  configureFlags = [
-    "--with-cyrus-sasl=${placeholder "out"}"
-  ];
+  configureFlags = [ "--with-cyrus-sasl=${placeholder "out"}" ];
 
   meta = with lib; {
     homepage = "https://github.com/moriyoshi/cyrus-sasl-xoauth2";

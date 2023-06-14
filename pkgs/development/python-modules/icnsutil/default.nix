@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, python
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, python, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "icnsutil";
@@ -24,9 +19,7 @@ buildPythonPackage rec {
     ${python.interpreter} tests/test_cli.py
   '';
 
-  pythonImportsCheck = [
-    "icnsutil"
-  ];
+  pythonImportsCheck = [ "icnsutil" ];
 
   meta = with lib; {
     description = "Create and extract .icns files";

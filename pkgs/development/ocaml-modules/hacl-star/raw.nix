@@ -1,28 +1,17 @@
-{ lib
-, which
-, stdenv
-, fetchzip
-, opaline
-, cmake
-, ocaml
-, findlib
-, hacl-star
-, ctypes
-, cppo
-}:
+{ lib, which, stdenv, fetchzip, opaline, cmake, ocaml, findlib, hacl-star
+, ctypes, cppo }:
 stdenv.mkDerivation rec {
   pname = "ocaml${ocaml.version}-hacl-star-raw";
   version = "0.7.0";
 
   src = fetchzip {
-    url = "https://github.com/cryspen/hacl-packages/releases/download/ocaml-v${version}/hacl-star.${version}.tar.gz";
+    url =
+      "https://github.com/cryspen/hacl-packages/releases/download/ocaml-v${version}/hacl-star.${version}.tar.gz";
     sha256 = "sha256-jJtxVYhQgP8ItfLhQ2wcF8RKNRnYhB2j0nR7/YH1NfY=";
     stripRoot = false;
   };
 
-  patches = [
-    ./aligned-alloc.patch
-  ];
+  patches = [ ./aligned-alloc.patch ];
 
   minimalOCamlVersion = "4.08";
 
@@ -60,20 +49,11 @@ stdenv.mkDerivation rec {
   dontAddStaticConfigureFlags = true;
   createFindlibDestdir = true;
 
-  nativeBuildInputs = [
-    which
-    cmake
-    ocaml
-    findlib
-  ];
+  nativeBuildInputs = [ which cmake ocaml findlib ];
 
-  propagatedBuildInputs = [
-    ctypes
-  ];
+  propagatedBuildInputs = [ ctypes ];
 
-  checkInputs = [
-    cppo
-  ];
+  checkInputs = [ cppo ];
 
   strictDeps = true;
 

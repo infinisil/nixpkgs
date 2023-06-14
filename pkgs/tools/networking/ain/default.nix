@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "ain";
@@ -16,11 +13,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-eyB+0D0+4hHG4yKDj/m9QB+8YTyv+por8fTyu/WcZyg=";
 
-  ldflags = [
-    "-s"
-    "-w"
-    "-X=main.gitSha=${src.rev}"
-  ];
+  ldflags = [ "-s" "-w" "-X=main.gitSha=${src.rev}" ];
 
   meta = with lib; {
     description = "A HTTP API client for the terminal";

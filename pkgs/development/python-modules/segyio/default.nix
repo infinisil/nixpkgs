@@ -1,13 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, ninja
-, python
-, scikit-build
-, pytest
-, numpy
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, ninja, python, scikit-build, pytest
+, numpy }:
 
 stdenv.mkDerivation rec {
   pname = "segyio";

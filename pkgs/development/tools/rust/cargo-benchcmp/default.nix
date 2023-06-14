@@ -1,10 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, substituteAll
-, rust
-, stdenv
-}:
+{ lib, rustPlatform, fetchFromGitHub, substituteAll, rust, stdenv }:
 
 rustPlatform.buildRustPackage rec {
   pname = "cargo-benchcmp";

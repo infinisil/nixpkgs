@@ -1,18 +1,6 @@
-{ lib
-, fetchFromGitHub
-, stdenv
-, cmake
-, copyDesktopItems
-, makeDesktopItem
-, makeWrapper
-, pkg-config
-, curl
-, gtkmm3
-, libhandy
-, libsecret
-, nlohmann_json
-, sqlite
-}:
+{ lib, fetchFromGitHub, stdenv, cmake, copyDesktopItems, makeDesktopItem
+, makeWrapper, pkg-config, curl, gtkmm3, libhandy, libsecret, nlohmann_json
+, sqlite }:
 
 stdenv.mkDerivation rec {
   pname = "abaddon";
@@ -26,21 +14,9 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [
-    cmake
-    copyDesktopItems
-    makeWrapper
-    pkg-config
-  ];
+  nativeBuildInputs = [ cmake copyDesktopItems makeWrapper pkg-config ];
 
-  buildInputs = [
-    curl
-    gtkmm3
-    libhandy
-    libsecret
-    nlohmann_json
-    sqlite
-  ];
+  buildInputs = [ curl gtkmm3 libhandy libsecret nlohmann_json sqlite ];
 
   installPhase = ''
     runHook preInstall

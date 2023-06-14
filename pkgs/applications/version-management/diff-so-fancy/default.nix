@@ -1,4 +1,5 @@
-{lib, stdenv, git, perl, ncurses, coreutils, fetchFromGitHub, makeWrapper, ...}:
+{ lib, stdenv, git, perl, ncurses, coreutils, fetchFromGitHub, makeWrapper, ...
+}:
 
 stdenv.mkDerivation rec {
   pname = "diff-so-fancy";
@@ -11,9 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-yF+LI1lsE1qwOc3u7mtc+uu0N/8m4bZD5qP+xFraaTI=";
   };
 
-  nativeBuildInputs = [
-    makeWrapper
-  ];
+  nativeBuildInputs = [ makeWrapper ];
 
   buildInputs = [
     perl # needed for patchShebangs

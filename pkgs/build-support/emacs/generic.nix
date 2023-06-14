@@ -2,13 +2,8 @@
 
 { lib, stdenv, emacs, texinfo, writeText, gcc, ... }:
 
-{ pname
-, version ? null
-, buildInputs ? []
-, packageRequires ? []
-, meta ? {}
-, ...
-}@args:
+{ pname, version ? null, buildInputs ? [ ], packageRequires ? [ ], meta ? { }
+, ... }@args:
 
 let
   defaultMeta = {
@@ -17,9 +12,8 @@ let
   } // lib.optionalAttrs ((args.src.meta.homepage or "") != "") {
     homepage = args.src.meta.homepage;
   };
-in
 
-stdenv.mkDerivation ({
+in stdenv.mkDerivation ({
   name = "emacs-${pname}${lib.optionalString (version != null) "-${version}"}";
 
   unpackCmd = ''
@@ -38,7 +32,7 @@ stdenv.mkDerivation ({
     esac
   '';
 
-  buildInputs = [emacs texinfo] ++ packageRequires ++ buildInputs;
+  buildInputs = [ emacs texinfo ] ++ packageRequires ++ buildInputs;
   propagatedBuildInputs = packageRequires;
   propagatedUserEnvPkgs = packageRequires;
 
@@ -61,26 +55,26 @@ stdenv.mkDerivation ({
   meta = defaultMeta // meta;
 }
 
-// lib.optionalAttrs (emacs.withNativeCompilation or false) {
+  // lib.optionalAttrs (emacs.withNativeCompilation or false) {
 
-  LIBRARY_PATH = "${lib.getLib stdenv.cc.libc}/lib";
+    LIBRARY_PATH = "${lib.getLib stdenv.cc.libc}/lib";
 
-  nativeBuildInputs = [ gcc ];
+    nativeBuildInputs = [ gcc ];
 
-  addEmacsNativeLoadPath = true;
+    addEmacsNativeLoadPath = true;
 
-  postInstall = ''
-    # Besides adding the output directory to the native load path, make sure
-    # the current package's elisp files are in the load path, otherwise
-    # (require 'file-b) from file-a.el in the same package will fail.
-    mkdir -p $out/share/emacs/native-lisp
-    source ${./emacs-funcs.sh}
-    addEmacsVars "$out"
+    postInstall = ''
+      # Besides adding the output directory to the native load path, make sure
+      # the current package's elisp files are in the load path, otherwise
+      # (require 'file-b) from file-a.el in the same package will fail.
+      mkdir -p $out/share/emacs/native-lisp
+      source ${./emacs-funcs.sh}
+      addEmacsVars "$out"
 
-    find $out/share/emacs -type f -name '*.el' -print0 \
-      | xargs -0 -I {} -n 1 -P $NIX_BUILD_CORES sh -c \
-          "emacs --batch --eval '(setq large-file-warning-threshold nil)' -f batch-native-compile {} || true"
-  '';
-}
+      find $out/share/emacs -type f -name '*.el' -print0 \
+        | xargs -0 -I {} -n 1 -P $NIX_BUILD_CORES sh -c \
+            "emacs --batch --eval '(setq large-file-warning-threshold nil)' -f batch-native-compile {} || true"
+    '';
+  }
 
-// removeAttrs args [ "buildInputs" "packageRequires" "meta" ])
+  // removeAttrs args [ "buildInputs" "packageRequires" "meta" ])

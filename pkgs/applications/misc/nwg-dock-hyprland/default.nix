@@ -1,10 +1,5 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, pkg-config
-, wrapGAppsHook
-, gtk-layer-shell
-}:
+{ lib, buildGoModule, fetchFromGitHub, pkg-config, wrapGAppsHook
+, gtk-layer-shell }:
 
 buildGoModule rec {
   pname = "nwg-dock-hyprland";

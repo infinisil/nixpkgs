@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, bash
-, buildNpmPackage
-, fetchFromGitHub
-, installShellFiles
-, makeWrapper
-, nodejs
-, substituteAll
-, v4l-utils
-, which
-}:
+{ lib, stdenv, bash, buildNpmPackage, fetchFromGitHub, installShellFiles
+, makeWrapper, nodejs, substituteAll, v4l-utils, which }:
 
 buildNpmPackage rec {
   pname = "mirakurun";
@@ -35,37 +25,32 @@ buildNpmPackage rec {
   # workaround for https://github.com/webpack/webpack/issues/14532
   NODE_OPTIONS = "--openssl-legacy-provider";
 
-  postInstall =
-    let
-      runtimeDeps = [
-        bash
-        nodejs
-        which
-      ] ++ lib.optionals stdenv.isLinux [ v4l-utils ];
-      crc32Patch = substituteAll {
-        src = ./fix-musl-detection.patch;
-        isMusl = if stdenv.hostPlatform.isMusl then "true" else "false";
-      };
-    in
-    ''
-      sed 's/@DESCRIPTION@/${meta.description}/g' ${./mirakurun.1} > mirakurun.1
-      installManPage mirakurun.1
+  postInstall = let
+    runtimeDeps = [ bash nodejs which ]
+      ++ lib.optionals stdenv.isLinux [ v4l-utils ];
+    crc32Patch = substituteAll {
+      src = ./fix-musl-detection.patch;
+      isMusl = if stdenv.hostPlatform.isMusl then "true" else "false";
+    };
+  in ''
+    sed 's/@DESCRIPTION@/${meta.description}/g' ${./mirakurun.1} > mirakurun.1
+    installManPage mirakurun.1
 
-      wrapProgram $out/bin/mirakurun-epgdump \
-        --prefix PATH : ${lib.makeBinPath runtimeDeps}
+    wrapProgram $out/bin/mirakurun-epgdump \
+      --prefix PATH : ${lib.makeBinPath runtimeDeps}
 
-      # XXX: The original mirakurun command uses PM2 to manage the Mirakurun
-      # server.  However, we invoke the server directly and let systemd
-      # manage it to avoid complication. This is okay since no features
-      # unique to PM2 is currently being used.
-      makeWrapper ${nodejs}/bin/npm $out/bin/mirakurun \
-        --chdir "$out/lib/node_modules/mirakurun" \
-        --prefix PATH : ${lib.makeBinPath runtimeDeps}
+    # XXX: The original mirakurun command uses PM2 to manage the Mirakurun
+    # server.  However, we invoke the server directly and let systemd
+    # manage it to avoid complication. This is okay since no features
+    # unique to PM2 is currently being used.
+    makeWrapper ${nodejs}/bin/npm $out/bin/mirakurun \
+      --chdir "$out/lib/node_modules/mirakurun" \
+      --prefix PATH : ${lib.makeBinPath runtimeDeps}
 
-      pushd $out/lib/node_modules/mirakurun/node_modules/@node-rs/crc32
-      patch -p3 < ${crc32Patch}
-      popd
-    '';
+    pushd $out/lib/node_modules/mirakurun/node_modules/@node-rs/crc32
+    patch -p3 < ${crc32Patch}
+    popd
+  '';
 
   meta = with lib; {
     description = "Resource manager for TV tuners.";

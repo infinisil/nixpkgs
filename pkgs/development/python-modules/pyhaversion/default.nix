@@ -1,13 +1,5 @@
-{ lib
-, aiohttp
-, aresponses
-, awesomeversion
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, pytest-asyncio
-, pytestCheckHook
-}:
+{ lib, aiohttp, aresponses, awesomeversion, buildPythonPackage, fetchFromGitHub
+, pythonOlder, pytest-asyncio, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "pyhaversion";
@@ -29,20 +21,11 @@ buildPythonPackage rec {
       --replace "main" ${version}
   '';
 
-  propagatedBuildInputs = [
-    aiohttp
-    awesomeversion
-  ];
+  propagatedBuildInputs = [ aiohttp awesomeversion ];
 
-  nativeCheckInputs = [
-    aresponses
-    pytest-asyncio
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ aresponses pytest-asyncio pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "pyhaversion"
-  ];
+  pythonImportsCheck = [ "pyhaversion" ];
 
   disabledTests = [
     # Error fetching version information from HaVersionSource.SUPERVISOR Server disconnected
@@ -51,9 +34,11 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Python module to the newest version number of Home Assistant";
+    description =
+      "Python module to the newest version number of Home Assistant";
     homepage = "https://github.com/ludeeus/pyhaversion";
-    changelog = "https://github.com/ludeeus/pyhaversion/releases/tag/${version}";
+    changelog =
+      "https://github.com/ludeeus/pyhaversion/releases/tag/${version}";
     license = with licenses; [ mit ];
     maintainers = with maintainers; [ makefu ];
   };

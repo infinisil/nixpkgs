@@ -1,17 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
+{ lib, buildPythonPackage, fetchFromGitHub
 
 # dependencies
-, ftfy
-, regex
-, tqdm
-, torch
-, torchvision
+, ftfy, regex, tqdm, torch, torchvision
 
 # tests
-, pytestCheckHook
-}:
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "clip-anytorch";
@@ -25,24 +18,14 @@ buildPythonPackage rec {
     hash = "sha256-EqVkpMQHawoCFHNupf49NrvLdGCq35wnYBpdP81Ztd4=";
   };
 
-  propagatedBuildInputs = [
-    ftfy
-    regex
-    tqdm
-    torch
-    torchvision
-  ];
+  propagatedBuildInputs = [ ftfy regex tqdm torch torchvision ];
 
-  pythonImportsCheck = [
-    "clip"
-  ];
+  pythonImportsCheck = [ "clip" ];
 
   # all tests require network access
   doCheck = false;
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   preCheck = ''
     export HOME=$TMPDIR

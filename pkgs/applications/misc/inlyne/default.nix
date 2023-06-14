@@ -1,15 +1,5 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, installShellFiles
-, stdenv
-, pkg-config
-, fontconfig
-, xorg
-, libGL
-, openssl
-, darwin
-}:
+{ lib, rustPlatform, fetchFromGitHub, installShellFiles, stdenv, pkg-config
+, fontconfig, xorg, libGL, openssl, darwin }:
 
 rustPlatform.buildRustPackage rec {
   pname = "inlyne";
@@ -24,11 +14,8 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-LFL2DVKu/UM7effikZN/IhSD6DrlwO+CF+S60PXULa0=";
 
-  nativeBuildInputs = [
-    installShellFiles
-  ] ++ lib.optionals stdenv.isLinux [
-    pkg-config
-  ];
+  nativeBuildInputs = [ installShellFiles ]
+    ++ lib.optionals stdenv.isLinux [ pkg-config ];
 
   buildInputs = lib.optionals stdenv.isLinux [
     fontconfig
@@ -37,9 +24,8 @@ rustPlatform.buildRustPackage rec {
     xorg.libXrandr
     xorg.libxcb
     openssl
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk_11_0.frameworks.AppKit
-  ];
+  ] ++ lib.optionals stdenv.isDarwin
+    [ darwin.apple_sdk_11_0.frameworks.AppKit ];
 
   postInstall = ''
     installShellCompletion --cmd inlyne \

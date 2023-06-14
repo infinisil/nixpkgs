@@ -3,8 +3,7 @@
 let
   cfg = config.services.nextcloud.notify_push;
   cfgN = config.services.nextcloud;
-in
-{
+in {
   options.services.nextcloud.notify_push = {
     enable = lib.mkEnableOption (lib.mdDoc "Notify push");
 
@@ -36,33 +35,28 @@ in
         This is useful when nextcloud's domain is not a static IP address and when the reverse proxy cannot be bypassed because the backend connection is done via unix socket.
       '';
     };
-  } // (
-    lib.genAttrs [
-      "dbtype"
-      "dbname"
-      "dbuser"
-      "dbpassFile"
-      "dbhost"
-      "dbport"
-      "dbtableprefix"
-    ] (
-      opt: options.services.nextcloud.config.${opt} // {
-        default = config.services.nextcloud.config.${opt};
-        defaultText = "config.services.nextcloud.config.${opt}";
-      }
-    )
-  );
+  } // (lib.genAttrs [
+    "dbtype"
+    "dbname"
+    "dbuser"
+    "dbpassFile"
+    "dbhost"
+    "dbport"
+    "dbtableprefix"
+  ] (opt:
+    options.services.nextcloud.config.${opt} // {
+      default = config.services.nextcloud.config.${opt};
+      defaultText = "config.services.nextcloud.config.${opt}";
+    }));
 
   config = lib.mkIf cfg.enable {
     systemd.services.nextcloud-notify_push = let
-      nextcloudUrl = "http${lib.optionalString cfgN.https "s"}://${cfgN.hostName}";
+      nextcloudUrl =
+        "http${lib.optionalString cfgN.https "s"}://${cfgN.hostName}";
     in {
       description = "Push daemon for Nextcloud clients";
       documentation = [ "https://github.com/nextcloud/notify_push" ];
-      after = [
-        "phpfpm-nextcloud.service"
-        "redis-nextcloud.service"
-      ];
+      after = [ "phpfpm-nextcloud.service" "redis-nextcloud.service" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
         NEXTCLOUD_URL = nextcloudUrl;
@@ -76,16 +70,22 @@ in
       script = let
         dbType = if cfg.dbtype == "pgsql" then "postgresql" else cfg.dbtype;
         dbUser = lib.optionalString (cfg.dbuser != null) cfg.dbuser;
-        dbPass = lib.optionalString (cfg.dbpassFile != null) ":$DATABASE_PASSWORD";
+        dbPass =
+          lib.optionalString (cfg.dbpassFile != null) ":$DATABASE_PASSWORD";
         isSocket = lib.hasPrefix "/" (toString cfg.dbhost);
-        dbHost = lib.optionalString (cfg.dbhost != null) (if
-          isSocket then
-            if dbType == "postgresql" then "?host=${cfg.dbhost}" else
-            if dbType == "mysql" then "?socket=${cfg.dbhost}" else throw "unsupported dbtype"
+        dbHost = lib.optionalString (cfg.dbhost != null) (if isSocket then
+          if dbType == "postgresql" then
+            "?host=${cfg.dbhost}"
+          else if dbType == "mysql" then
+            "?socket=${cfg.dbhost}"
           else
-            "@${cfg.dbhost}");
+            throw "unsupported dbtype"
+        else
+          "@${cfg.dbhost}");
         dbName = lib.optionalString (cfg.dbname != null) "/${cfg.dbname}";
-        dbUrl = "${dbType}://${dbUser}${dbPass}${lib.optionalString (!isSocket) dbHost}${dbName}${lib.optionalString isSocket dbHost}";
+        dbUrl = "${dbType}://${dbUser}${dbPass}${
+            lib.optionalString (!isSocket) dbHost
+          }${dbName}${lib.optionalString isSocket dbHost}";
       in lib.optionalString (dbPass != "") ''
         export DATABASE_PASSWORD="$(<"${cfg.dbpassFile}")"
       '' + ''

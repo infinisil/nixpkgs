@@ -1,11 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, openssl
-, pam
-, openssh
-}:
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, openssl, pam, openssh }:
 
 rustPlatform.buildRustPackage {
   pname = "pam_rssh";
@@ -21,23 +14,16 @@ rustPlatform.buildRustPackage {
 
   cargoHash = "sha256-/AQqjmAGgvnpVWyoK3ymZ1gNAhTSN30KQEiqv4G+zx8=";
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    openssl
-    pam
-  ];
+  buildInputs = [ openssl pam ];
 
   checkFlags = [
     # Fails because it tries finding authorized_keys in /home/$USER.
     "--skip=tests::parse_user_authorized_keys"
   ];
 
-  nativeCheckInputs = [
-    openssh
-  ];
+  nativeCheckInputs = [ openssh ];
 
   env.USER = "nixbld";
 
@@ -62,7 +48,8 @@ rustPlatform.buildRustPackage {
   '';
 
   meta = with lib; {
-    description = "PAM module for authenticating via ssh-agent, written in Rust";
+    description =
+      "PAM module for authenticating via ssh-agent, written in Rust";
     homepage = "https://github.com/z4yx/pam_rssh";
     license = licenses.mit;
     platforms = platforms.linux;

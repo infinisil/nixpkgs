@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, numpy
-, laszip
-, pytestCheckHook
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, numpy, laszip, pytestCheckHook
+, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "laspy";
@@ -19,19 +13,11 @@ buildPythonPackage rec {
     hash = "sha256-E8rsxzJcsiQsslOUmE0hs7X3lsiLy0S8LtLTzxuXKsQ=";
   };
 
-  propagatedBuildInputs = [
-    numpy
-    laszip
-  ];
+  propagatedBuildInputs = [ numpy laszip ];
 
-  checkInputs = [
-    pytestCheckHook
-  ];
+  checkInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "laspy"
-    "laszip"
-  ];
+  pythonImportsCheck = [ "laspy" "laszip" ];
 
   meta = with lib; {
     description = "Interface for reading/modifying/creating .LAS LIDAR files";

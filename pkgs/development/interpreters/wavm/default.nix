@@ -1,8 +1,4 @@
-{ lib
-, llvmPackages
-, fetchFromGitHub
-, cmake
-}:
+{ lib, llvmPackages, fetchFromGitHub, cmake }:
 
 llvmPackages.stdenv.mkDerivation (finalAttrs: {
   pname = "wavm";

@@ -1,7 +1,7 @@
 { lib, stdenv, fetchFromGitHub, cmake, curl }:
 
-let version = "1.10.4"; in
-stdenv.mkDerivation {
+let version = "1.10.4";
+in stdenv.mkDerivation {
   pname = "libcpr";
   inherit version;
 
@@ -18,9 +18,7 @@ stdenv.mkDerivation {
 
   propagatedBuildInputs = [ curl ];
 
-  cmakeFlags = [
-    "-DCPR_USE_SYSTEM_CURL=ON"
-  ];
+  cmakeFlags = [ "-DCPR_USE_SYSTEM_CURL=ON" ];
 
   postPatch = ''
     # Linking with stdc++fs is no longer necessary.

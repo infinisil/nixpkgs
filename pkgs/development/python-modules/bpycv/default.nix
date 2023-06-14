@@ -1,22 +1,6 @@
-{ stdenv
-, lib
-, beautifulsoup4
-, blender
-, blender-with-packages
-, boxx
-, bpycv
-, buildPythonPackage
-, fetchFromGitHub
-, fetchPypi
-, fetchurl
-, minexr
-, opencv3
-, python3Packages
-, requests
-, runCommand
-, writeText
-, zcs
-}:
+{ stdenv, lib, beautifulsoup4, blender, blender-with-packages, boxx, bpycv
+, buildPythonPackage, fetchFromGitHub, fetchPypi, fetchurl, minexr, opencv3
+, python3Packages, requests, runCommand, writeText, zcs }:
 
 buildPythonPackage rec {
   pname = "bpycv";
@@ -28,14 +12,7 @@ buildPythonPackage rec {
     hash = "sha256-4N4rCVhbfJx7H7jS88QR3EcRupISIhnLuZ+cgfwIzg4=";
   };
 
-  propagatedBuildInputs = [
-    beautifulsoup4
-    minexr
-    zcs
-    requests
-    opencv3
-    boxx
-  ];
+  propagatedBuildInputs = [ beautifulsoup4 minexr zcs requests opencv3 boxx ];
 
   postPatch = ''
     sed -i 's/opencv-python//g' requirements.txt
@@ -53,7 +30,7 @@ buildPythonPackage rec {
         rev = "6ce0e65c107d572011394da16ffdf851e988dbb4";
       };
       nativeBuildInputs = [
-        ((blender-with-packages.override {inherit blender python3Packages;}) {
+        ((blender-with-packages.override { inherit blender python3Packages; }) {
           packages = [ bpycv ];
         })
       ];

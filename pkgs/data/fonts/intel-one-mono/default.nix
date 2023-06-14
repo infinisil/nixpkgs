@@ -6,20 +6,20 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   srcs = [
     (fetchurl {
-      url = "https://github.com/intel/intel-one-mono/releases/download/V${finalAttrs.version}/otf.zip";
+      url =
+        "https://github.com/intel/intel-one-mono/releases/download/V${finalAttrs.version}/otf.zip";
       hash = "sha256-RBJwIUkmAZIRaIEWUxFZlRMfFTUFdLbHCMRkagU0gU0=";
     })
     (fetchurl {
-      url = "https://github.com/intel/intel-one-mono/releases/download/V${finalAttrs.version}/ttf.zip";
+      url =
+        "https://github.com/intel/intel-one-mono/releases/download/V${finalAttrs.version}/ttf.zip";
       hash = "sha256-DV/PT+P+GGq/ejS5cx5ENuCy+iiE32AMOirwuTCP3vY=";
     })
   ];
 
   sourceRoot = ".";
 
-  nativeBuildInputs = [
-    unzip
-  ];
+  nativeBuildInputs = [ unzip ];
 
   installPhase = ''
     runHook preInstall
@@ -29,9 +29,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   meta = with lib; {
-    description = "Intel One Mono, an expressive monospaced font family that’s built with clarity, legibility, and the needs of developers in mind";
+    description =
+      "Intel One Mono, an expressive monospaced font family that’s built with clarity, legibility, and the needs of developers in mind";
     homepage = "https://github.com/intel/intel-one-mono";
-    changelog = "https://github.com/intel/intel-one-mono/releases/tag/V${finalAttrs.version}";
+    changelog =
+      "https://github.com/intel/intel-one-mono/releases/tag/V${finalAttrs.version}";
     license = licenses.ofl;
     maintainers = [ maintainers.simoneruffini ];
     platforms = platforms.all;

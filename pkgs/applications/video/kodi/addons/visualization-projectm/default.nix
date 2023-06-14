@@ -1,4 +1,5 @@
-{ lib, rel, buildKodiBinaryAddon, fetchFromGitHub, pkg-config, glm, libGL, projectm }:
+{ lib, rel, buildKodiBinaryAddon, fetchFromGitHub, pkg-config, glm, libGL
+, projectm }:
 
 buildKodiBinaryAddon rec {
   pname = "visualization-projectm";

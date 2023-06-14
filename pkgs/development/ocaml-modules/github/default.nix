@@ -1,6 +1,5 @@
-{ lib, buildDunePackage, fetchFromGitHub
-, uri, cohttp, lwt, cohttp-lwt, github-data, yojson, stringext
-}:
+{ lib, buildDunePackage, fetchFromGitHub, uri, cohttp, lwt, cohttp-lwt
+, github-data, yojson, stringext }:
 
 buildDunePackage rec {
   pname = "github";
@@ -15,15 +14,8 @@ buildDunePackage rec {
 
   duneVersion = "3";
 
-  propagatedBuildInputs = [
-    uri
-    cohttp
-    lwt
-    cohttp-lwt
-    github-data
-    yojson
-    stringext
-  ];
+  propagatedBuildInputs =
+    [ uri cohttp lwt cohttp-lwt github-data yojson stringext ];
 
   meta = with lib; {
     homepage = "https://github.com/mirage/ocaml-github";

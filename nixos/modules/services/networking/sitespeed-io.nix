@@ -2,8 +2,7 @@
 let
   cfg = config.services.sitespeed-io;
   format = pkgs.formats.json { };
-in
-{
+in {
   options.services.sitespeed-io = {
     enable = lib.mkEnableOption (lib.mdDoc "Sitespeed.io");
 
@@ -45,7 +44,7 @@ in
         options = {
           urls = lib.mkOption {
             type = with lib.types; listOf str;
-            default = [];
+            default = [ ];
             description = lib.mdDoc ''
               URLs the service should monitor.
             '';
@@ -67,7 +66,7 @@ in
 
           extraArgs = lib.mkOption {
             type = with lib.types; listOf str;
-            default = [];
+            default = [ ];
             description = lib.mdDoc ''
               Extra command line arguments to pass to the program.
             '';
@@ -79,15 +78,15 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-    {
-      assertion = cfg.runs != [];
-      message = "At least one run must be configured.";
-    }
-    {
-      assertion = lib.all (run: run.urls != []) cfg.runs;
-      message = "All runs must have at least one url configured.";
-    }
-  ];
+      {
+        assertion = cfg.runs != [ ];
+        message = "At least one run must be configured.";
+      }
+      {
+        assertion = lib.all (run: run.urls != [ ]) cfg.runs;
+        message = "All runs must have at least one url configured.";
+      }
+    ];
 
     systemd.services.sitespeed-io = {
       description = "Check website status";
@@ -102,8 +101,7 @@ in
           --config ${format.generate "sitespeed.json" run.settings} \
           ${lib.escapeShellArgs run.extraArgs} \
           ${builtins.toFile "urls.txt" (lib.concatLines run.urls)} &
-      '') cfg.runs) +
-      ''
+      '') cfg.runs) + ''
         wait
       '';
     };

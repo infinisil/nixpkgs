@@ -1,11 +1,5 @@
-{ lib
-, stdenv
-, fetchFromBitbucket
-, xcbutil
-, xcbutilkeysyms
-, xcbutilwm
-, xcb-util-cursor
-}:
+{ lib, stdenv, fetchFromBitbucket, xcbutil, xcbutilkeysyms, xcbutilwm
+, xcb-util-cursor }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "dk";
@@ -18,12 +12,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-OodD2z9C4oGTK6ynAXRlEZSzzdzIkVjmq5vLdUcht1U=";
   };
 
-  buildInputs = [
-    xcbutil
-    xcbutilkeysyms
-    xcbutilwm
-    xcb-util-cursor
-  ];
+  buildInputs = [ xcbutil xcbutilkeysyms xcbutilwm xcb-util-cursor ];
 
   postPatch = ''
     substituteInPlace Makefile \
@@ -37,7 +26,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = {
     homepage = "https://bitbucket.org/natemaia/dk";
-    description = "A list based tiling window manager in the vein of dwm, bspwm, and xmonad";
+    description =
+      "A list based tiling window manager in the vein of dwm, bspwm, and xmonad";
     license = lib.licenses.x11;
     maintainers = with lib.maintainers; [ _3JlOy-PYCCKUi ];
     platforms = lib.platforms.linux;

@@ -1,11 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchzip
-, cmake
-, gmp
-, mpfr
-}:
+{ lib, stdenv, fetchFromGitHub, fetchzip, cmake, gmp, mpfr }:
 
 let
   satlib-bmc = fetchzip {

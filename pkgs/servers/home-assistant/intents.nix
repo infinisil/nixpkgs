@@ -1,21 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, setuptools
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, setuptools
 
 # build
-, hassil
-, jinja2
-, pyyaml
-, regex
-, voluptuous
-, python
+, hassil, jinja2, pyyaml, regex, voluptuous, python
 
 # tests
-, pytest-xdist
-, pytestCheckHook
-}:
+, pytest-xdist, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "home-assistant-intents";
@@ -38,14 +27,7 @@ buildPythonPackage rec {
       --replace "2023.4.26" "${version}"
   '';
 
-  nativeBuildInputs = [
-    hassil
-    jinja2
-    pyyaml
-    regex
-    setuptools
-    voluptuous
-  ];
+  nativeBuildInputs = [ hassil jinja2 pyyaml regex setuptools voluptuous ];
 
   postInstall = ''
     pushd ..
@@ -54,14 +36,9 @@ buildPythonPackage rec {
     popd
   '';
 
-  checkInputs = [
-    pytest-xdist
-    pytestCheckHook
-  ];
+  checkInputs = [ pytest-xdist pytestCheckHook ];
 
-  pytestFlagsArray = [
-    "../tests"
-  ];
+  pytestFlagsArray = [ "../tests" ];
 
   meta = with lib; {
     description = "Intents to be used with Home Assistant";

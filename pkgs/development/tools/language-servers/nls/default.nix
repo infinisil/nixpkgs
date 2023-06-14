@@ -1,7 +1,4 @@
-{ lib
-, rustPlatform
-, nickel
-}:
+{ lib, rustPlatform, nickel }:
 
 rustPlatform.buildRustPackage {
   pname = "nls";

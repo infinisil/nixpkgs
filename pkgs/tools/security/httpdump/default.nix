@@ -1,8 +1,4 @@
-{ buildGoModule
-, fetchFromGitHub
-, lib
-, libpcap
-}:
+{ buildGoModule, fetchFromGitHub, lib, libpcap }:
 
 buildGoModule rec {
   pname = "httpdump";
@@ -22,7 +18,8 @@ buildGoModule rec {
   ldflags = [ "-s" "-w" ];
 
   meta = with lib; {
-    description = "Parse and display HTTP traffic from network device or pcap file";
+    description =
+      "Parse and display HTTP traffic from network device or pcap file";
     homepage = "https://github.com/hsiafan/httpdump";
     license = with licenses; [ bsd2 ];
     maintainers = with maintainers; [ fab ];

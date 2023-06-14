@@ -1,9 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, testers
-, piknik
-}:
+{ lib, buildGoModule, fetchFromGitHub, testers, piknik }:
 
 buildGoModule rec {
   pname = "piknik";

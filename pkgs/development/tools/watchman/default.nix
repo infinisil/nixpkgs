@@ -1,38 +1,8 @@
-{ boost
-, cargo
-, cmake
-, config
-, CoreServices
-, cpptoml
-, double-conversion
-, edencommon
-, ensureNewerSourcesForZipFilesHook
-, fb303
-, fbthrift
-, fetchFromGitHub
-, fizz
-, fmt_8
-, folly
-, glog
-, gtest
-, lib
-, libevent
-, libiconv
-, libsodium
-, libunwind
-, lz4
-, openssl
-, pcre
-, pkg-config
-, python3
-, rustPlatform
-, rustc
-, stateDir ? "/tmp"
-, stdenv
-, wangle
-, zlib
-, zstd
-}:
+{ boost, cargo, cmake, config, CoreServices, cpptoml, double-conversion
+, edencommon, ensureNewerSourcesForZipFilesHook, fb303, fbthrift
+, fetchFromGitHub, fizz, fmt_8, folly, glog, gtest, lib, libevent, libiconv
+, libsodium, libunwind, lz4, openssl, pcre, pkg-config, python3, rustPlatform
+, rustc, stateDir ? "/tmp", stdenv, wangle, zlib, zstd }:
 
 stdenv.mkDerivation rec {
   pname = "watchman";
@@ -90,9 +60,7 @@ stdenv.mkDerivation rec {
 
   cargoRoot = "watchman/cli";
 
-  cargoDeps = rustPlatform.importCargoLock {
-    lockFile = ./Cargo.lock;
-  };
+  cargoDeps = rustPlatform.importCargoLock { lockFile = ./Cargo.lock; };
 
   postPatch = ''
     patchShebangs .

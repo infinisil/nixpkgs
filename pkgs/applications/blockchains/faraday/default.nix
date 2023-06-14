@@ -1,9 +1,4 @@
-{ buildGoModule
-, fetchFromGitHub
-, lib
-, testers
-, faraday
-}:
+{ buildGoModule, fetchFromGitHub, lib, testers, faraday }:
 
 buildGoModule rec {
   pname = "faraday";
@@ -22,9 +17,7 @@ buildGoModule rec {
 
   ldflags = [ "-s" "-w" ];
 
-  passthru.tests.version = testers.testVersion {
-    package = faraday;
-  };
+  passthru.tests.version = testers.testVersion { package = faraday; };
 
   meta = with lib; {
     description = "LND Channel Management Tools";

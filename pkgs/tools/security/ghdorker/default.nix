@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "ghdorker";
@@ -23,9 +20,7 @@ python3.pkgs.buildPythonApplication rec {
   # Project has no tests
   doCheck = false;
 
-  pythonImportsCheck = [
-    "GHDorker"
-  ];
+  pythonImportsCheck = [ "GHDorker" ];
 
   meta = with lib; {
     description = "Extensible GitHub dorking tool";

@@ -1,10 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, makeWrapper
-, python3
-, which
-}:
+{ lib, rustPlatform, fetchFromGitHub, makeWrapper, python3, which }:
 
 rustPlatform.buildRustPackage rec {
   pname = "erg";
@@ -19,11 +13,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-I4hQ78RTkCDKpq7HBNJsKqCiFL9004XvWdwtRdTQQkE=";
 
-  nativeBuildInputs = [
-    makeWrapper
-    python3
-    which
-  ];
+  nativeBuildInputs = [ makeWrapper python3 which ];
 
   buildFeatures = [ "full" ];
 
@@ -54,7 +44,8 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "A statically typed language that can deeply improve the Python ecosystem";
+    description =
+      "A statically typed language that can deeply improve the Python ecosystem";
     homepage = "https://github.com/erg-lang/erg";
     changelog = "https://github.com/erg-lang/erg/releases/tag/${src.rev}";
     license = with licenses; [ asl20 mit ];

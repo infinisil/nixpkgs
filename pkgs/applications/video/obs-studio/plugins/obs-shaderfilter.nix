@@ -1,10 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, obs-studio
-, qtbase
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, obs-studio, qtbase }:
 
 stdenv.mkDerivation rec {
   pname = "obs-shaderfilter";
@@ -20,9 +14,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ cmake ];
   buildInputs = [ obs-studio qtbase ];
 
-  cmakeFlags = [
-    "-DBUILD_OUT_OF_TREE=On"
-  ];
+  cmakeFlags = [ "-DBUILD_OUT_OF_TREE=On" ];
 
   dontWrapQtApps = true;
 
@@ -32,7 +24,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "OBS Studio filter for applying an arbitrary shader to a source.";
+    description =
+      "OBS Studio filter for applying an arbitrary shader to a source.";
     homepage = "https://github.com/exeldro/obs-shaderfilter";
     maintainers = with maintainers; [ flexiondotorg ];
     license = licenses.gpl2Plus;

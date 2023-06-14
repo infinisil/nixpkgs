@@ -1,11 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, msgpack
-, greenlet
-, pythonOlder
-, isPyPy
-}:
+{ lib, buildPythonPackage, fetchPypi, msgpack, greenlet, pythonOlder, isPyPy }:
 
 buildPythonPackage rec {
   pname = "pynvim";
@@ -24,18 +17,12 @@ buildPythonPackage rec {
       --replace " + pytest_runner" ""
   '';
 
-  propagatedBuildInputs = [
-    msgpack
-  ] ++ lib.optionals (!isPyPy) [
-    greenlet
-  ];
+  propagatedBuildInputs = [ msgpack ] ++ lib.optionals (!isPyPy) [ greenlet ];
 
   # Tests require pkgs.neovim which we cannot add because of circular dependency
   doCheck = false;
 
-  pythonImportsCheck = [
-    "pynvim"
-  ];
+  pythonImportsCheck = [ "pynvim" ];
 
   meta = with lib; {
     description = "Python client for Neovim";

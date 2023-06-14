@@ -12,8 +12,7 @@ let
     hash = "sha256-O977DZLWPyLafIaOTPZKI4MOtK9E9TDProf2xyk05aI";
     fetchSubmodules = true;
   };
-in
-mixRelease  {
+in mixRelease {
   inherit pname version src elixir;
 
   stripDebug = true;

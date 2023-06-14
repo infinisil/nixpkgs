@@ -1,10 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, numpy
-, pythonOlder
-, pyyaml
-}:
+{ lib, buildPythonPackage, fetchPypi, numpy, pythonOlder, pyyaml }:
 
 buildPythonPackage rec {
   pname = "pysrim";
@@ -23,10 +17,7 @@ buildPythonPackage rec {
       --replace "'pytest-runner', " ""
   '';
 
-  propagatedBuildInputs = [
-    numpy
-    pyyaml
-  ];
+  propagatedBuildInputs = [ numpy pyyaml ];
 
   # Tests require git lfs download of repository
   doCheck = false;

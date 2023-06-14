@@ -1,9 +1,6 @@
 { lib, python3, stdenvNoCC }:
 
-{ name
-, description ? ""
-, deps ? []
-}:
+{ name, description ? "", deps ? [ ] }:
 
 let
   nuget-source = stdenvNoCC.mkDerivation rec {
@@ -17,7 +14,9 @@ let
 
       (
         shopt -s nullglob
-        for nupkg in ${lib.concatMapStringsSep " " (dep: "\"${dep}\"/*.nupkg") deps}; do
+        for nupkg in ${
+          lib.concatMapStringsSep " " (dep: ''"${dep}"/*.nupkg'') deps
+        }; do
           cp --no-clobber "$nupkg" $out/lib
         done
       )
@@ -26,11 +25,12 @@ let
       # Note that this currently ignores any license provided in plain text (e.g. "LICENSE.txt")
       python ${./extract-licenses-from-nupkgs.py} $out/lib > $out/share/licenses
     '';
-  } // { # We need data from `$out` for `meta`, so we have to use overrides as to not hit infinite recursion.
-    meta.licence = let
-      depLicenses = lib.splitString "\n" (builtins.readFile "${nuget-source}/share/licenses");
-    in (lib.flatten (lib.forEach depLicenses (spdx:
-      lib.optionals (spdx != "") (lib.getLicenseFromSpdxId spdx)
-    )));
-  };
+  }
+    // { # We need data from `$out` for `meta`, so we have to use overrides as to not hit infinite recursion.
+      meta.licence = let
+        depLicenses = lib.splitString "\n"
+          (builtins.readFile "${nuget-source}/share/licenses");
+      in (lib.flatten (lib.forEach depLicenses
+        (spdx: lib.optionals (spdx != "") (lib.getLicenseFromSpdxId spdx))));
+    };
 in nuget-source

@@ -1,14 +1,7 @@
-{ lib
-, buildPlatform
-, callPackage
-, kaem
-, mescc-tools-extra
-, checkMeta
-}:
-rec {
+{ lib, buildPlatform, callPackage, kaem, mescc-tools-extra, checkMeta }: rec {
   derivationWithMeta = attrs:
     let
-      passthru = attrs.passthru or {};
+      passthru = attrs.passthru or { };
       validity = checkMeta.assertValidity { inherit meta attrs; };
       meta = checkMeta.commonMeta { inherit validity attrs; };
       baseDrv = derivation ({
@@ -18,20 +11,15 @@ rec {
       passthru' = passthru // lib.optionalAttrs (passthru ? tests) {
         tests = lib.mapAttrs (_: f: f baseDrv) passthru.tests;
       };
-    in
-    lib.extendDerivation
-      validity.handled
-      ({ inherit meta; passthru = passthru'; } // passthru')
-      baseDrv;
+    in lib.extendDerivation validity.handled ({
+      inherit meta;
+      passthru = passthru';
+    } // passthru') baseDrv;
 
-  writeTextFile =
-    { name # the name of the derivation
-    , text
-    , executable ? false # run chmod +x ?
-    , destination ? ""   # relative path appended to $out eg "/bin/foo"
-    , allowSubstitutes ? false
-    , preferLocalBuild ? true
-    }:
+  writeTextFile = { name # the name of the derivation
+    , text, executable ? false # run chmod +x ?
+    , destination ? "" # relative path appended to $out eg "/bin/foo"
+    , allowSubstitutes ? false, preferLocalBuild ? true }:
     derivationWithMeta {
       inherit name text allowSubstitutes preferLocalBuild;
       passAsFile = [ "text" ];
@@ -57,6 +45,6 @@ rec {
       inherit destination;
     };
 
-  writeText = name: text: writeTextFile {inherit name text;};
+  writeText = name: text: writeTextFile { inherit name text; };
 
 }

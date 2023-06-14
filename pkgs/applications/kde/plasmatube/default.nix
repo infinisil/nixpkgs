@@ -1,25 +1,10 @@
-{ lib
-, mkDerivation
-, extra-cmake-modules
-, wrapGAppsHook
-, gst_all_1
-, kcoreaddons
-, kdeclarative
-, ki18n
-, kirigami2
-, mpv
-, qtmultimedia
-, qtquickcontrols2
-, yt-dlp
-}:
+{ lib, mkDerivation, extra-cmake-modules, wrapGAppsHook, gst_all_1, kcoreaddons
+, kdeclarative, ki18n, kirigami2, mpv, qtmultimedia, qtquickcontrols2, yt-dlp }:
 
 mkDerivation {
   pname = "plasmatube";
 
-  nativeBuildInputs = [
-    extra-cmake-modules
-    wrapGAppsHook
-  ];
+  nativeBuildInputs = [ extra-cmake-modules wrapGAppsHook ];
 
   buildInputs = [
     kcoreaddons
@@ -36,12 +21,7 @@ mkDerivation {
     gstreamer
   ]);
 
-  qtWrapperArgs = [
-    "--prefix"
-    "PATH"
-    ":"
-    (lib.makeBinPath [ yt-dlp ])
-  ];
+  qtWrapperArgs = [ "--prefix" "PATH" ":" (lib.makeBinPath [ yt-dlp ]) ];
 
   preFixup = ''
     qtWrapperArgs+=("''${gappsWrapperArgs[@]}")

@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, flit-core
-, installShellFiles
-, pytestCheckHook
-, isPy3k
-}:
+{ lib, buildPythonPackage, fetchPypi, flit-core, installShellFiles
+, pytestCheckHook, isPy3k }:
 
 buildPythonPackage rec {
   pname = "sqlparse";

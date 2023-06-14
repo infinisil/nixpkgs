@@ -1,24 +1,12 @@
-{ lib
-, stdenv
-, fetchurl
-, gettext
-, help2man
-, pkg-config
-, texinfo
-, boehmgc
-, readline
-, guiSupport ? false, makeWrapper, tcl, tcllib, tk
-, miSupport ? true, json_c
-, nbdSupport ? !stdenv.isDarwin, libnbd
-, textStylingSupport ? true
+{ lib, stdenv, fetchurl, gettext, help2man, pkg-config, texinfo, boehmgc
+, readline, guiSupport ? false, makeWrapper, tcl, tcllib, tk, miSupport ? true
+, json_c, nbdSupport ? !stdenv.isDarwin, libnbd, textStylingSupport ? true
 , dejagnu
 
 # update script only
-, writeScript
-}:
+, writeScript }:
 
-let
-  isCross = stdenv.hostPlatform != stdenv.buildPlatform;
+let isCross = stdenv.hostPlatform != stdenv.buildPlatform;
 in stdenv.mkDerivation rec {
   pname = "poke";
   version = "3.2";
@@ -28,10 +16,15 @@ in stdenv.mkDerivation rec {
     hash = "sha256-dY5VHdU6bM5U7JTY/CH6TWtSon0cJmcgbVmezcdPDZc=";
   };
 
-  outputs = [ "out" "dev" "info" "lib" ]
+  outputs = [
+    "out"
+    "dev"
+    "info"
+    "lib"
+  ]
   # help2man can't cross compile because it runs `poke --help` to
   # generate the man page
-  ++ lib.optional (!isCross) "man";
+    ++ lib.optional (!isCross) "man";
 
   postPatch = ''
     patchShebangs .
@@ -39,23 +32,15 @@ in stdenv.mkDerivation rec {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    gettext
-    pkg-config
-    texinfo
-  ] ++ lib.optionals (!isCross) [
-    help2man
-  ] ++ lib.optionals guiSupport [
-    makeWrapper
-    tcl.tclPackageHook
-  ];
+  nativeBuildInputs = [ gettext pkg-config texinfo ]
+    ++ lib.optionals (!isCross) [ help2man ]
+    ++ lib.optionals guiSupport [ makeWrapper tcl.tclPackageHook ];
 
   buildInputs = [ boehmgc readline ]
-  ++ lib.optionals guiSupport [ tcl tcllib tk ]
-  ++ lib.optional miSupport json_c
-  ++ lib.optional nbdSupport libnbd
-  ++ lib.optional textStylingSupport gettext
-  ++ lib.optional (!isCross) dejagnu;
+    ++ lib.optionals guiSupport [ tcl tcllib tk ]
+    ++ lib.optional miSupport json_c ++ lib.optional nbdSupport libnbd
+    ++ lib.optional textStylingSupport gettext
+    ++ lib.optional (!isCross) dejagnu;
 
   configureFlags = [
     # libpoke depends on $datadir/poke, so we specify the datadir in
@@ -104,7 +89,8 @@ in stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Interactive, extensible editor for binary data";
     homepage = "http://www.jemarch.net/poke";
-    changelog = "https://git.savannah.gnu.org/cgit/poke.git/plain/ChangeLog?h=releases/poke-${version}";
+    changelog =
+      "https://git.savannah.gnu.org/cgit/poke.git/plain/ChangeLog?h=releases/poke-${version}";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ AndersonTorres kira-bruneau ];
     platforms = platforms.unix;

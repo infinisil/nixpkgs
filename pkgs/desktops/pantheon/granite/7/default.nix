@@ -1,21 +1,6 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, nix-update-script
-, python3
-, meson
-, ninja
-, sassc
-, vala
-, pkg-config
-, libgee
-, gtk4
-, glib
-, gettext
-, gsettings-desktop-schemas
-, gobject-introspection
-, wrapGAppsHook4
-}:
+{ lib, stdenv, fetchFromGitHub, nix-update-script, python3, meson, ninja, sassc
+, vala, pkg-config, libgee, gtk4, glib, gettext, gsettings-desktop-schemas
+, gobject-introspection, wrapGAppsHook4 }:
 
 stdenv.mkDerivation rec {
   pname = "granite";
@@ -54,9 +39,7 @@ stdenv.mkDerivation rec {
     patchShebangs meson/post_install.py
   '';
 
-  passthru = {
-    updateScript = nix-update-script { };
-  };
+  passthru = { updateScript = nix-update-script { }; };
 
   meta = with lib; {
     description = "An extension to GTK used by elementary OS";

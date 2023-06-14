@@ -14,11 +14,13 @@ buildGoModule rec {
   vendorHash = "sha256-r1E0JrwLDMlBINxtHKI5XfrG4kYWRcuep8CvtvVCqio=";
   proxyVendor = true;
 
-  subPackages = [
-    "cmd/dagger"
-  ];
+  subPackages = [ "cmd/dagger" ];
 
-  ldflags = [ "-s" "-w" "-X=github.com/dagger/dagger/internal/engine.Version=${version}" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X=github.com/dagger/dagger/internal/engine.Version=${version}"
+  ];
 
   passthru.tests.version = testers.testVersion {
     package = dagger;

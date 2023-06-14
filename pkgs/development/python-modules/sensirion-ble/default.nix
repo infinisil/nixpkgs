@@ -1,13 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, hatchling
-, bluetooth-data-tools
-, bluetooth-sensor-state-data
-, home-assistant-bluetooth
-, sensor-state-data
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, hatchling, bluetooth-data-tools
+, bluetooth-sensor-state-data, home-assistant-bluetooth, sensor-state-data
+, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "sensirion-ble";
@@ -28,9 +21,7 @@ buildPythonPackage rec {
       --replace " --cov=sensirion_ble --cov-report=term-missing:skip-covered" ""
   '';
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
   propagatedBuildInputs = [
     bluetooth-data-tools
@@ -39,9 +30,7 @@ buildPythonPackage rec {
     sensor-state-data
   ];
 
-  pythonImportsCheck = [
-    "sensirion_ble"
-  ];
+  pythonImportsCheck = [ "sensirion_ble" ];
 
   meta = with lib; {
     description = "Parser for Sensirion BLE devices";

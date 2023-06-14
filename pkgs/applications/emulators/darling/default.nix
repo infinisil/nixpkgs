@@ -1,48 +1,20 @@
-{ clangStdenv
-, lib
-, runCommandWith
-, writeShellScript
-, fetchFromGitHub
+{ clangStdenv, lib, runCommandWith, writeShellScript, fetchFromGitHub
 , fetchpatch
 
-, freetype
-, libjpeg
-, libpng
-, libtiff
-, giflib
-, libX11
-, libXext
-, libXrandr
-, libXcursor
-, libxkbfile
-, cairo
-, libglvnd
-, fontconfig
-, dbus
-, libGLU
-, fuse
-, ffmpeg
-, pulseaudio
+, freetype, libjpeg, libpng, libtiff, giflib, libX11, libXext, libXrandr
+, libXcursor, libxkbfile, cairo, libglvnd, fontconfig, dbus, libGLU, fuse
+, ffmpeg, pulseaudio
 
-, makeWrapper
-, python2
-, python3
-, cmake
-, ninja
-, pkg-config
-, bison
-, flex
+, makeWrapper, python2, python3, cmake, ninja, pkg-config, bison, flex
 
-, libbsd
-, openssl
+, libbsd, openssl
 
 , xdg-user-dirs
 
 , addOpenGLRunpath
 
 # Whether to pre-compile Python 2 bytecode for performance.
-, compilePy2Bytecode ? false
-}:
+, compilePy2Bytecode ? false }:
 let
   stdenv = clangStdenv;
 
@@ -132,22 +104,10 @@ in stdenv.mkDerivation {
     substituteInPlace src/external/basic_cmds/CMakeLists.txt --replace SETGID ""
   '';
 
-  nativeBuildInputs = [
-    bison
-    ccWrapperBypass
-    cmake
-    flex
-    makeWrapper
-    ninja
-    pkg-config
-    python3
-  ]
-  ++ lib.optional compilePy2Bytecode python2;
-  buildInputs = wrappedLibs ++ [
-    libbsd
-    openssl
-    stdenv.cc.libc.linuxHeaders
-  ];
+  nativeBuildInputs =
+    [ bison ccWrapperBypass cmake flex makeWrapper ninja pkg-config python3 ]
+    ++ lib.optional compilePy2Bytecode python2;
+  buildInputs = wrappedLibs ++ [ libbsd openssl stdenv.cc.libc.linuxHeaders ];
 
   # Breaks valid paths like
   # Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
@@ -163,7 +123,8 @@ in stdenv.mkDerivation {
     "-DDARLINGSERVER_XDG_USER_DIR_CMD=${xdg-user-dirs}/bin/xdg-user-dir"
   ];
 
-  env.NIX_CFLAGS_COMPILE = "-Wno-macro-redefined -Wno-unused-command-line-argument";
+  env.NIX_CFLAGS_COMPILE =
+    "-Wno-macro-redefined -Wno-unused-command-line-argument";
 
   # Linux .so's are dlopen'd by wrapgen during the build
   env.LD_LIBRARY_PATH = lib.makeLibraryPath wrappedLibs;
@@ -217,7 +178,9 @@ in stdenv.mkDerivation {
       exit 1
     fi
 
-    patchelf --add-rpath "${lib.makeLibraryPath wrappedLibs}:${addOpenGLRunpath.driverLink}/lib" \
+    patchelf --add-rpath "${
+      lib.makeLibraryPath wrappedLibs
+    }:${addOpenGLRunpath.driverLink}/lib" \
       $out/libexec/darling/usr/libexec/darling/mldr
   '';
 

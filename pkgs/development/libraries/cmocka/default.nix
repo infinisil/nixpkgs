@@ -10,9 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "0xksffx1w3pzm18ynf28cx8scrhylcbz43s1rgkkdqnyil1q6cjv";
   };
 
-  patches = [
-    ./uintptr_t.patch
-  ];
+  patches = [ ./uintptr_t.patch ];
 
   nativeBuildInputs = [ cmake ];
 
@@ -22,7 +20,8 @@ stdenv.mkDerivation rec {
   doCheck = true;
 
   meta = with lib; {
-    description = "Lightweight library to simplify and generalize unit tests for C";
+    description =
+      "Lightweight library to simplify and generalize unit tests for C";
     longDescription = ''
       There are a variety of C unit testing frameworks available however
       many of them are fairly complex and require the latest compiler

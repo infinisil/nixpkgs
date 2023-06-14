@@ -1,6 +1,5 @@
 { buildGoModule, lib, installShellFiles, fetchFromGitHub }:
-let
-  short_hash = "7447a09";
+let short_hash = "7447a09";
 in buildGoModule rec {
   pname = "deck";
   version = "1.22.0";
@@ -31,7 +30,8 @@ in buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "A configuration management and drift detection tool for Kong";
+    description =
+      "A configuration management and drift detection tool for Kong";
     homepage = "https://github.com/Kong/deck";
     license = licenses.asl20;
     maintainers = with maintainers; [ liyangau ];

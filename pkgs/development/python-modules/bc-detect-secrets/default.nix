@@ -1,17 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, gibberish-detector
-, mock
-, pkgs
-, pyahocorasick
-, pytestCheckHook
-, pythonOlder
-, pyyaml
-, requests
-, responses
-, unidiff
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, gibberish-detector, mock, pkgs
+, pyahocorasick, pytestCheckHook, pythonOlder, pyyaml, requests, responses
+, unidiff }:
 
 buildPythonPackage rec {
   pname = "bc-detect-secrets";
@@ -27,27 +16,15 @@ buildPythonPackage rec {
     hash = "sha256-oMJMiXS4/OU5/LWV2i2CcDQZL5yuusXGwgZG2OMMlaQ=";
   };
 
-  propagatedBuildInputs = [
-    pyyaml
-    requests
-    unidiff
-  ];
+  propagatedBuildInputs = [ pyyaml requests unidiff ];
 
   passthru.optional-dependencies = {
-    word_list = [
-      pyahocorasick
-    ];
-    gibberish = [
-      gibberish-detector
-    ];
+    word_list = [ pyahocorasick ];
+    gibberish = [ gibberish-detector ];
   };
 
-  nativeCheckInputs = [
-    mock
-    pkgs.gitMinimal
-    pytestCheckHook
-    responses
-  ] ++ lib.flatten (builtins.attrValues passthru.optional-dependencies);
+  nativeCheckInputs = [ mock pkgs.gitMinimal pytestCheckHook responses ]
+    ++ lib.flatten (builtins.attrValues passthru.optional-dependencies);
 
   preCheck = ''
     export HOME=$(mktemp -d);
@@ -66,9 +43,7 @@ buildPythonPackage rec {
     "TestModifiesBaselineFromVersionChange"
   ];
 
-  pythonImportsCheck = [
-    "detect_secrets"
-  ];
+  pythonImportsCheck = [ "detect_secrets" ];
 
   meta = with lib; {
     description = "Tool to detect secrets in the code";

@@ -1,13 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, mutagen
-, requests
-, colorama
-, prettytable
-, pycrypto
-, pydub
-}:
+{ lib, buildPythonPackage, fetchPypi, mutagen, requests, colorama, prettytable
+, pycrypto, pydub }:
 
 buildPythonPackage rec {
   pname = "aigpy";
@@ -18,7 +10,8 @@ buildPythonPackage rec {
     sha256 = "sha256-1kQced6YdC/wvegqFVhZfej4+4aemGXvKysKjejP13w=";
   };
 
-  propagatedBuildInputs = [ mutagen requests colorama prettytable pycrypto pydub ];
+  propagatedBuildInputs =
+    [ mutagen requests colorama prettytable pycrypto pydub ];
 
   meta = {
     homepage = "https://github.com/AIGMix/AIGPY";

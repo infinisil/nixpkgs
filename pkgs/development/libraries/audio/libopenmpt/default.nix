@@ -1,18 +1,6 @@
-{ config
-, lib
-, stdenv
-, fetchurl
-, zlib
-, pkg-config
-, mpg123
-, libogg
-, libvorbis
-, portaudio
-, libsndfile
-, flac
-, usePulseAudio ? config.pulseaudio or stdenv.isLinux
-, libpulseaudio
-}:
+{ config, lib, stdenv, fetchurl, zlib, pkg-config, mpg123, libogg, libvorbis
+, portaudio, libsndfile, flac
+, usePulseAudio ? config.pulseaudio or stdenv.isLinux, libpulseaudio }:
 
 stdenv.mkDerivation rec {
   pname = "libopenmpt";
@@ -21,31 +9,19 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" "bin" ];
 
   src = fetchurl {
-    url = "https://lib.openmpt.org/files/libopenmpt/src/libopenmpt-${version}+release.autotools.tar.gz";
+    url =
+      "https://lib.openmpt.org/files/libopenmpt/src/libopenmpt-${version}+release.autotools.tar.gz";
     hash = "sha256-vxddJkSLsTP3RxTzqIWecAC5NSL7NXdVnf/ANxYZEPk=";
   };
 
   enableParallelBuilding = true;
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    zlib
-    mpg123
-    libogg
-    libvorbis
-    portaudio
-    libsndfile
-    flac
-  ] ++ lib.optionals usePulseAudio [
-    libpulseaudio
-  ];
+  buildInputs = [ zlib mpg123 libogg libvorbis portaudio libsndfile flac ]
+    ++ lib.optionals usePulseAudio [ libpulseaudio ];
 
-  configureFlags = [
-    (lib.strings.withFeature usePulseAudio "pulseaudio")
-  ];
+  configureFlags = [ (lib.strings.withFeature usePulseAudio "pulseaudio") ];
 
   doCheck = stdenv.buildPlatform.canExecute stdenv.hostPlatform;
 
@@ -56,7 +32,8 @@ stdenv.mkDerivation rec {
   passthru.updateScript = ./update.sh;
 
   meta = with lib; {
-    description = "Cross-platform C++ and C library to decode tracked music files into a raw PCM audio stream";
+    description =
+      "Cross-platform C++ and C library to decode tracked music files into a raw PCM audio stream";
     longDescription = ''
       libopenmpt is a cross-platform C++ and C library to decode tracked music files (modules) into a raw PCM audio stream.
       openmpt123 is a cross-platform command-line or terminal based module file player.

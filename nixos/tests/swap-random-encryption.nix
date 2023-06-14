@@ -1,50 +1,45 @@
-import ./make-test-python.nix ({ lib, pkgs, ... }:
-{
+import ./make-test-python.nix ({ lib, pkgs, ... }: {
   name = "swap-random-encryption";
 
-  nodes.machine =
-    { config, pkgs, lib, ... }:
-    {
-      environment.systemPackages = [ pkgs.cryptsetup ];
+  nodes.machine = { config, pkgs, lib, ... }: {
+    environment.systemPackages = [ pkgs.cryptsetup ];
 
-      virtualisation.useDefaultFilesystems = false;
+    virtualisation.useDefaultFilesystems = false;
 
-      virtualisation.rootDevice = "/dev/vda1";
+    virtualisation.rootDevice = "/dev/vda1";
 
-      boot.initrd.postDeviceCommands = ''
-        if ! test -b /dev/vda1; then
-          ${pkgs.parted}/bin/parted --script /dev/vda -- mklabel msdos
-          ${pkgs.parted}/bin/parted --script /dev/vda -- mkpart primary 1MiB -250MiB
-          ${pkgs.parted}/bin/parted --script /dev/vda -- mkpart primary -250MiB 100%
-          sync
-        fi
+    boot.initrd.postDeviceCommands = ''
+      if ! test -b /dev/vda1; then
+        ${pkgs.parted}/bin/parted --script /dev/vda -- mklabel msdos
+        ${pkgs.parted}/bin/parted --script /dev/vda -- mkpart primary 1MiB -250MiB
+        ${pkgs.parted}/bin/parted --script /dev/vda -- mkpart primary -250MiB 100%
+        sync
+      fi
 
-        FSTYPE=$(blkid -o value -s TYPE /dev/vda1 || true)
-        if test -z "$FSTYPE"; then
-          ${pkgs.e2fsprogs}/bin/mke2fs -t ext4 -L root /dev/vda1
-        fi
-      '';
+      FSTYPE=$(blkid -o value -s TYPE /dev/vda1 || true)
+      if test -z "$FSTYPE"; then
+        ${pkgs.e2fsprogs}/bin/mke2fs -t ext4 -L root /dev/vda1
+      fi
+    '';
 
-      virtualisation.fileSystems = {
-        "/" = {
-          device = "/dev/disk/by-label/root";
-          fsType = "ext4";
-        };
+    virtualisation.fileSystems = {
+      "/" = {
+        device = "/dev/disk/by-label/root";
+        fsType = "ext4";
       };
-
-      swapDevices = [
-        {
-          device = "/dev/vda2";
-
-          randomEncryption = {
-            enable = true;
-            cipher = "aes-xts-plain64";
-            keySize = 512;
-            sectorSize = 4096;
-          };
-        }
-      ];
     };
+
+    swapDevices = [{
+      device = "/dev/vda2";
+
+      randomEncryption = {
+        enable = true;
+        cipher = "aes-xts-plain64";
+        keySize = 512;
+        sectorSize = 4096;
+      };
+    }];
+  };
 
   testScript = ''
     machine.wait_for_unit("multi-user.target")

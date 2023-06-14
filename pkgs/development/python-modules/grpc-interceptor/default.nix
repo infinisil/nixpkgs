@@ -1,13 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, poetry-core
-, grpcio
-, protobuf
-, pytest-asyncio
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, poetry-core, grpcio
+, protobuf, pytest-asyncio, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "grpc-interceptor";
@@ -28,28 +20,19 @@ buildPythonPackage rec {
       --replace "poetry.masonry.api" "poetry.core.masonry.api"
   '';
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  propagatedBuildInputs = [
-    grpcio
-    protobuf
-  ];
+  propagatedBuildInputs = [ grpcio protobuf ];
 
-  nativeCheckInputs = [
-    pytest-asyncio
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytest-asyncio pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "grpc_interceptor"
-  ];
+  pythonImportsCheck = [ "grpc_interceptor" ];
 
   meta = with lib; {
     description = "Simplified gRPC interceptors";
     homepage = "https://github.com/d5h-foss/grpc-interceptor";
-    changelog = "https://github.com/d5h-foss/grpc-interceptor/releases/tag/v${version}";
+    changelog =
+      "https://github.com/d5h-foss/grpc-interceptor/releases/tag/v${version}";
     longDescription = ''
       Simplified Python gRPC interceptors.
 

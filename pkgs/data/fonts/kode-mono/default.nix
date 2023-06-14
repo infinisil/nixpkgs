@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   version = "1.017";
 
   src = fetchzip {
-    url = "https://github.com/isaozler/kode-mono/releases/download/${finalAttrs.version}/kode-mono-fonts.zip";
+    url =
+      "https://github.com/isaozler/kode-mono/releases/download/${finalAttrs.version}/kode-mono-fonts.zip";
     hash = "sha256-5bTciBQhWNUokOP3YzAwrvp7jeyiF4JMdJDX+6NXvLU=";
     stripRoot = false;
   };
@@ -18,7 +19,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   meta = with lib; {
-    description = "A custom-designed typeface explicitly created for the developer community";
+    description =
+      "A custom-designed typeface explicitly created for the developer community";
     homepage = "https://kodemono.com/";
     changelog = "https://github.com/isaozler/kode-mono/blob/main/CHANGELOG.md";
     license = licenses.ofl;

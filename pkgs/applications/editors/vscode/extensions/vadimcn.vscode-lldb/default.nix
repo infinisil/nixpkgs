@@ -1,6 +1,6 @@
-{ pkgs, lib, stdenv, fetchFromGitHub, runCommand, rustPlatform, makeWrapper, llvmPackages
-, buildNpmPackage, cmake, nodejs, unzip, python3, pkg-config, libsecret, darwin
-}:
+{ pkgs, lib, stdenv, fetchFromGitHub, runCommand, rustPlatform, makeWrapper
+, llvmPackages, buildNpmPackage, cmake, nodejs, unzip, python3, pkg-config
+, libsecret, darwin }:
 assert lib.versionAtLeast python3.version "3.5";
 let
   publisher = "vadimcn";
@@ -19,7 +19,8 @@ let
   };
 
   # need to build a custom version of lldb and llvm for enhanced rust support
-  lldb = (import ./lldb.nix { inherit fetchFromGitHub runCommand llvmPackages; });
+  lldb =
+    (import ./lldb.nix { inherit fetchFromGitHub runCommand llvmPackages; });
 
   adapter = rustPlatform.buildRustPackage {
     pname = "${pname}-adapter";
@@ -33,10 +34,7 @@ let
 
     buildFeatures = [ "weak-linkage" ];
 
-    cargoBuildFlags = [
-      "--lib"
-      "--bin=codelldb"
-    ];
+    cargoBuildFlags = [ "--lib" "--bin=codelldb" ];
 
     # Tests are linked to liblldb but it is not available here.
     doCheck = false;
@@ -48,17 +46,10 @@ let
 
     npmDepsHash = "sha256-Cdlq1jxHSCfPjXhasClc6XzEUp3vlLgkStbhYtCyc7E=";
 
-    nativeBuildInputs = [
-      python3
-      pkg-config
-    ];
+    nativeBuildInputs = [ python3 pkg-config ];
 
-    buildInputs = [
-      libsecret
-    ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-      Security
-      AppKit
-    ]);
+    buildInputs = [ libsecret ] ++ lib.optionals stdenv.isDarwin
+      (with darwin.apple_sdk.frameworks; [ Security AppKit ]);
 
     dontNpmBuild = true;
 

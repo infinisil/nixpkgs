@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitea
-, giflib
-, imlib2
-, libXft
-, libexif
-, libwebp
-, libinotify-kqueue
-, conf ? null
-}:
+{ lib, stdenv, fetchFromGitea, giflib, imlib2, libXft, libexif, libwebp
+, libinotify-kqueue, conf ? null }:
 
 stdenv.mkDerivation rec {
   pname = "nsxiv";
@@ -22,15 +13,10 @@ stdenv.mkDerivation rec {
     hash = "sha256-X1ZMr5OADs9GIe/kp/kEqKMMHZMymd58m9+f0SPzn7s=";
   };
 
-  buildInputs = [
-    giflib
-    imlib2
-    libXft
-    libexif
-    libwebp
-  ] ++ lib.optional stdenv.isDarwin libinotify-kqueue;
+  buildInputs = [ giflib imlib2 libXft libexif libwebp ]
+    ++ lib.optional stdenv.isDarwin libinotify-kqueue;
 
-  preBuild = lib.optionalString (conf!=null) ''
+  preBuild = lib.optionalString (conf != null) ''
     cp ${(builtins.toFile "config.def.h" conf)} config.def.h
   '';
 
@@ -62,6 +48,7 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ AndersonTorres sikmir ];
     platforms = platforms.unix;
-    changelog = "https://codeberg.org/nsxiv/nsxiv/src/tag/${src.rev}/etc/CHANGELOG.md";
+    changelog =
+      "https://codeberg.org/nsxiv/nsxiv/src/tag/${src.rev}/etc/CHANGELOG.md";
   };
 }

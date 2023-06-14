@@ -1,13 +1,5 @@
-{ callPackage
-, lib
-, stdenv
-, fetchFromGitHub
-, rustPlatform
-, pkg-config
-, dbus
-, libiconv
-, Security
-}:
+{ callPackage, lib, stdenv, fetchFromGitHub, rustPlatform, pkg-config, dbus
+, libiconv, Security }:
 
 rustPlatform.buildRustPackage rec {
   pname = "maturin";
@@ -30,7 +22,7 @@ rustPlatform.buildRustPackage rec {
   # Requires network access, fails in sandbox.
   doCheck = false;
 
-  passthru.tests.pyo3 = callPackage ./pyo3-test {};
+  passthru.tests.pyo3 = callPackage ./pyo3-test { };
 
   meta = with lib; {
     description = "Build and publish Rust crates Python packages";
@@ -44,7 +36,10 @@ rustPlatform.buildRustPackage rec {
     '';
     homepage = "https://github.com/PyO3/maturin";
     changelog = "https://github.com/PyO3/maturin/blob/v${version}/Changelog.md";
-    license = with licenses; [ asl20 /* or */ mit ];
+    license = with licenses; [
+      asl20 # or
+      mit
+    ];
     maintainers = [ ];
   };
 }

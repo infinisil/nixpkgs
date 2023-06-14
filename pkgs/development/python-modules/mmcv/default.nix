@@ -1,26 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pytestCheckHook
-, pythonOlder
-, torch
-, torchvision
-, opencv4
-, yapf
-, packaging
-, pillow
-, addict
-, ninja
-, which
-, onnx
-, onnxruntime
-, scipy
-, pyturbojpeg
-, tifffile
-, lmdb
-, mmengine
-, symlinkJoin
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pytestCheckHook, pythonOlder, torch
+, torchvision, opencv4, yapf, packaging, pillow, addict, ninja, which, onnx
+, onnxruntime, scipy, pyturbojpeg, tifffile, lmdb, mmengine, symlinkJoin }:
 
 let
   inherit (torch) cudaCapabilities cudaPackages cudaSupport;
@@ -35,10 +15,11 @@ let
 
   cuda-native-redist = symlinkJoin {
     name = "cuda-native-redist-${cudaVersion}";
-    paths = with cudaPackages; [
-      cuda_cudart # cuda_runtime.h
-      cuda_nvcc
-    ] ++ cuda-common-redist;
+    paths = with cudaPackages;
+      [
+        cuda_cudart # cuda_runtime.h
+        cuda_nvcc
+      ] ++ cuda-common-redist;
   };
 
   cuda-redist = symlinkJoin {
@@ -46,8 +27,7 @@ let
     paths = cuda-common-redist;
   };
 
-in
-buildPythonPackage rec {
+in buildPythonPackage rec {
   pname = "mmcv";
   version = "2.0.0";
   format = "setuptools";
@@ -98,21 +78,21 @@ buildPythonPackage rec {
 
   buildInputs = [ torch ] ++ lib.optionals cudaSupport [ cuda-redist ];
 
-  nativeCheckInputs = [ pytestCheckHook torchvision lmdb onnx onnxruntime scipy pyturbojpeg tifffile ];
-
-  propagatedBuildInputs = [
-    mmengine
-    torch
-    opencv4
-    yapf
-    packaging
-    pillow
-    addict
+  nativeCheckInputs = [
+    pytestCheckHook
+    torchvision
+    lmdb
+    onnx
+    onnxruntime
+    scipy
+    pyturbojpeg
+    tifffile
   ];
 
-  pythonImportsCheck = [
-    "mmcv"
-  ];
+  propagatedBuildInputs =
+    [ mmengine torch opencv4 yapf packaging pillow addict ];
+
+  pythonImportsCheck = [ "mmcv" ];
 
   meta = with lib; {
     description = "A Foundational Library for Computer Vision Research";

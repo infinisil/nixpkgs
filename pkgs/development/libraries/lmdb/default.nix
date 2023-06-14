@@ -25,9 +25,12 @@ stdenv.mkDerivation rec {
     "prefix=$(out)"
     "CC=${stdenv.cc.targetPrefix}cc"
     "AR=${stdenv.cc.targetPrefix}ar"
-  ]
-    ++ lib.optional stdenv.isDarwin "LDFLAGS=-Wl,-install_name,$(out)/lib/liblmdb.so"
-    ++ lib.optionals stdenv.hostPlatform.isWindows [ "SOEXT=.dll" "BINEXT=.exe" ];
+  ] ++ lib.optional stdenv.isDarwin
+    "LDFLAGS=-Wl,-install_name,$(out)/lib/liblmdb.so"
+    ++ lib.optionals stdenv.hostPlatform.isWindows [
+      "SOEXT=.dll"
+      "BINEXT=.exe"
+    ];
 
   doCheck = true;
   checkTarget = "test";
@@ -37,19 +40,19 @@ stdenv.mkDerivation rec {
   ''
     # add lmdb.pc (dynamic only)
     + ''
-    mkdir -p "$dev/lib/pkgconfig"
-    cat > "$dev/lib/pkgconfig/lmdb.pc" <<EOF
-    Name: lmdb
-    Description: ${meta.description}
-    Version: ${version}
+      mkdir -p "$dev/lib/pkgconfig"
+      cat > "$dev/lib/pkgconfig/lmdb.pc" <<EOF
+      Name: lmdb
+      Description: ${meta.description}
+      Version: ${version}
 
-    Cflags: -I$dev/include
-    Libs: -L$out/lib -llmdb
-    EOF
+      Cflags: -I$dev/include
+      Libs: -L$out/lib -llmdb
+      EOF
 
-    # Expected by Rust libraries.
-    ln -s lmdb.pc "$dev/lib/pkgconfig/liblmdb.pc"
-  '';
+      # Expected by Rust libraries.
+      ln -s lmdb.pc "$dev/lib/pkgconfig/liblmdb.pc"
+    '';
 
   meta = with lib; {
     description = "Lightning memory-mapped database";

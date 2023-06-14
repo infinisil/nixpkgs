@@ -1,35 +1,7 @@
-{ cmake
-, fetchFromGitHub
-, lib
-, stdenv
-, curl
-, ffmpeg
-, fmt
-, gettext
-, harfbuzz
-, libaio
-, libbacktrace
-, libpcap
-, libpulseaudio
-, libsamplerate
-, libXrandr
-, libzip
-, pkg-config
-, qtbase
-, qtsvg
-, qttools
-, qttranslations
-, qtwayland
-, rapidyaml
-, SDL2
-, soundtouch
-, vulkan-headers
-, vulkan-loader
-, wayland
-, wrapQtAppsHook
-, xz
-, zip
-}:
+{ cmake, fetchFromGitHub, lib, stdenv, curl, ffmpeg, fmt, gettext, harfbuzz
+, libaio, libbacktrace, libpcap, libpulseaudio, libsamplerate, libXrandr, libzip
+, pkg-config, qtbase, qtsvg, qttools, qttranslations, qtwayland, rapidyaml, SDL2
+, soundtouch, vulkan-headers, vulkan-loader, wayland, wrapQtAppsHook, xz, zip }:
 
 let
   # The pre-zipped files in releases don't have a versioned link, we need to zip them ourselves
@@ -39,8 +11,7 @@ let
     rev = "8db5ae467a35cc00dc50a65061aa78dc5115e6d1";
     sha256 = "sha256-68kD7IAhBMASFmkGwvyQ7ppO/3B1csAKik+rU792JI4=";
   };
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   pname = "pcsx2";
   version = "1.7.4554";
 
@@ -98,11 +69,13 @@ stdenv.mkDerivation rec {
   '';
 
   qtWrapperArgs = [
-    "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [
-      ffmpeg # It's loaded with dlopen. They plan to change it https://github.com/PCSX2/pcsx2/issues/8624
-      libpulseaudio
-      vulkan-loader
-    ]}"
+    "--prefix LD_LIBRARY_PATH : ${
+      lib.makeLibraryPath [
+        ffmpeg # It's loaded with dlopen. They plan to change it https://github.com/PCSX2/pcsx2/issues/8624
+        libpulseaudio
+        vulkan-loader
+      ]
+    }"
   ];
 
   meta = with lib; {

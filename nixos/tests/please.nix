@@ -1,41 +1,35 @@
-import ./make-test-python.nix ({ lib, ... }:
-{
+import ./make-test-python.nix ({ lib, ... }: {
   name = "please";
   meta.maintainers = with lib.maintainers; [ azahi ];
 
-  nodes.machine =
-    { ... }:
-    {
-      users.users = lib.mkMerge [
-        (lib.listToAttrs (map
-          (n: lib.nameValuePair n { isNormalUser = true; })
-          (lib.genList (x: "user${toString x}") 6)))
-        {
-          user0.extraGroups = [ "wheel" ];
-        }
-      ];
+  nodes.machine = { ... }: {
+    users.users = lib.mkMerge [
+      (lib.listToAttrs (map (n: lib.nameValuePair n { isNormalUser = true; })
+        (lib.genList (x: "user${toString x}") 6)))
+      { user0.extraGroups = [ "wheel" ]; }
+    ];
 
-      security.please = {
-        enable = true;
-        wheelNeedsPassword = false;
-        settings = {
-          user2_run_true_as_root = {
-            name = "user2";
-            target = "root";
-            rule = "/run/current-system/sw/bin/true";
-            require_pass = false;
-          };
-          user4_edit_etc_hosts_as_root = {
-            name = "user4";
-            type = "edit";
-            target = "root";
-            rule = "/etc/hosts";
-            editmode = 644;
-            require_pass = false;
-          };
+    security.please = {
+      enable = true;
+      wheelNeedsPassword = false;
+      settings = {
+        user2_run_true_as_root = {
+          name = "user2";
+          target = "root";
+          rule = "/run/current-system/sw/bin/true";
+          require_pass = false;
+        };
+        user4_edit_etc_hosts_as_root = {
+          name = "user4";
+          type = "edit";
+          target = "root";
+          rule = "/etc/hosts";
+          editmode = 644;
+          require_pass = false;
         };
       };
     };
+  };
 
   testScript = ''
     with subtest("root: can run anything by default"):

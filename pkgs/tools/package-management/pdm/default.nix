@@ -19,9 +19,8 @@ let
     };
     self = python;
   };
-in
 
-with python.pkgs;
+in with python.pkgs;
 buildPythonApplication rec {
   pname = "pdm";
   version = "2.7.0";
@@ -33,9 +32,7 @@ buildPythonApplication rec {
     hash = "sha256-4dyu/neMFX/U1RuI0ZEBzdbONIHvdWyvpy1Gu5iMAcg=";
   };
 
-  nativeBuildInputs = [
-    pdm-backend
-  ];
+  nativeBuildInputs = [ pdm-backend ];
 
   propagatedBuildInputs = [
     blinker
@@ -54,14 +51,9 @@ buildPythonApplication rec {
     tomlkit
     unearth
     virtualenv
-  ]
-  ++ cachecontrol.optional-dependencies.filecache
-  ++ lib.optionals (pythonOlder "3.11") [
-    tomli
-  ]
-  ++ lib.optionals (pythonOlder "3.10") [
-    importlib-metadata
-  ];
+  ] ++ cachecontrol.optional-dependencies.filecache
+    ++ lib.optionals (pythonOlder "3.11") [ tomli ]
+    ++ lib.optionals (pythonOlder "3.10") [ importlib-metadata ];
 
   nativeCheckInputs = [
     pytestCheckHook
@@ -71,9 +63,7 @@ buildPythonApplication rec {
     pytest-httpserver
   ];
 
-  pytestFlagsArray = [
-    "-m 'not network'"
-  ];
+  pytestFlagsArray = [ "-m 'not network'" ];
 
   preCheck = ''
     export HOME=$TMPDIR

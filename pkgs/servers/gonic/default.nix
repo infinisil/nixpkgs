@@ -1,6 +1,5 @@
-{ lib, stdenv, buildGoModule, fetchFromGitHub
-, nixosTests
-, pkg-config, taglib, zlib
+{ lib, stdenv, buildGoModule, fetchFromGitHub, nixosTests, pkg-config, taglib
+, zlib
 
 # Disable on-the-fly transcoding,
 # removing the dependency on ffmpeg.
@@ -8,8 +7,7 @@
 # to the original file, but if transcoding is configured
 # that takes a while. So best to disable all transcoding
 # in the configuration if you disable transcodingSupport.
-, transcodingSupport ? true, ffmpeg
-, mpv }:
+, transcodingSupport ? true, ffmpeg, mpv }:
 
 buildGoModule rec {
   pname = "gonic";
@@ -41,9 +39,7 @@ buildGoModule rec {
         '"${lib.getBin mpv}/bin/mpv"'
   '';
 
-  passthru = {
-    tests.gonic = nixosTests.gonic;
-  };
+  passthru = { tests.gonic = nixosTests.gonic; };
 
   meta = {
     homepage = "https://github.com/sentriz/gonic";

@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, flit-core
-, fsspec
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, flit-core, fsspec }:
 
 buildPythonPackage rec {
   pname = "universal-pathlib";
@@ -17,20 +12,17 @@ buildPythonPackage rec {
     hash = "sha256-UT4S7sqRn0/YFzFL1KzByK44u8G7pwWHERzJEm7xmiw=";
   };
 
-  nativeBuildInputs = [
-    flit-core
-  ];
+  nativeBuildInputs = [ flit-core ];
 
-  propagatedBuildInputs = [
-    fsspec
-  ];
+  propagatedBuildInputs = [ fsspec ];
 
   pythonImportsCheck = [ "upath" ];
 
   meta = with lib; {
     description = "Pathlib api extended to use fsspec backends";
     homepage = "https://github.com/fsspec/universal_pathlib";
-    changelog = "https://github.com/fsspec/universal_pathlib/releases/tag/${src.rev}";
+    changelog =
+      "https://github.com/fsspec/universal_pathlib/releases/tag/${src.rev}";
     license = licenses.mit;
     maintainers = with maintainers; [ figsoda ];
   };

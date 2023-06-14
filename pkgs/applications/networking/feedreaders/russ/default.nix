@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, rustPlatform
-, xorg
-}:
+{ lib, stdenv, fetchFromGitHub, rustPlatform, xorg }:
 
 rustPlatform.buildRustPackage {
   pname = "russ";
@@ -22,7 +17,8 @@ rustPlatform.buildRustPackage {
   doCheck = false;
 
   meta = with lib; {
-    description = "A TUI RSS reader with vim-like controls and a local-first, offline-first focus";
+    description =
+      "A TUI RSS reader with vim-like controls and a local-first, offline-first focus";
     homepage = "https://github.com/ckampfe/russ";
     license = with licenses; [ agpl3Only ];
     maintainers = with maintainers; [ blusk ];

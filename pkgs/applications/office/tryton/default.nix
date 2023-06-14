@@ -1,21 +1,6 @@
-{ lib
-, python3Packages
-, fetchPypi
-, pkg-config
-, librsvg
-, gobject-introspection
-, atk
-, gtk3
-, gtkspell3
-, gnome
-, glib
-, goocanvas2
-, gdk-pixbuf
-, pango
-, fontconfig
-, freetype
-, wrapGAppsHook
-}:
+{ lib, python3Packages, fetchPypi, pkg-config, librsvg, gobject-introspection
+, atk, gtk3, gtkspell3, gnome, glib, goocanvas2, gdk-pixbuf, pango, fontconfig
+, freetype, wrapGAppsHook }:
 
 with lib;
 
@@ -30,11 +15,7 @@ python3Packages.buildPythonApplication rec {
     sha256 = "1rca19krvmycdhmi1vb4ixwq0cagmrkhbqry4f19b725nlp8cv0q";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-    gobject-introspection
-    wrapGAppsHook
-  ];
+  nativeBuildInputs = [ pkg-config gobject-introspection wrapGAppsHook ];
 
   propagatedBuildInputs = with python3Packages; [
     python-dateutil

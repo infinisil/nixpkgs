@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "peaqevcore";
@@ -24,14 +20,13 @@ buildPythonPackage rec {
   # https://github.com/elden1337/peaqev-core/issues/4
   doCheck = false;
 
-  pythonImportsCheck = [
-    "peaqevcore"
-  ];
+  pythonImportsCheck = [ "peaqevcore" ];
 
   meta = with lib; {
     description = "Library for interacting with Peaqev car charging";
     homepage = "https://github.com/elden1337/peaqev-core";
-    changelog = "https://github.com/elden1337/peaqev-core/releases/tag/${version}";
+    changelog =
+      "https://github.com/elden1337/peaqev-core/releases/tag/${version}";
     license = with licenses; [ mit ];
     maintainers = with maintainers; [ fab ];
   };

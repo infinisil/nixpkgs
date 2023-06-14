@@ -1,8 +1,4 @@
-{ lib
-, fetchFromGitLab
-, pkg-config
-, python3
-}:
+{ lib, fetchFromGitLab, pkg-config, python3 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "poezio";
@@ -17,9 +13,7 @@ python3.pkgs.buildPythonApplication rec {
     sha256 = "sha256-3pUegEfhQxEv/7Htw6b2BN1lXtDockyANmi1xW4wPhA=";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
   propagatedBuildInputs = with python3.pkgs; [
     aiodns
@@ -34,18 +28,15 @@ python3.pkgs.buildPythonApplication rec {
     typing-extensions
   ];
 
-  nativeCheckInputs = with python3.pkgs; [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = with python3.pkgs; [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "poezio"
-  ];
+  pythonImportsCheck = [ "poezio" ];
 
   meta = with lib; {
     description = "Free console XMPP client";
     homepage = "https://poez.io";
-    changelog = "https://lab.louiz.org/poezio/poezio/-/blob/v${version}/CHANGELOG";
+    changelog =
+      "https://lab.louiz.org/poezio/poezio/-/blob/v${version}/CHANGELOG";
     license = licenses.zlib;
     maintainers = with maintainers; [ lsix ];
   };

@@ -1,7 +1,5 @@
-{ system ? builtins.currentSystem,
-  config ? {},
-  pkgs ? import ../.. { inherit system config; }
-}:
+{ system ? builtins.currentSystem, config ? { }
+, pkgs ? import ../.. { inherit system config; } }:
 
 with import ../lib/testing-python.nix { inherit system pkgs; };
 with pkgs.lib;
@@ -14,8 +12,7 @@ let
     boot.loader.efi.canTouchEfiVariables = true;
     environment.systemPackages = [ pkgs.efibootmgr ];
   };
-in
-{
+in {
   basic = makeTest {
     name = "systemd-boot";
     meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer ];
@@ -46,7 +43,7 @@ in
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
-      specialisation.something.configuration = {};
+      specialisation.something.configuration = { };
     };
 
     testScript = ''
@@ -118,9 +115,8 @@ in
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
       boot.loader.systemd-boot.memtest86.enable = true;
-      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "memtest86-efi"
-      ];
+      nixpkgs.config.allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
     };
 
     testScript = ''
@@ -152,9 +148,8 @@ in
       imports = [ common ];
       boot.loader.systemd-boot.memtest86.enable = true;
       boot.loader.systemd-boot.memtest86.entryFilename = "apple.conf";
-      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "memtest86-efi"
-      ];
+      nixpkgs.config.allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
     };
 
     testScript = ''
@@ -226,36 +221,37 @@ in
       };
     };
 
-    testScript = { nodes, ... }: let
-      originalSystem = nodes.machine.system.build.toplevel;
-      baseSystem = nodes.common.system.build.toplevel;
-      finalSystem = nodes.with_netbootxyz.system.build.toplevel;
-    in ''
-      machine.succeed("test -e /boot/efi/fruits/tomato.efi")
-      machine.succeed("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
+    testScript = { nodes, ... }:
+      let
+        originalSystem = nodes.machine.system.build.toplevel;
+        baseSystem = nodes.common.system.build.toplevel;
+        finalSystem = nodes.with_netbootxyz.system.build.toplevel;
+      in ''
+        machine.succeed("test -e /boot/efi/fruits/tomato.efi")
+        machine.succeed("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
 
-      with subtest("remove files when no longer needed"):
-          machine.succeed("${baseSystem}/bin/switch-to-configuration boot")
-          machine.fail("test -e /boot/efi/fruits/tomato.efi")
-          machine.fail("test -d /boot/efi/fruits")
-          machine.succeed("test -d /boot/efi/nixos/.extra-files")
-          machine.fail("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
-          machine.fail("test -d /boot/efi/nixos/.extra-files/efi/fruits")
+        with subtest("remove files when no longer needed"):
+            machine.succeed("${baseSystem}/bin/switch-to-configuration boot")
+            machine.fail("test -e /boot/efi/fruits/tomato.efi")
+            machine.fail("test -d /boot/efi/fruits")
+            machine.succeed("test -d /boot/efi/nixos/.extra-files")
+            machine.fail("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
+            machine.fail("test -d /boot/efi/nixos/.extra-files/efi/fruits")
 
-      with subtest("files are added back when needed again"):
-          machine.succeed("${originalSystem}/bin/switch-to-configuration boot")
-          machine.succeed("test -e /boot/efi/fruits/tomato.efi")
-          machine.succeed("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
+        with subtest("files are added back when needed again"):
+            machine.succeed("${originalSystem}/bin/switch-to-configuration boot")
+            machine.succeed("test -e /boot/efi/fruits/tomato.efi")
+            machine.succeed("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
 
-      with subtest("simultaneously removing and adding files works"):
-          machine.succeed("${finalSystem}/bin/switch-to-configuration boot")
-          machine.fail("test -e /boot/efi/fruits/tomato.efi")
-          machine.fail("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
-          machine.succeed("test -e /boot/loader/entries/o_netbootxyz.conf")
-          machine.succeed("test -e /boot/efi/netbootxyz/netboot.xyz.efi")
-          machine.succeed("test -e /boot/efi/nixos/.extra-files/loader/entries/o_netbootxyz.conf")
-          machine.succeed("test -e /boot/efi/nixos/.extra-files/efi/netbootxyz/netboot.xyz.efi")
-    '';
+        with subtest("simultaneously removing and adding files works"):
+            machine.succeed("${finalSystem}/bin/switch-to-configuration boot")
+            machine.fail("test -e /boot/efi/fruits/tomato.efi")
+            machine.fail("test -e /boot/efi/nixos/.extra-files/efi/fruits/tomato.efi")
+            machine.succeed("test -e /boot/loader/entries/o_netbootxyz.conf")
+            machine.succeed("test -e /boot/efi/netbootxyz/netboot.xyz.efi")
+            machine.succeed("test -e /boot/efi/nixos/.extra-files/loader/entries/o_netbootxyz.conf")
+            machine.succeed("test -e /boot/efi/nixos/.extra-files/efi/netbootxyz/netboot.xyz.efi")
+      '';
   };
 
   # See: [Firmware file size bug] in systemd/default.nix
@@ -263,7 +259,7 @@ in
     name = "uefi-large-file-workaround";
 
     nodes.machine = { pkgs, ... }: {
-      imports = [common];
+      imports = [ common ];
       virtualisation.efi.OVMF = pkgs.OVMF.overrideAttrs (old: {
         # This patch deliberately breaks the FAT driver in EDK2 to
         # exhibit (part of) the firmware bug that we are testing
@@ -274,7 +270,8 @@ in
         # LoadImage call would fail, which is not the failure mode
         # we're testing for. It needs to be between the kernel size
         # and the initrd size.
-        patches = old.patches or [] ++ [ ./systemd-boot-ovmf-broken-fat-driver.patch ];
+        patches = old.patches or [ ]
+          ++ [ ./systemd-boot-ovmf-broken-fat-driver.patch ];
       });
     };
 

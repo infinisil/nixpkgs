@@ -3,8 +3,7 @@
 let
   pname = "cargo-pgrx";
   version = "0.9.5";
-in
-rustPlatform.buildRustPackage rec {
+in rustPlatform.buildRustPackage rec {
   inherit version pname;
 
   src = fetchCrate {
@@ -16,8 +15,7 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [ openssl ]
-    ++ lib.optionals stdenv.isDarwin [ Security ];
+  buildInputs = [ openssl ] ++ lib.optionals stdenv.isDarwin [ Security ];
 
   meta = with lib; {
     description = "Build Postgres Extensions with Rust!";

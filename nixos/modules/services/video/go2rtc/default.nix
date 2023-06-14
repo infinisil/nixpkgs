@@ -1,28 +1,16 @@
-{ lib
-, config
-, options
-, pkgs
-, ...
-}:
+{ lib, config, options, pkgs, ... }:
 
 let
   inherit (lib)
-    literalExpression
-    mdDoc
-    mkEnableOption
-    mkOption
-    mkPackageOptionMD
-    types
-    ;
+    literalExpression mdDoc mkEnableOption mkOption mkPackageOptionMD types;
 
   cfg = config.services.go2rtc;
   opt = options.services.go2rtc;
 
-  format = pkgs.formats.yaml {};
+  format = pkgs.formats.yaml { };
   configFile = format.generate "go2rtc.yaml" cfg.settings;
-in
 
-{
+in {
   meta.buildDocsInSandbox = false;
 
   options.services.go2rtc = with types; {
@@ -31,7 +19,7 @@ in
     package = mkPackageOptionMD pkgs "go2rtc" { };
 
     settings = mkOption {
-      default = {};
+      default = { };
       description = mdDoc ''
         go2rtc configuration as a Nix attribute set.
 
@@ -57,7 +45,8 @@ in
             bin = mkOption {
               type = path;
               default = "${lib.getBin pkgs.ffmpeg_6-headless}/bin/ffmpeg";
-              defaultText = literalExpression "\${lib.getBin pkgs.ffmpeg_6-headless}/bin/ffmpeg";
+              defaultText = literalExpression
+                "\${lib.getBin pkgs.ffmpeg_6-headless}/bin/ffmpeg";
               description = mdDoc ''
                 The ffmpeg package to use for transcoding.
               '';
@@ -65,12 +54,11 @@ in
           };
 
           # TODO: https://github.com/AlexxIT/go2rtc/blob/v1.5.0/README.md#module-rtsp
-          rtsp = {
-          };
+          rtsp = { };
 
           streams = mkOption {
             type = attrsOf (either str (listOf str));
-            default = {};
+            default = { };
             example = literalExpression ''
               {
                 cam1 = "onvif://admin:password@192.168.1.123:2020";
@@ -85,8 +73,7 @@ in
           };
 
           # TODO: https://github.com/AlexxIT/go2rtc/blob/v1.5.0/README.md#module-webrtc
-          webrtc = {
-          };
+          webrtc = { };
         };
       };
     };
@@ -94,12 +81,8 @@ in
 
   config = lib.mkIf cfg.enable {
     systemd.services.go2rtc = {
-      after = [
-        "network-online.target"
-      ];
-      wantedBy = [
-        "multi-user.target"
-      ];
+      after = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         DynamicUser = true;
         User = "go2rtc";

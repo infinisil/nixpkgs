@@ -1,43 +1,34 @@
-{ lib
-, stdenv
-, fetchurl
-, makeWrapper
-, autoPatchelfHook
-, jdk8_headless
-, jdk11_headless
-, bash
-, coreutils
-, which
-, bzip2
-, cyrus_sasl
-, protobuf
-, snappy
-, zlib
-, zstd
-, openssl
-, glibc
-, nixosTests
-, sparkSupport ? true
-, spark
-}:
+{ lib, stdenv, fetchurl, makeWrapper, autoPatchelfHook, jdk8_headless
+, jdk11_headless, bash, coreutils, which, bzip2, cyrus_sasl, protobuf, snappy
+, zlib, zstd, openssl, glibc, nixosTests, sparkSupport ? true, spark }:
 
 with lib;
 
-assert elem stdenv.system [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+assert elem stdenv.system [
+  "x86_64-linux"
+  "x86_64-darwin"
+  "aarch64-linux"
+  "aarch64-darwin"
+];
 
 let
-  common = { pname, platformAttrs, untarDir ? "${pname}-${version}", jdk, openssl ? null, nativeLibs ? [ ], libPatches ? "", tests }:
+  common = { pname, platformAttrs, untarDir ? "${pname}-${version}", jdk
+    , openssl ? null, nativeLibs ? [ ], libPatches ? "", tests }:
     stdenv.mkDerivation rec {
       inherit pname jdk libPatches untarDir openssl;
-      version = platformAttrs.${stdenv.system}.version or (throw "Unsupported system: ${stdenv.system}");
+      version = platformAttrs.${stdenv.system}.version or (throw
+        "Unsupported system: ${stdenv.system}");
       src = fetchurl {
-        url = "mirror://apache/hadoop/common/hadoop-${version}/hadoop-${version}" + optionalString stdenv.isAarch64 "-aarch64" + ".tar.gz";
+        url =
+          "mirror://apache/hadoop/common/hadoop-${version}/hadoop-${version}"
+          + optionalString stdenv.isAarch64 "-aarch64" + ".tar.gz";
         inherit (platformAttrs.${stdenv.system}) hash;
       };
       doCheck = true;
 
       nativeBuildInputs = [ makeWrapper ]
-        ++ optionals (stdenv.isLinux && (nativeLibs != [ ] || libPatches != "")) [ autoPatchelfHook ];
+        ++ optionals (stdenv.isLinux && (nativeLibs != [ ] || libPatches != ""))
+        [ autoPatchelfHook ];
       buildInputs = [ openssl ] ++ nativeLibs;
 
       installPhase = ''
@@ -53,7 +44,7 @@ let
             --set-default HADOOP_HOME $out/lib/${untarDir}\
             --run "test -d /etc/hadoop-conf && export HADOOP_CONF_DIR=\''${HADOOP_CONF_DIR-'/etc/hadoop-conf/'}"\
             --set-default HADOOP_CONF_DIR $out/lib/${untarDir}/etc/hadoop/\
-            --prefix PATH : "${makeBinPath [ bash coreutils which]}"\
+            --prefix PATH : "${makeBinPath [ bash coreutils which ]}"\
             --prefix JAVA_LIBRARY_PATH : "${makeLibraryPath buildInputs}"
         done
       '' + optionalString sparkSupport ''
@@ -65,7 +56,8 @@ let
 
       meta = recursiveUpdate {
         homepage = "https://hadoop.apache.org/";
-        description = "Framework for distributed processing of large data sets across clusters of computers";
+        description =
+          "Framework for distributed processing of large data sets across clusters of computers";
         license = licenses.asl20;
         sourceProvenance = with sourceTypes; [ binaryBytecode ];
 
@@ -82,25 +74,24 @@ let
         '';
         maintainers = with maintainers; [ illustris ];
         platforms = attrNames platformAttrs;
-      } (attrByPath [ stdenv.system "meta" ] {} platformAttrs);
+      } (attrByPath [ stdenv.system "meta" ] { } platformAttrs);
     };
-in
-{
+in {
   # Different version of hadoop support different java runtime versions
   # https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions
   hadoop_3_3 = common rec {
     pname = "hadoop";
     platformAttrs = rec {
-        x86_64-linux = {
-          version = "3.3.5";
-          hash = "sha256-RG4FypL6I6YGF6ixeUbe3kcoGvFQQEFhfLfV9i50JSo=";
-        };
-        x86_64-darwin = x86_64-linux;
-        aarch64-linux = {
-          version = "3.3.5";
-          hash = "sha256-qcKjbE881isauWBxIv+NY0UFbYit704/Re8Kdl6x1LA=";
-        };
-        aarch64-darwin = aarch64-linux;
+      x86_64-linux = {
+        version = "3.3.5";
+        hash = "sha256-RG4FypL6I6YGF6ixeUbe3kcoGvFQQEFhfLfV9i50JSo=";
+      };
+      x86_64-darwin = x86_64-linux;
+      aarch64-linux = {
+        version = "3.3.5";
+        hash = "sha256-qcKjbE881isauWBxIv+NY0UFbYit704/Re8Kdl6x1LA=";
+      };
+      aarch64-darwin = aarch64-linux;
     };
     untarDir = "${pname}-${platformAttrs.${stdenv.system}.version}";
     jdk = jdk11_headless;
@@ -108,7 +99,9 @@ in
     # TODO: Package and add Intel Storage Acceleration Library
     nativeLibs = [ stdenv.cc.cc.lib protobuf zlib snappy ];
     libPatches = ''
-      ln -s ${getLib cyrus_sasl}/lib/libsasl2.so $out/lib/${untarDir}/lib/native/libsasl2.so.2
+      ln -s ${
+        getLib cyrus_sasl
+      }/lib/libsasl2.so $out/lib/${untarDir}/lib/native/libsasl2.so.2
       ln -s ${getLib openssl}/lib/libcrypto.so $out/lib/${untarDir}/lib/native/
       ln -s ${getLib zlib}/lib/libz.so.1 $out/lib/${untarDir}/lib/native/
       ln -s ${getLib zstd}/lib/libzstd.so.1 $out/lib/${untarDir}/lib/native/

@@ -11,9 +11,7 @@ tcl.mkTclDerivation rec {
     sha256 = "sha256-RLuV4ARmGWCJTmhs7DbMWENQGj3d5ZXWb821WrgG0qA=";
   };
 
-  buildInputs = [
-    tclx
-  ];
+  buildInputs = [ tclx ];
 
   unpackPhase = ''
     mkdir -p $out/lib/tcl-fcgi

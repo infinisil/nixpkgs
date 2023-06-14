@@ -1,25 +1,6 @@
-{ lib
-, fetchPypi
-, pythonOlder
-, buildPythonPackage
-, qcodes
-, h5py
-, lazy-loader
-, matplotlib
-, numpy
-, pandas
-, versioningit
-, xarray
-, hickle
-, ipython
-, slack-sdk
-, hypothesis
-, pytest-xdist
-, pytest-mock
-, pyqtgraph
-, pyqt5
-, pytestCheckHook
-}:
+{ lib, fetchPypi, pythonOlder, buildPythonPackage, qcodes, h5py, lazy-loader
+, matplotlib, numpy, pandas, versioningit, xarray, hickle, ipython, slack-sdk
+, hypothesis, pytest-xdist, pytest-mock, pyqtgraph, pyqt5, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "qcodes-loop";
@@ -34,38 +15,18 @@ buildPythonPackage rec {
     sha256 = "sha256-pDR0Ws8cYQifftdE9dKcSzMxmouFo4tJmQvNanm6zyM=";
   };
 
-  nativeBuildInputs = [
-    versioningit
-  ];
+  nativeBuildInputs = [ versioningit ];
 
-  propagatedBuildInputs = [
-    qcodes
-    h5py
-    lazy-loader
-    matplotlib
-    numpy
-    pandas
-    xarray
-    hickle
-    ipython
-  ];
+  propagatedBuildInputs =
+    [ qcodes h5py lazy-loader matplotlib numpy pandas xarray hickle ipython ];
 
   passthru.optional-dependencies = {
-    qtplot = [
-      pyqtgraph
-    ];
-    slack = [
-      slack-sdk
-    ];
+    qtplot = [ pyqtgraph ];
+    slack = [ slack-sdk ];
   };
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    hypothesis
-    pytest-xdist
-    pytest-mock
-    pyqt5
-  ];
+  nativeCheckInputs =
+    [ pytestCheckHook hypothesis pytest-xdist pytest-mock pyqt5 ];
 
   pythonImportsCheck = [ "qcodes_loop" ];
 

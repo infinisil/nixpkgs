@@ -1,11 +1,5 @@
-{ lib
-, stdenv
-, fetchFromSourcehut
-, rustPlatform
-, installShellFiles
-, scdoc
-, Security
-}:
+{ lib, stdenv, fetchFromSourcehut, rustPlatform, installShellFiles, scdoc
+, Security }:
 
 rustPlatform.buildRustPackage rec {
   pname = "stargazer";

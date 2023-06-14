@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, zope_interface
-, webob
-}:
+{ lib, buildPythonPackage, fetchPypi, zope_interface, webob }:
 
 buildPythonPackage rec {
   pname = "repoze.who";
@@ -25,7 +20,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "WSGI Authentication Middleware / API";
     homepage = "http://www.repoze.org";
-    changelog = "https://github.com/repoze/repoze.who/blob/${version}/CHANGES.rst";
+    changelog =
+      "https://github.com/repoze/repoze.who/blob/${version}/CHANGES.rst";
     license = licenses.bsd0;
     maintainers = with maintainers; [ ];
   };

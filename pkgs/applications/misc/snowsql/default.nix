@@ -1,19 +1,14 @@
-{ lib
-, stdenv
-, fetchurl
-, rpmextract
-, patchelf
-, makeWrapper
-, openssl
-, libxcrypt-legacy
-}:
+{ lib, stdenv, fetchurl, rpmextract, patchelf, makeWrapper, openssl
+, libxcrypt-legacy }:
 
 stdenv.mkDerivation rec {
   pname = "snowsql";
   version = "1.2.26";
 
   src = fetchurl {
-    url = "https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/${lib.versions.majorMinor version}/linux_x86_64/snowflake-snowsql-${version}-1.x86_64.rpm";
+    url = "https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/${
+        lib.versions.majorMinor version
+      }/linux_x86_64/snowflake-snowsql-${version}-1.x86_64.rpm";
     sha256 = "sha256-V0TZebmhc463DczQuTDy0nZQX+io61z/m32/n/EKFJY=";
   };
 
@@ -34,7 +29,9 @@ stdenv.mkDerivation rec {
         lib64/snowflake/snowsql/snowsql
 
     makeWrapper $out/lib64/snowflake/snowsql/snowsql $out/bin/snowsql \
-      --set LD_LIBRARY_PATH "${libPath}":"${placeholder "out"}"/lib64/snowflake/snowsql \
+      --set LD_LIBRARY_PATH "${libPath}":"${
+        placeholder "out"
+      }"/lib64/snowflake/snowsql \
   '';
 
   meta = with lib; {

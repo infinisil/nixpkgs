@@ -1,24 +1,17 @@
-{ stdenv
-, lib
-, fetchurl
-, pkg-config
-, hidapi
-, jimtcl
-, libjaylink
-, libusb1
+{ stdenv, lib, fetchurl, pkg-config, hidapi, jimtcl, libjaylink, libusb1
 , libgpiod
 
 , enableFtdi ? true, libftdi1
 
 # Allow selection the hardware targets (SBCs, JTAG Programmers, JTAG Adapters)
-, extraHardwareSupport ? []
-}:
+, extraHardwareSupport ? [ ] }:
 
 stdenv.mkDerivation rec {
   pname = "openocd";
   version = "0.12.0";
   src = fetchurl {
-    url = "mirror://sourceforge/project/${pname}/${pname}/${version}/${pname}-${version}.tar.bz2";
+    url =
+      "mirror://sourceforge/project/${pname}/${pname}/${version}/${pname}-${version}.tar.bz2";
     sha256 = "sha256-ryVHiL6Yhh8r2RA/5uYKd07Jaow3R0Tu+Rl/YEMHWvo=";
   };
 
@@ -37,9 +30,7 @@ stdenv.mkDerivation rec {
     (lib.enableFeature enableFtdi "ftdi")
     (lib.enableFeature stdenv.isLinux "linuxgpiod")
     (lib.enableFeature stdenv.isLinux "sysfsgpio")
-  ] ++
-    map (hardware: "--enable-${hardware}") extraHardwareSupport
-  ;
+  ] ++ map (hardware: "--enable-${hardware}") extraHardwareSupport;
 
   enableParallelBuilding = true;
 
@@ -59,7 +50,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Free and Open On-Chip Debugging, In-System Programming and Boundary-Scan Testing";
+    description =
+      "Free and Open On-Chip Debugging, In-System Programming and Boundary-Scan Testing";
     longDescription = ''
       OpenOCD provides on-chip programming and debugging support with a layered
       architecture of JTAG interface and TAP support, debug target support

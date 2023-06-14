@@ -1,6 +1,5 @@
-{ stdenv, lib, buildPythonPackage, fetchPypi, pythonOlder
-, pytestCheckHook, nose, glibcLocales, fetchpatch
-, numpy, scipy, matplotlib, h5py }:
+{ stdenv, lib, buildPythonPackage, fetchPypi, pythonOlder, pytestCheckHook, nose
+, glibcLocales, fetchpatch, numpy, scipy, matplotlib, h5py }:
 
 buildPythonPackage rec {
   pname = "bayespy";

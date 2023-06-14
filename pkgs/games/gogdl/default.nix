@@ -1,12 +1,5 @@
-{ lib
-, writeScript
-, buildPythonApplication
-, fetchFromGitHub
-, pythonOlder
-, setuptools
-, requests
-, cacert
-}:
+{ lib, writeScript, buildPythonApplication, fetchFromGitHub, pythonOlder
+, setuptools, requests, cacert }:
 
 buildPythonApplication rec {
   pname = "gogdl";
@@ -22,10 +15,7 @@ buildPythonApplication rec {
 
   disabled = pythonOlder "3.8";
 
-  propagatedBuildInputs = [
-    setuptools
-    requests
-  ];
+  propagatedBuildInputs = [ setuptools requests ];
 
   pythonImportsCheck = [ "gogdl" ];
 

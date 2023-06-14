@@ -1,43 +1,31 @@
-{ lib
-, stdenv
-, fetchurl
-, dpkg
-, autoPatchelfHook
-, alsa-lib
-, at-spi2-core
-, libtool
-, libxkbcommon
-, nspr
-, mesa
-, libtiff
-, udev
-, gtk3
-, qtbase
-, xorg
-, cups
-, pango
-, useChineseVersion ? false
-}:
+{ lib, stdenv, fetchurl, dpkg, autoPatchelfHook, alsa-lib, at-spi2-core, libtool
+, libxkbcommon, nspr, mesa, libtiff, udev, gtk3, qtbase, xorg, cups, pango
+, useChineseVersion ? false }:
 
 stdenv.mkDerivation rec {
   pname = "wpsoffice";
   version = "11.1.0.11698";
 
-  src = if useChineseVersion then fetchurl {
-    url = "https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/${lib.last (lib.splitString "." version)}/wps-office_${version}_amd64.deb";
-    sha256 = "sha256-m7BOE2IF2m75mV/4X3HY9UJcidL0S0biqkidddp4LbQ=";
-  } else fetchurl {
-    url = "https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/${lib.last (lib.splitString "." version)}/wps-office_${version}.XA_amd64.deb";
-    sha256 = "sha256-spqxQK/xTE8yFPmGbSbrDY1vSxkan2kwAWpCWIExhgs=";
-  };
+  src = if useChineseVersion then
+    fetchurl {
+      url = "https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/${
+          lib.last (lib.splitString "." version)
+        }/wps-office_${version}_amd64.deb";
+      sha256 = "sha256-m7BOE2IF2m75mV/4X3HY9UJcidL0S0biqkidddp4LbQ=";
+    }
+  else
+    fetchurl {
+      url =
+        "https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/${
+          lib.last (lib.splitString "." version)
+        }/wps-office_${version}.XA_amd64.deb";
+      sha256 = "sha256-spqxQK/xTE8yFPmGbSbrDY1vSxkan2kwAWpCWIExhgs=";
+    };
 
   unpackCmd = "dpkg -x $src .";
   sourceRoot = ".";
 
-  nativeBuildInputs = [
-    dpkg
-    autoPatchelfHook
-  ];
+  nativeBuildInputs = [ dpkg autoPatchelfHook ];
 
   buildInputs = [
     alsa-lib
@@ -57,10 +45,7 @@ stdenv.mkDerivation rec {
 
   dontWrapQtApps = true;
 
-  runtimeDependencies = map lib.getLib [
-    cups
-    pango
-  ];
+  runtimeDependencies = map lib.getLib [ cups pango ];
 
   autoPatchelfIgnoreMissingDeps = [
     # distribution is missing libkappessframework.so

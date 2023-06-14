@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "fiano";
@@ -33,7 +30,8 @@ buildGoModule rec {
   meta = with lib; {
     description = "Go-based tools for modifying UEFI firmware";
     homepage = "https://github.com/linuxboot/fiano";
-    changelog = "https://github.com/linuxboot/fiano/blob/v${version}/RELEASES.md";
+    changelog =
+      "https://github.com/linuxboot/fiano/blob/v${version}/RELEASES.md";
     license = licenses.bsd3;
     maintainers = [ maintainers.jmbaur ];
   };

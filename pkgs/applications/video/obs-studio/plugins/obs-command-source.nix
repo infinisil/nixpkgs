@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, obs-studio
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, obs-studio }:
 
 stdenv.mkDerivation rec {
   pname = "obs-command-source";
@@ -27,7 +22,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "OBS Studio plugin that provides a dummy source to execute arbitrary commands when a scene is switched.";
+    description =
+      "OBS Studio plugin that provides a dummy source to execute arbitrary commands when a scene is switched.";
     homepage = "https://github.com/norihiro/command-source";
     maintainers = with maintainers; [ flexiondotorg ];
     license = licenses.gpl2Plus;

@@ -1,4 +1,5 @@
-{ lib, buildGoModule, fetchFromGitHub, stdenv, makeWrapper, gitMinimal, testers, gitsign }:
+{ lib, buildGoModule, fetchFromGitHub, stdenv, makeWrapper, gitMinimal, testers
+, gitsign }:
 
 buildGoModule rec {
   pname = "gitsign";
@@ -12,14 +13,16 @@ buildGoModule rec {
   };
   vendorHash = "sha256-+EKC/Up48EjwfVhLTpoxctWCSMDL0kLZaRPLBl0JGFQ=";
 
-  subPackages = [
-    "."
-    "cmd/gitsign-credential-cache"
-  ];
+  subPackages = [ "." "cmd/gitsign-credential-cache" ];
 
   nativeBuildInputs = [ makeWrapper ];
 
-  ldflags = [ "-s" "-w" "-buildid=" "-X github.com/sigstore/gitsign/pkg/version.gitVersion=${version}" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-buildid="
+    "-X github.com/sigstore/gitsign/pkg/version.gitVersion=${version}"
+  ];
 
   preCheck = ''
     # test all paths

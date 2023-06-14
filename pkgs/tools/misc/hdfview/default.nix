@@ -1,11 +1,13 @@
-{ lib, stdenv, fetchurl, ant, jdk, nettools, hdf4, hdf5, makeDesktopItem, copyDesktopItems }:
+{ lib, stdenv, fetchurl, ant, jdk, nettools, hdf4, hdf5, makeDesktopItem
+, copyDesktopItems }:
 
 stdenv.mkDerivation rec {
   pname = "hdfview";
   version = "3.3.0";
 
   src = fetchurl {
-    url = "https://support.hdfgroup.org/ftp/HDF5/releases/HDF-JAVA/${pname}-${version}/src/${pname}-${version}.tar.gz";
+    url =
+      "https://support.hdfgroup.org/ftp/HDF5/releases/HDF-JAVA/${pname}-${version}/src/${pname}-${version}.tar.gz";
     sha256 = "sha256-CRYWGGHCH6jdNUtEW0jv9aU9gKXAs4PnnrZLexCOJDA=";
   };
 
@@ -16,26 +18,19 @@ stdenv.mkDerivation rec {
     ./disable-mac-signing.patch
   ];
 
-  nativeBuildInputs = [
-    ant
-    jdk
-    copyDesktopItems
-  ];
+  nativeBuildInputs = [ ant jdk copyDesktopItems ];
 
   HDFLIBS = (hdf4.override { javaSupport = true; }).out;
   HDF5LIBS = (hdf5.override { javaSupport = true; }).out;
 
-  buildPhase =
-    let
-      arch = if stdenv.isx86_64 then "x86_64" else "aarch64";
-    in
-    ''
-      runHook preBuild
+  buildPhase = let arch = if stdenv.isx86_64 then "x86_64" else "aarch64";
+  in ''
+    runHook preBuild
 
-      ant createJPackage -Dmachine.arch=${arch}
+    ant createJPackage -Dmachine.arch=${arch}
 
-      runHook postBuild
-    '';
+    runHook postBuild
+  '';
 
   desktopItem = makeDesktopItem rec {
     name = "HDFView";

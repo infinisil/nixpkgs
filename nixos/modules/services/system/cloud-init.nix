@@ -4,22 +4,13 @@ with lib;
 
 let
   cfg = config.services.cloud-init;
-  path = with pkgs; [
-    cloud-init
-    iproute2
-    nettools
-    openssh
-    shadow
-    util-linux
-    busybox
-  ]
-  ++ optional cfg.btrfs.enable btrfs-progs
-  ++ optional cfg.ext4.enable e2fsprogs
-  ;
+  path = with pkgs;
+    [ cloud-init iproute2 nettools openssh shadow util-linux busybox ]
+    ++ optional cfg.btrfs.enable btrfs-progs
+    ++ optional cfg.ext4.enable 0.0 fsprogs;
   settingsFormat = pkgs.formats.yaml { };
   cfgfile = settingsFormat.generate "cloud.cfg" cfg.settings;
-in
-{
+in {
   options = {
     services.cloud-init = {
       enable = mkOption {
@@ -70,9 +61,7 @@ in
         description = mdDoc ''
           Structured cloud-init configuration.
         '';
-        type = types.submodule {
-          freeformType = settingsFormat.type;
-        };
+        type = types.submodule { freeformType = settingsFormat.type; };
         default = { };
       };
 
@@ -94,9 +83,7 @@ in
     services.cloud-init.settings = {
       system_info = mkDefault {
         distro = "nixos";
-        network = {
-          renderers = [ "networkd" ];
-        };
+        network = { renderers = [ "networkd" ]; };
       };
 
       users = mkDefault [ "root" ];
@@ -143,12 +130,11 @@ in
       ];
     };
 
-    environment.etc."cloud/cloud.cfg" =
-      if cfg.config == "" then
-        { source = cfgfile; }
-      else
-        { text = cfg.config; }
-    ;
+    environment.etc."cloud/cloud.cfg" = if cfg.config == "" then {
+      source = cfgfile;
+    } else {
+      text = cfg.config;
+    };
 
     systemd.network.enable = cfg.network.enable;
 
@@ -208,7 +194,12 @@ in
       description = "Execute cloud user/final scripts";
       wantedBy = [ "multi-user.target" ];
       wants = [ "network-online.target" ];
-      after = [ "network-online.target" "syslog.target" "cloud-config.service" "rc-local.service" ];
+      after = [
+        "network-online.target"
+        "syslog.target"
+        "cloud-config.service"
+        "rc-local.service"
+      ];
       requires = [ "cloud-config.target" ];
       path = path;
       serviceConfig = {

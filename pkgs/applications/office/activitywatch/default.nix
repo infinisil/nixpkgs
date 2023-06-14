@@ -1,18 +1,6 @@
-{ lib
-, fetchFromGitHub
-, rustPlatform
-, makeWrapper
-, pkg-config
-, perl
-, openssl
-, python3
-, wrapQtAppsHook
-, qtbase
-, qtsvg
-, xdg-utils
-, substituteAll
-, buildNpmPackage
-}:
+{ lib, fetchFromGitHub, rustPlatform, makeWrapper, pkg-config, perl, openssl
+, python3, wrapQtAppsHook, qtbase, qtsvg, xdg-utils, substituteAll
+, buildNpmPackage }:
 
 let
   version = "0.12.2";
@@ -23,8 +11,7 @@ let
     sha256 = "sha256-IvRXfxTOSgBVlxy4SVij+POr7KgvXTEjGN3lSozhHkY=";
     fetchSubmodules = true;
   };
-in
-rec {
+in rec {
   aw-watcher-afk = python3.pkgs.buildPythonApplication {
     pname = "aw-watcher-afk";
     inherit version;
@@ -33,20 +20,15 @@ rec {
 
     src = "${sources}/aw-watcher-afk";
 
-    nativeBuildInputs = [
-      python3.pkgs.poetry-core
-    ];
+    nativeBuildInputs = [ python3.pkgs.poetry-core ];
 
-    propagatedBuildInputs = with python3.pkgs; [
-      aw-client
-      xlib
-      pynput
-    ];
+    propagatedBuildInputs = with python3.pkgs; [ aw-client xlib pynput ];
 
     pythonImportsCheck = [ "aw_watcher_afk" ];
 
     meta = with lib; {
-      description = "Watches keyboard and mouse activity to determine if you are AFK or not (for use with ActivityWatch)";
+      description =
+        "Watches keyboard and mouse activity to determine if you are AFK or not (for use with ActivityWatch)";
       homepage = "https://github.com/ActivityWatch/aw-watcher-afk";
       maintainers = with maintainers; [ huantian ];
       license = licenses.mpl20;
@@ -61,19 +43,15 @@ rec {
 
     src = "${sources}/aw-watcher-window";
 
-    nativeBuildInputs = [
-      python3.pkgs.poetry-core
-    ];
+    nativeBuildInputs = [ python3.pkgs.poetry-core ];
 
-    propagatedBuildInputs = with python3.pkgs; [
-      aw-client
-      xlib
-    ];
+    propagatedBuildInputs = with python3.pkgs; [ aw-client xlib ];
 
     pythonImportsCheck = [ "aw_watcher_window" ];
 
     meta = with lib; {
-      description = "Cross-platform window watcher (for use with ActivityWatch)";
+      description =
+        "Cross-platform window watcher (for use with ActivityWatch)";
       homepage = "https://github.com/ActivityWatch/aw-watcher-window";
       maintainers = with maintainers; [ huantian ];
       license = licenses.mpl20;
@@ -88,10 +66,7 @@ rec {
 
     src = "${sources}/aw-qt";
 
-    nativeBuildInputs = [
-      python3.pkgs.poetry-core
-      wrapQtAppsHook
-    ];
+    nativeBuildInputs = [ python3.pkgs.poetry-core wrapQtAppsHook ];
 
     propagatedBuildInputs = with python3.pkgs; [
       aw-core
@@ -104,9 +79,7 @@ rec {
     # Prevent double wrapping
     dontWrapQtApps = true;
 
-    makeWrapperArgs = [
-      "--suffix PATH : ${lib.makeBinPath [ xdg-utils ]}"
-    ];
+    makeWrapperArgs = [ "--suffix PATH : ${lib.makeBinPath [ xdg-utils ]}" ];
 
     postPatch = ''
       sed -E 's#PyQt6 = "6.3.1"#PyQt6 = "^6.4.0"#g' -i pyproject.toml
@@ -134,7 +107,8 @@ rec {
     pythonImportsCheck = [ "aw_qt" ];
 
     meta = with lib; {
-      description = "Tray icon that manages ActivityWatch processes, built with Qt";
+      description =
+        "Tray icon that manages ActivityWatch processes, built with Qt";
       homepage = "https://github.com/ActivityWatch/aw-qt";
       maintainers = with maintainers; [ huantian ];
       license = licenses.mpl20;
@@ -150,7 +124,8 @@ rec {
     cargoLock = {
       lockFile = ./Cargo.lock;
       outputHashes = {
-        "rocket_cors-0.6.0-alpha1" = "sha256-GuMekgnsyuOg6lMiVvi4TwMba4sAFJ/zkgrdzSeBrv0=";
+        "rocket_cors-0.6.0-alpha1" =
+          "sha256-GuMekgnsyuOg6lMiVvi4TwMba4sAFJ/zkgrdzSeBrv0=";
       };
     };
 
@@ -165,15 +140,9 @@ rec {
       })
     ];
 
-    nativeBuildInputs = [
-      makeWrapper
-      pkg-config
-      perl
-    ];
+    nativeBuildInputs = [ makeWrapper pkg-config perl ];
 
-    buildInputs = [
-      openssl
-    ];
+    buildInputs = [ openssl ];
 
     postFixup = ''
       wrapProgram "$out/bin/aw-server" \
@@ -189,7 +158,8 @@ rec {
     '';
 
     meta = with lib; {
-      description = "High-performance implementation of the ActivityWatch server, written in Rust";
+      description =
+        "High-performance implementation of the ActivityWatch server, written in Rust";
       homepage = "https://github.com/ActivityWatch/aw-server-rust";
       maintainers = with maintainers; [ huantian ];
       mainProgram = "aw-server";

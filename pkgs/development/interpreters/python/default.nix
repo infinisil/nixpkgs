@@ -1,14 +1,5 @@
-{ __splicedPackages
-, callPackage
-, config
-, darwin
-, db
-, lib
-, libffiBoot
-, makeScopeWithSplicing
-, pythonPackagesExtensions
-, stdenv
-}@args:
+{ __splicedPackages, callPackage, config, darwin, db, lib, libffiBoot
+, makeScopeWithSplicing, pythonPackagesExtensions, stdenv }@args:
 
 (let
 
@@ -127,7 +118,7 @@ in {
     enableOptimizations = false;
     enableLTO = false;
     mimetypesSupport = false;
-  } // sources.python310)).overrideAttrs(old: {
+  } // sources.python310)).overrideAttrs (old: {
     # TODO(@Artturin): Add this to the main cpython expr
     strictDeps = true;
     pname = "python3-minimal";
@@ -173,7 +164,8 @@ in {
     hash = "sha256-TWdpv8pzc06GZv1wUDt86wam4lkRDmFzMbs4mcpOYFg=";
   };
 
-  pypy37 = throw "pypy37 has been removed from nixpkgs since it is no longer supported upstream"; # Added 2023-01-04
+  pypy37 = throw
+    "pypy37 has been removed from nixpkgs since it is no longer supported upstream"; # Added 2023-01-04
 
   pypy27_prebuilt = callPackage ./pypy/prebuilt_2_7.nix {
     # Not included at top-level

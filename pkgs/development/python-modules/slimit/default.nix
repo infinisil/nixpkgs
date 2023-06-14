@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, ply
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, ply, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "slimit";
@@ -17,17 +12,11 @@ buildPythonPackage rec {
     hash = "sha256-J+8RGENM/+eaTNvoC54XXPP+aWmazlssjnZAY88J/F0=";
   };
 
-  propagatedBuildInputs = [
-    ply
-  ];
+  propagatedBuildInputs = [ ply ];
 
-  pythonImportsCheck = [
-    "slimit"
-  ];
+  pythonImportsCheck = [ "slimit" ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   meta = with lib; {
     description = "SlimIt -  a JavaScript minifier/parser in Python";

@@ -7,7 +7,8 @@ rustPlatform.buildRustPackage rec {
   # This release tarball includes source code for the tree-sitter grammars,
   # which is not ordinarily part of the repository.
   src = fetchzip {
-    url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
+    url =
+      "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
     hash = "sha256-3ZEToXwW569P7IFLqz6Un8rClnWrW5RiYKmRVFt7My8=";
     stripRoot = false;
   };

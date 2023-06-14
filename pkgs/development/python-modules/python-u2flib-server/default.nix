@@ -1,18 +1,13 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, fetchpatch
+{ lib, buildPythonPackage, fetchFromGitHub, fetchpatch
 
 # propagates
-, cryptography
-, six
+, cryptography, six
 
 # optional
 , webob
 
 # tests
-, pytestCheckHook
-}:
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "python-u2flib-server";
@@ -26,34 +21,22 @@ buildPythonPackage rec {
     hash = "sha256-ginP9u+aHcdaWpwcFYJWu0Ghf7+nDZq9i3TVAacIPhg=";
   };
 
-  patches = [
-    ./cryptography-37-compat.patch
-  ];
+  patches = [ ./cryptography-37-compat.patch ];
 
-  propagatedBuildInputs = [
-    cryptography
-    six
-  ];
+  propagatedBuildInputs = [ cryptography six ];
 
-  passthru.optional-dependencies = {
-    u2f_server = [
-      webob
-    ];
-  };
+  passthru.optional-dependencies = { u2f_server = [ webob ]; };
 
-  pythonImportsCheck = [
-    "u2flib_server"
-    "u2flib_server.u2f"
-  ];
+  pythonImportsCheck = [ "u2flib_server" "u2flib_server.u2f" ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ] ++ passthru.optional-dependencies.u2f_server;
+  nativeCheckInputs = [ pytestCheckHook ]
+    ++ passthru.optional-dependencies.u2f_server;
 
   meta = with lib; {
     description = "Python based U2F server library";
     homepage = "https://github.com/Yubico/python-u2flib-server";
-    changelog = "https://github.com/Yubico/python-u2flib-server/blob/${src.rev}/NEWS";
+    changelog =
+      "https://github.com/Yubico/python-u2flib-server/blob/${src.rev}/NEWS";
     license = licenses.bsd2;
     maintainers = with maintainers; [ hexa ];
   };

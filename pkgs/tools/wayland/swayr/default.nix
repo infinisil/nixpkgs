@@ -13,9 +13,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-QgzKmbYEmUr3qwSp58/dYwwz2tJeoJlMZfrp1vB0zjo=";
 
-  patches = [
-    ./icon-paths.patch
-  ];
+  patches = [ ./icon-paths.patch ];
 
   # don't build swayrbar
   buildAndTestSubdir = pname;

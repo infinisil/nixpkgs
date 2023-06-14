@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pytestCheckHook
-, scipy
-, pythonOlder
+{ lib, buildPythonPackage, fetchFromGitHub, pytestCheckHook, scipy, pythonOlder
 }:
 
 buildPythonPackage {
@@ -25,13 +20,9 @@ buildPythonPackage {
       --replace '"pytest-runner",' ""
   '';
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  propagatedBuildInputs = [
-    scipy
-  ];
+  propagatedBuildInputs = [ scipy ];
 
   meta = with lib; {
     description = "Data-structure for the dynamic closest-pair problem";

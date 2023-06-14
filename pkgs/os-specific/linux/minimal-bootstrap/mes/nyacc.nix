@@ -1,8 +1,4 @@
-{ lib
-, fetchurl
-, kaem
-, nyacc
-}:
+{ lib, fetchurl, kaem, nyacc }:
 let
   pname = "nyacc";
   # NYACC is a tightly coupled dependency of mes. This version is known to work
@@ -14,8 +10,7 @@ let
     url = "mirror://savannah/nyacc/nyacc-${version}.tar.gz";
     sha256 = "065ksalfllbdrzl12dz9d9dcxrv97wqxblslngsc6kajvnvlyvpk";
   };
-in
-kaem.runCommand "${pname}-${version}" {
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
   passthru.guilePath = "${nyacc}/share/${pname}-${version}/module";

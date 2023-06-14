@@ -1,7 +1,4 @@
-{ lib, rustPlatform, fetchFromGitHub
-, pkg-config
-, dbus, fuse, sqlite
-}:
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, dbus, fuse, sqlite }:
 
 rustPlatform.buildRustPackage rec {
   pname = "supertag";

@@ -5,19 +5,19 @@ stdenv.mkDerivation (finalAttrs: {
   version = "1.6.0";
 
   srcs = [
-    ( fetchFromGitHub {
-        name   = "datasketches-postgresql";
-        owner  = "apache";
-        repo   = "datasketches-postgresql";
-        rev    = "refs/tags/${finalAttrs.version}";
-        hash   = "sha256-sz94fIe7nyWhjiw8FAm6ZzVpB0sAK5YxUrtbaZt/guA=";
+    (fetchFromGitHub {
+      name = "datasketches-postgresql";
+      owner = "apache";
+      repo = "datasketches-postgresql";
+      rev = "refs/tags/${finalAttrs.version}";
+      hash = "sha256-sz94fIe7nyWhjiw8FAm6ZzVpB0sAK5YxUrtbaZt/guA=";
     })
-    ( fetchFromGitHub {
-        name   = "datasketches-cpp";
-        owner  = "apache";
-        repo   = "datasketches-cpp";
-        rev    = "refs/tags/4.1.0";
-        hash   = "sha256-vPoFzRxOXlEAiiHH9M5S6255ahzaKsGNYS0cdHwrRYw=";
+    (fetchFromGitHub {
+      name = "datasketches-cpp";
+      owner = "apache";
+      repo = "datasketches-cpp";
+      rev = "refs/tags/4.1.0";
+      hash = "sha256-vPoFzRxOXlEAiiHH9M5S6255ahzaKsGNYS0cdHwrRYw=";
     })
   ];
   sourceRoot = "datasketches-postgresql";
@@ -57,11 +57,12 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.tests.apache_datasketches = nixosTests.apache_datasketches;
 
   meta = {
-    description = "PostgreSQL extension providing approximate algorithms for distinct item counts, quantile estimation and frequent items detection";
+    description =
+      "PostgreSQL extension providing approximate algorithms for distinct item counts, quantile estimation and frequent items detection";
     longDescription = ''
-       apache_datasketches is an extension to support approximate algorithms on PostgreSQL. The implementation
-       is based on the Apache Datasketches CPP library, and provides support for HyperLogLog,
-       Compressed Probabilistic Counting, KLL, Frequent strings, and Theta sketches.
+      apache_datasketches is an extension to support approximate algorithms on PostgreSQL. The implementation
+      is based on the Apache Datasketches CPP library, and provides support for HyperLogLog,
+      Compressed Probabilistic Counting, KLL, Frequent strings, and Theta sketches.
     '';
     homepage = "https://datasketches.apache.org/";
     platforms = postgresql.meta.platforms;

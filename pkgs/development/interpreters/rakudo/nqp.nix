@@ -25,15 +25,13 @@ stdenv.mkDerivation rec {
     ln -fs ${moarvm}/$share_dir/{Nodes,Ops}.nqp $out/$share_dir
   '';
 
-  configureFlags = [
-    "--backends=moar"
-    "--with-moar=${moarvm}/bin/moar"
-  ];
+  configureFlags = [ "--backends=moar" "--with-moar=${moarvm}/bin/moar" ];
 
   doCheck = true;
 
   meta = with lib; {
-    description = "Not Quite Perl -- a lightweight Raku-like environment for virtual machines";
+    description =
+      "Not Quite Perl -- a lightweight Raku-like environment for virtual machines";
     homepage = "https://github.com/Raku/nqp";
     license = licenses.artistic2;
     platforms = platforms.unix;

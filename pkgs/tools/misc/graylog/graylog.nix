@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchurl, makeWrapper, openjdk11_headless, openjdk17_headless, systemd, nixosTests}:
+{ lib, stdenv, fetchurl, makeWrapper, openjdk11_headless, openjdk17_headless
+, systemd, nixosTests }:
 
 { version, sha256, maintainers, license }:
 stdenv.mkDerivation rec {
@@ -6,7 +7,8 @@ stdenv.mkDerivation rec {
   inherit version;
 
   src = fetchurl {
-    url = "https://packages.graylog2.org/releases/graylog/graylog-${version}.tgz";
+    url =
+      "https://packages.graylog2.org/releases/graylog/graylog-${version}.tgz";
     inherit sha256;
   };
 
@@ -14,7 +16,12 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ makeWrapper ];
   makeWrapperArgs = [
-    "--set-default" "JAVA_HOME" "${if (lib.versionAtLeast version "5.0") then openjdk17_headless else openjdk11_headless}"
+    "--set-default"
+    "JAVA_HOME"
+    "${if (lib.versionAtLeast version "5.0") then
+      openjdk17_headless
+    else
+      openjdk11_headless}"
     "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ systemd ]}"
   ];
 
@@ -31,11 +38,11 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Open source log management solution";
-    homepage    = "https://www.graylog.org/";
+    homepage = "https://www.graylog.org/";
     sourceProvenance = with sourceTypes; [ binaryBytecode ];
     inherit license;
     inherit maintainers;
     mainProgram = "graylogctl";
-    platforms   = platforms.unix;
+    platforms = platforms.unix;
   };
 }

@@ -1,22 +1,6 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, fetchpatch
-, pkg-config
-, cmake
-, expat
-, freetype
-, libxcb
-, python3
-, libiconv
-, AppKit
-, CoreText
-, Security
-, fira-code
-, fontconfig
-, harfbuzz
-}:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, fetchpatch, pkg-config, cmake
+, expat, freetype, libxcb, python3, libiconv, AppKit, CoreText, Security
+, fira-code, fontconfig, harfbuzz }:
 
 rustPlatform.buildRustPackage rec {
   pname = "silicon";
@@ -30,9 +14,10 @@ rustPlatform.buildRustPackage rec {
   };
 
   patches = [
-   # fix build on aarch64-linux, see https://github.com/Aloxaf/silicon/pull/210
+    # fix build on aarch64-linux, see https://github.com/Aloxaf/silicon/pull/210
     (fetchpatch {
-      url = "https://github.com/Aloxaf/silicon/commit/f666c95d3dab85a81d60067e2f25d29ee8ab59e7.patch";
+      url =
+        "https://github.com/Aloxaf/silicon/commit/f666c95d3dab85a81d60067e2f25d29ee8ab59e7.patch";
       hash = "sha256-L6tF9ndC38yVn5ZNof1TMxSImmaqZ6bJ/NYhb0Ebji4=";
     })
   ];
@@ -40,7 +25,8 @@ rustPlatform.buildRustPackage rec {
   cargoLock = {
     lockFile = ./Cargo.lock;
     outputHashes = {
-      "pathfinder_simd-0.5.1" = "sha256-jQCa8TpGHLWvDT9kXWmlw51QtpKImPlWi082Va721cE=";
+      "pathfinder_simd-0.5.1" =
+        "sha256-jQCa8TpGHLWvDT9kXWmlw51QtpKImPlWi082Va721cE=";
     };
   };
 
@@ -58,7 +44,10 @@ rustPlatform.buildRustPackage rec {
   meta = with lib; {
     description = "Create beautiful image of your source code";
     homepage = "https://github.com/Aloxaf/silicon";
-    license = with licenses; [ mit /* or */ asl20 ];
+    license = with licenses; [
+      mit # or
+      asl20
+    ];
     maintainers = with maintainers; [ evanjs _0x4A6F ];
   };
 }

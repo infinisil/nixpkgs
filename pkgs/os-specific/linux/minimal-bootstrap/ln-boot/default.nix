@@ -1,14 +1,10 @@
-{ lib
-, kaem
-, mes
-}:
+{ lib, kaem, mes }:
 let
   pname = "ln-boot";
   version = "unstable-2023-05-22";
 
   src = ./ln.c;
-in
-kaem.runCommand "${pname}-${version}" {
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
   meta = with lib; {

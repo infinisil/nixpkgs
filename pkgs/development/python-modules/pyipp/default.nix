@@ -1,17 +1,6 @@
-{ lib
-, aiohttp
-, aresponses
-, awesomeversion
-, backoff
-, buildPythonPackage
-, deepmerge
-, fetchFromGitHub
-, poetry-core
-, pytest-asyncio
-, pytestCheckHook
-, pythonOlder
-, yarl
-}:
+{ lib, aiohttp, aresponses, awesomeversion, backoff, buildPythonPackage
+, deepmerge, fetchFromGitHub, poetry-core, pytest-asyncio, pytestCheckHook
+, pythonOlder, yarl }:
 
 buildPythonPackage rec {
   pname = "pyipp";
@@ -21,10 +10,10 @@ buildPythonPackage rec {
   disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
-   owner = "ctalkington";
-   repo = "python-ipp";
-   rev = version;
-   hash = "sha256-l8zDgqv8+9r15dt1YeuAYq2GCl9JsrtNRjPlQ9A7H9c=";
+    owner = "ctalkington";
+    repo = "python-ipp";
+    rev = version;
+    hash = "sha256-l8zDgqv8+9r15dt1YeuAYq2GCl9JsrtNRjPlQ9A7H9c=";
   };
 
   postPatch = ''
@@ -33,33 +22,21 @@ buildPythonPackage rec {
       --replace "--cov" ""
   '';
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  propagatedBuildInputs = [
-    aiohttp
-    awesomeversion
-    backoff
-    deepmerge
-    yarl
-  ];
+  propagatedBuildInputs = [ aiohttp awesomeversion backoff deepmerge yarl ];
 
-  nativeCheckInputs = [
-    aresponses
-    pytest-asyncio
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ aresponses pytest-asyncio pytestCheckHook ];
 
   __darwinAllowLocalNetworking = true;
 
-  pythonImportsCheck = [
-    "pyipp"
-  ];
+  pythonImportsCheck = [ "pyipp" ];
 
   meta = with lib; {
-    changelog = "https://github.com/ctalkington/python-ipp/releases/tag/${version}";
-    description = "Asynchronous Python client for Internet Printing Protocol (IPP)";
+    changelog =
+      "https://github.com/ctalkington/python-ipp/releases/tag/${version}";
+    description =
+      "Asynchronous Python client for Internet Printing Protocol (IPP)";
     homepage = "https://github.com/ctalkington/python-ipp";
     license = licenses.mit;
     maintainers = with maintainers; [ hexa ];

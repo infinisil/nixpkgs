@@ -1,23 +1,6 @@
-{ lib
-, stdenv
-, coreutils
-, fetchFromGitHub
-, makeWrapper
-, pkg-config
-, cmake
-, llvm
-, emscripten
-, openssl
-, libsndfile
-, libmicrohttpd
-, gnutls
-, libtasn1
-, p11-kit
-, vim
-, which
-, ncurses
-, fetchpatch
-}:
+{ lib, stdenv, coreutils, fetchFromGitHub, makeWrapper, pkg-config, cmake, llvm
+, emscripten, openssl, libsndfile, libmicrohttpd, gnutls, libtasn1, p11-kit, vim
+, which, ncurses, fetchpatch }:
 
 with lib.strings;
 
@@ -41,93 +24,93 @@ let
     maintainers = with maintainers; [ magnetophon pmahoney ];
   };
 
-  faust =
-    let ncurses_static = ncurses.override { enableStatic = true; };
-    in stdenv.mkDerivation {
+  faust = let ncurses_static = ncurses.override { enableStatic = true; };
+  in stdenv.mkDerivation {
 
-      pname = "faust";
-      inherit version;
+    pname = "faust";
+    inherit version;
 
-      inherit src;
+    inherit src;
 
-      nativeBuildInputs = [ makeWrapper pkg-config cmake vim which ];
-      buildInputs = [
-        llvm
-        emscripten
-        openssl
-        libsndfile
-        libmicrohttpd
-        gnutls
-        libtasn1
-        p11-kit
-        ncurses_static
-      ];
+    nativeBuildInputs = [ makeWrapper pkg-config cmake vim which ];
+    buildInputs = [
+      llvm
+      emscripten
+      openssl
+      libsndfile
+      libmicrohttpd
+      gnutls
+      libtasn1
+      p11-kit
+      ncurses_static
+    ];
 
-      patches = [
-        # make preset management thread safe
-        # needed for magnetophonDSP.VoiceOfFaust
-        # see: https://github.com/grame-cncm/faust/issues/899
-        (fetchpatch {
-          url = "https://github.com/grame-cncm/faust/commit/a1c3a515abbcafea0a6e4e2ec7ecb0f092de5349.patch";
-          hash = "sha256-1Ndm+CgxvGEbS6TKGggeu9hW7N3pC+d1kluT2vhGzL8=";
-        })
-      ];
+    patches = [
+      # make preset management thread safe
+      # needed for magnetophonDSP.VoiceOfFaust
+      # see: https://github.com/grame-cncm/faust/issues/899
+      (fetchpatch {
+        url =
+          "https://github.com/grame-cncm/faust/commit/a1c3a515abbcafea0a6e4e2ec7ecb0f092de5349.patch";
+        hash = "sha256-1Ndm+CgxvGEbS6TKGggeu9hW7N3pC+d1kluT2vhGzL8=";
+      })
+    ];
 
-      passthru = { inherit wrap wrapWithBuildEnv faust2ApplBase; };
+    passthru = { inherit wrap wrapWithBuildEnv faust2ApplBase; };
 
-      preConfigure = ''
-        cd build
-        sed -i 's@LIBNCURSES_PATH ?= .*@LIBNCURSES_PATH ?= ${ncurses_static}/lib/libncurses.a@'  Make.llvm.static
-        substituteInPlace Make.llvm.static \
-          --replace 'mkdir -p $@ && cd $@ && ar -x ../../$<' 'mkdir -p $@ && cd $@ && ar -x ../source/build/lib/libfaust.a && cd ../source/build/'
-        substituteInPlace Make.llvm.static \
-          --replace 'rm -rf $(TMP)' ' '
+    preConfigure = ''
+      cd build
+      sed -i 's@LIBNCURSES_PATH ?= .*@LIBNCURSES_PATH ?= ${ncurses_static}/lib/libncurses.a@'  Make.llvm.static
+      substituteInPlace Make.llvm.static \
+        --replace 'mkdir -p $@ && cd $@ && ar -x ../../$<' 'mkdir -p $@ && cd $@ && ar -x ../source/build/lib/libfaust.a && cd ../source/build/'
+      substituteInPlace Make.llvm.static \
+        --replace 'rm -rf $(TMP)' ' '
+    '';
+
+    cmakeFlags = [ "-C../backends/all.cmake" "-C../targets/all.cmake" ];
+
+    postInstall = ''
+      # syntax error when eval'd directly
+      pattern="faust2!(*@(atomsnippets|graph|graphviewer|md|plot|sig|sigviewer|svg))"
+      (shopt -s extglob; rm "$out"/bin/$pattern)
+    '';
+
+    postFixup = ''
+      # The 'faustoptflags' is 'source'd into other faust scripts and
+      # not used as an executable, so patch 'uname' usage directly
+      # rather than use makeWrapper.
+      substituteInPlace "$out"/bin/faustoptflags \
+        --replace uname "${coreutils}/bin/uname"
+
+      # wrapper for scripts that don't need faust.wrap*
+      for script in "$out"/bin/faust2*; do
+        wrapProgram "$script" \
+          --prefix PATH : "$out"/bin
+      done
+    '';
+
+    meta = meta // {
+      description =
+        "A functional programming language for realtime audio signal processing";
+      longDescription = ''
+        FAUST (Functional Audio Stream) is a functional programming
+        language specifically designed for real-time signal processing
+        and synthesis. FAUST targets high-performance signal processing
+        applications and audio plug-ins for a variety of platforms and
+        standards.
+        The Faust compiler translates DSP specifications into very
+        efficient C++ code. Thanks to the notion of architecture,
+        FAUST programs can be easily deployed on a large variety of
+        audio platforms and plugin formats (jack, alsa, ladspa, maxmsp,
+        puredata, csound, supercollider, pure, vst, coreaudio) without
+        any change to the FAUST code.
+
+        This package has just the compiler, libraries, and headers.
+        Install faust2* for specific faust2appl scripts.
       '';
-
-      cmakeFlags = [ "-C../backends/all.cmake" "-C../targets/all.cmake" ];
-
-      postInstall = ''
-        # syntax error when eval'd directly
-        pattern="faust2!(*@(atomsnippets|graph|graphviewer|md|plot|sig|sigviewer|svg))"
-        (shopt -s extglob; rm "$out"/bin/$pattern)
-      '';
-
-      postFixup = ''
-        # The 'faustoptflags' is 'source'd into other faust scripts and
-        # not used as an executable, so patch 'uname' usage directly
-        # rather than use makeWrapper.
-        substituteInPlace "$out"/bin/faustoptflags \
-          --replace uname "${coreutils}/bin/uname"
-
-        # wrapper for scripts that don't need faust.wrap*
-        for script in "$out"/bin/faust2*; do
-          wrapProgram "$script" \
-            --prefix PATH : "$out"/bin
-        done
-      '';
-
-      meta = meta // {
-        description =
-          "A functional programming language for realtime audio signal processing";
-        longDescription = ''
-          FAUST (Functional Audio Stream) is a functional programming
-          language specifically designed for real-time signal processing
-          and synthesis. FAUST targets high-performance signal processing
-          applications and audio plug-ins for a variety of platforms and
-          standards.
-          The Faust compiler translates DSP specifications into very
-          efficient C++ code. Thanks to the notion of architecture,
-          FAUST programs can be easily deployed on a large variety of
-          audio platforms and plugin formats (jack, alsa, ladspa, maxmsp,
-          puredata, csound, supercollider, pure, vst, coreaudio) without
-          any change to the FAUST code.
-
-          This package has just the compiler, libraries, and headers.
-          Install faust2* for specific faust2appl scripts.
-        '';
-      };
-
     };
+
+  };
 
   # Default values for faust2appl.
   faust2ApplBase =
@@ -229,18 +212,16 @@ let
       runtimePath =
         concatStringsSep ":" (map (p: "${p}/bin") ([ faust ] ++ runtimeInputs));
 
-    in
-      stdenv.mkDerivation ((faust2ApplBase args) // {
+    in stdenv.mkDerivation ((faust2ApplBase args) // {
 
-        nativeBuildInputs = [ makeWrapper ];
+      nativeBuildInputs = [ makeWrapper ];
 
-        postFixup = ''
+      postFixup = ''
         for script in "$out"/bin/*; do
           wrapProgram "$script" --prefix PATH : "${runtimePath}"
         done
       '';
 
-      });
+    });
 
-in
-faust
+in faust

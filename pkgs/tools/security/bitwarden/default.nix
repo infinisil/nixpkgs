@@ -1,23 +1,6 @@
-{ lib
-, applyPatches
-, buildNpmPackage
-, dbus
-, electron_24
-, fetchFromGitHub
-, glib
-, gnome
-, gtk3
-, jq
-, libsecret
-, makeDesktopItem
-, makeWrapper
-, moreutils
-, nodejs_18
-, pkg-config
-, python3
-, rustPlatform
-, wrapGAppsHook
-}:
+{ lib, applyPatches, buildNpmPackage, dbus, electron_24, fetchFromGitHub, glib
+, gnome, gtk3, jq, libsecret, makeDesktopItem, makeWrapper, moreutils, nodejs_18
+, pkg-config, python3, rustPlatform, wrapGAppsHook }:
 
 let
   description = "A secure and free password manager for all of your devices";
@@ -44,25 +27,14 @@ let
     sourceRoot = "source-patched/apps/desktop/desktop_native";
     cargoSha256 = "sha256-SeK8Nbgenof9vXI2v7tJ5oHiX60kBoR+UNOSJTRHdzk=";
 
-    nativeBuildInputs = [
-      pkg-config
-      wrapGAppsHook
-    ];
+    nativeBuildInputs = [ pkg-config wrapGAppsHook ];
 
-    buildInputs = [
-      glib
-      gtk3
-      libsecret
-    ];
+    buildInputs = [ glib gtk3 libsecret ];
 
-    nativeCheckInputs = [
-      dbus
-      (gnome.gnome-keyring.override { useWrappedDaemon = false; })
-    ];
+    nativeCheckInputs =
+      [ dbus (gnome.gnome-keyring.override { useWrappedDaemon = false; }) ];
 
-    checkFlags = [
-      "--skip=password::password::tests::test"
-    ];
+    checkFlags = [ "--skip=password::password::tests::test" ];
 
     checkPhase = ''
       runHook preCheck
@@ -85,29 +57,22 @@ let
     categories = [ "Utility" ];
   };
 
-in
-
-buildNpmPackage' {
+in buildNpmPackage' {
   pname = "bitwarden";
   inherit src version;
 
   makeCacheWritable = true;
-  npmBuildFlags = [
-    "--workspace apps/desktop"
-  ];
+  npmBuildFlags = [ "--workspace apps/desktop" ];
   npmDepsHash = "sha256-G8DEYPjEP3L4s0pr5n2ZTj8kkT0E7Po1BKhZ2hUdJuY=";
 
   ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
 
-  nativeBuildInputs = [
-    jq
-    makeWrapper
-    moreutils
-    python3
-  ];
+  nativeBuildInputs = [ jq makeWrapper moreutils python3 ];
 
   preBuild = ''
-    if [[ $(jq --raw-output '.devDependencies.electron' < package.json | grep -E --only-matching '^[0-9]+') != ${lib.escapeShellArg (lib.versions.major electron.version)} ]]; then
+    if [[ $(jq --raw-output '.devDependencies.electron' < package.json | grep -E --only-matching '^[0-9]+') != ${
+      lib.escapeShellArg (lib.versions.major electron.version)
+    } ]]; then
       echo 'ERROR: electron version mismatch'
       exit 1
     fi

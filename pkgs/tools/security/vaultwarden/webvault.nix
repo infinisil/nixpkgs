@@ -1,10 +1,4 @@
-{ lib
-, buildNpmPackage
-, fetchFromGitHub
-, git
-, nixosTests
-, python3
-}:
+{ lib, buildNpmPackage, fetchFromGitHub, git, nixosTests, python3 }:
 
 let
   version = "2023.3.0b";
@@ -34,9 +28,7 @@ in buildNpmPackage rec {
       bash ${bw_web_builds}/scripts/apply_patches.sh
   '';
 
-  nativeBuildInputs = [
-    python3
-  ];
+  nativeBuildInputs = [ python3 ];
 
   makeCacheWritable = true;
 
@@ -44,9 +36,7 @@ in buildNpmPackage rec {
 
   npmBuildScript = "dist:oss:selfhost";
 
-  npmBuildFlags = [
-    "--workspace" "apps/web"
-  ];
+  npmBuildFlags = [ "--workspace" "apps/web" ];
 
   installPhase = ''
     runHook preInstall

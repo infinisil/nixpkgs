@@ -1,13 +1,13 @@
 { lib, stdenv, fetchurl, makeWrapper, asciidoc, docbook_xml_dtd_45, docbook_xsl
-, coreutils, cvs, diffutils, findutils, git, python3, rsync
-}:
+, coreutils, cvs, diffutils, findutils, git, python3, rsync }:
 
 stdenv.mkDerivation rec {
   pname = "cvs-fast-export";
   version = "1.60";
 
   src = fetchurl {
-    url = "http://www.catb.org/~esr/cvs-fast-export/cvs-fast-export-${version}.tar.gz";
+    url =
+      "http://www.catb.org/~esr/cvs-fast-export/cvs-fast-export-${version}.tar.gz";
     sha256 = "sha256-QLMBYX2n27rcaa9Uisrr2VItgtTPv5ZWbOc5tK1VF8w=";
   };
 
@@ -29,9 +29,9 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     wrapProgram $out/bin/cvssync --prefix PATH : ${lib.makeBinPath [ rsync ]}
-    wrapProgram $out/bin/cvsconvert --prefix PATH : $out/bin:${lib.makeBinPath [
-      coreutils cvs diffutils findutils git
-    ]}
+    wrapProgram $out/bin/cvsconvert --prefix PATH : $out/bin:${
+      lib.makeBinPath [ coreutils cvs diffutils findutils git ]
+    }
   '';
 
   meta = with lib; {

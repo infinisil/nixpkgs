@@ -1,16 +1,5 @@
-{ lib
-, aiohttp
-, async-lru
-, buildPythonPackage
-, fetchFromGitHub
-, oauthlib
-, pytestCheckHook
-, pythonOlder
-, requests
-, requests-oauthlib
-, six
-, vcrpy
-}:
+{ lib, aiohttp, async-lru, buildPythonPackage, fetchFromGitHub, oauthlib
+, pytestCheckHook, pythonOlder, requests, requests-oauthlib, six, vcrpy }:
 
 buildPythonPackage rec {
   pname = "tweepy";
@@ -26,23 +15,12 @@ buildPythonPackage rec {
     hash = "sha256-ugqa85l0eWVtMUl5d+BjEWvTyH8c5NVtsnPflkHTWh8=";
   };
 
-  propagatedBuildInputs = [
-    aiohttp
-    async-lru
-    oauthlib
-    requests
-    requests-oauthlib
-    six
-  ];
+  propagatedBuildInputs =
+    [ aiohttp async-lru oauthlib requests requests-oauthlib six ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    vcrpy
-  ];
+  nativeCheckInputs = [ pytestCheckHook vcrpy ];
 
-  pythonImportsCheck = [
-    "tweepy"
-  ];
+  pythonImportsCheck = [ "tweepy" ];
 
   meta = with lib; {
     description = "Twitter library for Python";

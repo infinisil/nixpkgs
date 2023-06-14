@@ -1,15 +1,5 @@
-{ lib
-, aiohttp
-, buildPythonPackage
-, fetchPypi
-, pytest-asyncio
-, pytest-cov
-, pytest-httpserver
-, pytestCheckHook
-, pythonOlder
-, setuptools-scm
-, voluptuous
-}:
+{ lib, aiohttp, buildPythonPackage, fetchPypi, pytest-asyncio, pytest-cov
+, pytest-httpserver, pytestCheckHook, pythonOlder, setuptools-scm, voluptuous }:
 
 buildPythonPackage rec {
   pname = "solax";
@@ -23,25 +13,14 @@ buildPythonPackage rec {
     hash = "sha256-7UDTG8rw9XJd5LPqcAe2XyE7DQa96dBj9YOcgW+/aFc=";
   };
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [
-    aiohttp
-    voluptuous
-  ];
+  propagatedBuildInputs = [ aiohttp voluptuous ];
 
-  nativeCheckInputs = [
-    pytest-asyncio
-    pytest-cov
-    pytest-httpserver
-    pytestCheckHook
-  ];
+  nativeCheckInputs =
+    [ pytest-asyncio pytest-cov pytest-httpserver pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "solax"
-  ];
+  pythonImportsCheck = [ "solax" ];
 
   meta = with lib; {
     description = "Python wrapper for the Solax Inverter API";

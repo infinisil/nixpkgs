@@ -1,19 +1,12 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, php
-, pkgs
-, nixosTests
-, dataDir ? "/var/lib/pixelfed"
-, runtimeDir ? "/run/pixelfed"
-}:
+{ lib, stdenv, fetchFromGitHub, php, pkgs, nixosTests
+, dataDir ? "/var/lib/pixelfed", runtimeDir ? "/run/pixelfed" }:
 
 let
   package = (import ./composition.nix {
     inherit pkgs;
     inherit (stdenv.hostPlatform) system;
     noDev = true; # Disable development dependencies
-  }).overrideAttrs (attrs : {
+  }).overrideAttrs (attrs: {
     installPhase = attrs.installPhase + ''
       rm -R $out/bootstrap/cache
       # Move static contents for the NixOS module to pick it up, if needed.

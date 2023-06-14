@@ -1,33 +1,10 @@
-{ lib
-, stdenv
-, callPackage
-, buildPythonPackage
-, fetchPypi
-, rustPlatform
-, cargo
-, rustc
-, setuptools-rust
-, openssl
-, Security
-, isPyPy
-, cffi
-, pkg-config
-, pytestCheckHook
-, pytest-subtests
-, pythonOlder
-, pretend
-, libiconv
-, libxcrypt
-, iso8601
-, py
-, pytz
-, hypothesis
-}:
+{ lib, stdenv, callPackage, buildPythonPackage, fetchPypi, rustPlatform, cargo
+, rustc, setuptools-rust, openssl, Security, isPyPy, cffi, pkg-config
+, pytestCheckHook, pytest-subtests, pythonOlder, pretend, libiconv, libxcrypt
+, iso8601, py, pytz, hypothesis }:
 
-let
-  cryptography-vectors = callPackage ./vectors.nix { };
-in
-buildPythonPackage rec {
+let cryptography-vectors = callPackage ./vectors.nix { };
+in buildPythonPackage rec {
   pname = "cryptography";
   version = "40.0.1"; # Also update the hash in vectors.nix
   format = "setuptools";
@@ -52,23 +29,14 @@ buildPythonPackage rec {
 
   cargoRoot = "src/rust";
 
-  nativeBuildInputs = lib.optionals (!isPyPy) [
-    cffi
-    pkg-config
-  ] ++ [
-    rustPlatform.cargoSetupHook
-    setuptools-rust
-    cargo
-    rustc
-  ];
+  nativeBuildInputs = lib.optionals (!isPyPy) [ cffi pkg-config ]
+    ++ [ rustPlatform.cargoSetupHook setuptools-rust cargo rustc ];
 
   buildInputs = [ openssl ]
     ++ lib.optionals stdenv.isDarwin [ Security libiconv ]
     ++ lib.optionals (pythonOlder "3.9") [ libxcrypt ];
 
-  propagatedBuildInputs = lib.optionals (!isPyPy) [
-    cffi
-  ];
+  propagatedBuildInputs = lib.optionals (!isPyPy) [ cffi ];
 
   nativeCheckInputs = [
     cryptography-vectors
@@ -82,9 +50,7 @@ buildPythonPackage rec {
     pytz
   ];
 
-  pytestFlagsArray = [
-    "--disable-pytest-warnings"
-  ];
+  pytestFlagsArray = [ "--disable-pytest-warnings" ];
 
   disabledTestPaths = [
     # save compute time by not running benchmarks
@@ -96,7 +62,8 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "A package which provides cryptographic recipes and primitives";
+    description =
+      "A package which provides cryptographic recipes and primitives";
     longDescription = ''
       Cryptography includes both high level recipes and low level interfaces to
       common cryptographic algorithms such as symmetric ciphers, message

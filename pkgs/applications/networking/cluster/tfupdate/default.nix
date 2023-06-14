@@ -20,7 +20,8 @@ buildGoModule rec {
   meta = with lib; {
     description = "Update version constraints in your Terraform configurations";
     homepage = "https://github.com/minamijoyo/tfupdate";
-    changelog = "https://github.com/minamijoyo/tfupdate/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/minamijoyo/tfupdate/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ Intuinewin qjoly ];
   };

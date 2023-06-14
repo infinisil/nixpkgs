@@ -1,21 +1,9 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, ninja
-, python3
-, perl
-, yasm
-, nixosTests
+{ lib, stdenv, fetchFromGitHub, cmake, ninja, python3, perl, yasm, nixosTests
 
 # currently for BLAKE3 hash function
 , rustSupport ? true
 
-, corrosion
-, rustc
-, cargo
-, rustPlatform
-}:
+, corrosion, rustc, cargo, rustPlatform }:
 
 stdenv.mkDerivation rec {
   pname = "clickhouse";
@@ -44,32 +32,29 @@ stdenv.mkDerivation rec {
   };
 
   strictDeps = true;
-  nativeBuildInputs = [
-    cmake
-    ninja
-    python3
-    perl
-  ] ++ lib.optionals stdenv.isx86_64 [
-    yasm
-  ] ++ lib.optionals rustSupport [
-    rustc
-    cargo
-    rustPlatform.cargoSetupHook
-  ];
+  nativeBuildInputs = [ cmake ninja python3 perl ]
+    ++ lib.optionals stdenv.isx86_64 [ yasm ]
+    ++ lib.optionals rustSupport [ rustc cargo rustPlatform.cargoSetupHook ];
 
   corrosionDeps = if rustSupport then corrosion.cargoDeps else null;
-  blake3Deps = if rustSupport then rustPlatform.fetchCargoTarball {
-    inherit src;
-    name = "blake3-deps";
-    preBuild = "cd rust/BLAKE3";
-    hash = "sha256-lDMmmsyjEbTfI5NgTgT4+8QQrcUE/oUWfFgj1i19W0Q=";
-  } else null;
-  skimDeps = if rustSupport then rustPlatform.fetchCargoTarball {
-    inherit src;
-    name = "skim-deps";
-    preBuild = "cd rust/skim";
-    hash = "sha256-gEWB+U8QrM0yYyMXpwocszJZgOemdTlbSzKNkS0NbPk=";
-  } else null;
+  blake3Deps = if rustSupport then
+    rustPlatform.fetchCargoTarball {
+      inherit src;
+      name = "blake3-deps";
+      preBuild = "cd rust/BLAKE3";
+      hash = "sha256-lDMmmsyjEbTfI5NgTgT4+8QQrcUE/oUWfFgj1i19W0Q=";
+    }
+  else
+    null;
+  skimDeps = if rustSupport then
+    rustPlatform.fetchCargoTarball {
+      inherit src;
+      name = "skim-deps";
+      preBuild = "cd rust/skim";
+      hash = "sha256-gEWB+U8QrM0yYyMXpwocszJZgOemdTlbSzKNkS0NbPk=";
+    }
+  else
+    null;
 
   dontCargoSetupPostUnpack = true;
   postUnpack = lib.optionalString rustSupport ''
@@ -157,7 +142,8 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ orivej ];
 
     # not supposed to work on 32-bit https://github.com/ClickHouse/ClickHouse/pull/23959#issuecomment-835343685
-    platforms = lib.filter (x: (lib.systems.elaborate x).is64bit) platforms.linux;
+    platforms =
+      lib.filter (x: (lib.systems.elaborate x).is64bit) platforms.linux;
     broken = stdenv.buildPlatform != stdenv.hostPlatform;
   };
 }

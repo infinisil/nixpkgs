@@ -1,23 +1,6 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchFromGitHub
-, cmake
-, comic-neue
-, boost
-, catch2
-, inchi
-, cairo
-, eigen
-, python
-, rapidjson
-, maeparser
-, coordgenlibs
-, numpy
-, pandas
-, pillow
-, memorymappingHook
-}:
+{ lib, stdenv, buildPythonPackage, fetchFromGitHub, cmake, comic-neue, boost
+, catch2, inchi, cairo, eigen, python, rapidjson, maeparser, coordgenlibs, numpy
+, pandas, pillow, memorymappingHook }:
 let
   external = {
     avalon = fetchFromGitHub {
@@ -39,22 +22,18 @@ let
       hash = "sha256-7E+imvfDAJFnXQRWb5hNaSu+Xrf9NXeIKc9fl+o3yHQ=";
     };
   };
-in
-buildPythonPackage rec {
+in buildPythonPackage rec {
   pname = "rdkit";
   version = "2023.03.1";
   format = "other";
 
-  src =
-    let
-      versionTag = lib.replaceStrings [ "." ] [ "_" ] version;
-    in
-    fetchFromGitHub {
-      owner = pname;
-      repo = pname;
-      rev = "Release_${versionTag}";
-      hash = "sha256-hiDaPWDAWzALRf3+SAfzghu2K706rcajeZ69tMFplhU=";
-    };
+  src = let versionTag = lib.replaceStrings [ "." ] [ "_" ] version;
+  in fetchFromGitHub {
+    owner = pname;
+    repo = pname;
+    rev = "Release_${versionTag}";
+    hash = "sha256-hiDaPWDAWzALRf3+SAfzghu2K706rcajeZ69tMFplhU=";
+  };
 
   unpackPhase = ''
     cp -r $src/* .
@@ -77,22 +56,12 @@ buildPythonPackage rec {
     ln -s ${comic-neue}/share/fonts/truetype/ComicNeue-Regular.ttf Data/Fonts/
   '';
 
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
-  buildInputs = [
-    boost
-    cairo
-  ] ++ lib.optionals (stdenv.system == "x86_64-darwin") [
-    memorymappingHook
-  ];
+  buildInputs = [ boost cairo ]
+    ++ lib.optionals (stdenv.system == "x86_64-darwin") [ memorymappingHook ];
 
-  propagatedBuildInputs = [
-    numpy
-    pandas
-    pillow
-  ];
+  propagatedBuildInputs = [ numpy pandas pillow ];
 
   hardeningDisable = [ "format" ]; # required by yaehmop
 
@@ -145,11 +114,7 @@ buildPythonPackage rec {
     (cd $RDBASE/rdkit/Chem && python $RDBASE/rdkit/TestRunner.py test_list.py)
   '';
 
-  pythonImportsCheck = [
-    "rdkit"
-    "rdkit.Chem"
-    "rdkit.Chem.AllChem"
-  ];
+  pythonImportsCheck = [ "rdkit" "rdkit.Chem" "rdkit.Chem.AllChem" ];
 
   meta = with lib; {
     description = "Open source toolkit for cheminformatics";

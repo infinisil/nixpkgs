@@ -1,14 +1,5 @@
-{ lib
-, buildPythonPackage
-, docopt
-, fetchPypi
-, nose
-, pytz
-, pythonOlder
-, setuptools-scm
-, six
-, sqlalchemy
-}:
+{ lib, buildPythonPackage, docopt, fetchPypi, nose, pytz, pythonOlder
+, setuptools-scm, six, sqlalchemy }:
 
 buildPythonPackage rec {
   pname = "pygtfs";
@@ -28,24 +19,13 @@ buildPythonPackage rec {
       --replace "pytz>=2012d" "pytz"
   '';
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [
-    docopt
-    pytz
-    six
-    sqlalchemy
-  ];
+  propagatedBuildInputs = [ docopt pytz six sqlalchemy ];
 
-  nativeCheckInputs = [
-    nose
-  ];
+  nativeCheckInputs = [ nose ];
 
-  pythonImportsCheck = [
-    "pygtfs"
-  ];
+  pythonImportsCheck = [ "pygtfs" ];
 
   meta = with lib; {
     description = "Python module for GTFS";

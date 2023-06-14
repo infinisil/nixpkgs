@@ -1,11 +1,4 @@
-{ lib
-, stdenv
-, fetchgit
-, autoreconfHook
-, pkg-config
-, fltk13
-, libsndfile
-, gettext
+{ lib, stdenv, fetchgit, autoreconfHook, pkg-config, fltk13, libsndfile, gettext
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -18,15 +11,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-BnKL1iwaw1iJC5qcGCvdMr461n0BSYxk61dbAnhpz2c=";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-    pkg-config
-    gettext
-  ];
+  nativeBuildInputs = [ autoreconfHook pkg-config gettext ];
 
-  buildInputs = [
-    fltk13
-  ];
+  buildInputs = [ fltk13 ];
 
   enableParallelBuilding = true;
 

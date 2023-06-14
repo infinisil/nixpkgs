@@ -1,10 +1,4 @@
-{ lib
-, fetchurl
-, kaem
-, tinycc
-, gnumake
-, gnupatch
-}:
+{ lib, fetchurl, kaem, tinycc, gnumake, gnupatch }:
 let
   pname = "coreutils";
   version = "5.0";
@@ -16,7 +10,8 @@ let
 
   # Thanks to the live-bootstrap project!
   # See https://github.com/fosslinux/live-bootstrap/blob/a8752029f60217a5c41c548b16f5cdd2a1a0e0db/sysa/coreutils-5.0/coreutils-5.0.kaem
-  liveBootstrap = "https://github.com/fosslinux/live-bootstrap/raw/a8752029f60217a5c41c548b16f5cdd2a1a0e0db/sysa/coreutils-5.0";
+  liveBootstrap =
+    "https://github.com/fosslinux/live-bootstrap/raw/a8752029f60217a5c41c548b16f5cdd2a1a0e0db/sysa/coreutils-5.0";
 
   makefile = fetchurl {
     url = "${liveBootstrap}/mk/main.mk";
@@ -69,15 +64,10 @@ let
       sha256 = "0qs6shyxl9j4h34v5j5sgpxrr4gjfljd2hxzw416ghwc3xzv63fp";
     })
   ];
-in
-kaem.runCommand "${pname}-${version}" {
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnupatch
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnupatch ];
 
   meta = with lib; {
     description = "The GNU Core Utilities";

@@ -1,13 +1,6 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, hatchling
-, opentelemetry-proto
-, opentelemetry-sdk
-, opentelemetry-test-utils
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, hatchling
+, opentelemetry-proto, opentelemetry-sdk, opentelemetry-test-utils
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-exporter-otlp-proto-common";
@@ -24,24 +17,17 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    opentelemetry-sdk
-    opentelemetry-proto
-  ];
+  propagatedBuildInputs = [ opentelemetry-sdk opentelemetry-proto ];
 
-  nativeCheckInputs = [
-    opentelemetry-test-utils
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.exporter.otlp.proto.common" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-proto-common";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-proto-common";
     description = "OpenTelemetry Protobuf encoding";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

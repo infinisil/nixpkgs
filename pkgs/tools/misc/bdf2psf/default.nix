@@ -5,7 +5,8 @@ stdenv.mkDerivation rec {
   version = "1.221";
 
   src = fetchurl {
-    url = "mirror://debian/pool/main/c/console-setup/bdf2psf_${version}_all.deb";
+    url =
+      "mirror://debian/pool/main/c/console-setup/bdf2psf_${version}_all.deb";
     sha256 = "XaNAF5+TM1F0qyX/PEwRoiEvO8qmPuMWs+mkWSaHNGg=";
   };
 

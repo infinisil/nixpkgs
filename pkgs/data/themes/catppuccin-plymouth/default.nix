@@ -1,14 +1,9 @@
-{ stdenvNoCC
-, lib
-, fetchFromGitHub
-, variant ? "macchiato"
-}:
+{ stdenvNoCC, lib, fetchFromGitHub, variant ? "macchiato" }:
 
 let
   pname = "catppuccin-plymouth";
   validVariants = [ "latte" "frappe" "macchiato" "mocha" ];
-in
-lib.checkListOfEnum "${pname}: color variant" validVariants [ variant ]
+in lib.checkListOfEnum "${pname}: color variant" validVariants [ variant ]
 
 stdenvNoCC.mkDerivation rec {
   inherit pname;

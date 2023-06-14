@@ -1,12 +1,5 @@
-{ lib
-, stdenvNoCC
-, fetchFromGitHub
-, buildDotnetModule
-, buildNpmPackage
-, dotnetCorePackages
-, nixosTests
-, substituteAll
-}:
+{ lib, stdenvNoCC, fetchFromGitHub, buildDotnetModule, buildNpmPackage
+, dotnetCorePackages, nixosTests, substituteAll }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kavita";
@@ -39,7 +32,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     dotnet-runtime = dotnetCorePackages.aspnetcore_6_0;
   };
 
-  frontend =  buildNpmPackage {
+  frontend = buildNpmPackage {
     pname = "kavita-frontend";
     inherit (finalAttrs) version src;
 
@@ -47,7 +40,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     npmBuildScript = "prod";
     npmFlags = [ "--legacy-peer-deps" ];
-    npmRebuildFlags = [ "--ignore-scripts" ]; # Prevent playwright from trying to install browsers
+    npmRebuildFlags = [
+      "--ignore-scripts"
+    ]; # Prevent playwright from trying to install browsers
     npmDepsHash = "sha256-w0CuTPyCQyAxULvqd6+GiZaPlO8fh4xLmbEnGA47pL8=";
   };
 
@@ -69,7 +64,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   meta = {
     description = "A fast, feature rich, cross platform reading server";
     homepage = "https://kavitareader.com";
-    changelog = "https://github.com/kareadita/kavita/releases/tag/${finalAttrs.src.rev}";
+    changelog =
+      "https://github.com/kareadita/kavita/releases/tag/${finalAttrs.src.rev}";
     license = lib.licenses.gpl3Only;
     platforms = lib.platforms.linux;
     maintainers = with lib.maintainers; [ misterio77 ];

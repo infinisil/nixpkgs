@@ -1,4 +1,5 @@
-{ lib, stdenv, buildGoModule, fetchFromGitHub, git, Cocoa, Virtualization, sigtool, testers, linuxkit }:
+{ lib, stdenv, buildGoModule, fetchFromGitHub, git, Cocoa, Virtualization
+, sigtool, testers, linuxkit }:
 
 buildGoModule rec {
   pname = "linuxkit";
@@ -15,10 +16,7 @@ buildGoModule rec {
 
   modRoot = "./src/cmd/linuxkit";
 
-  patches = [
-    ./darwin-os-version.patch
-    ./support-apple-11-sdk.patch
-  ];
+  patches = [ ./darwin-os-version.patch ./support-apple-11-sdk.patch ];
 
   # - On macOS, an executable must be signed with the right entitlement(s) to be
   #   able to use the Virtualization framework at runtime.
@@ -52,7 +50,8 @@ buildGoModule rec {
   };
 
   meta = with lib; {
-    description = "A toolkit for building secure, portable and lean operating systems for containers";
+    description =
+      "A toolkit for building secure, portable and lean operating systems for containers";
     license = licenses.asl20;
     homepage = "https://github.com/linuxkit/linuxkit";
     maintainers = with maintainers; [ nicknovitski ];

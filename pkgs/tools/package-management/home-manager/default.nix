@@ -1,17 +1,5 @@
-{ lib
-, stdenvNoCC
-, fetchFromGitHub
-, bash
-, coreutils
-, findutils
-, gettext
-, gnused
-, less
-, ncurses
-, nixos-option
-, unixtools
-, installShellFiles
-, unstableGitUpdater
+{ lib, stdenvNoCC, fetchFromGitHub, bash, coreutils, findutils, gettext, gnused
+, less, ncurses, nixos-option, unixtools, installShellFiles, unstableGitUpdater
 }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
@@ -26,10 +14,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     hash = "sha256-pkk3J9gX745LEkkeTGhSRJqPJkmCPQzwI/q7a720XaY=";
   };
 
-  nativeBuildInputs = [
-    gettext
-    installShellFiles
-  ];
+  nativeBuildInputs = [ gettext installShellFiles ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -54,7 +39,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
           unixtools.hostname
         ]
       }" \
-      --subst-var-by HOME_MANAGER_LIB '${placeholder "out"}/share/bash/home-manager.sh' \
+      --subst-var-by HOME_MANAGER_LIB '${
+        placeholder "out"
+      }/share/bash/home-manager.sh' \
       --subst-var-by HOME_MANAGER_PATH "" \
       --subst-var-by OUT '${placeholder "out"}'
 

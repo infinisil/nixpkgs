@@ -1,43 +1,8 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, fetchpatch
-, gitUpdater
-, testers
-, cmake
-, pkg-config
-, python3
-, doxygen
-, libxslt
-, boost
-, egl-wayland
-, freetype
-, glib
-, glm
-, glog
-, libdrm
-, libepoxy
-, libevdev
-, libglvnd
-, libinput
-, libuuid
-, libxcb
-, libxkbcommon
-, libxmlxx
-, yaml-cpp
-, lttng-ust
-, mesa
-, nettle
-, udev
-, wayland
-, xorg
-, xwayland
-, dbus
-, gtest
-, umockdev
-, wlcs
-, validatePkgConfig
-}:
+{ stdenv, lib, fetchFromGitHub, fetchpatch, gitUpdater, testers, cmake
+, pkg-config, python3, doxygen, libxslt, boost, egl-wayland, freetype, glib, glm
+, glog, libdrm, libepoxy, libevdev, libglvnd, libinput, libuuid, libxcb
+, libxkbcommon, libxmlxx, yaml-cpp, lttng-ust, mesa, nettle, udev, wayland, xorg
+, xwayland, dbus, gtest, umockdev, wlcs, validatePkgConfig }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "mir";
@@ -55,7 +20,8 @@ stdenv.mkDerivation (finalAttrs: {
     # Drop when https://github.com/MirServer/mir/issues/2837 fixed in a release
     (fetchpatch {
       name = "0001-mir-Simplify_probing_of_evdev_input_platform.patch";
-      url = "https://github.com/MirServer/mir/commit/7787cfa721934bb43d3255218e7c92e700923fcb.patch";
+      url =
+        "https://github.com/MirServer/mir/commit/7787cfa721934bb43d3255218e7c92e700923fcb.patch";
       hash = "sha256-9C9qcmngd+K8EAcyOYUJFTdFDu1Nt1MM7Y9TRNOXFB4=";
     })
   ];
@@ -72,8 +38,12 @@ stdenv.mkDerivation (finalAttrs: {
       tests/unit-tests/CMakeLists.txt
     do
       substituteInPlace $needsPreloadFixing \
-        --replace 'LD_PRELOAD=liblttng-ust-fork.so' 'LD_PRELOAD=${lib.getLib lttng-ust}/lib/liblttng-ust-fork.so' \
-        --replace 'LD_PRELOAD=libumockdev-preload.so.0' 'LD_PRELOAD=${lib.getLib umockdev}/lib/libumockdev-preload.so.0'
+        --replace 'LD_PRELOAD=liblttng-ust-fork.so' 'LD_PRELOAD=${
+          lib.getLib lttng-ust
+        }/lib/liblttng-ust-fork.so' \
+        --replace 'LD_PRELOAD=libumockdev-preload.so.0' 'LD_PRELOAD=${
+          lib.getLib umockdev
+        }/lib/libumockdev-preload.so.0'
     done
 
     # Fix Xwayland default
@@ -82,8 +52,12 @@ stdenv.mkDerivation (finalAttrs: {
 
     # Fix paths for generating drm-formats
     substituteInPlace src/platform/graphics/CMakeLists.txt \
-      --replace "/usr/include/drm/drm_fourcc.h" "${lib.getDev libdrm}/include/libdrm/drm_fourcc.h" \
-      --replace "/usr/include/libdrm/drm_fourcc.h" "${lib.getDev libdrm}/include/libdrm/drm_fourcc.h"
+      --replace "/usr/include/drm/drm_fourcc.h" "${
+        lib.getDev libdrm
+      }/include/libdrm/drm_fourcc.h" \
+      --replace "/usr/include/libdrm/drm_fourcc.h" "${
+        lib.getDev libdrm
+      }/include/libdrm/drm_fourcc.h"
 
     # Fix date in generated docs not honouring SOURCE_DATE_EPOCH
     # Install docs to correct dir
@@ -101,12 +75,10 @@ stdenv.mkDerivation (finalAttrs: {
     libxslt
     lttng-ust # lttng-gen-tp
     pkg-config
-    (python3.withPackages (ps: with ps; [
-      pillow
-    ] ++ lib.optionals finalAttrs.doCheck [
-      pygobject3
-      python-dbusmock
-    ]))
+    (python3.withPackages (ps:
+      with ps;
+      [ pillow ]
+      ++ lib.optionals finalAttrs.doCheck [ pygobject3 python-dbusmock ]))
     validatePkgConfig
   ];
 
@@ -138,15 +110,9 @@ stdenv.mkDerivation (finalAttrs: {
     xwayland
   ];
 
-  nativeCheckInputs = [
-    dbus
-  ];
+  nativeCheckInputs = [ dbus ];
 
-  checkInputs = [
-    gtest
-    umockdev
-    wlcs
-  ];
+  checkInputs = [ gtest umockdev wlcs ];
 
   buildFlags = [ "all" "doc" ];
 
@@ -156,8 +122,7 @@ stdenv.mkDerivation (finalAttrs: {
     # BadBufferTest.test_truncated_shm_file *doesn't* throw an error as the test expected, mark as such
     # https://github.com/MirServer/mir/pull/1947#issuecomment-811810872
     "-DMIR_SIGBUS_HANDLER_ENVIRONMENT_BROKEN=ON"
-    "-DMIR_EXCLUDE_TESTS=${lib.strings.concatStringsSep ";" [
-    ]}"
+    "-DMIR_EXCLUDE_TESTS=${lib.strings.concatStringsSep ";" [ ]}"
     # These get built but don't get executed by default, yet they get installed when tests are enabled
     "-DMIR_BUILD_PERFORMANCE_TESTS=OFF"
     "-DMIR_BUILD_PLATFORM_TEST_HARNESS=OFF"
@@ -175,9 +140,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
-    updateScript = gitUpdater {
-      rev-prefix = "v";
-    };
+    updateScript = gitUpdater { rev-prefix = "v"; };
     # More of an example than a fully functioning shell, some notes for the adventurous:
     # - ~/.config/miral-shell.config is one possible user config location,
     #   accepted options=value are according to `mir-shell --help`
@@ -189,9 +152,11 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   meta = with lib; {
-    description = "A display server and Wayland compositor developed by Canonical";
+    description =
+      "A display server and Wayland compositor developed by Canonical";
     homepage = "https://mir-server.io";
-    changelog = "https://github.com/MirServer/mir/releases/tag/v${finalAttrs.version}";
+    changelog =
+      "https://github.com/MirServer/mir/releases/tag/v${finalAttrs.version}";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ onny OPNA2608 ];
     platforms = platforms.linux;

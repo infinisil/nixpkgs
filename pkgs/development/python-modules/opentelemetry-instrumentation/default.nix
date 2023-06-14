@@ -1,15 +1,6 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, hatchling
-, opentelemetry-api
-, opentelemetry-sdk
-, opentelemetry-test-utils
-, setuptools
-, wrapt
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, hatchling
+, opentelemetry-api, opentelemetry-sdk, opentelemetry-test-utils, setuptools
+, wrapt, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-instrumentation";
@@ -26,27 +17,20 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    opentelemetry-api
-    opentelemetry-sdk
-    setuptools
-    wrapt
-  ];
+  propagatedBuildInputs =
+    [ opentelemetry-api opentelemetry-sdk setuptools wrapt ];
 
-  nativeCheckInputs = [
-    opentelemetry-test-utils
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.instrumentation" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/opentelemetry-instrumentation";
-    description = "Instrumentation Tools & Auto Instrumentation for OpenTelemetry Python";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/opentelemetry-instrumentation";
+    description =
+      "Instrumentation Tools & Auto Instrumentation for OpenTelemetry Python";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;
   };

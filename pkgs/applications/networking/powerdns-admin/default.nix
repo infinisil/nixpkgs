@@ -12,11 +12,49 @@ let
   python = python3;
 
   pythonDeps = with python.pkgs; [
-    flask flask_assets flask-login flask-sqlalchemy flask_migrate flask-seasurf flask_mail flask-session flask-session-captcha flask-sslify
-    mysqlclient psycopg2 sqlalchemy
-    certifi cffi configobj cryptography bcrypt requests python-ldap pyotp qrcode dnspython
-    gunicorn itsdangerous python3-saml pytz rcssmin rjsmin authlib bravado-core
-    lima lxml passlib pyasn1 pytimeparse pyyaml jinja2 itsdangerous webcolors werkzeug zipp zxcvbn
+    flask
+    flask_assets
+    flask-login
+    flask-sqlalchemy
+    flask_migrate
+    flask-seasurf
+    flask_mail
+    flask-session
+    flask-session-captcha
+    flask-sslify
+    mysqlclient
+    psycopg2
+    sqlalchemy
+    certifi
+    cffi
+    configobj
+    cryptography
+    bcrypt
+    requests
+    python-ldap
+    pyotp
+    qrcode
+    dnspython
+    gunicorn
+    itsdangerous
+    python3-saml
+    pytz
+    rcssmin
+    rjsmin
+    authlib
+    bravado-core
+    lima
+    lxml
+    passlib
+    pyasn1
+    pytimeparse
+    pyyaml
+    jinja2
+    itsdangerous
+    webcolors
+    werkzeug
+    zipp
+    zxcvbn
   ];
 
   assets = mkYarnPackage {
@@ -25,9 +63,7 @@ let
     yarnNix = ./yarndeps.nix;
     # Copied from package.json, see also
     # https://github.com/NixOS/nixpkgs/pull/214952
-    packageResolutions = {
-      "@fortawesome/fontawesome-free" = "6.3.0";
-    };
+    packageResolutions = { "@fortawesome/fontawesome-free" = "6.3.0"; };
 
     nativeBuildInputs = pythonDeps;
     patchPhase = ''

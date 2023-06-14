@@ -18,7 +18,8 @@ buildPythonPackage rec {
     # fix pyasn1 0.5.0 compability
     # https://github.com/cannatag/ldap3/pull/983
     (fetchpatch {
-      url = "https://github.com/cannatag/ldap3/commit/ca689f4893b944806f90e9d3be2a746ee3c502e4.patch";
+      url =
+        "https://github.com/cannatag/ldap3/commit/ca689f4893b944806f90e9d3be2a746ee3c502e4.patch";
       hash = "sha256-A8qI0t1OV3bkKaSdhVWHFBC9MoSkWynqxpgznV+5gh8=";
     })
   ];
@@ -31,7 +32,8 @@ buildPythonPackage rec {
 
   meta = with lib; {
     homepage = "https://pypi.python.org/pypi/ldap3";
-    description = "A strictly RFC 4510 conforming LDAP V3 pure Python client library";
+    description =
+      "A strictly RFC 4510 conforming LDAP V3 pure Python client library";
     license = licenses.lgpl3;
     maintainers = with maintainers; [ ];
   };

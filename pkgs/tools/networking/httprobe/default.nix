@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "httprobe";
@@ -19,7 +16,8 @@ buildGoModule rec {
   ldflags = [ "-s" "-w" ];
 
   meta = with lib; {
-    description = "Take a list of domains and probe for working HTTP and HTTPS servers";
+    description =
+      "Take a list of domains and probe for working HTTP and HTTPS servers";
     homepage = "https://github.com/tomnomnom/httprobe";
     license = licenses.mit;
     maintainers = with maintainers; [ figsoda ];

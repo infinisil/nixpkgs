@@ -1,5 +1,4 @@
-import ../../make-test-python.nix ({pkgs, ...}:
-{
+import ../../make-test-python.nix ({ pkgs, ... }: {
   name = "pixelfed-standard";
   meta.maintainers = with pkgs.lib.maintainers; [ raitobezarius ];
 
@@ -9,7 +8,7 @@ import ../../make-test-python.nix ({pkgs, ...}:
         enable = true;
         domain = "pixelfed.local";
         # Configure NGINX.
-        nginx = {};
+        nginx = { };
         secretFile = (pkgs.writeText "secrets.env" ''
           # Snakeoil secret, can be any random 32-chars secret via CSPRNG.
           APP_KEY=adKK9EcY8Hcj3PLU7rzG9rJ6KKTOtYfA

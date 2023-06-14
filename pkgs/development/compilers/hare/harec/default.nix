@@ -1,8 +1,4 @@
-{ lib
-, stdenv
-, fetchFromSourcehut
-, qbe
-}:
+{ lib, stdenv, fetchFromSourcehut, qbe }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "harec";
@@ -15,13 +11,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-PPR0d+6JJRzPURW7AznloBSrtylMJExNCGCxFMl2LsA=";
   };
 
-  nativeBuildInputs = [
-    qbe
-  ];
+  nativeBuildInputs = [ qbe ];
 
-  buildInputs = [
-    qbe
-  ];
+  buildInputs = [ qbe ];
 
   # TODO: report upstream
   hardeningDisable = [ "fortify" ];

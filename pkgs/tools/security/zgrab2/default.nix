@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "zgrab2";
@@ -23,9 +20,7 @@ buildGoModule rec {
     ./fix-go-version-error.patch
   ];
 
-  subPackages = [
-    "cmd/zgrab2"
-  ];
+  subPackages = [ "cmd/zgrab2" ];
 
   meta = with lib; {
     description = "Web application scanner";

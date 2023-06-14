@@ -1,29 +1,38 @@
-{ config, stdenv, lib, fetchurl, intltool, pkg-config, python3Packages, bluez, gtk3
-, obex_data_server, xdg-utils, dnsmasq, dhcp, libappindicator, iproute2
-, gnome, librsvg, wrapGAppsHook, gobject-introspection
-, networkmanager, withPulseAudio ? config.pulseaudio or stdenv.isLinux, libpulseaudio }:
+{ config, stdenv, lib, fetchurl, intltool, pkg-config, python3Packages, bluez
+, gtk3, obex_data_server, xdg-utils, dnsmasq, dhcp, libappindicator, iproute2
+, gnome, librsvg, wrapGAppsHook, gobject-introspection, networkmanager
+, withPulseAudio ? config.pulseaudio or stdenv.isLinux, libpulseaudio }:
 
-let
-  pythonPackages = python3Packages;
+let pythonPackages = python3Packages;
 
 in stdenv.mkDerivation rec {
   pname = "blueman";
   version = "2.3.5";
 
   src = fetchurl {
-    url = "https://github.com/blueman-project/blueman/releases/download/${version}/${pname}-${version}.tar.xz";
+    url =
+      "https://github.com/blueman-project/blueman/releases/download/${version}/${pname}-${version}.tar.xz";
     sha256 = "sha256-stIa/fd6Bs2G2vVAJAb30qU0WYF+KeC+vEkR1PDc/aE=";
   };
 
   nativeBuildInputs = [
-    gobject-introspection intltool pkg-config pythonPackages.cython
-    pythonPackages.wrapPython wrapGAppsHook
+    gobject-introspection
+    intltool
+    pkg-config
+    pythonPackages.cython
+    pythonPackages.wrapPython
+    wrapGAppsHook
   ];
 
-  buildInputs = [ bluez gtk3 pythonPackages.python librsvg
-                  gnome.adwaita-icon-theme iproute2 networkmanager ]
-                ++ pythonPath
-                ++ lib.optional withPulseAudio libpulseaudio;
+  buildInputs = [
+    bluez
+    gtk3
+    pythonPackages.python
+    librsvg
+    gnome.adwaita-icon-theme
+    iproute2
+    networkmanager
+  ] ++ pythonPath ++ lib.optional withPulseAudio libpulseaudio;
 
   postPatch = lib.optionalString withPulseAudio ''
     sed -i 's,CDLL(",CDLL("${libpulseaudio.out}/lib/,g' blueman/main/PulseAudioUtils.py
@@ -55,7 +64,8 @@ in stdenv.mkDerivation rec {
     description = "GTK-based Bluetooth Manager";
     license = licenses.gpl3;
     platforms = platforms.linux;
-    changelog = "https://github.com/blueman-project/blueman/releases/tag/${version}";
+    changelog =
+      "https://github.com/blueman-project/blueman/releases/tag/${version}";
     maintainers = with maintainers; [ abbradar ];
   };
 }

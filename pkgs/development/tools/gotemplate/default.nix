@@ -15,7 +15,8 @@ buildGoModule rec {
 
   meta = with lib; {
     description = "CLI for go text/template";
-    changelog = "https://github.com/coveooss/gotemplate/releases/tag/v${version}";
+    changelog =
+      "https://github.com/coveooss/gotemplate/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ giorgiga ];
   };

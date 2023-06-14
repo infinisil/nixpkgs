@@ -22,15 +22,14 @@ buildGoModule rec {
   ];
 
   passthru.tests = {
-    version = testers.testVersion {
-      package = eks-node-viewer;
-    };
+    version = testers.testVersion { package = eks-node-viewer; };
   };
 
   meta = with lib; {
     description = "Tool to visualize dynamic node usage within a cluster";
     homepage = "https://github.com/awslabs/eks-node-viewer";
-    changelog = "https://github.com/awslabs/eks-node-viewer/releases/tag/${src.rev}";
+    changelog =
+      "https://github.com/awslabs/eks-node-viewer/releases/tag/${src.rev}";
     license = licenses.asl20;
     maintainers = [ maintainers.ivankovnatsky ];
   };

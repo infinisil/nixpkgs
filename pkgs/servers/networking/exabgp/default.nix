@@ -1,9 +1,4 @@
-{ lib
-, python3
-, fetchFromGitHub
-, exabgp
-, testers
-}:
+{ lib, python3, fetchFromGitHub, exabgp, testers }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "exabgp";
@@ -17,28 +12,19 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-NlGE3yHUXPdxAMGhSaXMT2P1e7P+4AWg4lReP3f6Zx8=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
-    setuptools
-  ];
+  nativeBuildInputs = with python3.pkgs; [ setuptools ];
 
-  pythonImportsCheck = [
-    "exabgp"
-  ];
+  pythonImportsCheck = [ "exabgp" ];
 
-  nativeCheckInputs = with python3.pkgs; [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = with python3.pkgs; [ pytestCheckHook ];
 
-  passthru.tests = {
-    version = testers.testVersion {
-      package = exabgp;
-    };
-  };
+  passthru.tests = { version = testers.testVersion { package = exabgp; }; };
 
   meta = with lib; {
     description = "The BGP swiss army knife of networking";
     homepage = "https://github.com/Exa-Networks/exabgp";
-    changelog = "https://github.com/Exa-Networks/exabgp/blob/${src.rev}/CHANGELOG.rst";
+    changelog =
+      "https://github.com/Exa-Networks/exabgp/blob/${src.rev}/CHANGELOG.rst";
     license = licenses.bsd3;
     maintainers = with maintainers; [ hexa raitobezarius ];
   };

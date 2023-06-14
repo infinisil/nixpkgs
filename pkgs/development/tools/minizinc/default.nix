@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, callPackage, jq, cmake, flex, bison, gecode, mpfr, cbc, zlib }:
+{ lib, stdenv, fetchFromGitHub, callPackage, jq, cmake, flex, bison, gecode
+, mpfr, cbc, zlib }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "minizinc";
@@ -25,9 +26,7 @@ stdenv.mkDerivation (finalAttrs: {
        >$out/share/minizinc/solvers/gecode.msc
   '';
 
-  passthru.tests = {
-    simple = callPackage ./simple-test { };
-  };
+  passthru.tests = { simple = callPackage ./simple-test { }; };
 
   meta = with lib; {
     homepage = "https://www.minizinc.org/";

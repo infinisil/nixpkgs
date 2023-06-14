@@ -1,22 +1,8 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, cmake
-, fetchFromGitHub
-, gtest
-, nbval
-, numpy
-, parameterized
-, protobuf
-, pybind11
-, pytestCheckHook
-, pythonOlder
-, tabulate
-, typing-extensions
-}:
+{ lib, stdenv, buildPythonPackage, cmake, fetchFromGitHub, gtest, nbval, numpy
+, parameterized, protobuf, pybind11, pytestCheckHook, pythonOlder, tabulate
+, typing-extensions }:
 
-let
-  gtestStatic = gtest.override { static = true; };
+let gtestStatic = gtest.override { static = true; };
 in buildPythonPackage rec {
   pname = "onnx";
   version = "1.14.0";
@@ -31,23 +17,11 @@ in buildPythonPackage rec {
     hash = "sha256-f+s25Y/jGosaSdoZY6PE3j6pENkfDcD+IQndrbtuzWg=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pybind11
-  ];
+  nativeBuildInputs = [ cmake pybind11 ];
 
-  propagatedBuildInputs = [
-    protobuf
-    numpy
-    typing-extensions
-  ];
+  propagatedBuildInputs = [ protobuf numpy typing-extensions ];
 
-  nativeCheckInputs = [
-    nbval
-    parameterized
-    pytestCheckHook
-    tabulate
-  ];
+  nativeCheckInputs = [ nbval parameterized pytestCheckHook tabulate ];
 
   postPatch = ''
     chmod +x tools/protoc-gen-mypy.sh.in
@@ -67,7 +41,9 @@ in buildPythonPackage rec {
     # Set CMAKE_INSTALL_LIBDIR to lib explicitly, because otherwise it gets set
     # to lib64 and cmake incorrectly looks for the protobuf library in lib64
     export CMAKE_ARGS="-DCMAKE_INSTALL_LIBDIR=lib -DONNX_USE_PROTOBUF_SHARED_LIBS=ON"
-    export CMAKE_ARGS+=" -Dgoogletest_STATIC_LIBRARIES=${gtestStatic}/lib/libgtest.a -Dgoogletest_INCLUDE_DIRS=${lib.getDev gtestStatic}/include"
+    export CMAKE_ARGS+=" -Dgoogletest_STATIC_LIBRARIES=${gtestStatic}/lib/libgtest.a -Dgoogletest_INCLUDE_DIRS=${
+      lib.getDev gtestStatic
+    }/include"
     export ONNX_BUILD_TESTS=1
   '';
 
@@ -90,10 +66,7 @@ in buildPythonPackage rec {
     mv onnx/__init__.py onnx/__init__.py.hidden
   '';
 
-  pytestFlagsArray = [
-    "onnx/test"
-    "onnx/examples"
-  ];
+  pytestFlagsArray = [ "onnx/test" "onnx/examples" ];
 
   disabledTests = [
     # attempts to fetch data from web
@@ -130,9 +103,7 @@ in buildPythonPackage rec {
     .setuptools-cmake-build/onnx_gtests
   '';
 
-  pythonImportsCheck = [
-    "onnx"
-  ];
+  pythonImportsCheck = [ "onnx" ];
 
   meta = with lib; {
     description = "Open Neural Network Exchange";

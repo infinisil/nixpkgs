@@ -1,11 +1,5 @@
-{ lib
-, fetchFromGitHub
-, python3
-, nixosTests
-, testers
-, sqlite3-to-mysql
-, fetchPypi
-}:
+{ lib, fetchFromGitHub, python3, nixosTests, testers, sqlite3-to-mysql
+, fetchPypi }:
 
 let
   py = python3.override {
@@ -24,8 +18,8 @@ let
     self = py;
   };
 
-in
-with py.pkgs; buildPythonApplication rec {
+in with py.pkgs;
+buildPythonApplication rec {
   pname = "sqlite3-to-mysql";
   version = "1.4.19";
   format = "pyproject";
@@ -37,9 +31,7 @@ with py.pkgs; buildPythonApplication rec {
     hash = "sha256-gtXwDLHl5f1sXLm+b8l08bY/XJkN+zVtd7m45K0CAYY=";
   };
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
   propagatedBuildInputs = [
     click
@@ -70,7 +62,8 @@ with py.pkgs; buildPythonApplication rec {
   };
 
   meta = with lib; {
-    description = "A simple Python tool to transfer data from SQLite 3 to MySQL";
+    description =
+      "A simple Python tool to transfer data from SQLite 3 to MySQL";
     homepage = "https://github.com/techouse/sqlite3-to-mysql";
     license = licenses.mit;
     maintainers = with maintainers; [ gador ];

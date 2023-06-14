@@ -9,42 +9,48 @@
 }:
 
 let
-  commonTargetPkgs = pkgs: with pkgs; [
-    # Needed for operating system detection until
-    # https://github.com/ValveSoftware/steam-for-linux/issues/5909 is resolved
-    lsb-release
-    # Errors in output without those
-    pciutils
-    # Games' dependencies
-    xorg.xrandr
-    which
-    # Needed by gdialog, including in the steam-runtime
-    perl
-    # Open URLs
-    xdg-utils
-    iana-etc
-    # Steam Play / Proton
-    python3
-    # Steam VR
-    procps
-    usbutils
+  commonTargetPkgs = pkgs:
+    with pkgs;
+    [
+      # Needed for operating system detection until
+      # https://github.com/ValveSoftware/steam-for-linux/issues/5909 is resolved
+      lsb-release
+      # Errors in output without those
+      pciutils
+      # Games' dependencies
+      xorg.xrandr
+      which
+      # Needed by gdialog, including in the steam-runtime
+      perl
+      # Open URLs
+      xdg-utils
+      iana-etc
+      # Steam Play / Proton
+      python3
+      # Steam VR
+      procps
+      usbutils
 
-    # It tries to execute xdg-user-dir and spams the log with command not founds
-    xdg-user-dirs
+      # It tries to execute xdg-user-dir and spams the log with command not founds
+      xdg-user-dirs
 
-    # electron based launchers need newer versions of these libraries than what runtime provides
-    mesa
-    sqlite
-  ] ++ extraPkgs pkgs;
+      # electron based launchers need newer versions of these libraries than what runtime provides
+      mesa
+      sqlite
+    ] ++ extraPkgs pkgs;
 
-  ldPath = lib.optionals stdenv.is64bit [ "/lib64" ]
-  ++ [ "/lib32" ]
-  ++ map (x: "/steamrt/${steam-runtime-wrapped.arch}/" + x) steam-runtime-wrapped.libs
-  ++ lib.optionals (steam-runtime-wrapped-i686 != null) (map (x: "/steamrt/${steam-runtime-wrapped-i686.arch}/" + x) steam-runtime-wrapped-i686.libs);
+  ldPath = lib.optionals stdenv.is64bit [ "/lib64" ] ++ [ "/lib32" ]
+    ++ map (x: "/steamrt/${steam-runtime-wrapped.arch}/" + x)
+    steam-runtime-wrapped.libs
+    ++ lib.optionals (steam-runtime-wrapped-i686 != null)
+    (map (x: "/steamrt/${steam-runtime-wrapped-i686.arch}/" + x)
+      steam-runtime-wrapped-i686.libs);
 
   # Zachtronics and a few other studios expect STEAM_LD_LIBRARY_PATH to be present
   exportLDPath = ''
-    export LD_LIBRARY_PATH=${lib.concatStringsSep ":" ldPath}''${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=${
+      lib.concatStringsSep ":" ldPath
+    }''${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
     export STEAM_LD_LIBRARY_PATH="$STEAM_LD_LIBRARY_PATH''${STEAM_LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH"
   '';
 
@@ -61,163 +67,167 @@ let
 in buildFHSEnv rec {
   name = "steam";
 
-  targetPkgs = pkgs: with pkgs; [
-    steam
-    # License agreement
-    gnome.zenity
-  ] ++ commonTargetPkgs pkgs;
+  targetPkgs = pkgs:
+    with pkgs;
+    [
+      steam
+      # License agreement
+      gnome.zenity
+    ] ++ commonTargetPkgs pkgs;
 
-  multiPkgs = pkgs: with pkgs; [
-    # These are required by steam with proper errors
-    xorg.libXcomposite
-    xorg.libXtst
-    xorg.libXrandr
-    xorg.libXext
-    xorg.libX11
-    xorg.libXfixes
-    libGL
-    libva
-    pipewire.lib
+  multiPkgs = pkgs:
+    with pkgs;
+    [
+      # These are required by steam with proper errors
+      xorg.libXcomposite
+      xorg.libXtst
+      xorg.libXrandr
+      xorg.libXext
+      xorg.libX11
+      xorg.libXfixes
+      libGL
+      libva
+      pipewire.lib
 
-    # steamwebhelper
-    harfbuzz
-    libthai
-    pango
+      # steamwebhelper
+      harfbuzz
+      libthai
+      pango
 
-    lsof # friends options won't display "Launch Game" without it
-    file # called by steam's setup.sh
+      lsof # friends options won't display "Launch Game" without it
+      file # called by steam's setup.sh
 
-    # dependencies for mesa drivers, needed inside pressure-vessel
-    mesa.llvmPackages.llvm.lib
-    vulkan-loader
-    expat
-    wayland
-    xorg.libxcb
-    xorg.libXdamage
-    xorg.libxshmfence
-    xorg.libXxf86vm
-    libelf
-    (lib.getLib elfutils)
+      # dependencies for mesa drivers, needed inside pressure-vessel
+      mesa.llvmPackages.llvm.lib
+      vulkan-loader
+      expat
+      wayland
+      xorg.libxcb
+      xorg.libXdamage
+      xorg.libxshmfence
+      xorg.libXxf86vm
+      libelf
+      (lib.getLib elfutils)
 
-    # Without these it silently fails
-    xorg.libXinerama
-    xorg.libXcursor
-    xorg.libXrender
-    xorg.libXScrnSaver
-    xorg.libXi
-    xorg.libSM
-    xorg.libICE
-    gnome2.GConf
-    curlWithGnuTls
-    nspr
-    nss
-    cups
-    libcap
-    SDL2
-    libusb1
-    dbus-glib
-    gsettings-desktop-schemas
-    ffmpeg
-    libudev0-shim
+      # Without these it silently fails
+      xorg.libXinerama
+      xorg.libXcursor
+      xorg.libXrender
+      xorg.libXScrnSaver
+      xorg.libXi
+      xorg.libSM
+      xorg.libICE
+      gnome2.GConf
+      curlWithGnuTls
+      nspr
+      nss
+      cups
+      libcap
+      SDL2
+      libusb1
+      dbus-glib
+      gsettings-desktop-schemas
+      ffmpeg
+      libudev0-shim
 
-    # Verified games requirements
-    fontconfig
-    freetype
-    xorg.libXt
-    xorg.libXmu
-    libogg
-    libvorbis
-    SDL
-    SDL2_image
-    glew110
-    libdrm
-    libidn
-    tbb
-    zlib
+      # Verified games requirements
+      fontconfig
+      freetype
+      xorg.libXt
+      xorg.libXmu
+      libogg
+      libvorbis
+      SDL
+      SDL2_image
+      glew110
+      libdrm
+      libidn
+      tbb
+      zlib
 
-    # SteamVR
-    udev
+      # SteamVR
+      udev
 
-    # Other things from runtime
-    glib
-    gtk2
-    bzip2
-    flac
-    freeglut
-    libjpeg
-    libpng
-    libpng12
-    libsamplerate
-    libmikmod
-    libtheora
-    libtiff
-    pixman
-    speex
-    SDL_image
-    SDL_ttf
-    SDL_mixer
-    SDL2_ttf
-    SDL2_mixer
-    libappindicator-gtk2
-    libdbusmenu-gtk2
-    libindicator-gtk2
-    libcaca
-    libcanberra
-    libgcrypt
-    libvpx
-    librsvg
-    xorg.libXft
-    libvdpau
+      # Other things from runtime
+      glib
+      gtk2
+      bzip2
+      flac
+      freeglut
+      libjpeg
+      libpng
+      libpng12
+      libsamplerate
+      libmikmod
+      libtheora
+      libtiff
+      pixman
+      speex
+      SDL_image
+      SDL_ttf
+      SDL_mixer
+      SDL2_ttf
+      SDL2_mixer
+      libappindicator-gtk2
+      libdbusmenu-gtk2
+      libindicator-gtk2
+      libcaca
+      libcanberra
+      libgcrypt
+      libvpx
+      librsvg
+      xorg.libXft
+      libvdpau
 
-    # required by coreutils stuff to run correctly
-    # Steam ends up with LD_LIBRARY_PATH=<bunch of runtime stuff>:/usr/lib:<etc>
-    # which overrides DT_RUNPATH in our binaries, so it tries to dynload the
-    # very old versions of stuff from the runtime.
-    # FIXME: how do we even fix this correctly
-    attr
-  ] ++ lib.optionals withGameSpecificLibraries [
-    # Not formally in runtime but needed by some games
-    at-spi2-atk
-    at-spi2-core   # CrossCode
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-ugly
-    gst_all_1.gst-plugins-base
-    json-glib # paradox launcher (Stellaris)
-    libdrm
-    libxkbcommon # paradox launcher
-    libvorbis # Dead Cells
-    libxcrypt # Alien Isolation, XCOM 2, Company of Heroes 2
-    mono
-    xorg.xkeyboardconfig
-    xorg.libpciaccess
-    xorg.libXScrnSaver # Dead Cells
-    icu # dotnet runtime, e.g. Stardew Valley
+      # required by coreutils stuff to run correctly
+      # Steam ends up with LD_LIBRARY_PATH=<bunch of runtime stuff>:/usr/lib:<etc>
+      # which overrides DT_RUNPATH in our binaries, so it tries to dynload the
+      # very old versions of stuff from the runtime.
+      # FIXME: how do we even fix this correctly
+      attr
+    ] ++ lib.optionals withGameSpecificLibraries [
+      # Not formally in runtime but needed by some games
+      at-spi2-atk
+      at-spi2-core # CrossCode
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-ugly
+      gst_all_1.gst-plugins-base
+      json-glib # paradox launcher (Stellaris)
+      libdrm
+      libxkbcommon # paradox launcher
+      libvorbis # Dead Cells
+      libxcrypt # Alien Isolation, XCOM 2, Company of Heroes 2
+      mono
+      xorg.xkeyboardconfig
+      xorg.libpciaccess
+      xorg.libXScrnSaver # Dead Cells
+      icu # dotnet runtime, e.g. Stardew Valley
 
-    # screeps dependencies
-    gtk3
-    dbus
-    zlib
-    atk
-    cairo
-    freetype
-    gdk-pixbuf
-    fontconfig
+      # screeps dependencies
+      gtk3
+      dbus
+      zlib
+      atk
+      cairo
+      freetype
+      gdk-pixbuf
+      fontconfig
 
-    # Prison Architect
-    libGLU
-    libuuid
-    libbsd
-    alsa-lib
+      # Prison Architect
+      libGLU
+      libuuid
+      libbsd
+      alsa-lib
 
-    # Loop Hero
-    libidn2
-    libpsl
-    nghttp2.lib
-    rtmpdump
-  ]
-  # This needs to come from pkgs as the passed-in steam-runtime-wrapped may not be the same architecture
-  ++ pkgs.steamPackages.steam-runtime-wrapped.overridePkgs
-  ++ extraLibraries pkgs;
+      # Loop Hero
+      libidn2
+      libpsl
+      nghttp2.lib
+      rtmpdump
+    ]
+    # This needs to come from pkgs as the passed-in steam-runtime-wrapped may not be the same architecture
+    ++ pkgs.steamPackages.steam-runtime-wrapped.overridePkgs
+    ++ extraLibraries pkgs;
 
   extraInstallCommands = lib.optionalString (steam != null) ''
     mkdir -p $out/share/applications
@@ -271,15 +281,14 @@ in buildFHSEnv rec {
     exec steam ${extraArgs} "$@"
   '';
 
-  meta =
-    if steam != null
-    then
-      steam.meta // lib.optionalAttrs (!withGameSpecificLibraries) {
-        description = steam.meta.description + " (without game specific libraries)";
-      }
-    else {
-      description = "Steam dependencies (dummy package, do not use)";
-    };
+  meta = if steam != null then
+    steam.meta // lib.optionalAttrs (!withGameSpecificLibraries) {
+      description = steam.meta.description
+        + " (without game specific libraries)";
+    }
+  else {
+    description = "Steam dependencies (dummy package, do not use)";
+  };
 
   # allows for some gui applications to share IPC
   # this fixes certain issues where they don't render correctly
@@ -313,8 +322,9 @@ in buildFHSEnv rec {
       exec -- "$run" "$@"
     '';
 
-    meta = (steam.meta or {}) // {
-      description = "Run commands in the same FHS environment that is used for Steam";
+    meta = (steam.meta or { }) // {
+      description =
+        "Run commands in the same FHS environment that is used for Steam";
       name = "steam-run";
     };
   };

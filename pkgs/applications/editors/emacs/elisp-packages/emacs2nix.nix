@@ -8,12 +8,9 @@ let
     sha256 = "sha256-Mh9G8LH3n1ccg+shBoWQRk67yAA+GEYGkk8tjM7W02Y=";
     fetchSubmodules = true;
   };
-in
-pkgs.mkShell {
+in pkgs.mkShell {
 
-  packages = [
-    pkgs.bash
-  ];
+  packages = [ pkgs.bash ];
 
   EMACS2NIX = src;
 

@@ -7,9 +7,9 @@ buildGoModule rec {
   subPackages = [ "cmd/okta-aws-cli" ];
 
   src = fetchFromGitHub {
-    owner  = "okta";
-    repo   = "okta-aws-cli";
-    rev    = "v${version}";
+    owner = "okta";
+    repo = "okta-aws-cli";
+    rev = "v${version}";
     sha256 = "1qlc04fydcqnifbhrzdw63wq3ndzsyzp4s1bdvfhvizbhdi03mpp";
   };
 

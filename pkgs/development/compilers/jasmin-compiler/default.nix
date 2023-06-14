@@ -5,24 +5,23 @@ stdenv.mkDerivation rec {
   version = "2022.09.3";
 
   src = fetchurl {
-    url = "https://github.com/jasmin-lang/jasmin/releases/download/v${version}/jasmin-compiler-v${version}.tar.bz2";
+    url =
+      "https://github.com/jasmin-lang/jasmin/releases/download/v${version}/jasmin-compiler-v${version}.tar.bz2";
     hash = "sha256-CCLUF3GDeQrWIur1ve19WveNiOR/6kRVWuU7wvmXGGg=";
   };
 
   sourceRoot = "jasmin-compiler-v${version}/compiler";
 
-  nativeBuildInputs = with ocamlPackages; [ ocaml findlib ocamlbuild menhir camlidl ];
+  nativeBuildInputs = with ocamlPackages; [
+    ocaml
+    findlib
+    ocamlbuild
+    menhir
+    camlidl
+  ];
 
-  buildInputs = [
-    mpfr
-    ppl
-  ] ++ (with ocamlPackages; [
-    apron
-    batteries
-    menhirLib
-    yojson
-    zarith
-  ]);
+  buildInputs = [ mpfr ppl ]
+    ++ (with ocamlPackages; [ apron batteries menhirLib yojson zarith ]);
 
   installPhase = ''
     runHook preInstall

@@ -3,13 +3,13 @@
 let
   # The version number here is whatever is reported by the RUBY_VERSION string
   rubyVersion = mkRubyVersion "3" "1" "4" "";
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "jruby";
   version = "9.4.3.0";
 
   src = fetchurl {
-    url = "https://s3.amazonaws.com/jruby.org/downloads/${finalAttrs.version}/jruby-bin-${finalAttrs.version}.tar.gz";
+    url =
+      "https://s3.amazonaws.com/jruby.org/downloads/${finalAttrs.version}/jruby-bin-${finalAttrs.version}.tar.gz";
     hash = "sha256-sJfgjFZp6KGIKI4RORHRK0rSvWeiwgnW36hEXWOk2Mk=";
   };
 
@@ -49,9 +49,7 @@ stdenv.mkDerivation (finalAttrs: {
     rubyEngine = "jruby";
     gemPath = "lib/${rubyEngine}/gems/${rubyVersion.libDir}";
     libPath = "lib/${rubyEngine}/${rubyVersion.libDir}";
-    devEnv = callPackage ../ruby/dev.nix {
-      ruby = finalAttrs.finalPackage;
-    };
+    devEnv = callPackage ../ruby/dev.nix { ruby = finalAttrs.finalPackage; };
   };
 
   meta = with lib; {

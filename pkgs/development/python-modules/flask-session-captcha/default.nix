@@ -1,12 +1,5 @@
-{ lib
-, fetchFromGitHub
-, buildPythonPackage
-, flask
-, flask-sessionstore
-, flask-sqlalchemy
-, captcha
-, pytestCheckHook
-}:
+{ lib, fetchFromGitHub, buildPythonPackage, flask, flask-sessionstore
+, flask-sqlalchemy, captcha, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "flask-session-captcha";

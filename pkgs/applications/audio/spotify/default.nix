@@ -1,8 +1,4 @@
-{ lib
-, stdenv
-, callPackage
-, ...
-}@args:
+{ lib, stdenv, callPackage, ... }@args:
 
 let
   extraArgs = removeAttrs args [ "callPackage" ];
@@ -17,6 +13,7 @@ let
     platforms = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
   };
 
-in if stdenv.isDarwin
-then callPackage ./darwin.nix (extraArgs // { inherit pname meta; })
-else callPackage ./linux.nix (extraArgs // { inherit pname meta; })
+in if stdenv.isDarwin then
+  callPackage ./darwin.nix (extraArgs // { inherit pname meta; })
+else
+  callPackage ./linux.nix (extraArgs // { inherit pname meta; })

@@ -1,9 +1,4 @@
-{ lib
-, kaem
-, ln-boot
-, mes
-, mes-libc
-}:
+{ lib, kaem, ln-boot, mes, mes-libc }:
 let
   pname = "mes-libc";
   inherit (mes.compiler) version;
@@ -19,13 +14,13 @@ let
   # the operation in two
   firstLibc = lib.take 100 libc_gnu_SOURCES;
   lastLibc = lib.drop 100 libc_gnu_SOURCES;
-in
-kaem.runCommand "${pname}-${version}" {
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
   nativeBuildInputs = [ ln-boot ];
 
-  passthru.CFLAGS = "-DHAVE_CONFIG_H=1 -I${mes-libc}/include -I${mes-libc}/include/linux/x86";
+  passthru.CFLAGS =
+    "-DHAVE_CONFIG_H=1 -I${mes-libc}/include -I${mes-libc}/include/linux/x86";
 
   meta = with lib; {
     description = "The Mes C Library";
@@ -42,7 +37,9 @@ kaem.runCommand "${pname}-${version}" {
 
   # libc.c
   catm ''${TMPDIR}/first.c ${lib.concatStringsSep " " firstLibc}
-  catm ''${out}/lib/libc.c ''${TMPDIR}/first.c ${lib.concatStringsSep " " lastLibc}
+  catm ''${out}/lib/libc.c ''${TMPDIR}/first.c ${
+    lib.concatStringsSep " " lastLibc
+  }
 
   # crt{1,n,i}.c
   cp lib/linux/x86-mes-gcc/crt1.c ''${out}/lib

@@ -1,18 +1,6 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
+{ lib, stdenv, rustPlatform, fetchFromGitHub
 
-, buildPackages
-, cargo
-, iproute2
-, lzo
-, openssl
-, pkg-config
-, ronn
-, rustc
-, zlib
-}:
+, buildPackages, cargo, iproute2, lzo, openssl, pkg-config, ronn, rustc, zlib }:
 
 let
   pname = "zerotierone";
@@ -51,19 +39,9 @@ in stdenv.mkDerivation {
       --replace '-mcpu=arm1176jzf-s' ""
   '';
 
-  nativeBuildInputs = [
-    pkg-config
-    ronn
-    rustPlatform.cargoSetupHook
-    cargo
-    rustc
-  ];
-  buildInputs = [
-    iproute2
-    lzo
-    openssl
-    zlib
-  ];
+  nativeBuildInputs =
+    [ pkg-config ronn rustPlatform.cargoSetupHook cargo rustc ];
+  buildInputs = [ iproute2 lzo openssl zlib ];
 
   enableParallelBuilding = true;
 
@@ -92,10 +70,17 @@ in stdenv.mkDerivation {
   passthru.updateScript = ./update.sh;
 
   meta = with lib; {
-    description = "Create flat virtual Ethernet networks of almost unlimited size";
+    description =
+      "Create flat virtual Ethernet networks of almost unlimited size";
     homepage = "https://www.zerotier.com";
     license = licenses.bsl11;
-    maintainers = with maintainers; [ sjmackenzie zimbatm ehmry obadz danielfullmer ];
+    maintainers = with maintainers; [
+      sjmackenzie
+      zimbatm
+      ehmry
+      obadz
+      danielfullmer
+    ];
     platforms = platforms.all;
   };
 }

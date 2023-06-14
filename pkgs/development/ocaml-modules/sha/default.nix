@@ -5,18 +5,15 @@ buildDunePackage rec {
   version = "1.15.4";
 
   src = fetchurl {
-    url = "https://github.com/djs55/ocaml-${pname}/releases/download/v${version}/${pname}-${version}.tbz";
+    url =
+      "https://github.com/djs55/ocaml-${pname}/releases/download/v${version}/${pname}-${version}.tbz";
     hash = "sha256-beWxITmxmZzp30zHiloxiGwqVHydRIvyhT+LU7zx8bE=";
   };
 
-  propagatedBuildInputs = [
-    stdlib-shims
-  ];
+  propagatedBuildInputs = [ stdlib-shims ];
 
   doCheck = lib.versionAtLeast ocaml.version "4.08";
-  checkInputs = [
-    ounit2
-  ];
+  checkInputs = [ ounit2 ];
 
   meta = with lib; {
     description = "Binding for SHA interface code in OCaml";

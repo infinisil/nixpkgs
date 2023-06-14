@@ -1,26 +1,6 @@
-{ buildGoModule
-, cargo
-, cmake
-, fetchFromGitHub
-, fetchpatch
-, go
-, lib
-, libsecret
-, pkg-config
-, polkit
-, python3
-, qt5compat
-, qtbase
-, qtnetworkauth
-, qtsvg
-, qttools
-, qtwebsockets
-, rustPlatform
-, rustc
-, stdenv
-, wireguard-tools
-, wrapQtAppsHook
-}:
+{ buildGoModule, cargo, cmake, fetchFromGitHub, fetchpatch, go, lib, libsecret
+, pkg-config, polkit, python3, qt5compat, qtbase, qtnetworkauth, qtsvg, qttools
+, qtwebsockets, rustPlatform, rustc, stdenv, wireguard-tools, wrapQtAppsHook }:
 
 let
   pname = "mozillavpn";
@@ -35,13 +15,15 @@ let
   patches = [
     # Force version downgrade for openssl and openssl-sys crates
     (fetchpatch {
-      url = "https://github.com/mozilla-mobile/mozilla-vpn-client/commit/5911071ea37d12401af32dcdf2a542ca5049bf2f.patch";
+      url =
+        "https://github.com/mozilla-mobile/mozilla-vpn-client/commit/5911071ea37d12401af32dcdf2a542ca5049bf2f.patch";
       hash = "sha256-b3yOgn3Et0sYpqzUUdmlGIbzZSz13Q9HW56hyQqRnHc=";
       revert = true;
     })
     # [2.15] Restore qtglean/Cargo.lock
     (fetchpatch {
-      url = "https://github.com/mozilla-mobile/mozilla-vpn-client/pull/7026/commits/13c1b77ee4249883a33b6ac240b3ca143b485ba1.patch";
+      url =
+        "https://github.com/mozilla-mobile/mozilla-vpn-client/pull/7026/commits/13c1b77ee4249883a33b6ac240b3ca143b485ba1.patch";
       hash = "sha256-L4D71zreDMLAIbP4x1as9QdNmMC1snUZSwlkKehg5yM=";
     })
   ];
@@ -71,19 +53,11 @@ let
     hash = "sha256-cW+nf+Dho+eSzOBo3xhxki7NXpg0wd5ZM9OMA6iOUl4=";
   };
 
-in
-stdenv.mkDerivation {
+in stdenv.mkDerivation {
   inherit pname version src patches;
 
-  buildInputs = [
-    libsecret
-    polkit
-    qt5compat
-    qtbase
-    qtnetworkauth
-    qtsvg
-    qtwebsockets
-  ];
+  buildInputs =
+    [ libsecret polkit qt5compat qtbase qtnetworkauth qtsvg qtwebsockets ];
   nativeBuildInputs = [
     cmake
     go

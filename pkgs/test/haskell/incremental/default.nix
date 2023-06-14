@@ -25,11 +25,8 @@ let
   # GHC will then naturally pick up and reuse these products, making this build
   # complete much more quickly than the previous one.
   temporary-incremental-build = overrideCabal (drv: {
-    previousIntermediates = temporary-full-build-with-incremental-output.intermediates;
+    previousIntermediates =
+      temporary-full-build-with-incremental-output.intermediates;
   }) temporary;
-in
-  temporary-incremental-build.overrideAttrs (old: {
-    meta = {
-      maintainers = lib.teams.mercury.members;
-    };
-  })
+in temporary-incremental-build.overrideAttrs
+(old: { meta = { maintainers = lib.teams.mercury.members; }; })

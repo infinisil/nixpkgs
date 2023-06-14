@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, sqlite
-, installShellFiles
-, Security
-, libiconv
-, innernet
-, testers
-}:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, sqlite, installShellFiles
+, Security, libiconv, innernet, testers }:
 
 rustPlatform.buildRustPackage rec {
   pname = "innernet";
@@ -22,11 +13,9 @@ rustPlatform.buildRustPackage rec {
   };
   cargoSha256 = "sha256-qQ6yRI0rNxV/TRZHCR69h6kx6L2Wp75ziw+B2P8LZmE=";
 
-  nativeBuildInputs = [
-    rustPlatform.bindgenHook
-    installShellFiles
-  ];
-  buildInputs = [ sqlite ] ++ lib.optionals stdenv.isDarwin [ Security libiconv ];
+  nativeBuildInputs = [ rustPlatform.bindgenHook installShellFiles ];
+  buildInputs = [ sqlite ]
+    ++ lib.optionals stdenv.isDarwin [ Security libiconv ];
 
   postInstall = ''
     installManPage doc/innernet-server.8.gz
@@ -39,8 +28,14 @@ rustPlatform.buildRustPackage rec {
   '');
 
   passthru.tests = {
-    serverVersion = testers.testVersion { package = innernet; command = "innernet-server --version"; };
-    version = testers.testVersion { package = innernet; command = "innernet --version"; };
+    serverVersion = testers.testVersion {
+      package = innernet;
+      command = "innernet-server --version";
+    };
+    version = testers.testVersion {
+      package = innernet;
+      command = "innernet --version";
+    };
   };
 
   meta = with lib; {

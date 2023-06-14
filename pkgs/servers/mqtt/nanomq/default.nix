@@ -1,23 +1,8 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, ninja
-, pkg-config
-, cyclonedds
-, libmysqlclient
-, mariadb
-, mbedtls
-, sqlite
-, zeromq
-, flex
-, bison
+{ lib, stdenv, fetchFromGitHub, cmake, ninja, pkg-config, cyclonedds
+, libmysqlclient, mariadb, mbedtls, sqlite, zeromq, flex, bison
 
 # for tests
-, python3
-, mosquitto
-, netcat-gnu
-}:
+, python3, mosquitto, netcat-gnu }:
 
 let
 
@@ -68,7 +53,8 @@ in stdenv.mkDerivation (finalAttrs: {
     "-DNNG_ENABLE_TLS=ON"
   ];
 
-  env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.cc.isClang "-Wno-return-type";
+  env.NIX_CFLAGS_COMPILE =
+    lib.optionalString stdenv.cc.isClang "-Wno-return-type";
 
   # disabled by default - not 100% reliable and making nanomq depend on
   # mosquitto would annoy people
@@ -94,11 +80,13 @@ in stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru.tests = {
-    withInstallChecks = finalAttrs.finalPackage.overrideAttrs (_: { doInstallCheck = true; });
+    withInstallChecks =
+      finalAttrs.finalPackage.overrideAttrs (_: { doInstallCheck = true; });
   };
 
   meta = with lib; {
-    description = "An ultra-lightweight and blazing-fast MQTT broker for IoT edge";
+    description =
+      "An ultra-lightweight and blazing-fast MQTT broker for IoT edge";
     homepage = "https://nanomq.io/";
     license = licenses.mit;
     maintainers = with maintainers; [ sikmir ];

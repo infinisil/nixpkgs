@@ -1,23 +1,18 @@
-{ lib
-, fetchurl
-, kaem
-, tinycc
-, gnumake
-, gnupatch
-, coreutils
-}:
+{ lib, fetchurl, kaem, tinycc, gnumake, gnupatch, coreutils }:
 let
   pname = "heirloom-devtools";
   version = "070527";
 
   src = fetchurl {
-    url = "mirror://sourceforge/heirloom/heirloom-devtools/heirloom-devtools-${version}.tar.bz2";
+    url =
+      "mirror://sourceforge/heirloom/heirloom-devtools/heirloom-devtools-${version}.tar.bz2";
     sha256 = "9f233d8b78e4351fe9dd2d50d83958a0e5af36f54e9818521458a08e058691ba";
   };
 
   # Thanks to the live-bootstrap project!
   # See https://github.com/fosslinux/live-bootstrap/blob/d918b984ad6fe4fc7680f3be060fd82f8c9fddd9/sysa/heirloom-devtools-070527/heirloom-devtools-070527.kaem
-  liveBootstrap = "https://github.com/fosslinux/live-bootstrap/raw/d918b984ad6fe4fc7680f3be060fd82f8c9fddd9/sysa/heirloom-devtools-070527";
+  liveBootstrap =
+    "https://github.com/fosslinux/live-bootstrap/raw/d918b984ad6fe4fc7680f3be060fd82f8c9fddd9/sysa/heirloom-devtools-070527";
 
   patches = [
     # Remove all kinds of wchar support. Mes Libc does not support wchar in any form
@@ -31,16 +26,10 @@ let
       sha256 = "168dfngi51ljjqgd55wbvmffaq61gk48gak50ymnl1br92qkp4zh";
     })
   ];
-in
-kaem.runCommand "${pname}-${version}" {
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnupatch
-    coreutils
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnupatch coreutils ];
 
   meta = with lib; {
     description = "Portable yacc and lex derived from OpenSolaris";

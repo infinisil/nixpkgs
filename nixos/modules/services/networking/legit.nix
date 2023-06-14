@@ -2,15 +2,8 @@
 
 let
   inherit (lib)
-    literalExpression
-    mkEnableOption
-    mdDoc
-    mkIf
-    mkOption
-    mkPackageOptionMD
-    optionalAttrs
-    optional
-    types;
+    literalExpression mkEnableOption mdDoc mkIf mkOption mkPackageOptionMD
+    optionalAttrs optional types;
 
   cfg = config.services.legit;
 
@@ -20,8 +13,7 @@ let
   defaultStateDir = "/var/lib/legit";
   defaultStaticDir = "${cfg.settings.repo.scanPath}/static";
   defaultTemplatesDir = "${cfg.settings.repo.scanPath}/templates";
-in
-{
+in {
   options.services.legit = {
     enable = mkEnableOption (mdDoc "legit git web frontend");
 
@@ -51,7 +43,8 @@ in
           scanPath = mkOption {
             type = types.path;
             default = defaultStateDir;
-            description = mdDoc "Directory where legit will scan for repositories.";
+            description =
+              mdDoc "Directory where legit will scan for repositories.";
           };
           readme = mkOption {
             type = types.listOf types.str;
@@ -73,13 +66,15 @@ in
           templates = mkOption {
             type = types.path;
             default = "${pkgs.legit-web}/lib/legit/templates";
-            defaultText = literalExpression ''"''${pkgs.legit-web}/lib/legit/templates"'';
+            defaultText =
+              literalExpression ''"''${pkgs.legit-web}/lib/legit/templates"'';
             description = mdDoc "Directories where template files are located.";
           };
           static = mkOption {
             type = types.path;
             default = "${pkgs.legit-web}/lib/legit/static";
-            defaultText = literalExpression ''"''${pkgs.legit-web}/lib/legit/static"'';
+            defaultText =
+              literalExpression ''"''${pkgs.legit-web}/lib/legit/static"'';
             description = mdDoc "Directories where static files are located.";
           };
         };
@@ -117,9 +112,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.groups = optionalAttrs (cfg.group == "legit") {
-      "${cfg.group}" = { };
-    };
+    users.groups =
+      optionalAttrs (cfg.group == "legit") { "${cfg.group}" = { }; };
 
     users.users = optionalAttrs (cfg.user == "legit") {
       "${cfg.user}" = {
@@ -143,10 +137,12 @@ in
         Restart = "always";
 
         WorkingDirectory = cfg.settings.repo.scanPath;
-        StateDirectory = [ ] ++
-          optional (cfg.settings.repo.scanPath == defaultStateDir) "legit" ++
-          optional (cfg.settings.dirs.static == defaultStaticDir) "legit/static" ++
-          optional (cfg.settings.dirs.templates == defaultTemplatesDir) "legit/templates";
+        StateDirectory = [ ]
+          ++ optional (cfg.settings.repo.scanPath == defaultStateDir) "legit"
+          ++ optional (cfg.settings.dirs.static == defaultStaticDir)
+          "legit/static"
+          ++ optional (cfg.settings.dirs.templates == defaultTemplatesDir)
+          "legit/templates";
 
         # Hardening
         CapabilityBoundingSet = [ "" ];

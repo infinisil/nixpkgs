@@ -5,7 +5,8 @@ buildDunePackage rec {
   version = "1.6";
 
   src = fetchurl {
-    url = "https://github.com/Chris00/ocaml-benchmark/releases/download/${version}/benchmark-${version}.tbz";
+    url =
+      "https://github.com/Chris00/ocaml-benchmark/releases/download/${version}/benchmark-${version}.tbz";
     hash = "sha256-Mw19cYya/MEy52PVRYE/B6TnqCWw5tEz9CUrUfKAnPA=";
   };
 

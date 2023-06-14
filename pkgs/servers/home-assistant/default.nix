@@ -1,28 +1,20 @@
-{ stdenv
-, lib
-, callPackage
-, fetchFromGitHub
-, fetchPypi
-, python311
-, substituteAll
-, ffmpeg-headless
-, inetutils
-, nixosTests
-, home-assistant
-, testers
+{ stdenv, lib, callPackage, fetchFromGitHub, fetchPypi, python311, substituteAll
+, ffmpeg-headless, inetutils, nixosTests, home-assistant, testers
 
 # Look up dependencies of specified components in component-packages.nix
 , extraComponents ? [ ]
 
-# Additional packages to add to propagatedBuildInputs
-, extraPackages ? ps: []
+  # Additional packages to add to propagatedBuildInputs
+, extraPackages ? ps:
+  [ ]
 
-# Override Python packages using
-# self: super: { pkg = super.pkg.overridePythonAttrs (oldAttrs: { ... }); }
-# Applied after defaultOverrides
-, packageOverrides ? self: super: {}
+  # Override Python packages using
+  # self: super: { pkg = super.pkg.overridePythonAttrs (oldAttrs: { ... }); }
+  # Applied after defaultOverrides
+, packageOverrides ? self: super:
+  { }
 
-# Skip pip install of required packages on startup
+  # Skip pip install of required packages on startup
 , skipPip ? true }:
 
 let
@@ -51,9 +43,7 @@ let
           substituteInPlace pyproject.toml \
             --replace "poetry.masonry" "poetry.core.masonry"
         '';
-        propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [
-          self.pytz
-        ];
+        propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ self.pytz ];
       });
 
       dsmr-parser = super.dsmr-parser.overridePythonAttrs (oldAttrs: rec {
@@ -97,31 +87,26 @@ let
       });
 
       # moto tests are a nuissance
-      moto = super.moto.overridePythonAttrs (_: {
-        doCheck = false;
-      });
+      moto = super.moto.overridePythonAttrs (_: { doCheck = false; });
 
-      notifications-android-tv = super.notifications-android-tv.overridePythonAttrs (oldAttrs: rec {
-        version = "0.1.5";
-        format = "setuptools";
+      notifications-android-tv =
+        super.notifications-android-tv.overridePythonAttrs (oldAttrs: rec {
+          version = "0.1.5";
+          format = "setuptools";
 
-        src = fetchFromGitHub {
-          owner = "engrbm87";
-          repo = "notifications_android_tv";
-          rev = "refs/tags/${version}";
-          hash = "sha256-adkcUuPl0jdJjkBINCTW4Kmc16C/HzL+jaRZB/Qr09A=";
-        };
+          src = fetchFromGitHub {
+            owner = "engrbm87";
+            repo = "notifications_android_tv";
+            rev = "refs/tags/${version}";
+            hash = "sha256-adkcUuPl0jdJjkBINCTW4Kmc16C/HzL+jaRZB/Qr09A=";
+          };
 
-        nativeBuildInputs = with super; [
-          setuptools
-        ];
+          nativeBuildInputs = with super; [ setuptools ];
 
-        propagatedBuildInputs = with super; [
-          requests
-        ];
+          propagatedBuildInputs = with super; [ requests ];
 
-        doCheck = false; # no tests
-      });
+          doCheck = false; # no tests
+        });
 
       # Pinned due to API changes in 1.3.0
       ovoenergy = super.ovoenergy.overridePythonAttrs (oldAttrs: rec {
@@ -153,15 +138,16 @@ let
         };
       });
 
-      py-synologydsm-api = super.py-synologydsm-api.overridePythonAttrs (oldAttrs: rec {
-        version = "2.1.4";
-        src = fetchFromGitHub {
-          owner = "mib1185";
-          repo = "py-synologydsm-api";
-          rev = "refs/tags/v${version}";
-          hash = "sha256-37JzdhMny6YDTBO9NRzfrZJAVAOPnpcr95fOKxisbTg=";
-        };
-      });
+      py-synologydsm-api = super.py-synologydsm-api.overridePythonAttrs
+        (oldAttrs: rec {
+          version = "2.1.4";
+          src = fetchFromGitHub {
+            owner = "mib1185";
+            repo = "py-synologydsm-api";
+            rev = "refs/tags/v${version}";
+            hash = "sha256-37JzdhMny6YDTBO9NRzfrZJAVAOPnpcr95fOKxisbTg=";
+          };
+        });
 
       # Pinned due to API changes >0.3.5.3
       pyatag = super.pyatag.overridePythonAttrs (oldAttrs: rec {
@@ -202,34 +188,35 @@ let
         };
       });
 
-      python-telegram-bot = super.python-telegram-bot.overridePythonAttrs (oldAttrs: rec {
-        version = "13.15";
-        src = fetchFromGitHub {
-          owner = "python-telegram-bot";
-          repo = "python-telegram-bot";
-          rev = "v${version}";
-          hash = "sha256-EViSjr/nnuJIDTwV8j/O50hJkWV3M5aTNnWyzrinoyg=";
-        };
-        propagatedBuildInputs = [
-          self.apscheduler
-          self.cachetools
-          self.certifi
-          self.cryptography
-          self.decorator
-          self.future
-          self.tornado
-          self.urllib3
-        ];
-        setupPyGlobalFlags = [ "--with-upstream-urllib3" ];
-        postPatch = ''
-          rm -r telegram/vendor
-          substituteInPlace requirements.txt \
-            --replace "APScheduler==3.6.3" "APScheduler" \
-            --replace "cachetools==4.2.2" "cachetools" \
-            --replace "tornado==6.1" "tornado"
-        '';
-        doCheck = false;
-      });
+      python-telegram-bot = super.python-telegram-bot.overridePythonAttrs
+        (oldAttrs: rec {
+          version = "13.15";
+          src = fetchFromGitHub {
+            owner = "python-telegram-bot";
+            repo = "python-telegram-bot";
+            rev = "v${version}";
+            hash = "sha256-EViSjr/nnuJIDTwV8j/O50hJkWV3M5aTNnWyzrinoyg=";
+          };
+          propagatedBuildInputs = [
+            self.apscheduler
+            self.cachetools
+            self.certifi
+            self.cryptography
+            self.decorator
+            self.future
+            self.tornado
+            self.urllib3
+          ];
+          setupPyGlobalFlags = [ "--with-upstream-urllib3" ];
+          postPatch = ''
+            rm -r telegram/vendor
+            substituteInPlace requirements.txt \
+              --replace "APScheduler==3.6.3" "APScheduler" \
+              --replace "cachetools==4.2.2" "cachetools" \
+              --replace "tornado==6.1" "tornado"
+          '';
+          doCheck = false;
+        });
 
       sqlalchemy = super.sqlalchemy.overridePythonAttrs (oldAttrs: rec {
         version = "2.0.12";
@@ -279,7 +266,8 @@ let
   ];
 
   python = python311.override {
-    packageOverrides = lib.composeManyExtensions (defaultOverrides ++ [ packageOverrides ]);
+    packageOverrides =
+      lib.composeManyExtensions (defaultOverrides ++ [ packageOverrides ]);
   };
 
   componentPackages = import ./component-packages.nix;
@@ -290,7 +278,9 @@ let
 
   getPackages = component: componentPackages.components.${component};
 
-  componentBuildInputs = lib.concatMap (component: getPackages component python.pkgs) extraComponents;
+  componentBuildInputs =
+    lib.concatMap (component: getPackages component python.pkgs)
+    extraComponents;
 
   # Ensure that we are using a consistent package set
   extraBuildInputs = extraPackages python.pkgs;
@@ -323,9 +313,7 @@ in python.pkgs.buildPythonApplication rec {
     hash = "sha256-ojiNHl+sm1mLiM+rjESeR2zPOCGkG3RQ9to6VfetmZQ=";
   };
 
-  nativeBuildInputs = with python.pkgs; [
-    setuptools
-  ];
+  nativeBuildInputs = with python.pkgs; [ setuptools ];
 
   # copy tests early, so patches apply as they would to the git repo
   prePatch = ''
@@ -363,9 +351,11 @@ in python.pkgs.buildPythonApplication rec {
     ];
   in ''
     sed -r -i \
-      ${lib.concatStringsSep "\n" (map (package:
-        ''-e 's/${package}[<>=]+.*/${package}",/g' \''
-      ) relaxedConstraints)}
+      ${
+        lib.concatStringsSep "\n"
+        (map (package: ''-e 's/${package}[<>=]+.*/${package}",/g' \'')
+          relaxedConstraints)
+      }
       pyproject.toml
     substituteInPlace tests/test_config.py --replace '"/usr"' '"/build/media"'
   '';
@@ -407,35 +397,36 @@ in python.pkgs.buildPythonApplication rec {
   # upstream only tests on Linux, so do we.
   doCheck = stdenv.isLinux;
 
-  nativeCheckInputs = with python.pkgs; [
-    # test infrastructure (selectively from requirement_test.txt)
-    freezegun
-    pytest-asyncio
-    pytest-aiohttp
-    pytest-freezer
-    pytest-mock
-    pytest-rerunfailures
-    pytest-socket
-    pytest-timeout
-    pytest-unordered
-    pytest-xdist
-    pytestCheckHook
-    requests-mock
-    respx
-    stdlib-list
-    syrupy
-    tomli
-    # required through tests/auth/mfa_modules/test_otp.py
-    pyotp
-    # Sneakily imported in tests/conftest.py
-    paho-mqtt
-  ] ++ lib.concatMap (component: getPackages component python.pkgs) [
-    # some components are needed even if tests in tests/components are disabled
-    "default_config"
-    "hue"
-    # for tests/test_config.py::test_merge_id_schema
-    "qwikswitch"
-  ];
+  nativeCheckInputs = with python.pkgs;
+    [
+      # test infrastructure (selectively from requirement_test.txt)
+      freezegun
+      pytest-asyncio
+      pytest-aiohttp
+      pytest-freezer
+      pytest-mock
+      pytest-rerunfailures
+      pytest-socket
+      pytest-timeout
+      pytest-unordered
+      pytest-xdist
+      pytestCheckHook
+      requests-mock
+      respx
+      stdlib-list
+      syrupy
+      tomli
+      # required through tests/auth/mfa_modules/test_otp.py
+      pyotp
+      # Sneakily imported in tests/conftest.py
+      paho-mqtt
+    ] ++ lib.concatMap (component: getPackages component python.pkgs) [
+      # some components are needed even if tests in tests/components are disabled
+      "default_config"
+      "hue"
+      # for tests/test_config.py::test_merge_id_schema
+      "qwikswitch"
+    ];
 
   pytestFlagsArray = [
     # assign tests grouped by file to workers
@@ -473,13 +464,10 @@ in python.pkgs.buildPythonApplication rec {
   '';
 
   passthru = {
-    inherit
-      availableComponents
-      extraComponents
-      getPackages
-      python
+    inherit availableComponents extraComponents getPackages python
       supportedComponentsWithTests;
-    pythonPath = python.pkgs.makePythonPath (componentBuildInputs ++ extraBuildInputs);
+    pythonPath =
+      python.pkgs.makePythonPath (componentBuildInputs ++ extraBuildInputs);
     frontend = python.pkgs.home-assistant-frontend;
     intents = python.pkgs.home-assistant-intents;
     tests = {
@@ -494,7 +482,8 @@ in python.pkgs.buildPythonApplication rec {
 
   meta = with lib; {
     homepage = "https://home-assistant.io/";
-    description = "Open source home automation that puts local control and privacy first";
+    description =
+      "Open source home automation that puts local control and privacy first";
     license = licenses.asl20;
     maintainers = teams.home-assistant.members;
     platforms = platforms.linux;

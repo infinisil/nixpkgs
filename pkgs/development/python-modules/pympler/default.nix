@@ -1,11 +1,5 @@
-{ lib, stdenv
-, bottle
-, buildPythonPackage
-, fetchpatch
-, fetchPypi
-, pytestCheckHook
-, pythonAtLeast
-}:
+{ lib, stdenv, bottle, buildPythonPackage, fetchpatch, fetchPypi
+, pytestCheckHook, pythonAtLeast }:
 
 buildPythonPackage rec {
   pname = "Pympler";
@@ -26,16 +20,12 @@ buildPythonPackage rec {
     })
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   # There is a version of bottle bundled with Pympler, but it is broken on
   # Python 3.11. Fortunately, Pympler will preferentially import an external
   # bottle if it is available, so we make it an explicit dependency.
-  propagatedBuildInputs = [
-    bottle
-  ];
+  propagatedBuildInputs = [ bottle ];
 
   disabledTests = [
     # 'AssertionError: 'function (test.muppy.test_summary.func)' != 'function (muppy.test_summary.func)'

@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.services.hardware.openrgb;
+let cfg = config.services.hardware.openrgb;
 in {
   options.services.hardware.openrgb = {
     enable = mkEnableOption (lib.mdDoc "OpenRGB server");
@@ -18,7 +17,8 @@ in {
     motherboard = mkOption {
       type = types.nullOr (types.enum [ "amd" "intel" ]);
       default = null;
-      description = lib.mdDoc "CPU family of motherboard. Allows for addition motherboard i2c support.";
+      description = lib.mdDoc
+        "CPU family of motherboard. Allows for addition motherboard i2c support.";
     };
 
     server.port = mkOption {
@@ -34,8 +34,8 @@ in {
     services.udev.packages = [ cfg.package ];
 
     boot.kernelModules = [ "i2c-dev" ]
-     ++ lib.optionals (cfg.motherboard == "amd") [ "i2c-piix4" ]
-     ++ lib.optionals (cfg.motherboard == "intel") [ "i2c-i801" ];
+      ++ lib.optionals (cfg.motherboard == "amd") [ "i2c-piix4" ]
+      ++ lib.optionals (cfg.motherboard == "intel") [ "i2c-i801" ];
 
     systemd.services.openrgb = {
       description = "OpenRGB server daemon";
@@ -43,7 +43,9 @@ in {
       serviceConfig = {
         StateDirectory = "OpenRGB";
         WorkingDirectory = "/var/lib/OpenRGB";
-        ExecStart = "${cfg.package}/bin/openrgb --server --server-port ${toString cfg.server.port}";
+        ExecStart = "${cfg.package}/bin/openrgb --server --server-port ${
+            toString cfg.server.port
+          }";
         Restart = "always";
       };
     };

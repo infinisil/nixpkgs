@@ -1,13 +1,13 @@
-{ lib, stdenv, fetchurl, libtool, cmake, libxml2, cppunit, boost
-, apr, aprutil, db, expat
-}:
+{ lib, stdenv, fetchurl, libtool, cmake, libxml2, cppunit, boost, apr, aprutil
+, db, expat }:
 
 stdenv.mkDerivation rec {
   pname = "log4cxx";
   version = "1.1.0";
 
   src = fetchurl {
-    url = "mirror://apache/logging/log4cxx/${version}/apache-${pname}-${version}.tar.gz";
+    url =
+      "mirror://apache/logging/log4cxx/${version}/apache-${pname}-${version}.tar.gz";
     hash = "sha256-H8fYJpdTQYS8D3VzSNlp0khSuUj2PWsXKD/R7inCwoo=";
   };
 

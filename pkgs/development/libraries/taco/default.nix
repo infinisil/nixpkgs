@@ -1,11 +1,5 @@
-{ stdenv
-, lib
-, fetchgit
-, cmake
-, llvmPackages
-, enablePython ? false
-, python ? null
-}:
+{ stdenv, lib, fetchgit, cmake, llvmPackages, enablePython ? false
+, python ? null }:
 
 let pyEnv = python.withPackages (p: with p; [ numpy scipy ]);
 
@@ -29,9 +23,7 @@ in stdenv.mkDerivation rec {
 
   propagatedBuildInputs = lib.optional enablePython pyEnv;
 
-  cmakeFlags = [
-    "-DOPENMP=ON"
-  ] ++ lib.optional enablePython "-DPYTHON=ON" ;
+  cmakeFlags = [ "-DOPENMP=ON" ] ++ lib.optional enablePython "-DPYTHON=ON";
 
   postInstall = lib.strings.optionalString enablePython ''
     mkdir -p $out/${python.sitePackages}

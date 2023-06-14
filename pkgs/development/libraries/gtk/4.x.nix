@@ -1,57 +1,15 @@
-{ lib
-, stdenv
-, substituteAll
-, fetchurl
-, fetchpatch2
-, pkg-config
-, gettext
-, graphene
-, gi-docgen
-, meson
-, ninja
-, python3
-, makeWrapper
-, shared-mime-info
-, isocodes
-, glib
-, cairo
-, pango
-, pandoc
-, gdk-pixbuf
-, gobject-introspection
-, fribidi
-, harfbuzz
-, xorg
-, libepoxy
-, libxkbcommon
-, libpng
-, libtiff
-, libjpeg
-, libxml2
-, gnome
-, gsettings-desktop-schemas
-, gst_all_1
-, sassc
-, trackerSupport ? stdenv.isLinux
-, tracker
-, x11Support ? stdenv.isLinux
-, waylandSupport ? stdenv.isLinux
-, libGL
+{ lib, stdenv, substituteAll, fetchurl, fetchpatch2, pkg-config, gettext
+, graphene, gi-docgen, meson, ninja, python3, makeWrapper, shared-mime-info
+, isocodes, glib, cairo, pango, pandoc, gdk-pixbuf, gobject-introspection
+, fribidi, harfbuzz, xorg, libepoxy, libxkbcommon, libpng, libtiff, libjpeg
+, libxml2, gnome, gsettings-desktop-schemas, gst_all_1, sassc
+, trackerSupport ? stdenv.isLinux, tracker, x11Support ? stdenv.isLinux
+, waylandSupport ? stdenv.isLinux, libGL
 # experimental and can cause crashes in inspector
-, vulkanSupport ? false
-, vulkan-loader
-, vulkan-headers
-, wayland
-, wayland-protocols
-, wayland-scanner
-, xineramaSupport ? stdenv.isLinux
-, cupsSupport ? stdenv.isLinux
-, cups
-, AppKit
-, Cocoa
-, libexecinfo
-, broadwaySupport ? true
-}:
+, vulkanSupport ? false, vulkan-loader, vulkan-headers, wayland
+, wayland-protocols, wayland-scanner, xineramaSupport ? stdenv.isLinux
+, cupsSupport ? stdenv.isLinux, cups, AppKit, Cocoa, libexecinfo
+, broadwaySupport ? true }:
 
 let
 
@@ -61,22 +19,19 @@ let
     gtk_binary_version = "4.0.0";
   };
 
-in
-
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   pname = "gtk4";
   version = "4.10.3";
 
   outputs = [ "out" "dev" ] ++ lib.optionals x11Support [ "devdoc" ];
   outputBin = "dev";
 
-  setupHooks = [
-    ./hooks/drop-icon-theme-cache.sh
-    gtkCleanImmodulesCache
-  ];
+  setupHooks = [ ./hooks/drop-icon-theme-cache.sh gtkCleanImmodulesCache ];
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk/${lib.versions.majorMinor version}/gtk-${version}.tar.xz";
+    url = "mirror://gnome/sources/gtk/${
+        lib.versions.majorMinor version
+      }/gtk-${version}.tar.xz";
     sha256 = "RUVEGteeN3624KcFAm3HpGiG5GobA020CRKQnagBzqk=";
   };
 
@@ -87,21 +42,21 @@ stdenv.mkDerivation rec {
     # Fix deleting in Nautilus (part of 4.10.4)
     # https://gitlab.gnome.org/GNOME/nautilus/-/issues/2945
     (fetchpatch2 {
-      url = "https://gitlab.gnome.org/GNOME/gtk/-/commit/4f47683710bbb4b56c286c6ee6a5c394fcf2b755.patch";
+      url =
+        "https://gitlab.gnome.org/GNOME/gtk/-/commit/4f47683710bbb4b56c286c6ee6a5c394fcf2b755.patch";
       sha256 = "fU9SX8MH37ZN6Ffk/YhYmipTC7+uT9JXnWggArWNkqA=";
     })
     # Fix border/artifact appearing in applications (part of 4.10.4)
     # https://gitlab.gnome.org/GNOME/mutter/-/issues/2805
     # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/6696
     (fetchpatch2 {
-      url = "https://gitlab.gnome.org/GNOME/gtk/-/commit/b686ce1cb62dba505120e0f1116c516662a06e30.patch";
+      url =
+        "https://gitlab.gnome.org/GNOME/gtk/-/commit/b686ce1cb62dba505120e0f1116c516662a06e30.patch";
       sha256 = "0zjY5s+T4CVe3WiowgWE58ruVvqBFUuY2juwBOzMRN4=";
     })
   ];
 
-  depsBuildBuild = [
-    pkg-config
-  ];
+  depsBuildBuild = [ pkg-config ];
 
   nativeBuildInputs = [
     gettext
@@ -114,9 +69,7 @@ stdenv.mkDerivation rec {
     sassc
     gi-docgen
     libxml2 # for xmllint
-  ] ++ lib.optionals waylandSupport [
-    wayland-scanner
-  ] ++ setupHooks;
+  ] ++ lib.optionals waylandSupport [ wayland-scanner ] ++ setupHooks;
 
   buildInputs = [
     libxkbcommon
@@ -125,38 +78,23 @@ stdenv.mkDerivation rec {
     libjpeg
     (libepoxy.override { inherit x11Support; })
     isocodes
-  ] ++ lib.optionals vulkanSupport [
-    vulkan-headers
-  ] ++ [
-    gst_all_1.gst-plugins-base
-    gst_all_1.gst-plugins-bad
-    fribidi
-    harfbuzz
-  ] ++ (with xorg; [
-    libICE
-    libSM
-    libXcursor
-    libXdamage
-    libXi
-    libXrandr
-    libXrender
-  ]) ++ lib.optionals stdenv.isDarwin [
-    AppKit
-  ] ++ lib.optionals trackerSupport [
-    tracker
-  ] ++ lib.optionals waylandSupport [
-    libGL
-    wayland
-    wayland-protocols
-  ] ++ lib.optionals xineramaSupport [
-    xorg.libXinerama
-  ] ++ lib.optionals cupsSupport [
-    cups
-  ] ++ lib.optionals stdenv.isDarwin [
-    Cocoa
-  ] ++ lib.optionals stdenv.hostPlatform.isMusl [
-    libexecinfo
-  ];
+  ] ++ lib.optionals vulkanSupport [ vulkan-headers ]
+    ++ [ gst_all_1.gst-plugins-base gst_all_1.gst-plugins-bad fribidi harfbuzz ]
+    ++ (with xorg; [
+      libICE
+      libSM
+      libXcursor
+      libXdamage
+      libXi
+      libXrandr
+      libXrender
+    ]) ++ lib.optionals stdenv.isDarwin [ AppKit ]
+    ++ lib.optionals trackerSupport [ tracker ]
+    ++ lib.optionals waylandSupport [ libGL wayland wayland-protocols ]
+    ++ lib.optionals xineramaSupport [ xorg.libXinerama ]
+    ++ lib.optionals cupsSupport [ cups ]
+    ++ lib.optionals stdenv.isDarwin [ Cocoa ]
+    ++ lib.optionals stdenv.hostPlatform.isMusl [ libexecinfo ];
   #TODO: colord?
 
   propagatedBuildInputs = [
@@ -166,15 +104,12 @@ stdenv.mkDerivation rec {
     glib
     graphene
     pango
-  ] ++ lib.optionals waylandSupport [
-    wayland
-  ] ++ lib.optionals vulkanSupport [
-    vulkan-loader
-  ] ++ [
-    # Required for GSettings schemas at runtime.
-    # Will be picked up by wrapGAppsHook.
-    gsettings-desktop-schemas
-  ];
+  ] ++ lib.optionals waylandSupport [ wayland ]
+    ++ lib.optionals vulkanSupport [ vulkan-loader ] ++ [
+      # Required for GSettings schemas at runtime.
+      # Will be picked up by wrapGAppsHook.
+      gsettings-desktop-schemas
+    ];
 
   mesonFlags = [
     # ../docs/tools/shooter.c:4:10: fatal error: 'cairo-xlib.h' file not found
@@ -182,15 +117,11 @@ stdenv.mkDerivation rec {
     "-Dbuild-tests=false"
     "-Dtracker=${if trackerSupport then "enabled" else "disabled"}"
     "-Dbroadway-backend=${lib.boolToString broadwaySupport}"
-  ] ++ lib.optionals vulkanSupport [
-    "-Dvulkan=enabled"
-  ] ++ lib.optionals (!cupsSupport) [
-    "-Dprint-cups=disabled"
-  ] ++ lib.optionals (stdenv.isDarwin && !stdenv.isAarch64) [
-    "-Dmedia-gstreamer=disabled" # requires gstreamer-gl
-  ] ++ lib.optionals (!x11Support) [
-    "-Dx11-backend=false"
-  ];
+  ] ++ lib.optionals vulkanSupport [ "-Dvulkan=enabled" ]
+    ++ lib.optionals (!cupsSupport) [ "-Dprint-cups=disabled" ]
+    ++ lib.optionals (stdenv.isDarwin && !stdenv.isAarch64) [
+      "-Dmedia-gstreamer=disabled" # requires gstreamer-gl
+    ] ++ lib.optionals (!x11Support) [ "-Dx11-backend=false" ];
 
   doCheck = false; # needs X11
 
@@ -242,7 +173,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Wrap demos
-  postFixup =  lib.optionalString (!stdenv.isDarwin) ''
+  postFixup = lib.optionalString (!stdenv.isDarwin) ''
     demos=(gtk4-demo gtk4-demo-application gtk4-icon-browser gtk4-widget-factory)
 
     for program in ''${demos[@]}; do
@@ -263,7 +194,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "A multi-platform toolkit for creating graphical user interfaces";
+    description =
+      "A multi-platform toolkit for creating graphical user interfaces";
     longDescription = ''
       GTK is a highly usable, feature rich toolkit for creating
       graphical user interfaces which boasts cross platform

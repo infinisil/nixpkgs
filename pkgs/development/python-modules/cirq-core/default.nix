@@ -1,34 +1,11 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, pythonAtLeast
-, pythonOlder
-, fetchFromGitHub
-, fetchpatch
-, duet
-, matplotlib
-, networkx
-, numpy
-, pandas
-, requests
-, scipy
-, sortedcontainers
-, sympy
-, tqdm
-, typing-extensions
-  # Contrib requirements
-, withContribRequires ? false
-, autoray ? null
-, opt-einsum
-, ply
-, pylatex ? null
-, pyquil ? null
-, quimb ? null
+{ lib, stdenv, buildPythonPackage, pythonAtLeast, pythonOlder, fetchFromGitHub
+, fetchpatch, duet, matplotlib, networkx, numpy, pandas, requests, scipy
+, sortedcontainers, sympy, tqdm, typing-extensions
+# Contrib requirements
+, withContribRequires ? false, autoray ? null, opt-einsum, ply, pylatex ? null
+, pyquil ? null, quimb ? null
   # test inputs
-, pytestCheckHook
-, freezegun
-, pytest-asyncio
-}:
+, pytestCheckHook, freezegun, pytest-asyncio }:
 
 buildPythonPackage rec {
   pname = "cirq-core";
@@ -50,7 +27,8 @@ buildPythonPackage rec {
   patches = [
     # https://github.com/quantumlib/Cirq/pull/5991
     (fetchpatch {
-      url = "https://build.opensuse.org/public/source/openSUSE:Factory/python-cirq/cirq-pr5991-np1.24.patch?rev=8";
+      url =
+        "https://build.opensuse.org/public/source/openSUSE:Factory/python-cirq/cirq-pr5991-np1.24.patch?rev=8";
       stripLen = 1;
       hash = "sha256-d2FpaxM1PsPWT9ZM9v2gVrnLCy9zmvkkyAVgo85eL3U=";
     })
@@ -84,11 +62,7 @@ buildPythonPackage rec {
     quimb
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    pytest-asyncio
-    freezegun
-  ];
+  nativeCheckInputs = [ pytestCheckHook pytest-asyncio freezegun ];
 
   disabledTestPaths = lib.optionals (!withContribRequires) [
     # Requires external (unpackaged) libraries, so untested
@@ -107,7 +81,8 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Framework for creating, editing, and invoking Noisy Intermediate Scale Quantum (NISQ) circuits";
+    description =
+      "Framework for creating, editing, and invoking Noisy Intermediate Scale Quantum (NISQ) circuits";
     homepage = "https://github.com/quantumlib/cirq";
     changelog = "https://github.com/quantumlib/Cirq/releases/tag/v${version}";
     license = licenses.asl20;

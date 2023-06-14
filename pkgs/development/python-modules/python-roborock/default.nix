@@ -1,20 +1,6 @@
-{ lib
-, stdenv
-, aiohttp
-, async-timeout
-, buildPythonPackage
-, click
-, construct
-, dacite
-, fetchFromGitHub
-, paho-mqtt
-, poetry-core
-, pycryptodome
-, pycryptodomex
-, pytest-asyncio
-, pytestCheckHook
-, pythonOlder
-}:
+{ lib, stdenv, aiohttp, async-timeout, buildPythonPackage, click, construct
+, dacite, fetchFromGitHub, paho-mqtt, poetry-core, pycryptodome, pycryptodomex
+, pytest-asyncio, pytestCheckHook, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "python-roborock";
@@ -30,35 +16,22 @@ buildPythonPackage rec {
     hash = "sha256-5WgCVdmEhFrKYT7Uflnjv6OIISk//VH2aoxVwlWuPTk=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  propagatedBuildInputs = [
-    aiohttp
-    async-timeout
-    click
-    construct
-    dacite
-    paho-mqtt
-    pycryptodome
-  ] ++ lib.optionals stdenv.isDarwin [
-    pycryptodomex
-  ];
+  propagatedBuildInputs =
+    [ aiohttp async-timeout click construct dacite paho-mqtt pycryptodome ]
+    ++ lib.optionals stdenv.isDarwin [ pycryptodomex ];
 
-  nativeCheckInputs = [
-    pytest-asyncio
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytest-asyncio pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "roborock"
-  ];
+  pythonImportsCheck = [ "roborock" ];
 
   meta = with lib; {
-    description = "Python library & console tool for controlling Roborock vacuum";
+    description =
+      "Python library & console tool for controlling Roborock vacuum";
     homepage = "https://github.com/humbertogontijo/python-roborock";
-    changelog = "https://github.com/humbertogontijo/python-roborock/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/humbertogontijo/python-roborock/blob/v${version}/CHANGELOG.md";
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ fab ];
   };

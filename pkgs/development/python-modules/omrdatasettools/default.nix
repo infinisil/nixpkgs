@@ -1,22 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, h5py
-, ipython
-, lxml
-, mung
-, muscima
-, numpy
-, pillow
-, pytestCheckHook
-, scikit-image
-, sphinx-rtd-theme
-, sympy
-, pandas
-, pyhamcrest
-, tqdm
-, twine
-}:
+{ lib, buildPythonPackage, fetchPypi, h5py, ipython, lxml, mung, muscima, numpy
+, pillow, pytestCheckHook, scikit-image, sphinx-rtd-theme, sympy, pandas
+, pyhamcrest, tqdm, twine }:
 
 buildPythonPackage rec {
   pname = "omrdatasettools";
@@ -44,9 +28,7 @@ buildPythonPackage rec {
     ipython
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   disabledTestPaths = [
     # The download tests require internet access
@@ -67,7 +49,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Collection of datasets used for Optical Music Recognition";
     homepage = "https://github.com/apacha/OMR-Datasets";
-    changelog = "https://github.com/apacha/OMR-Datasets/blob/${version}/CHANGES.md";
+    changelog =
+      "https://github.com/apacha/OMR-Datasets/blob/${version}/CHANGES.md";
     license = licenses.mit;
     maintainers = with maintainers; [ piegames ];
   };

@@ -1,17 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
+{ lib, buildPythonPackage, fetchFromGitHub
 
 # dependencies
-, av
-, ctranslate2
-, huggingface-hub
-, onnxruntime
-, tokenizers
+, av, ctranslate2, huggingface-hub, onnxruntime, tokenizers
 
 # tests
-, pytestCheckHook
-}:
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "faster-whisper";
@@ -30,31 +23,23 @@ buildPythonPackage rec {
       --replace "onnxruntime>=1.14,<2" "onnxruntime"
   '';
 
-  propagatedBuildInputs = [
-    av
-    ctranslate2
-    huggingface-hub
-    onnxruntime
-    tokenizers
-  ];
+  propagatedBuildInputs =
+    [ av ctranslate2 huggingface-hub onnxruntime tokenizers ];
 
-  pythonImportsCheck = [
-    "faster_whisper"
-  ];
+  pythonImportsCheck = [ "faster_whisper" ];
 
   # all tests require downloads
   doCheck = false;
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   preCheck = ''
     export HOME=$TMPDIR
   '';
 
   meta = with lib; {
-    changelog = "https://github.com/guillaumekln/faster-whisper/releases/tag/v${version}";
+    changelog =
+      "https://github.com/guillaumekln/faster-whisper/releases/tag/v${version}";
     description = "Faster Whisper transcription with CTranslate2";
     homepage = "https://github.com/guillaumekln/faster-whisper";
     license = licenses.mit;

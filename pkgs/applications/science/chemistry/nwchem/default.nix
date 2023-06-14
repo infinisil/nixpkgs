@@ -1,24 +1,6 @@
-{ lib
-, stdenv
-, pkgs
-, fetchFromGitHub
-, fetchurl
-, which
-, openssh
-, gcc
-, gfortran
-, perl
-, mpi
-, blas
-, lapack
-, python3
-, tcsh
-, bash
-, automake
-, autoconf
-, libtool
-, makeWrapper
-}:
+{ lib, stdenv, pkgs, fetchFromGitHub, fetchurl, which, openssh, gcc, gfortran
+, perl, mpi, blas, lapack, python3, tcsh, bash, automake, autoconf, libtool
+, makeWrapper }:
 
 assert blas.isILP64 == lapack.isILP64;
 
@@ -33,13 +15,15 @@ let
   };
 
   dftd3Src = fetchurl {
-    url = "https://www.chemiebn.uni-bonn.de/pctc/mulliken-center/software/dft-d3/dftd3.tgz";
+    url =
+      "https://www.chemiebn.uni-bonn.de/pctc/mulliken-center/software/dft-d3/dftd3.tgz";
     hash = "sha256-2Xz5dY9hqoH9hUJUSPv0pujOB8EukjZzmDGjrzKID1k=";
   };
 
   versionLibxc = "6.1.0";
   libxcSrc = fetchurl {
-    url = "https://gitlab.com/libxc/libxc/-/archive/${versionLibxc}/libxc-${versionLibxc}.tar.gz";
+    url =
+      "https://gitlab.com/libxc/libxc/-/archive/${versionLibxc}/libxc-${versionLibxc}.tar.gz";
     hash = "sha256-9ZN0X6R+v7ndxGeqr9wvoSdfDXJQxpLOl2E4mpDdjq8=";
   };
 
@@ -50,8 +34,7 @@ let
     hash = "sha256-CNlb6MTEkD977hj3xonYqZH1/WlQ1EdVD7cvL//heRM=";
   };
 
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   pname = "nwchem";
   version = "7.2.0";
 
@@ -62,22 +45,9 @@ stdenv.mkDerivation rec {
     hash = "sha256-/biwHOSMGpdnYRGrGlDounKKLVaG2XkBgCmpE0IKR/Y=";
   };
 
-  nativeBuildInputs = [
-    perl
-    automake
-    autoconf
-    libtool
-    makeWrapper
-    gfortran
-    which
-  ];
-  buildInputs = [
-    tcsh
-    openssh
-    blas
-    lapack
-    python3
-  ];
+  nativeBuildInputs =
+    [ perl automake autoconf libtool makeWrapper gfortran which ];
+  buildInputs = [ tcsh openssh blas lapack python3 ];
   propagatedBuildInputs = [ mpi ];
   propagatedUserEnvPkgs = [ mpi ];
 

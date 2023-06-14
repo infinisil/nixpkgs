@@ -1,14 +1,5 @@
-{ lib
-, aiohttp
-, aioresponses
-, buildPythonPackage
-, fetchFromGitHub
-, orjson
-, pytest-asyncio
-, pytest-error-for-skips
-, pytestCheckHook
-, pythonOlder
-}:
+{ lib, aiohttp, aioresponses, buildPythonPackage, fetchFromGitHub, orjson
+, pytest-asyncio, pytest-error-for-skips, pytestCheckHook, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "accuweather";
@@ -24,24 +15,16 @@ buildPythonPackage rec {
     hash = "sha256-CWPhdu0lttYhAS6hzyKPL3vtNRVqbDexxY6nvMya3jA=";
   };
 
-  propagatedBuildInputs = [
-    aiohttp
-    orjson
-  ];
+  propagatedBuildInputs = [ aiohttp orjson ];
 
-  nativeCheckInputs = [
-    aioresponses
-    pytest-asyncio
-    pytest-error-for-skips
-    pytestCheckHook
-  ];
+  nativeCheckInputs =
+    [ aioresponses pytest-asyncio pytest-error-for-skips pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "accuweather"
-  ];
+  pythonImportsCheck = [ "accuweather" ];
 
   meta = with lib; {
-    description = "Python wrapper for getting weather data from AccuWeather servers";
+    description =
+      "Python wrapper for getting weather data from AccuWeather servers";
     homepage = "https://github.com/bieniu/accuweather";
     changelog = "https://github.com/bieniu/accuweather/releases/tag/${version}";
     license = licenses.asl20;

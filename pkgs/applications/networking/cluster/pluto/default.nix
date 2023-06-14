@@ -13,10 +13,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-okqDtxSKVLlmnm5JdCKSvRZkXTsghi/L5R9TX10WWjY=";
 
-  ldflags = [
-    "-w" "-s"
-    "-X main.version=v${version}"
-  ];
+  ldflags = [ "-w" "-s" "-X main.version=v${version}" ];
 
   meta = with lib; {
     homepage = "https://github.com/FairwindsOps/pluto";

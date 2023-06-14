@@ -1,9 +1,4 @@
-{ lib, stdenv
-, buildPythonPackage
-, fetchPypi
-, pkgs
-, pillow
-}:
+{ lib, stdenv, buildPythonPackage, fetchPypi, pkgs, pillow }:
 
 buildPythonPackage rec {
   pname = "pyopengl";
@@ -17,8 +12,8 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ pillow ];
 
-  patchPhase = let
-    ext = stdenv.hostPlatform.extensions.sharedLibrary; in lib.optionalString (!stdenv.isDarwin) ''
+  patchPhase = let ext = stdenv.hostPlatform.extensions.sharedLibrary;
+  in lib.optionalString (!stdenv.isDarwin) ''
     # Theses lines are patching the name of dynamic libraries
     # so pyopengl can find them at runtime.
     substituteInPlace OpenGL/platform/glx.py \
@@ -55,6 +50,5 @@ buildPythonPackage rec {
     license = "BSD-style";
     platforms = platforms.mesaPlatforms;
   };
-
 
 }

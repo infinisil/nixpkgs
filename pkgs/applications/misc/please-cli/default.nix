@@ -1,11 +1,4 @@
-{ lib
-, curl
-, fetchFromGitHub
-, jq
-, makeBinaryWrapper
-, please-cli
-, stdenv
-, testers
+{ lib, curl, fetchFromGitHub, jq, makeBinaryWrapper, please-cli, stdenv, testers
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -35,7 +28,8 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   meta = with lib; {
-    description = "An AI helper script to create CLI commands based on GPT prompts";
+    description =
+      "An AI helper script to create CLI commands based on GPT prompts";
     homepage = "https://github.com/TNG/please-cli";
     license = licenses.asl20;
     maintainers = with maintainers; [ _8-bit-fox ];

@@ -1,13 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, darwin
-, makeWrapper
-, shared-mime-info
-, boost
-, wxGTK32
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, darwin, makeWrapper, shared-mime-info
+, boost, wxGTK32 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "wxFormBuilder";
@@ -24,25 +16,18 @@ stdenv.mkDerivation (finalAttrs: {
   postPatch = ''
     substituteInPlace .git-properties \
       --replace "\$Format:%h\$" "${builtins.substring 0 7 finalAttrs.src.rev}" \
-      --replace "\$Format:%(describe)\$" "${builtins.substring 0 7 finalAttrs.src.rev}"
+      --replace "\$Format:%(describe)\$" "${
+        builtins.substring 0 7 finalAttrs.src.rev
+      }"
     sed -i '/fixup_bundle/d' cmake/macros.cmake
   '';
 
-  nativeBuildInputs = [
-    cmake
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.sigtool
-    makeWrapper
-  ] ++ lib.optionals stdenv.isLinux [
-    shared-mime-info
-  ];
+  nativeBuildInputs = [ cmake ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.sigtool makeWrapper ]
+    ++ lib.optionals stdenv.isLinux [ shared-mime-info ];
 
-  buildInputs = [
-    boost
-    wxGTK32
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Cocoa
-  ];
+  buildInputs = [ boost wxGTK32 ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Cocoa ];
 
   postInstall = lib.optionalString stdenv.isDarwin ''
     mkdir -p $out/{Applications,bin}

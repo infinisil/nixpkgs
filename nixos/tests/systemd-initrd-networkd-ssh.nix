@@ -4,7 +4,7 @@ import ./make-test-python.nix ({ lib, ... }: {
 
   nodes = with lib; {
     server = { config, pkgs, ... }: {
-      environment.systemPackages = [pkgs.cryptsetup];
+      environment.systemPackages = [ pkgs.cryptsetup ];
       boot.loader.systemd-boot.enable = true;
       boot.loader.timeout = 0;
       virtualisation = {
@@ -17,9 +17,8 @@ import ./make-test-python.nix ({ lib, ... }: {
 
       specialisation.encrypted-root.configuration = {
         virtualisation.rootDevice = "/dev/mapper/root";
-        boot.initrd.luks.devices = lib.mkVMOverride {
-          root.device = "/dev/vdb";
-        };
+        boot.initrd.luks.devices =
+          lib.mkVMOverride { root.device = "/dev/vdb"; };
         boot.initrd.systemd.enable = true;
         boot.initrd.network = {
           enable = true;
@@ -28,7 +27,8 @@ import ./make-test-python.nix ({ lib, ... }: {
             authorizedKeys = [ (readFile ./initrd-network-ssh/id_ed25519.pub) ];
             port = 22;
             # Terrible hack so it works with useBootLoader
-            hostKeys = [ { outPath = "${./initrd-network-ssh/ssh_host_ed25519_key}"; } ];
+            hostKeys =
+              [{ outPath = "${./initrd-network-ssh/ssh_host_ed25519_key}"; }];
           };
         };
       };

@@ -1,18 +1,10 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, rustPlatform
-, nix-update-script
-, pkg-config
-, openssl
-, Security
-}:
+{ stdenv, lib, fetchFromGitHub, rustPlatform, nix-update-script, pkg-config
+, openssl, Security }:
 
 let
   pname = "rustus";
   version = "0.7.3";
-in
-rustPlatform.buildRustPackage {
+in rustPlatform.buildRustPackage {
   inherit pname version;
 
   src = fetchFromGitHub {
@@ -26,15 +18,9 @@ rustPlatform.buildRustPackage {
 
   env.OPENSSL_NO_VENDOR = 1;
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    openssl
-  ] ++ lib.optionals stdenv.isDarwin [
-    Security
-  ];
+  buildInputs = [ openssl ] ++ lib.optionals stdenv.isDarwin [ Security ];
 
   passthru.updateScript = nix-update-script { };
 
@@ -59,7 +45,6 @@ rustPlatform.buildRustPackage {
   #   "--skip=run::parser::tests::test_parse_config_with_depends_on"
   #   "--skip=util::tests::test_process_multi_addr"
   # ];
-
 
   meta = with lib; {
     description = "TUS protocol implementation in Rust.";

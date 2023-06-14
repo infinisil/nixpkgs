@@ -1,11 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-, buildNpmPackage
-, fetchFromGitHub
-, jq
-, stdenv
-}:
+{ lib, python3, fetchPypi, buildNpmPackage, fetchFromGitHub, jq, stdenv }:
 
 let
   python = python3.override {
@@ -48,8 +41,7 @@ let
     '';
   };
 
-in
-python3.pkgs.buildPythonApplication rec {
+in python3.pkgs.buildPythonApplication rec {
   pname = "pyca";
   version = "4.5";
 
@@ -75,9 +67,7 @@ python3.pkgs.buildPythonApplication rec {
     sed -i -e 's#static_folder=.*#static_folder="${frontend}/static")#' pyca/ui/__init__.py
   '';
 
-  passthru = {
-    inherit frontend;
-  };
+  passthru = { inherit frontend; };
 
   meta = with lib; {
     broken = stdenv.isDarwin;

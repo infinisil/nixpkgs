@@ -1,20 +1,13 @@
-{ lib
-, stdenv
-, cmake
-, ninja
-, qt6
-, python
-, moveBuildTree
-, shiboken6
-, libxcrypt
-}:
+{ lib, stdenv, cmake, ninja, qt6, python, moveBuildTree, shiboken6, libxcrypt }:
 
 stdenv.mkDerivation rec {
   pname = "pyside6";
 
   inherit (shiboken6) version src;
 
-  sourceRoot = "pyside-setup-everywhere-src-${lib.versions.majorMinor version}/sources/${pname}";
+  sourceRoot = "pyside-setup-everywhere-src-${
+      lib.versions.majorMinor version
+    }/sources/${pname}";
 
   # FIXME: cmake/Macros/PySideModules.cmake supposes that all Qt frameworks on macOS
   # reside in the same directory as QtCore.framework, which is not true for Nix.
@@ -26,46 +19,38 @@ stdenv.mkDerivation rec {
         'set (found_basepath 0)'
   '';
 
-  nativeBuildInputs = [
-    cmake
-    ninja
-    python
-  ] ++ lib.optionals stdenv.isDarwin [
-    moveBuildTree
-  ];
+  nativeBuildInputs = [ cmake ninja python ]
+    ++ lib.optionals stdenv.isDarwin [ moveBuildTree ];
 
-  buildInputs = with qt6; [
-    # required
-    qtbase
-  ] ++ lib.optionals stdenv.isLinux [
-    # optional
-    qt3d
-    qtcharts
-    qtconnectivity
-    qtdatavis3d
-    qtdeclarative
-    qthttpserver
-    qtmultimedia
-    qtnetworkauth
-    qtquick3d
-    qtremoteobjects
-    qtscxml
-    qtsensors
-    qtspeech
-    qtsvg
-    qttools
-    qtwebchannel
-    qtwebengine
-    qtwebsockets
-  ];
+  buildInputs = with qt6;
+    [
+      # required
+      qtbase
+    ] ++ lib.optionals stdenv.isLinux [
+      # optional
+      qt3d
+      qtcharts
+      qtconnectivity
+      qtdatavis3d
+      qtdeclarative
+      qthttpserver
+      qtmultimedia
+      qtnetworkauth
+      qtquick3d
+      qtremoteobjects
+      qtscxml
+      qtsensors
+      qtspeech
+      qtsvg
+      qttools
+      qtwebchannel
+      qtwebengine
+      qtwebsockets
+    ];
 
-  propagatedBuildInputs = [
-    shiboken6
-  ];
+  propagatedBuildInputs = [ shiboken6 ];
 
-  cmakeFlags = [
-    "-DBUILD_TESTS=OFF"
-  ];
+  cmakeFlags = [ "-DBUILD_TESTS=OFF" ];
 
   dontWrapQtApps = true;
 

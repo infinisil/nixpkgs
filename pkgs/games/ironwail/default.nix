@@ -1,38 +1,34 @@
-{ lib
-, stdenv
-, SDL2
-, fetchurl
-, gzip
-, libvorbis
-, libmad
-, flac
-, libopus
-, opusfile
-, libogg
-, curl
-, libxmp
-, vulkan-headers
-, vulkan-loader
-, copyDesktopItems
-, makeDesktopItem
-, pkg-config
-}:
+{ lib, stdenv, SDL2, fetchurl, gzip, libvorbis, libmad, flac, libopus, opusfile
+, libogg, curl, libxmp, vulkan-headers, vulkan-loader, copyDesktopItems
+, makeDesktopItem, pkg-config }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "ironwail";
   version = "0.7.0";
 
   src = fetchurl {
-    url = "https://github.com/andrei-drexler/ironwail/archive/refs/tags/v${finalAttrs.version}.tar.gz";
+    url =
+      "https://github.com/andrei-drexler/ironwail/archive/refs/tags/v${finalAttrs.version}.tar.gz";
     hash = "sha256-NBG0wwQWqyGWQYJmiLKfxGxpDJLw7Kwf4EnYd33dOpU=";
   };
 
   sourceRoot = "${finalAttrs.pname}-${finalAttrs.version}/Quake";
 
   nativeBuildInputs = [
-    copyDesktopItems pkg-config vulkan-headers
-    gzip libvorbis libmad flac curl libopus
-    opusfile libogg libxmp vulkan-loader SDL2
+    copyDesktopItems
+    pkg-config
+    vulkan-headers
+    gzip
+    libvorbis
+    libmad
+    flac
+    curl
+    libopus
+    opusfile
+    libogg
+    libxmp
+    vulkan-loader
+    SDL2
   ];
 
   buildFlags = [

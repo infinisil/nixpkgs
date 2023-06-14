@@ -1,18 +1,20 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub, installShellFiles, testers, k9s }:
+{ stdenv, lib, buildGoModule, fetchFromGitHub, installShellFiles, testers, k9s
+}:
 
 buildGoModule rec {
   pname = "k9s";
   version = "0.27.4";
 
   src = fetchFromGitHub {
-    owner  = "derailed";
-    repo   = "k9s";
-    rev    = "v${version}";
+    owner = "derailed";
+    repo = "k9s";
+    rev = "v${version}";
     sha256 = "sha256-SMdpjeMerIEc0oeNe0SfZyc3yQTq6eif1fDLICNceKY=";
   };
 
   ldflags = [
-    "-s" "-w"
+    "-s"
+    "-w"
     "-X github.com/derailed/k9s/cmd.version=${version}"
     "-X github.com/derailed/k9s/cmd.commit=${src.rev}"
     "-X github.com/derailed/k9s/cmd.date=1970-01-01T00:00:00Z"

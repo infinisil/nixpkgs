@@ -1,8 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-}:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles }:
 
 buildGoModule rec {
   pname = "terraform-backend-git";
@@ -17,9 +13,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-Y/4UgG/2Vp+gxBnGrNpAgRNfPZWJXhVo8TVa/VfOYt0=";
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   ldflags = [
     "-s"
@@ -35,9 +29,11 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "Terraform HTTP Backend implementation that uses Git repository as storage";
+    description =
+      "Terraform HTTP Backend implementation that uses Git repository as storage";
     homepage = "https://github.com/plumber-cd/terraform-backend-git";
-    changelog = "https://github.com/plumber-cd/terraform-backend-git/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/plumber-cd/terraform-backend-git/blob/${src.rev}/CHANGELOG.md";
     license = licenses.asl20;
     maintainers = with maintainers; [ blaggacao ];
   };

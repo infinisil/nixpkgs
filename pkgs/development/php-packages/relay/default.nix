@@ -1,12 +1,4 @@
-{ stdenv
-, lib
-, fetchurl
-, php
-, openssl
-, openssl_1_1
-, zstd
-, lz4
-, autoPatchelfHook
+{ stdenv, lib, fetchurl, php, openssl, openssl_1_1, zstd, lz4, autoPatchelfHook
 }:
 
 let
@@ -51,25 +43,20 @@ let
       };
     };
   }.${system} or (throw "Unsupported platform for relay: ${system}");
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   inherit version;
   pname = "relay";
   extensionName = "relay";
 
   src = fetchurl {
-    url = "https://builds.r2.relay.so/v${finalAttrs.version}/relay-v${finalAttrs.version}-php"
+    url =
+      "https://builds.r2.relay.so/v${finalAttrs.version}/relay-v${finalAttrs.version}-php"
       + phpVersion + "-" + variation.platform + ".tar.gz";
-    sha256 = variation.hashes.${phpVersion} or (throw "Unsupported PHP version for relay ${phpVersion} on ${system}");
+    sha256 = variation.hashes.${phpVersion} or (throw
+      "Unsupported PHP version for relay ${phpVersion} on ${system}");
   };
-  nativeBuildInputs = lib.optionals (!stdenv.isDarwin) [
-    autoPatchelfHook
-  ];
-  buildInputs = lib.optionals (!stdenv.isDarwin) [
-    openssl
-    zstd
-    lz4
-  ];
+  nativeBuildInputs = lib.optionals (!stdenv.isDarwin) [ autoPatchelfHook ];
+  buildInputs = lib.optionals (!stdenv.isDarwin) [ openssl zstd lz4 ];
   installPhase = ''
     runHook preInstall
 
@@ -78,28 +65,27 @@ stdenv.mkDerivation (finalAttrs: {
     chmod +w $out/lib/php/extensions/relay.so
   '' + (if stdenv.isDarwin then
     let
-      args = lib.strings.concatMapStrings
-        (v: " -change /Users/administrator/dev/relay-dev/relay-deps/build/arm64/lib/${v.name}"
-          + " ${lib.strings.makeLibraryPath [ v.value ]}/${v.name}")
+      args = lib.strings.concatMapStrings (v:
+        " -change /Users/administrator/dev/relay-dev/relay-deps/build/arm64/lib/${v.name}"
+        + " ${lib.strings.makeLibraryPath [ v.value ]}/${v.name}")
         (with lib.attrsets; [
           (nameValuePair "libssl.1.1.dylib" openssl_1_1)
           (nameValuePair "libcrypto.1.1.dylib" openssl_1_1)
           (nameValuePair "libzstd.1.dylib" zstd)
           (nameValuePair "liblz4.1.dylib" lz4)
         ]);
-    in
-    # fixDarwinDylibNames can't be used here because we need to completely remap .dylibs, not just add absolute paths
-    ''
+      # fixDarwinDylibNames can't be used here because we need to completely remap .dylibs, not just add absolute paths
+    in ''
       install_name_tool${args} $out/lib/php/extensions/relay.so
     ''
   else
     "") + ''
-    # Random UUID that's required by the extension. Can be anything, but must be different from default.
-    sed -i "s/00000000-0000-0000-0000-000000000000/aced680f-30e9-40cc-a868-390ead14ba0c/" $out/lib/php/extensions/relay.so
-    chmod -w $out/lib/php/extensions/relay.so
+      # Random UUID that's required by the extension. Can be anything, but must be different from default.
+      sed -i "s/00000000-0000-0000-0000-000000000000/aced680f-30e9-40cc-a868-390ead14ba0c/" $out/lib/php/extensions/relay.so
+      chmod -w $out/lib/php/extensions/relay.so
 
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
   meta = with lib; {
     description = "Next-generation Redis extension for PHP";
@@ -108,6 +94,7 @@ stdenv.mkDerivation (finalAttrs: {
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
     license = licenses.unfree;
     maintainers = with maintainers; [ tillkruss ostrolucky ];
-    platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+    platforms =
+      [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
   };
 })

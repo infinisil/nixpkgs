@@ -1,7 +1,6 @@
-{ lib, pkgs, stdenv, buildGoModule, fetchFromGitHub, nixosTests
-, nodejs, debianutils, mkdocs, python3, python3Packages
-, pkg-config, pixman, cairo, pango }:
-
+{ lib, pkgs, stdenv, buildGoModule, fetchFromGitHub, nixosTests, nodejs
+, debianutils, mkdocs, python3, python3Packages, pkg-config, pixman, cairo
+, pango }:
 
 let
   nodeDependencies = (import ./node-composition.nix {
@@ -11,8 +10,7 @@ let
     nativeBuildInputs = [ pkg-config ];
     buildInputs = [ pixman cairo pango ];
   };
-in
-buildGoModule rec {
+in buildGoModule rec {
   pname = "ntfy-sh";
   version = "2.5.0";
 
@@ -54,7 +52,8 @@ buildGoModule rec {
   };
 
   meta = with lib; {
-    description = "Send push notifications to your phone or desktop via PUT/POST";
+    description =
+      "Send push notifications to your phone or desktop via PUT/POST";
     homepage = "https://ntfy.sh";
     license = licenses.asl20;
     maintainers = with maintainers; [ arjan-s fpletz ];

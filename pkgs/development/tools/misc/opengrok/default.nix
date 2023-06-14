@@ -6,7 +6,8 @@ stdenv.mkDerivation rec {
 
   # binary distribution
   src = fetchurl {
-    url = "https://github.com/oracle/opengrok/releases/download/${version}/${pname}-${version}.tar.gz";
+    url =
+      "https://github.com/oracle/opengrok/releases/download/${version}/${pname}-${version}.tar.gz";
     hash = "sha256-cJfBv1I8zw9Qtn9APb7+JbSahrzYYI8dkFM8fMnDVl0=";
   };
 

@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let
-  cfg = config.programs.darling;
+let cfg = config.programs.darling;
 in {
   options = {
     programs.darling = {
-      enable = lib.mkEnableOption (lib.mdDoc "Darling, a Darwin/macOS compatibility layer for Linux");
-      package = lib.mkPackageOptionMD pkgs "darling" {};
+      enable = lib.mkEnableOption
+        (lib.mdDoc "Darling, a Darwin/macOS compatibility layer for Linux");
+      package = lib.mkPackageOptionMD pkgs "darling" { };
     };
   };
 

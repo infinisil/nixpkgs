@@ -1,14 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, ninja
-, ignite
-, numpy
-, pybind11
-, torch
-, which
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, ninja, ignite, numpy
+, pybind11, torch, which }:
 
 buildPythonPackage rec {
   pname = "monai";
@@ -37,7 +28,7 @@ buildPythonPackage rec {
 
   BUILD_MONAI = 1;
 
-  doCheck = false;  # takes too long; tries to download data
+  doCheck = false; # takes too long; tries to download data
 
   pythonImportsCheck = [
     "monai"
@@ -56,9 +47,11 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Pytorch framework (based on Ignite) for deep learning in medical imaging";
+    description =
+      "Pytorch framework (based on Ignite) for deep learning in medical imaging";
     homepage = "https://github.com/Project-MONAI/MONAI";
-    changelog = "https://github.com/Project-MONAI/MONAI/releases/tag/${version}";
+    changelog =
+      "https://github.com/Project-MONAI/MONAI/releases/tag/${version}";
     license = licenses.asl20;
     maintainers = [ maintainers.bcdarwin ];
   };

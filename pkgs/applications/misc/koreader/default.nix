@@ -1,29 +1,22 @@
-{ lib, stdenv
-, fetchurl
-, makeWrapper
-, fetchFromGitHub
-, dpkg
-, glib
-, gnutar
-, gtk3-x11
-, luajit
-, sdcv
-, SDL2 }:
-let
-  luajit_lua52 = luajit.override { enable52Compat = true; };
-in
-stdenv.mkDerivation rec {
+{ lib, stdenv, fetchurl, makeWrapper, fetchFromGitHub, dpkg, glib, gnutar
+, gtk3-x11, luajit, sdcv, SDL2 }:
+let luajit_lua52 = luajit.override { enable52Compat = true; };
+in stdenv.mkDerivation rec {
   pname = "koreader";
   version = "2023.04";
 
-
-  src = if stdenv.isAarch64 then fetchurl {
-    url = "https://github.com/koreader/koreader/releases/download/v${version}/koreader-${version}-arm64.deb";
-    sha256 = "sha256-uuspjno0750hQMIB5HEhbV63wCna2izKOHEGIg/X0bU=";
-  } else fetchurl {
-    url = "https://github.com/koreader/koreader/releases/download/v${version}/koreader-${version}-amd64.deb";
-    sha256 = "sha256-tRUeRB1+UcWT49dchN0YDvd0L5n1YRdtMSFc8yy6m5o=";
-  };
+  src = if stdenv.isAarch64 then
+    fetchurl {
+      url =
+        "https://github.com/koreader/koreader/releases/download/v${version}/koreader-${version}-arm64.deb";
+      sha256 = "sha256-uuspjno0750hQMIB5HEhbV63wCna2izKOHEGIg/X0bU=";
+    }
+  else
+    fetchurl {
+      url =
+        "https://github.com/koreader/koreader/releases/download/v${version}/koreader-${version}-amd64.deb";
+      sha256 = "sha256-tRUeRB1+UcWT49dchN0YDvd0L5n1YRdtMSFc8yy6m5o=";
+    };
 
   src_repo = fetchFromGitHub {
     repo = "koreader";
@@ -35,14 +28,7 @@ stdenv.mkDerivation rec {
 
   sourceRoot = ".";
   nativeBuildInputs = [ makeWrapper dpkg ];
-  buildInputs = [
-    glib
-    gnutar
-    gtk3-x11
-    luajit_lua52
-    sdcv
-    SDL2
-  ];
+  buildInputs = [ glib gnutar gtk3-x11 luajit_lua52 sdcv SDL2 ];
   unpackCmd = "dpkg-deb -x ${src} .";
 
   dontConfigure = true;
@@ -68,6 +54,6 @@ stdenv.mkDerivation rec {
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     platforms = [ "aarch64-linux" "x86_64-linux" ];
     license = licenses.agpl3Only;
-    maintainers = with maintainers; [ contrun neonfuz];
+    maintainers = with maintainers; [ contrun neonfuz ];
   };
 }

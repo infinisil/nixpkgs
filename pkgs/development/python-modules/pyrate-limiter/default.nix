@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, poetry-core
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, poetry-core }:
 
 buildPythonPackage rec {
   pname = "pyrate-limiter";
@@ -16,18 +12,15 @@ buildPythonPackage rec {
     hash = "sha256-CPusPeyTS+QyWiMHsU0ii9ZxPuizsqv0wQy3uicrDw0=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  pythonImportsCheck = [
-    "pyrate_limiter"
-  ];
+  pythonImportsCheck = [ "pyrate_limiter" ];
 
   meta = with lib; {
     description = "Python Rate-Limiter using Leaky-Bucket Algorimth Family";
     homepage = "https://github.com/vutran1710/PyrateLimiter";
-    changelog = "https://github.com/vutran1710/PyrateLimiter/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/vutran1710/PyrateLimiter/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ kranzes ];
   };

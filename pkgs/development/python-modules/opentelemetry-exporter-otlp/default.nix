@@ -1,13 +1,6 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, backoff
-, hatchling
-, opentelemetry-exporter-otlp-proto-grpc
-, opentelemetry-exporter-otlp-proto-http
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, backoff, hatchling
+, opentelemetry-exporter-otlp-proto-grpc, opentelemetry-exporter-otlp-proto-http
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-exporter-otlp";
@@ -24,23 +17,20 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
   propagatedBuildInputs = [
     opentelemetry-exporter-otlp-proto-grpc
     opentelemetry-exporter-otlp-proto-http
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.exporter.otlp" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp";
     description = "OpenTelemetry Collector Exporters";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

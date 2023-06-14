@@ -42,9 +42,7 @@ import ./make-test-python.nix ({ pkgs, lib, ... }: {
       };
     };
 
-    environment.systemPackages = with pkgs; [
-      tcpdump
-    ];
+    environment.systemPackages = with pkgs; [ tcpdump ];
   };
 
   testScript = ''

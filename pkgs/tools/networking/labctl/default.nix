@@ -1,8 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-}:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles }:
 
 buildGoModule rec {
   pname = "labctl";
@@ -33,7 +29,8 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "collection of helper tools for network engineers, while configuring and experimenting with their own network labs";
+    description =
+      "collection of helper tools for network engineers, while configuring and experimenting with their own network labs";
     homepage = "https://labctl.net";
     license = licenses.asl20;
     maintainers = with maintainers; [ janik ];

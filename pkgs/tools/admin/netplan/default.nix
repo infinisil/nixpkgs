@@ -1,15 +1,5 @@
-{ stdenv
-, fetchFromGitHub
-, pkg-config
-, glib
-, pandoc
-, systemd
-, libyaml
-, python3
-, libuuid
-, bash-completion
-, lib
-}:
+{ stdenv, fetchFromGitHub, pkg-config, glib, pandoc, systemd, libyaml, python3
+, libuuid, bash-completion, lib }:
 
 stdenv.mkDerivation rec {
   pname = "netplan";
@@ -22,11 +12,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-wQ4gd9+9YU92WGRMjSiF/zLCGxhaSl8s22pH1jr+Mm0=";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-    glib
-    pandoc
-  ];
+  nativeBuildInputs = [ pkg-config glib pandoc ];
 
   buildInputs = [
     systemd

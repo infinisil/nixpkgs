@@ -1,7 +1,7 @@
 { stdenv, lib, fetchFromGitHub, expat, ocaml, findlib, ounit }:
 
 lib.throwIfNot (lib.versionAtLeast ocaml.version "4.02")
-  "ocaml_expat is not available for OCaml ${ocaml.version}"
+"ocaml_expat is not available for OCaml ${ocaml.version}"
 
 stdenv.mkDerivation rec {
   pname = "ocaml${ocaml.version}-expat";

@@ -1,10 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-, testers
-, go-task
-}:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles, testers, go-task }:
 
 buildGoModule rec {
   pname = "go-task";
@@ -37,11 +31,7 @@ buildGoModule rec {
     installShellCompletion completion/{bash,fish,zsh}/*
   '';
 
-  passthru.tests = {
-    version = testers.testVersion {
-      package = go-task;
-    };
-  };
+  passthru.tests = { version = testers.testVersion { package = go-task; }; };
 
   meta = with lib; {
     homepage = "https://taskfile.dev/";

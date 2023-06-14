@@ -1,32 +1,25 @@
 { pname, version, src, meta, binaryName, desktopName, autoPatchelfHook
-, makeDesktopItem, lib, stdenv, wrapGAppsHook, makeShellWrapper, alsa-lib, at-spi2-atk
-, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig, freetype, gdk-pixbuf
-, glib, gtk3, libcxx, libdrm, libglvnd, libnotify, libpulseaudio, libuuid, libX11
-, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext, libXfixes
-, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence, mesa, nspr, nss
-, pango, systemd, libappindicator-gtk3, libdbusmenu, writeScript, python3, runCommand
-, libunity
-, speechd
-, wayland
-, branch
-, withOpenASAR ? false, openasar
-, withVencord ? false, vencord
-, withTTS ? false }:
+, makeDesktopItem, lib, stdenv, wrapGAppsHook, makeShellWrapper, alsa-lib
+, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig, freetype
+, gdk-pixbuf, glib, gtk3, libcxx, libdrm, libglvnd, libnotify, libpulseaudio
+, libuuid, libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
+, libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence, mesa
+, nspr, nss, pango, systemd, libappindicator-gtk3, libdbusmenu, writeScript
+, python3, runCommand, libunity, speechd, wayland, branch, withOpenASAR ? false
+, openasar, withVencord ? false, vencord, withTTS ? false }:
 
 let
-  disableBreakingUpdates = runCommand "disable-breaking-updates.py"
-    {
-      pythonInterpreter = "${python3.interpreter}";
-      configDirName = lib.toLower binaryName;
-    } ''
+  disableBreakingUpdates = runCommand "disable-breaking-updates.py" {
+    pythonInterpreter = "${python3.interpreter}";
+    configDirName = lib.toLower binaryName;
+  } ''
     mkdir -p $out/bin
     cp ${./disable-breaking-updates.py} $out/bin/disable-breaking-updates.py
     substituteAllInPlace $out/bin/disable-breaking-updates.py
     chmod +x $out/bin/disable-breaking-updates.py
   '';
-in
 
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   inherit pname version src meta;
 
   nativeBuildInputs = [
@@ -105,7 +98,10 @@ stdenv.mkDerivation rec {
     wrapProgramShell $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform=wayland --enable-features=WaylandWindowDecorations}}" \
-        ${lib.strings.optionalString withTTS "--add-flags \"--enable-speech-dispatcher\""} \
+        ${
+          lib.strings.optionalString withTTS
+          ''--add-flags "--enable-speech-dispatcher"''
+        } \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
         --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName} \
         --run "${lib.getExe disableBreakingUpdates}"

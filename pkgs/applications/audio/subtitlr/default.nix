@@ -15,9 +15,7 @@ buildGoModule rec {
 
   ldflags = [ "-s" "-w" ];
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   postInstall = ''
     installShellCompletion --cmd Subtitlr \
@@ -27,7 +25,8 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "This application, a subtitle generator for YouTube, utilizes OpenAI's Whisper API.";
+    description =
+      "This application, a subtitle generator for YouTube, utilizes OpenAI's Whisper API.";
     homepage = "https://github.com/yoanbernabeu/Subtitlr/";
     license = licenses.mit;
     maintainers = with maintainers; [ qjoly ];

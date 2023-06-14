@@ -1,15 +1,11 @@
-let
-  certs = import ./snakeoil-certs.nix;
-in
-import ../make-test-python.nix ({ pkgs, ... }: {
+let certs = import ./snakeoil-certs.nix;
+in import ../make-test-python.nix ({ pkgs, ... }: {
   name = "nginx-proxyprotocol";
 
   nodes = {
     webserver = { pkgs, lib, ... }: {
       environment.systemPackages = [ pkgs.netcat ];
-      security.pki.certificateFiles = [
-        certs.ca.cert
-      ];
+      security.pki.certificateFiles = [ certs.ca.cert ];
 
       networking.extraHosts = ''
         127.0.0.5 proxy.test.nix
@@ -22,10 +18,21 @@ import ../make-test-python.nix ({ pkgs, ... }: {
       services.nginx = {
         enable = true;
         defaultListen = [
-          { addr = "127.0.0.1"; proxyProtocol = true; ssl = true; }
+          {
+            addr = "127.0.0.1";
+            proxyProtocol = true;
+            ssl = true;
+          }
           { addr = "127.0.0.2"; }
-          { addr = "127.0.0.3"; ssl = false; }
-          { addr = "127.0.0.4"; ssl = false; proxyProtocol = true; }
+          {
+            addr = "127.0.0.3";
+            ssl = false;
+          }
+          {
+            addr = "127.0.0.4";
+            ssl = false;
+            proxyProtocol = true;
+          }
         ];
         commonHttpConfig = ''
           log_format pcombined '(proxy_protocol=$proxy_protocol_addr) - (remote_addr=$remote_addr) - (realip=$realip_remote_addr) - (upstream=) - (remote_user=$remote_user) [$time_local] '
@@ -34,17 +41,15 @@ import ../make-test-python.nix ({ pkgs, ... }: {
           access_log /var/log/nginx/access.log pcombined;
           error_log /var/log/nginx/error.log;
         '';
-        virtualHosts =
-        let
+        virtualHosts = let
           commonConfig = {
-           locations."/".return = "200 '$remote_addr'";
-           extraConfig = ''
-            set_real_ip_from 127.0.0.5/32;
-            real_ip_header proxy_protocol;
-           '';
-         };
-        in
-        {
+            locations."/".return = "200 '$remote_addr'";
+            extraConfig = ''
+              set_real_ip_from 127.0.0.5/32;
+              real_ip_header proxy_protocol;
+            '';
+          };
+        in {
           "*.test.nix" = commonConfig // {
             sslCertificate = certs."*.test.nix".cert;
             sslCertificateKey = certs."*.test.nix".key;

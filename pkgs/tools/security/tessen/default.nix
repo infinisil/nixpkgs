@@ -1,14 +1,5 @@
-{ lib
-, stdenvNoCC
-, fetchFromSourcehut
-, makeWrapper
-, installShellFiles
-, wtype
-, wl-clipboard
-, pass
-, bemenu
-, scdoc
-}:
+{ lib, stdenvNoCC, fetchFromSourcehut, makeWrapper, installShellFiles, wtype
+, wl-clipboard, pass, bemenu, scdoc }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "tessen";
@@ -16,9 +7,9 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchFromSourcehut {
     owner = "~ayushnix";
-    repo  = pname;
+    repo = pname;
     rev = "v${version}";
-    sha256  = "sha256-8hhYOd5h55kl7ChqdyRzsaxzWLpX41aqG8LfznmbFWw=";
+    sha256 = "sha256-8hhYOd5h55kl7ChqdyRzsaxzWLpX41aqG8LfznmbFWw=";
   };
 
   nativeBuildInputs = [ makeWrapper installShellFiles scdoc ];
@@ -28,7 +19,9 @@ stdenvNoCC.mkDerivation rec {
   installPhase = ''
     runHook preInstall
     install -D tessen $out/bin/tessen
-    wrapProgram $out/bin/tessen --prefix PATH : ${ lib.makeBinPath [ bemenu pass wtype wl-clipboard ] }
+    wrapProgram $out/bin/tessen --prefix PATH : ${
+      lib.makeBinPath [ bemenu pass wtype wl-clipboard ]
+    }
     runHook postInstall
   '';
 
@@ -44,7 +37,8 @@ stdenvNoCC.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://sr.ht/~ayushnix/tessen";
-    description = "An interactive menu to autotype and copy Pass and GoPass data";
+    description =
+      "An interactive menu to autotype and copy Pass and GoPass data";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ monaaraj ];

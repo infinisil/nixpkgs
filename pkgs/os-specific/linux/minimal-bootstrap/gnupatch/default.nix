@@ -1,8 +1,4 @@
-{ lib
-, fetchurl
-, kaem
-, tinycc
-}:
+{ lib, fetchurl, kaem, tinycc }:
 let
   pname = "gnupatch";
   # 2.6.x and later use features not implemented in mes-libc (eg. quotearg.h)
@@ -24,14 +20,14 @@ let
     "-DHAVE_GETEUID"
     "-DHAVE_MKTEMP"
     "-DPACKAGE_BUGREPORT="
-    "-Ded_PROGRAM=\\\"/nullop\\\""
+    ''-Ded_PROGRAM=\"/nullop\"''
     "-Dmbstate_t=int" # When HAVE_MBRTOWC is not enabled uses of mbstate_t are always a no-op
     "-DRETSIGTYPE=int"
     "-DHAVE_MKDIR"
     "-DHAVE_RMDIR"
     "-DHAVE_FCNTL_H"
-    "-DPACKAGE_NAME=\\\"patch\\\""
-    "-DPACKAGE_VERSION=\\\"${version}\\\""
+    ''-DPACKAGE_NAME=\"patch\"''
+    ''-DPACKAGE_VERSION=\"${version}\"''
     "-DHAVE_MALLOC"
     "-DHAVE_REALLOC"
     "-DSTDC_HEADERS"
@@ -65,9 +61,10 @@ let
     "error.c"
   ];
 
-  objects = map (x: lib.replaceStrings [".c"] [".o"] (builtins.baseNameOf x)) sources;
-in
-kaem.runCommand "${pname}-${version}" {
+  objects =
+    map (x: lib.replaceStrings [ ".c" ] [ ".o" ] (builtins.baseNameOf x))
+    sources;
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
   nativeBuildInputs = [ tinycc.compiler ];

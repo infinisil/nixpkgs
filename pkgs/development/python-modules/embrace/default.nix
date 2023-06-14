@@ -1,12 +1,5 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchFromSourcehut
-, pytestCheckHook
-, pythonOlder
-, sqlparse
-, wrapt
-}:
+{ lib, stdenv, buildPythonPackage, fetchFromSourcehut, pytestCheckHook
+, pythonOlder, sqlparse, wrapt }:
 
 buildPythonPackage rec {
   pname = "embrace";
@@ -23,18 +16,11 @@ buildPythonPackage rec {
     hash = "sha256-B/xW5EfaQWW603fjKYcf+RHQJVZrnFoqVnIl6xSwS0E=";
   };
 
-  propagatedBuildInputs = [
-    sqlparse
-    wrapt
-  ];
+  propagatedBuildInputs = [ sqlparse wrapt ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "embrace"
-  ];
+  pythonImportsCheck = [ "embrace" ];
 
   # Some test for hot-reload fails on Darwin, but the rest of the library
   # should remain usable. (https://todo.sr.ht/~olly/embrace-sql/4)

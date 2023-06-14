@@ -13,7 +13,10 @@ perl.pkgs.toPerlModule (stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [ gettext perl libxml2 pango cairo groff ]
-    ++ lib.optionals stdenv.isDarwin [ tcl darwin.apple_sdk.frameworks.ApplicationServices ];
+    ++ lib.optionals stdenv.isDarwin [
+      tcl
+      darwin.apple_sdk.frameworks.ApplicationServices
+    ];
 
   postInstall = ''
     # for munin and rrdtool support

@@ -1,31 +1,11 @@
-{ lib
-, python3
-, melpaBuild
-, fetchFromGitHub
-, substituteAll
-, acm
-, markdown-mode
-, posframe
-, git
-, go
-, gopls
-, pyright
-, ruff
-, tempel
-, writeText
-, unstableGitUpdater
+{ lib, python3, melpaBuild, fetchFromGitHub, substituteAll, acm, markdown-mode
+, posframe, git, go, gopls, pyright, ruff, tempel, writeText, unstableGitUpdater
 }:
 
 let
   rev = "6f93deb32ebb3799dfedd896a17a0428a9b461bb";
-  python = python3.withPackages (ps: with ps; [
-    epc
-    orjson
-    sexpdata
-    six
-  ]);
-in
-melpaBuild {
+  python = python3.withPackages (ps: with ps; [ epc orjson sexpdata six ]);
+in melpaBuild {
   pname = "lsp-bridge";
   version = "20230607.135"; # 1:35 UTC
 
@@ -47,21 +27,9 @@ melpaBuild {
     })
   ];
 
-  packageRequires = [
-    acm
-    markdown-mode
-    posframe
-  ];
+  packageRequires = [ acm markdown-mode posframe ];
 
-  checkInputs = [
-    git
-    go
-    gopls
-    pyright
-    python
-    ruff
-    tempel
-  ];
+  checkInputs = [ git go gopls pyright python ruff tempel ];
 
   recipe = writeText "recipe" ''
     (lsp-bridge

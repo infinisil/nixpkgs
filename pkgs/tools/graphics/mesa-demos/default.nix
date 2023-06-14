@@ -1,23 +1,6 @@
-{ lib
-, stdenv
-, fetchurl
-, freeglut
-, libGL
-, libGLU
-, libX11
-, libXext
-, mesa
-, meson
-, ninja
-, pkg-config
-, wayland
-, wayland-scanner
-, wayland-protocols
-, vulkan-loader
-, libxkbcommon
-, libdecor
-, glslang
-}:
+{ lib, stdenv, fetchurl, freeglut, libGL, libGLU, libX11, libXext, mesa, meson
+, ninja, pkg-config, wayland, wayland-scanner, wayland-protocols, vulkan-loader
+, libxkbcommon, libdecor, glslang }:
 
 stdenv.mkDerivation rec {
   pname = "mesa-demos";
@@ -30,17 +13,9 @@ stdenv.mkDerivation rec {
 
   strictDeps = true;
 
-  depsBuildBuild = [
-    pkg-config
-  ];
+  depsBuildBuild = [ pkg-config ];
 
-  nativeBuildInputs = [
-    meson
-    ninja
-    pkg-config
-    wayland-scanner
-    glslang
-  ];
+  nativeBuildInputs = [ meson ninja pkg-config wayland-scanner glslang ];
 
   buildInputs = [
     freeglut

@@ -1,16 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pytestCheckHook
-, pythonOlder
-, duckdb
-, hypothesis
-, ipython-sql
-, poetry-core
-, snapshottest
-, sqlalchemy
-, typing-extensions
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pytestCheckHook, pythonOlder, duckdb
+, hypothesis, ipython-sql, poetry-core, snapshottest, sqlalchemy
+, typing-extensions }:
 
 buildPythonPackage rec {
   pname = "duckdb-engine";
@@ -26,14 +16,9 @@ buildPythonPackage rec {
     hash = "sha256-Z9m1+Bc/csWKdPDuwf82xX0qOiD1Y5LBgJjUlLntAO8=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  propagatedBuildInputs = [
-    duckdb
-    sqlalchemy
-  ];
+  propagatedBuildInputs = [ duckdb sqlalchemy ];
 
   preCheck = ''
     export HOME="$(mktemp -d)"
@@ -55,14 +40,13 @@ buildPythonPackage rec {
     typing-extensions
   ];
 
-  pythonImportsCheck = [
-    "duckdb_engine"
-  ];
+  pythonImportsCheck = [ "duckdb_engine" ];
 
   meta = with lib; {
     description = "SQLAlchemy driver for duckdb";
     homepage = "https://github.com/Mause/duckdb_engine";
-    changelog = "https://github.com/Mause/duckdb_engine/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/Mause/duckdb_engine/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ cpcloud ];
   };

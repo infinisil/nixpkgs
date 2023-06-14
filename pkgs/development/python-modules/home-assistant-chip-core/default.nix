@@ -1,8 +1,4 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
+{ lib, stdenv, buildPythonPackage, fetchPypi, pythonOlder
 
 # build
 , autoPatchelfHook
@@ -11,19 +7,8 @@
 , openssl_1_1
 
 # propagates
-, aenum
-, coloredlogs
-, construct
-, cryptography
-, dacite
-, ecdsa
-, rich
-, pyyaml
-, ipdb
-, deprecation
-, mobly
-, pygobject3
-}:
+, aenum, coloredlogs, construct, cryptography, dacite, ecdsa, rich, pyyaml, ipdb
+, deprecation, mobly, pygobject3 }:
 
 buildPythonPackage rec {
   pname = "home-assistant-chip-core";
@@ -53,13 +38,9 @@ buildPythonPackage rec {
     hash = system.hash;
   };
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-  ];
+  nativeBuildInputs = [ autoPatchelfHook ];
 
-  buildInputs = [
-    openssl_1_1
-  ];
+  buildInputs = [ openssl_1_1 ];
 
   propagatedBuildInputs = [
     aenum
@@ -91,7 +72,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Python-base APIs and tools for CHIP";
     homepage = "https://github.com/home-assistant-libs/chip-wheels";
-    changelog = "https://github.com/home-assistant-libs/chip-wheels/releases/tag/${version}";
+    changelog =
+      "https://github.com/home-assistant-libs/chip-wheels/releases/tag/${version}";
     license = licenses.asl20;
     maintainers = teams.home-assistant.members;
     platforms = [ "aarch64-linux" "x86_64-linux" ];

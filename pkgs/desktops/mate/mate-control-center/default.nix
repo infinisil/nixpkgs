@@ -1,42 +1,21 @@
-{ lib
-, stdenv
-, fetchurl
-, pkg-config
-, gettext
-, itstool
-, libxml2
-, dbus-glib
-, libxklavier
-, libcanberra-gtk3
-, librsvg
-, libappindicator-gtk3
-, glib
-, desktop-file-utils
-, dconf
-, gtk3
-, polkit
-, mate
-, hicolor-icon-theme
-, wrapGAppsHook
-, mateUpdateScript
-}:
+{ lib, stdenv, fetchurl, pkg-config, gettext, itstool, libxml2, dbus-glib
+, libxklavier, libcanberra-gtk3, librsvg, libappindicator-gtk3, glib
+, desktop-file-utils, dconf, gtk3, polkit, mate, hicolor-icon-theme
+, wrapGAppsHook, mateUpdateScript }:
 
 stdenv.mkDerivation rec {
   pname = "mate-control-center";
   version = "1.26.1";
 
   src = fetchurl {
-    url = "https://pub.mate-desktop.org/releases/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+    url = "https://pub.mate-desktop.org/releases/${
+        lib.versions.majorMinor version
+      }/${pname}-${version}.tar.xz";
     sha256 = "4F9JKjtleqVvxY989xvIyA344lNR/eTbT1I6uNtbVgg=";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-    gettext
-    itstool
-    desktop-file-utils
-    wrapGAppsHook
-  ];
+  nativeBuildInputs =
+    [ pkg-config gettext itstool desktop-file-utils wrapGAppsHook ];
 
   buildInputs = [
     libxml2

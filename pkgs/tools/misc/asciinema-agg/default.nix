@@ -18,12 +18,11 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    Security
-  ];
+  buildInputs = lib.optionals stdenv.isDarwin [ Security ];
 
   meta = with lib; {
-    description = "A command-line tool for generating animated GIF files from asciicast v2 files produced by asciinema terminal recorder";
+    description =
+      "A command-line tool for generating animated GIF files from asciicast v2 files produced by asciinema terminal recorder";
     homepage = "https://github.com/asciinema/agg";
     changelog = "https://github.com/asciinema/agg/releases/tag/${src.rev}";
     license = licenses.asl20;

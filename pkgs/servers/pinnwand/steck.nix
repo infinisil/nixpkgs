@@ -1,9 +1,4 @@
-{ lib
-, pkgs
-, python3Packages
-, fetchPypi
-, nixosTests
-}:
+{ lib, pkgs, python3Packages, fetchPypi, nixosTests }:
 
 python3Packages.buildPythonApplication rec {
   pname = "steck";
@@ -21,9 +16,7 @@ python3Packages.buildPythonApplication rec {
       --replace 'termcolor>=1.1.0,<2.0.0' 'termcolor'
   '';
 
-  nativeBuildInputs = with python3Packages; [
-    setuptools
-  ];
+  nativeBuildInputs = with python3Packages; [ setuptools ];
 
   propagatedBuildInputs = with python3Packages; [
     pkgs.git

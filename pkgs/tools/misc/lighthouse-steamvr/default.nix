@@ -14,7 +14,8 @@ rustPlatform.buildRustPackage rec {
   cargoLock = {
     lockFile = ./Cargo.lock;
     outputHashes = {
-      "clap-verbosity-flag-2.0.0" = "125b8ki3dqj2kilimmvpi9wslwky8xacydi75c2bdrxpi926nya6";
+      "clap-verbosity-flag-2.0.0" =
+        "125b8ki3dqj2kilimmvpi9wslwky8xacydi75c2bdrxpi926nya6";
     };
   };
 

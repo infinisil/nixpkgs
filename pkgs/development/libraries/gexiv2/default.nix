@@ -1,20 +1,6 @@
-{ stdenv
-, lib
-, fetchurl
-, meson
-, mesonEmulatorHook
-, ninja
-, pkg-config
-, exiv2
-, glib
-, gnome
-, gobject-introspection
-, vala
-, gtk-doc
-, docbook-xsl-nons
-, docbook_xml_dtd_43
-, python3
-}:
+{ stdenv, lib, fetchurl, meson, mesonEmulatorHook, ninja, pkg-config, exiv2
+, glib, gnome, gobject-introspection, vala, gtk-doc, docbook-xsl-nons
+, docbook_xml_dtd_43, python3 }:
 
 stdenv.mkDerivation rec {
   pname = "gexiv2";
@@ -23,7 +9,9 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" "devdoc" ];
 
   src = fetchurl {
-    url = "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+    url = "mirror://gnome/sources/${pname}/${
+        lib.versions.majorMinor version
+      }/${pname}-${version}.tar.xz";
     sha256 = "7D7j7DhguceJWKVdqJz3auIwWEjhL0GUW3tSEk2PbPk=";
   };
 
@@ -37,22 +25,14 @@ stdenv.mkDerivation rec {
     docbook-xsl-nons
     docbook_xml_dtd_43
     (python3.pythonForBuild.withPackages (ps: [ ps.pygobject3 ]))
-  ] ++ lib.optionals (!stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
-    mesonEmulatorHook
-  ];
+  ] ++ lib.optionals (!stdenv.buildPlatform.canExecute stdenv.hostPlatform)
+    [ mesonEmulatorHook ];
 
-  buildInputs = [
-    glib
-  ];
+  buildInputs = [ glib ];
 
-  propagatedBuildInputs = [
-    exiv2
-  ];
+  propagatedBuildInputs = [ exiv2 ];
 
-  mesonFlags = [
-    "-Dgtk_doc=true"
-    "-Dtests=true"
-  ];
+  mesonFlags = [ "-Dgtk_doc=true" "-Dtests=true" ];
 
   # Needed for darwin due to std::auto_ptr in exiv2 header files & enabling C++ 17
   # https://github.com/Exiv2/exiv2/issues/2359
@@ -61,8 +41,7 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
-  preCheck = let
-    libSuffix = if stdenv.isDarwin then "2.dylib" else "so.2";
+  preCheck = let libSuffix = if stdenv.isDarwin then "2.dylib" else "so.2";
   in ''
     # Our gobject-introspection patches make the shared library paths absolute
     # in the GIR files. When running unit tests, the library is not yet installed,

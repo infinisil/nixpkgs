@@ -1,8 +1,4 @@
-{ lib
-, buildNpmPackage
-, fetchFromGitHub
-, installShellFiles
-}:
+{ lib, buildNpmPackage, fetchFromGitHub, installShellFiles }:
 
 buildNpmPackage rec {
   pname = "djot-js";
@@ -17,9 +13,7 @@ buildNpmPackage rec {
 
   npmDepsHash = "sha256-WOsStvm7UC2Jnb803mHoJxDUs1I8dDT7HRPdpIXQne8=";
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   postPatch = ''
     ln -s ${./package-lock.json} package-lock.json

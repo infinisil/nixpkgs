@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation rec {
   version = "0.049";
 
   src = fetchzip {
-    url = "https://github.com/cormullion/juliamono/releases/download/v${version}/${pname}.tar.gz";
+    url =
+      "https://github.com/cormullion/juliamono/releases/download/v${version}/${pname}.tar.gz";
     stripRoot = false;
     hash = "sha256-UTiuWbRUJVGEuqNj2EU6VBb8Y4FO08TA2Nk7cjsjmuM=";
   };

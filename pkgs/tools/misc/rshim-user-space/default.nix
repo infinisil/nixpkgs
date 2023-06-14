@@ -1,13 +1,5 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, autoconf
-, automake
-, pkg-config
-, pciutils
-, libusb1
-, fuse
-}:
+{ stdenv, lib, fetchFromGitHub, autoconf, automake, pkg-config, pciutils
+, libusb1, fuse }:
 
 stdenv.mkDerivation rec {
   pname = "rshim-user-space";
@@ -20,17 +12,9 @@ stdenv.mkDerivation rec {
     hash = "sha256-2r8zsmce1w7f4/NhqJqgb8bZlLLSxXuQVAGKL1PtvcM=";
   };
 
-  nativeBuildInputs = [
-    autoconf
-    automake
-    pkg-config
-  ];
+  nativeBuildInputs = [ autoconf automake pkg-config ];
 
-  buildInputs = [
-    pciutils
-    libusb1
-    fuse
-  ];
+  buildInputs = [ pciutils libusb1 fuse ];
 
   strictDeps = true;
 

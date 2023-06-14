@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, virtualenv
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, virtualenv, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "virtualenv-clone";
@@ -26,13 +21,9 @@ buildPythonPackage rec {
       --replace "'virtualenv'" "'${virtualenv}/bin/virtualenv'"
   '';
 
-  propagatedBuildInputs = [
-    virtualenv
-  ];
+  propagatedBuildInputs = [ virtualenv ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   meta = with lib; {
     homepage = "https://github.com/edwardgeorge/virtualenv-clone";

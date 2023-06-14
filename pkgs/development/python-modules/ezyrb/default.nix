@@ -1,16 +1,5 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, future
-, numpy
-, scipy
-, matplotlib
-, scikit-learn
-, torch
-, pytestCheckHook
-}:
+{ lib, stdenv, buildPythonPackage, fetchFromGitHub, pythonOlder, future, numpy
+, scipy, matplotlib, scikit-learn, torch, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "ezyrb";
@@ -26,22 +15,11 @@ buildPythonPackage rec {
     hash = "sha256-uYwLz5NY+8lO8hZnAhqv+5PlcCSm6OOFWra47pwQhxg=";
   };
 
-  propagatedBuildInputs = [
-    future
-    numpy
-    scipy
-    matplotlib
-    scikit-learn
-    torch
-  ];
+  propagatedBuildInputs = [ future numpy scipy matplotlib scikit-learn torch ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "ezyrb"
-  ];
+  pythonImportsCheck = [ "ezyrb" ];
 
   disabledTestPaths = [
     # Exclude long tests

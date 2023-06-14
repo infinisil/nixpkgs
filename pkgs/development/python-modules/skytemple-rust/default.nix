@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, cargo
-, fetchFromGitHub
-, libiconv
-, Foundation
-, rustPlatform
-, rustc
-, setuptools-rust
-, range-typed-integers
-}:
+{ lib, stdenv, buildPythonPackage, cargo, fetchFromGitHub, libiconv, Foundation
+, rustPlatform, rustc, setuptools-rust, range-typed-integers }:
 
 buildPythonPackage rec {
   pname = "skytemple-rust";
@@ -29,7 +19,8 @@ buildPythonPackage rec {
   };
 
   buildInputs = lib.optionals stdenv.isDarwin [ libiconv Foundation ];
-  nativeBuildInputs = [ setuptools-rust rustPlatform.cargoSetupHook cargo rustc ];
+  nativeBuildInputs =
+    [ setuptools-rust rustPlatform.cargoSetupHook cargo rustc ];
   propagatedBuildInputs = [ range-typed-integers ];
 
   GETTEXT_SYSTEM = true;

@@ -1,9 +1,4 @@
-{ lib
-, python3Packages
-, fetchPypi
-, taskwarrior
-, glibcLocales
-}:
+{ lib, python3Packages, fetchPypi, taskwarrior, glibcLocales }:
 
 with python3Packages;
 
@@ -17,10 +12,7 @@ buildPythonApplication rec {
     sha256 = "sha256-6GbIc5giuecxUqswyaAJw675R1M8BvelyyRNFcTqKW8=";
   };
 
-  propagatedBuildInputs = [
-    tasklib
-    urwid
-  ];
+  propagatedBuildInputs = [ tasklib urwid ];
 
   nativeCheckInputs = [ glibcLocales ];
 

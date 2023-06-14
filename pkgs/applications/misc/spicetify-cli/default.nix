@@ -13,10 +13,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-g0SuXDzYjg0mGzeDuB2tQnVnDmTiL5vw0r9QWSgIs3Q=";
 
-  ldflags = [
-    "-s -w"
-    "-X 'main.version=${version}'"
-  ];
+  ldflags = [ "-s -w" "-X 'main.version=${version}'" ];
 
   # used at runtime, but not installed by default
   postInstall = ''

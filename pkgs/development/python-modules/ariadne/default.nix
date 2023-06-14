@@ -1,19 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, hatchling
-, freezegun
-, graphql-core
-, opentracing
-, pytest-asyncio
-, pytest-mock
-, pytestCheckHook
-, pythonOlder
-, snapshottest
-, starlette
-, typing-extensions
-, werkzeug
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, hatchling, freezegun, graphql-core
+, opentracing, pytest-asyncio, pytest-mock, pytestCheckHook, pythonOlder
+, snapshottest, starlette, typing-extensions, werkzeug }:
 
 buildPythonPackage rec {
   pname = "ariadne";
@@ -29,15 +16,9 @@ buildPythonPackage rec {
     hash = "sha256-E7uC+l0Yjol8UPLF4CV+PN49tOUJXNUS5yYdF1oyfwU=";
   };
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    graphql-core
-    starlette
-    typing-extensions
-  ];
+  propagatedBuildInputs = [ graphql-core starlette typing-extensions ];
 
   nativeCheckInputs = [
     freezegun
@@ -49,9 +30,7 @@ buildPythonPackage rec {
     werkzeug
   ];
 
-  pythonImportsCheck = [
-    "ariadne"
-  ];
+  pythonImportsCheck = [ "ariadne" ];
 
   disabledTests = [
     # TypeError: TestClient.request() got an unexpected keyword argument 'content'
@@ -67,9 +46,11 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Python library for implementing GraphQL servers using schema-first approach";
+    description =
+      "Python library for implementing GraphQL servers using schema-first approach";
     homepage = "https://ariadnegraphql.org";
-    changelog = "https://github.com/mirumee/ariadne/blob/${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/mirumee/ariadne/blob/${version}/CHANGELOG.md";
     license = licenses.bsd3;
     maintainers = with maintainers; [ samuela ];
   };

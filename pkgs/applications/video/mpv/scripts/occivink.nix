@@ -1,7 +1,4 @@
-{ lib
-, stdenvNoCC
-, fetchFromGitHub
-}:
+{ lib, stdenvNoCC, fetchFromGitHub }:
 
 let
   script = { n, ... }@p:
@@ -34,8 +31,7 @@ let
       outputHashMode = "recursive";
     } p);
 
-in
-{
+in {
 
   # Usage: `pkgs.mpv.override { scripts = [ pkgs.mpvScripts.seekTo ]; }`
   seekTo = script {
@@ -46,7 +42,8 @@ in
 
   blacklistExtensions = script {
     n = "blacklist-extensions";
-    meta.description = "Automatically remove playlist entries based on their extension.";
+    meta.description =
+      "Automatically remove playlist entries based on their extension.";
     outputHash = "sha256-qw9lz8ofmvvh23F9aWLxiU4YofY+YflRETu+nxMhvVE=";
   };
 

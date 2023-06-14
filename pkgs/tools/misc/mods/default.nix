@@ -1,10 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, gitUpdater
-, testers
-, mods
-}:
+{ lib, buildGoModule, fetchFromGitHub, gitUpdater, testers, mods }:
 
 buildGoModule rec {
   pname = "mods";
@@ -27,9 +21,7 @@ buildGoModule rec {
       ignoredVersions = ".(rc|beta).*";
     };
 
-    tests.version = testers.testVersion {
-      package = mods;
-    };
+    tests.version = testers.testVersion { package = mods; };
   };
 
   meta = with lib; {

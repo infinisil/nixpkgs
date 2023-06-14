@@ -1,28 +1,7 @@
-{ lib
-, stdenv
-, affine
-, attrs
-, boto3
-, buildPythonPackage
-, click
-, click-plugins
-, cligj
-, certifi
-, cython
-, fetchFromGitHub
-, gdal
-, hypothesis
-, matplotlib
-, ipython
-, numpy
-, packaging
-, pytest-randomly
-, pytestCheckHook
-, pythonOlder
-, setuptools
-, shapely
-, snuggs
-}:
+{ lib, stdenv, affine, attrs, boto3, buildPythonPackage, click, click-plugins
+, cligj, certifi, cython, fetchFromGitHub, gdal, hypothesis, matplotlib, ipython
+, numpy, packaging, pytest-randomly, pytestCheckHook, pythonOlder, setuptools
+, shapely, snuggs }:
 
 buildPythonPackage rec {
   pname = "rasterio";
@@ -38,43 +17,19 @@ buildPythonPackage rec {
     hash = "sha256-6AtGRXGuAXMrePqS2lmNdOuPZi6LHuiWP2LJyxH3L3M=";
   };
 
-  nativeBuildInputs = [
-    cython
-    gdal
-  ];
+  nativeBuildInputs = [ cython gdal ];
 
-  propagatedBuildInputs = [
-    affine
-    attrs
-    click
-    click-plugins
-    cligj
-    certifi
-    numpy
-    snuggs
-    setuptools
-  ];
+  propagatedBuildInputs =
+    [ affine attrs click click-plugins cligj certifi numpy snuggs setuptools ];
 
   passthru.optional-dependencies = {
-    ipython = [
-      ipython
-    ];
-    plot = [
-      matplotlib
-    ];
-    s3 = [
-      boto3
-    ];
+    ipython = [ ipython ];
+    plot = [ matplotlib ];
+    s3 = [ boto3 ];
   };
 
-  nativeCheckInputs = [
-    boto3
-    hypothesis
-    packaging
-    pytest-randomly
-    pytestCheckHook
-    shapely
-  ];
+  nativeCheckInputs =
+    [ boto3 hypothesis packaging pytest-randomly pytestCheckHook shapely ];
 
   doCheck = true;
 
@@ -82,22 +37,18 @@ buildPythonPackage rec {
     rm -r rasterio # prevent importing local rasterio
   '';
 
-  pytestFlagsArray = [
-    "-m 'not network'"
-  ];
+  pytestFlagsArray = [ "-m 'not network'" ];
 
-  disabledTests = lib.optionals stdenv.isDarwin [
-    "test_reproject_error_propagation"
-  ];
+  disabledTests =
+    lib.optionals stdenv.isDarwin [ "test_reproject_error_propagation" ];
 
-  pythonImportsCheck = [
-    "rasterio"
-  ];
+  pythonImportsCheck = [ "rasterio" ];
 
   meta = with lib; {
     description = "Python package to read and write geospatial raster data";
     homepage = "https://rasterio.readthedocs.io/";
-    changelog = "https://github.com/rasterio/rasterio/blob/${version}/CHANGES.txt";
+    changelog =
+      "https://github.com/rasterio/rasterio/blob/${version}/CHANGES.txt";
     license = licenses.bsd3;
     maintainers = teams.geospatial.members;
   };

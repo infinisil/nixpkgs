@@ -1,9 +1,4 @@
-{ lib
-, fetchFromGitHub
-, stdenv
-, buildNpmPackage
-, nix-update-script
-}:
+{ lib, fetchFromGitHub, stdenv, buildNpmPackage, nix-update-script }:
 
 buildNpmPackage rec {
   pname = "jellyfin-web";
@@ -29,7 +24,7 @@ buildNpmPackage rec {
     runHook postInstall
   '';
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "Web Client for Jellyfin";

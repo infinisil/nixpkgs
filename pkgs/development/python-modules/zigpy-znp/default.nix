@@ -1,18 +1,6 @@
-{ lib
-, async-timeout
-, buildPythonPackage
-, coloredlogs
-, fetchFromGitHub
-, jsonschema
-, pytest-asyncio
-, pytest-mock
-, pytest-rerunfailures
-, pytest-timeout
-, pytestCheckHook
-, pythonOlder
-, voluptuous
-, zigpy
-}:
+{ lib, async-timeout, buildPythonPackage, coloredlogs, fetchFromGitHub
+, jsonschema, pytest-asyncio, pytest-mock, pytest-rerunfailures, pytest-timeout
+, pytestCheckHook, pythonOlder, voluptuous, zigpy }:
 
 buildPythonPackage rec {
   pname = "zigpy-znp";
@@ -33,13 +21,8 @@ buildPythonPackage rec {
       --replace "timeout = 20" "timeout = 300"
   '';
 
-  propagatedBuildInputs = [
-    async-timeout
-    coloredlogs
-    jsonschema
-    voluptuous
-    zigpy
-  ];
+  propagatedBuildInputs =
+    [ async-timeout coloredlogs jsonschema voluptuous zigpy ];
 
   nativeCheckInputs = [
     pytest-asyncio
@@ -49,13 +32,9 @@ buildPythonPackage rec {
     pytestCheckHook
   ];
 
-  pytestFlagsArray = [
-    "--reruns=3"
-  ];
+  pytestFlagsArray = [ "--reruns=3" ];
 
-  pythonImportsCheck = [
-    "zigpy_znp"
-  ];
+  pythonImportsCheck = [ "zigpy_znp" ];
 
   meta = with lib; {
     description = "Library for zigpy which communicates with TI ZNP radios";

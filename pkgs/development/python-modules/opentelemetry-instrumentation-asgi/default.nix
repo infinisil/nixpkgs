@@ -1,16 +1,7 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, asgiref
-, hatchling
-, opentelemetry-api
-, opentelemetry-instrumentation
-, opentelemetry-semantic-conventions
-, opentelemetry-test-utils
-, opentelemetry-util-http
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, asgiref, hatchling
+, opentelemetry-api, opentelemetry-instrumentation
+, opentelemetry-semantic-conventions, opentelemetry-test-utils
+, opentelemetry-util-http, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-instrumentation-asgi";
@@ -27,9 +18,7 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
   propagatedBuildInputs = [
     asgiref
@@ -39,15 +28,13 @@ buildPythonPackage rec {
     opentelemetry-util-http
   ];
 
-  nativeCheckInputs = [
-    opentelemetry-test-utils
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.instrumentation.asgi" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/instrumentation/opentelemetry-instrumentation-asgi";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/instrumentation/opentelemetry-instrumentation-asgi";
     description = "ASGI instrumentation for OpenTelemetry";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

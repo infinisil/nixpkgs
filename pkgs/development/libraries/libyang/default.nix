@@ -1,17 +1,13 @@
-{ stdenv
-, lib
-, fetchFromGitHub
+{ stdenv, lib, fetchFromGitHub
 
 # build time
-, cmake
-, pkg-config
+, cmake, pkg-config
 
 # run time
 , pcre2
 
 # update script
-, gitUpdater
-}:
+, gitUpdater }:
 
 stdenv.mkDerivation rec {
   pname = "libyang";
@@ -24,14 +20,9 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-3Lf8JUnzD20Xq6UswCbcWpgEBs0z4OEo7CGt0vWiPhI=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-  ];
+  nativeBuildInputs = [ cmake pkg-config ];
 
-  buildInputs = [
-    pcre2
-  ];
+  buildInputs = [ pcre2 ];
 
   cmakeFlags = [
     "-DCMAKE_INSTALL_LIBDIR=lib"
@@ -39,9 +30,7 @@ stdenv.mkDerivation rec {
     "-DCMAKE_BUILD_TYPE:String=Release"
   ];
 
-  passthru.updateScript = gitUpdater {
-    rev-prefix = "v";
-  };
+  passthru.updateScript = gitUpdater { rev-prefix = "v"; };
 
   meta = with lib; {
     description = "YANG data modelling language parser and toolkit";

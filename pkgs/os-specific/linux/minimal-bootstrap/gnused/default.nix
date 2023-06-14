@@ -1,9 +1,4 @@
-{ lib
-, fetchurl
-, bash
-, tinycc
-, gnumake
-}:
+{ lib, fetchurl, bash, tinycc, gnumake }:
 let
   pname = "gnused";
   # last version that can be compiled with mes-libc
@@ -17,20 +12,17 @@ let
   # Thanks to the live-bootstrap project!
   # See https://github.com/fosslinux/live-bootstrap/blob/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/sed-4.0.9/sed-4.0.9.kaem
   makefile = fetchurl {
-    url = "https://github.com/fosslinux/live-bootstrap/raw/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/sed-4.0.9/mk/main.mk";
+    url =
+      "https://github.com/fosslinux/live-bootstrap/raw/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/sed-4.0.9/mk/main.mk";
     sha256 = "0w1f5ri0g5zla31m6l6xyzbqwdvandqfnzrsw90dd6ak126w3mya";
   };
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake ];
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/sed --version
       mkdir ''${out}
     '';

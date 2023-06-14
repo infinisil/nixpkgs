@@ -1,14 +1,5 @@
-{ lib
-, python3Packages
-, fetchFromGitHub
-, fetchpatch
-, copyDesktopItems
-, wrapQtAppsHook
-, writeText
-, makeDesktopItem
-, xvfb-run
-, qt5
-}:
+{ lib, python3Packages, fetchFromGitHub, fetchpatch, copyDesktopItems
+, wrapQtAppsHook, writeText, makeDesktopItem, xvfb-run, qt5 }:
 
 python3Packages.buildPythonApplication rec {
   pname = "streamdeck-ui";
@@ -24,69 +15,58 @@ python3Packages.buildPythonApplication rec {
   patches = [
     (fetchpatch {
       name = "use-poetry-core.patch";
-      url = "https://github.com/timothycrosley/streamdeck-ui/commit/e271656c1f47b1619d1b942e2ebb01ab2d6a68a9.patch";
+      url =
+        "https://github.com/timothycrosley/streamdeck-ui/commit/e271656c1f47b1619d1b942e2ebb01ab2d6a68a9.patch";
       hash = "sha256-wqYwX6eSqMnW6OG7wSprD62Dz818ayFduVrqW9E/ays=";
     })
     (fetchpatch {
       name = "update-python-xlib-0.33.patch";
-      url = "https://github.com/timothycrosley/streamdeck-ui/commit/07d7fdd33085b413dd26b02d8a02820edad2d568.patch";
+      url =
+        "https://github.com/timothycrosley/streamdeck-ui/commit/07d7fdd33085b413dd26b02d8a02820edad2d568.patch";
       hash = "sha256-PylTrbfB8RJ0+kbgJlRdcvfdahGoob8LabwhuFNsUpY=";
     })
   ];
 
-  desktopItems = [ (makeDesktopItem {
-    name = "streamdeck-ui";
-    desktopName = "Stream Deck UI";
-    icon = "streamdeck-ui";
-    exec = "streamdeck --no-ui";
-    comment = "UI for the Elgato Stream Deck";
-    categories = [ "Utility" ];
-    noDisplay = true;
-  }) ];
+  desktopItems = [
+    (makeDesktopItem {
+      name = "streamdeck-ui";
+      desktopName = "Stream Deck UI";
+      icon = "streamdeck-ui";
+      exec = "streamdeck --no-ui";
+      comment = "UI for the Elgato Stream Deck";
+      categories = [ "Utility" ];
+      noDisplay = true;
+    })
+  ];
 
-  postInstall =
-    let
-      udevRules = ''
-        SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", TAG+="uaccess"
-      '';
-    in
-      ''
-        mkdir -p "$out/etc/udev/rules.d"
-        cp ${writeText "70-streamdeck.rules" udevRules} $out/etc/udev/rules.d/70-streamdeck.rules
+  postInstall = let
+    udevRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", TAG+="uaccess"
+    '';
+  in ''
+    mkdir -p "$out/etc/udev/rules.d"
+    cp ${
+      writeText "70-streamdeck.rules" udevRules
+    } $out/etc/udev/rules.d/70-streamdeck.rules
 
-        mkdir -p "$out/share/pixmaps"
-        cp streamdeck_ui/logo.png $out/share/pixmaps/streamdeck-ui.png
-      '';
+    mkdir -p "$out/share/pixmaps"
+    cp streamdeck_ui/logo.png $out/share/pixmaps/streamdeck-ui.png
+  '';
 
   dontWrapQtApps = true;
   makeWrapperArgs = [ "\${qtWrapperArgs[@]}" ];
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    python3Packages.poetry-core
-    copyDesktopItems
-    wrapQtAppsHook
-  ];
+  nativeBuildInputs =
+    [ python3Packages.poetry-core copyDesktopItems wrapQtAppsHook ];
 
-  propagatedBuildInputs = with python3Packages; [
-    setuptools
-    filetype
-    cairosvg
-    pillow
-    pynput
-    pyside2
-    streamdeck
-    xlib
-  ] ++ lib.optionals stdenv.isLinux [
-    qt5.qtwayland
-  ];
+  propagatedBuildInputs = with python3Packages;
+    [ setuptools filetype cairosvg pillow pynput pyside2 streamdeck xlib ]
+    ++ lib.optionals stdenv.isLinux [ qt5.qtwayland ];
 
-  nativeCheckInputs = [
-    xvfb-run
-    python3Packages.pytest
-    python3Packages.hypothesis-auto
-  ];
+  nativeCheckInputs =
+    [ xvfb-run python3Packages.pytest python3Packages.hypothesis-auto ];
 
   # Ignored tests are not in a running or passing state.
   # Fixes have been merged upstream but not yet released.

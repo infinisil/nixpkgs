@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchFromGitHub
-}:
+{ lib, python3, fetchFromGitHub }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "ec2stepshell";
@@ -21,9 +18,7 @@ python3.pkgs.buildPythonApplication rec {
       --replace "realpython" "ec2stepshell"
   '';
 
-  nativeBuildInputs = with python3.pkgs; [
-    setuptools
-  ];
+  nativeBuildInputs = with python3.pkgs; [ setuptools ];
 
   propagatedBuildInputs = with python3.pkgs; [
     boto3
@@ -32,14 +27,13 @@ python3.pkgs.buildPythonApplication rec {
     termcolor
   ];
 
-  pythonImportsCheck = [
-    "ec2stepshell"
-  ];
+  pythonImportsCheck = [ "ec2stepshell" ];
 
   meta = with lib; {
     description = "AWS post-exploitation tool";
     homepage = "https://github.com/saw-your-packet/EC2StepShell";
-    changelog = "https://github.com/saw-your-packet/EC2StepShell/blob/${version}/CHANGELOG.txt";
+    changelog =
+      "https://github.com/saw-your-packet/EC2StepShell/blob/${version}/CHANGELOG.txt";
     license = licenses.mit;
     maintainers = with maintainers; [ fab ];
   };

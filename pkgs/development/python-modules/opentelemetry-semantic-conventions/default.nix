@@ -1,10 +1,5 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, hatchling
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, hatchling
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-semantic-conventions";
@@ -21,18 +16,15 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.semconv" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-semantic-conventions";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-semantic-conventions";
     description = "OpenTelemetry Semantic Conventions";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

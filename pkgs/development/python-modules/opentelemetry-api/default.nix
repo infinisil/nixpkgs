@@ -1,14 +1,5 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, deprecated
-, hatchling
-, importlib-metadata
-, opentelemetry-test-utils
-, setuptools
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, deprecated, hatchling
+, importlib-metadata, opentelemetry-test-utils, setuptools, pytestCheckHook }:
 
 let
   self = buildPythonPackage {
@@ -26,20 +17,11 @@ let
 
     format = "pyproject";
 
-    nativeBuildInputs = [
-      hatchling
-    ];
+    nativeBuildInputs = [ hatchling ];
 
-    propagatedBuildInputs = [
-      deprecated
-      importlib-metadata
-      setuptools
-    ];
+    propagatedBuildInputs = [ deprecated importlib-metadata setuptools ];
 
-    nativeCheckInputs = [
-      opentelemetry-test-utils
-      pytestCheckHook
-    ];
+    nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
     pythonImportsCheck = [ "opentelemetry" ];
 

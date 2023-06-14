@@ -14,22 +14,24 @@ let
           version = dartVersion;
           sources = {
             "${dartVersion}-x86_64-linux" = fetchzip {
-              url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${dartVersion}/sdk/dartsdk-linux-x64-release.zip";
+              url =
+                "https://storage.googleapis.com/dart-archive/channels/stable/release/${dartVersion}/sdk/dartsdk-linux-x64-release.zip";
               sha256 = dartHash.x86_64-linux;
             };
             "${dartVersion}-aarch64-linux" = fetchzip {
-              url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${dartVersion}/sdk/dartsdk-linux-arm64-release.zip";
+              url =
+                "https://storage.googleapis.com/dart-archive/channels/stable/release/${dartVersion}/sdk/dartsdk-linux-arm64-release.zip";
               sha256 = dartHash.aarch64-linux;
             };
           };
         };
         src = fetchzip {
-          url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${version}-stable.tar.xz";
+          url =
+            "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${version}-stable.tar.xz";
           sha256 = hash;
         };
       };
-    in
-    (mkCustomFlutter args).overrideAttrs (prev: next: {
+    in (mkCustomFlutter args).overrideAttrs (prev: next: {
       passthru = next.passthru // rec {
         inherit wrapFlutter mkCustomFlutter mkFlutter;
         buildFlutterApplication = callPackage ../../../build-support/flutter {
@@ -39,7 +41,8 @@ let
             includedEngineArtifacts = {
               common = [ "flutter_patched_sdk_product" ];
               platform.linux = lib.optionals stdenv.hostPlatform.isLinux
-                (lib.genAttrs ((lib.optional stdenv.hostPlatform.isx86_64 "x64") ++ (lib.optional stdenv.hostPlatform.isAarch64 "arm64"))
+                (lib.genAttrs ((lib.optional stdenv.hostPlatform.isx86_64 "x64")
+                  ++ (lib.optional stdenv.hostPlatform.isAarch64 "arm64"))
                   (architecture: [ "release" ]));
             };
           };
@@ -49,8 +52,7 @@ let
 
   flutter2Patches = getPatches ./patches/flutter2;
   flutter3Patches = getPatches ./patches/flutter3;
-in
-{
+in {
   inherit wrapFlutter;
   stable = mkFlutter {
     version = "3.10.0";

@@ -1,27 +1,7 @@
-{ lib
-, stdenv
-, apscheduler
-, bitstring
-, buildPythonPackage
-, cffi
-, ecdsa
-, fetchFromGitHub
-, monero
-, poetry-core
-, pypng
-, pyqrcode
-, pyramid
-, pyramid-jinja2
-, pysocks
-, pytestCheckHook
-, pythonOlder
-, pythonRelaxDepsHook
-, requests
-, tzlocal
-, waitress
-, webtest
-, yoyo-migrations
-}:
+{ lib, stdenv, apscheduler, bitstring, buildPythonPackage, cffi, ecdsa
+, fetchFromGitHub, monero, poetry-core, pypng, pyqrcode, pyramid, pyramid-jinja2
+, pysocks, pytestCheckHook, pythonOlder, pythonRelaxDepsHook, requests, tzlocal
+, waitress, webtest, yoyo-migrations }:
 
 buildPythonPackage rec {
   pname = "cypherpunkpay";
@@ -37,19 +17,10 @@ buildPythonPackage rec {
     hash = "sha256-X0DB0PVwR0gRnt3jixFzglWAOPKBMvqTOG6pK6OJ03w=";
   };
 
-  pythonRelaxDeps = [
-    "bitstring"
-    "cffi"
-    "ecdsa"
-    "pypng"
-    "tzlocal"
-    "yoyo-migrations"
-  ];
+  pythonRelaxDeps =
+    [ "bitstring" "cffi" "ecdsa" "pypng" "tzlocal" "yoyo-migrations" ];
 
-  nativeBuildInputs = [
-    poetry-core
-    pythonRelaxDepsHook
-  ];
+  nativeBuildInputs = [ poetry-core pythonRelaxDepsHook ];
 
   propagatedBuildInputs = [
     apscheduler
@@ -68,15 +39,9 @@ buildPythonPackage rec {
     yoyo-migrations
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    webtest
-  ];
+  nativeCheckInputs = [ pytestCheckHook webtest ];
 
-  pytestFlagsArray = [
-    "-W"
-    "ignore::DeprecationWarning"
-  ];
+  pytestFlagsArray = [ "-W" "ignore::DeprecationWarning" ];
 
   disabledTestPaths = [
     # performance test
@@ -102,15 +67,17 @@ buildPythonPackage rec {
     "tests/acceptance/views_dummystore"
   ];
 
-  pythonImportsCheck = [
-    "cypherpunkpay"
-  ];
+  pythonImportsCheck = [ "cypherpunkpay" ];
 
   meta = with lib; {
     description = "Modern self-hosted software for accepting Bitcoin";
     homepage = "https://github.com/CypherpunkPay/CypherpunkPay";
-    changelog = "https://github.com/CypherpunkPay/CypherpunkPay/releases/tag/v${version}";
-    license = with licenses; [ mit /* or */ unlicense ];
+    changelog =
+      "https://github.com/CypherpunkPay/CypherpunkPay/releases/tag/v${version}";
+    license = with licenses; [
+      mit # or
+      unlicense
+    ];
     maintainers = with maintainers; [ prusnak ];
   };
 }

@@ -1,21 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
-, pytestCheckHook
-, pythonRelaxDepsHook
-, matplotlib
-, nibabel
-, numpy
-, pydicom
-, pymedio
-, scikit-fuzzy
-, scikit-image
-, scikit-learn
-, scipy
-, simpleitk
-, statsmodels
-}:
+{ lib, buildPythonPackage, fetchPypi, pythonOlder, pytestCheckHook
+, pythonRelaxDepsHook, matplotlib, nibabel, numpy, pydicom, pymedio
+, scikit-fuzzy, scikit-image, scikit-learn, scipy, simpleitk, statsmodels }:
 
 buildPythonPackage rec {
   pname = "intensity-normalization";
@@ -52,9 +37,7 @@ buildPythonPackage rec {
     statsmodels
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
   pytestFlagsArray = [ "tests" ];
 
   pythonImportsCheck = [
@@ -63,7 +46,6 @@ buildPythonPackage rec {
     "intensity_normalization.plot"
     "intensity_normalization.util"
   ];
-
 
   meta = with lib; {
     homepage = "https://github.com/jcreinhold/intensity-normalization";

@@ -1,13 +1,5 @@
-{ lib
-, fetchurl
-, llvmPackages
-, python
-, qt6
-, cmake
-, autoPatchelfHook
-, stdenv
-, libxcrypt
-}:
+{ lib, fetchurl, llvmPackages, python, qt6, cmake, autoPatchelfHook, stdenv
+, libxcrypt }:
 
 llvmPackages.stdenv.mkDerivation rec {
   pname = "shiboken6";
@@ -15,32 +7,23 @@ llvmPackages.stdenv.mkDerivation rec {
 
   src = fetchurl {
     # https://download.qt.io/official_releases/QtForPython/shiboken6/
-    url = "https://download.qt.io/official_releases/QtForPython/shiboken6/PySide6-${version}-src/pyside-setup-everywhere-src-${version}.tar.xz";
+    url =
+      "https://download.qt.io/official_releases/QtForPython/shiboken6/PySide6-${version}-src/pyside-setup-everywhere-src-${version}.tar.xz";
     sha256 = "sha256-bvU7KRJyZ+OBkX5vk5nOdg7cBkTNWDGYix3nLJ1YOrQ=";
   };
 
-  sourceRoot = "pyside-setup-everywhere-src-${lib.versions.majorMinor version}/sources/${pname}";
+  sourceRoot = "pyside-setup-everywhere-src-${
+      lib.versions.majorMinor version
+    }/sources/${pname}";
 
-  patches = [
-    ./fix-include-qt-headers.patch
-  ];
+  patches = [ ./fix-include-qt-headers.patch ];
 
-  nativeBuildInputs = [
-    cmake
-    python
-  ] ++ lib.optionals stdenv.isLinux [
-    autoPatchelfHook
-  ];
+  nativeBuildInputs = [ cmake python ]
+    ++ lib.optionals stdenv.isLinux [ autoPatchelfHook ];
 
-  buildInputs = [
-    llvmPackages.llvm
-    llvmPackages.libclang
-    qt6.qtbase
-  ];
+  buildInputs = [ llvmPackages.llvm llvmPackages.libclang qt6.qtbase ];
 
-  cmakeFlags = [
-    "-DBUILD_TESTS=OFF"
-  ];
+  cmakeFlags = [ "-DBUILD_TESTS=OFF" ];
 
   # Due to Shiboken.abi3.so being linked to libshiboken6.abi3.so.6.5 in the build tree,
   # we need to remove the build tree reference from the RPATH and then add the correct

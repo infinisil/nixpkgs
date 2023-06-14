@@ -1,16 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, pkg-config
-, openssl
-, zlib
-, zstd
-, icu
-, cyrus_sasl
-, snappy
-, darwin
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, pkg-config, openssl, zlib, zstd, icu
+, cyrus_sasl, snappy, darwin }:
 
 stdenv.mkDerivation rec {
   pname = "mongoc";
@@ -28,21 +17,10 @@ stdenv.mkDerivation rec {
       --replace "\\\''${prefix}/" ""
   '';
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-  ];
+  nativeBuildInputs = [ cmake pkg-config ];
 
-  buildInputs = [
-    openssl
-    zlib
-    zstd
-    icu
-    cyrus_sasl
-    snappy
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-  ];
+  buildInputs = [ openssl zlib zstd icu cyrus_sasl snappy ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   cmakeFlags = [
     "-DBUILD_VERSION=${version}"

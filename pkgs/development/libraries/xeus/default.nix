@@ -1,12 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, doctest
-, nlohmann_json
-, libuuid
-, xtl
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, doctest, nlohmann_json, libuuid, xtl }:
 
 stdenv.mkDerivation rec {
   pname = "xeus";
@@ -19,23 +11,14 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-jZZe8SegQuFLoH2Qp+etoKELGEWdlYQPXj14DNIMJ/0=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    doctest
-  ];
+  nativeBuildInputs = [ cmake doctest ];
 
-  buildInputs = [
-    nlohmann_json
-    libuuid
-    xtl
-  ];
+  buildInputs = [ nlohmann_json libuuid xtl ];
 
-  cmakeFlags = [
-    "-DXEUS_BUILD_TESTS=ON"
-  ];
+  cmakeFlags = [ "-DXEUS_BUILD_TESTS=ON" ];
 
   doCheck = true;
-  preCheck = ''export LD_LIBRARY_PATH=$PWD'';
+  preCheck = "export LD_LIBRARY_PATH=$PWD";
 
   meta = with lib; {
     homepage = "https://xeus.readthedocs.io";

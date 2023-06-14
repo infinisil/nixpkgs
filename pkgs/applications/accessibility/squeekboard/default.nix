@@ -1,26 +1,7 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, cargo
-, meson
-, ninja
-, pkg-config
-, gnome
-, gnome-desktop
-, glib
-, gtk3
-, wayland
-, wayland-protocols
-, libbsd
-, libxml2
-, libxkbcommon
-, rustPlatform
-, rustc
-, feedbackd
-, wrapGAppsHook
-, fetchpatch
-, nixosTests
-}:
+{ lib, stdenv, fetchFromGitLab, cargo, meson, ninja, pkg-config, gnome
+, gnome-desktop, glib, gtk3, wayland, wayland-protocols, libbsd, libxml2
+, libxkbcommon, rustPlatform, rustc, feedbackd, wrapGAppsHook, fetchpatch
+, nixosTests }:
 
 stdenv.mkDerivation rec {
   pname = "squeekboard";
@@ -45,9 +26,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-F2mef0HvD9WZRx05DEpQ1AO1skMwcchHZzJa74AHmsM=";
   };
 
-  mesonFlags = [
-    "-Dnewer=true"
-  ];
+  mesonFlags = [ "-Dnewer=true" ];
 
   nativeBuildInputs = [
     meson

@@ -13,20 +13,16 @@ let
     MEDIA_ROOT = "/var/lib/tandoor-recipes";
   } // optionalAttrs (config.time.timeZone != null) {
     TIMEZONE = config.time.timeZone;
-  } // (
-    lib.mapAttrs (_: toString) cfg.extraConfig
-  );
+  } // (lib.mapAttrs (_: toString) cfg.extraConfig);
 
-  manage =
-    let
-      setupEnv = lib.concatStringsSep "\n" (mapAttrsToList (name: val: "export ${name}=\"${val}\"") env);
-    in
-    pkgs.writeShellScript "manage" ''
-      ${setupEnv}
-      exec ${pkg}/bin/tandoor-recipes "$@"
-    '';
-in
-{
+  manage = let
+    setupEnv = lib.concatStringsSep "\n"
+      (mapAttrsToList (name: val: ''export ${name}="${val}"'') env);
+  in pkgs.writeShellScript "manage" ''
+    ${setupEnv}
+    exec ${pkg}/bin/tandoor-recipes "$@"
+  '';
+in {
   meta.maintainers = with maintainers; [ ambroisie ];
 
   options.services.tandoor-recipes = {
@@ -66,9 +62,7 @@ in
         See [the example dot-env file](https://raw.githubusercontent.com/vabene1111/recipes/master/.env.template)
         for available options.
       '';
-      example = {
-        ENABLE_SIGNUP = "1";
-      };
+      example = { ENABLE_SIGNUP = "1"; };
     };
 
     package = mkOption {
@@ -96,7 +90,9 @@ in
         RuntimeDirectory = "tandoor-recipes";
 
         BindReadOnlyPaths = [
-          "${config.environment.etc."ssl/certs/ca-certificates.crt".source}:/etc/ssl/certs/ca-certificates.crt"
+          "${
+            config.environment.etc."ssl/certs/ca-certificates.crt".source
+          }:/etc/ssl/certs/ca-certificates.crt"
           builtins.storeDir
           "-/etc/resolv.conf"
           "-/etc/nsswitch.conf"
@@ -121,7 +117,13 @@ in
         RestrictRealtime = true;
         SystemCallArchitectures = "native";
         # gunicorn needs setuid
-        SystemCallFilter = [ "@system-service" "~@privileged" "@resources" "@setuid" "@keyring" ];
+        SystemCallFilter = [
+          "@system-service"
+          "~@privileged"
+          "@resources"
+          "@setuid"
+          "@keyring"
+        ];
         UMask = "0066";
       } // lib.optionalAttrs (cfg.port < 1024) {
         AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
@@ -138,7 +140,9 @@ in
       '';
 
       environment = env // {
-        PYTHONPATH = "${pkg.python.pkgs.makePythonPath pkg.propagatedBuildInputs}:${pkg}/lib/tandoor-recipes";
+        PYTHONPATH = "${
+            pkg.python.pkgs.makePythonPath pkg.propagatedBuildInputs
+          }:${pkg}/lib/tandoor-recipes";
       };
     };
   };

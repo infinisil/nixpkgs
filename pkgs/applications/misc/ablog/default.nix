@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 with python3.pkgs;
 
@@ -14,17 +11,9 @@ buildPythonApplication rec {
     sha256 = "sha256-+vrVQ4sItCXrSCzNXyKk6/6oDBOyfyD7iNWzmcbE/BQ=";
   };
 
-  propagatedBuildInputs = [
-    feedgen
-    sphinx
-    invoke
-    watchdog
-    python-dateutil
-  ];
+  propagatedBuildInputs = [ feedgen sphinx invoke watchdog python-dateutil ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   nativeBuildInputs = [ setuptools-scm ];
 

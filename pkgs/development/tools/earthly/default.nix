@@ -23,17 +23,9 @@ buildGoModule rec {
     "-X main.DefaultBuildkitdImage=docker.io/earthly/buildkitd:v${version}"
     "-X main.GitSha=v${version}"
     "-X main.DefaultInstallationName=earthly"
-  ] ++ lib.optionals stdenv.isLinux [
-    "-extldflags '-static'"
-  ];
+  ] ++ lib.optionals stdenv.isLinux [ "-extldflags '-static'" ];
 
-  tags = [
-    "dfrunmount"
-    "dfrunnetwork"
-    "dfrunsecurity"
-    "dfsecrets"
-    "dfssh"
-  ];
+  tags = [ "dfrunmount" "dfrunnetwork" "dfrunsecurity" "dfsecrets" "dfssh" ];
 
   postInstall = ''
     mv $out/bin/debugger $out/bin/earthly-debugger

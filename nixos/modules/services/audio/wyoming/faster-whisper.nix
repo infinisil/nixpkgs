@@ -1,131 +1,201 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.services.wyoming.faster-whisper;
 
   inherit (lib)
-    escapeShellArgs
-    mkOption
-    mdDoc
-    mkEnableOption
-    mkPackageOptionMD
-    types
-    ;
+    escapeShellArgs mkOption mdDoc mkEnableOption mkPackageOptionMD types;
 
-  inherit (builtins)
-    toString
-    ;
+  inherit (builtins) toString;
 
-in
-
-{
+in {
   options.services.wyoming.faster-whisper = with types; {
     package = mkPackageOptionMD pkgs "wyoming-faster-whisper" { };
 
     servers = mkOption {
-      default = {};
+      default = { };
       description = mdDoc ''
         Attribute set of faster-whisper instances to spawn.
       '';
-      type = types.attrsOf (types.submodule (
-        { ... }: {
-          options = {
-            enable = mkEnableOption (mdDoc "Wyoming faster-whisper server");
+      type = types.attrsOf (types.submodule ({ ... }: {
+        options = {
+          enable = mkEnableOption (mdDoc "Wyoming faster-whisper server");
 
-            model = mkOption {
-              type = enum [
-                "tiny"
-                "tiny-int8"
-                "base"
-                "base-int8"
-                "small"
-                "small-int8"
-                "medium"
-                "medium-int8"
-              ];
-              default = "tiny-int8";
-              example = "medium-int8";
-              description = mdDoc ''
-                Name of the voice model to use.
-              '';
-            };
-
-            uri = mkOption {
-              type = strMatching "^(tcp|unix)://.*$";
-              example = "tcp://0.0.0.0:10300";
-              description = mdDoc ''
-                URI to bind the wyoming server to.
-              '';
-            };
-
-            device = mkOption {
-              # https://opennmt.net/CTranslate2/python/ctranslate2.models.Whisper.html#
-              type = types.enum [
-                "cpu"
-                "cuda"
-                "auto"
-              ];
-              default = "cpu";
-              description = mdDoc ''
-                Id of a speaker in a multi-speaker model.
-              '';
-            };
-
-            language = mkOption {
-              type = enum [
-                # https://github.com/home-assistant/addons/blob/master/whisper/config.yaml#L20
-                "auto" "af" "am" "ar" "as" "az" "ba" "be" "bg" "bn" "bo" "br" "bs" "ca" "cs" "cy" "da" "de" "el" "en" "es" "et" "eu" "fa" "fi" "fo" "fr" "gl" "gu" "ha" "haw" "he" "hi" "hr" "ht" "hu" "hy" "id" "is" "it" "ja" "jw" "ka" "kk" "km" "kn" "ko" "la" "lb" "ln" "lo" "lt" "lv" "mg" "mi" "mk" "ml" "mn" "mr" "ms" "mt" "my" "ne" "nl" "nn" "no" "oc" "pa" "pl" "ps" "pt" "ro" "ru" "sa" "sd" "si" "sk" "sl" "sn" "so" "sq" "sr" "su" "sv" "sw" "ta" "te" "tg" "th" "tk" "tl" "tr" "tt" "uk" "ur" "uz" "vi" "yi" "yo" "zh"
-              ];
-              example = "en";
-              description = mdDoc ''
-                The language used to to parse words and sentences.
-              '';
-            };
-
-            beamSize = mkOption {
-              type = ints.unsigned;
-              default = 1;
-              example = 5;
-              description = mdDoc ''
-                The number of beams to use in beam search.
-              '';
-              apply = toString;
-            };
-
-            extraArgs = mkOption {
-              type = listOf str;
-              default = [ ];
-              description = mdDoc ''
-                Extra arguments to pass to the server commandline.
-              '';
-              apply = escapeShellArgs;
-            };
+          model = mkOption {
+            type = enum [
+              "tiny"
+              "tiny-int8"
+              "base"
+              "base-int8"
+              "small"
+              "small-int8"
+              "medium"
+              "medium-int8"
+            ];
+            default = "tiny-int8";
+            example = "medium-int8";
+            description = mdDoc ''
+              Name of the voice model to use.
+            '';
           };
-        }
-      ));
+
+          uri = mkOption {
+            type = strMatching "^(tcp|unix)://.*$";
+            example = "tcp://0.0.0.0:10300";
+            description = mdDoc ''
+              URI to bind the wyoming server to.
+            '';
+          };
+
+          device = mkOption {
+            # https://opennmt.net/CTranslate2/python/ctranslate2.models.Whisper.html#
+            type = types.enum [ "cpu" "cuda" "auto" ];
+            default = "cpu";
+            description = mdDoc ''
+              Id of a speaker in a multi-speaker model.
+            '';
+          };
+
+          language = mkOption {
+            type = enum [
+              # https://github.com/home-assistant/addons/blob/master/whisper/config.yaml#L20
+              "auto"
+              "af"
+              "am"
+              "ar"
+              "as"
+              "az"
+              "ba"
+              "be"
+              "bg"
+              "bn"
+              "bo"
+              "br"
+              "bs"
+              "ca"
+              "cs"
+              "cy"
+              "da"
+              "de"
+              "el"
+              "en"
+              "es"
+              "et"
+              "eu"
+              "fa"
+              "fi"
+              "fo"
+              "fr"
+              "gl"
+              "gu"
+              "ha"
+              "haw"
+              "he"
+              "hi"
+              "hr"
+              "ht"
+              "hu"
+              "hy"
+              "id"
+              "is"
+              "it"
+              "ja"
+              "jw"
+              "ka"
+              "kk"
+              "km"
+              "kn"
+              "ko"
+              "la"
+              "lb"
+              "ln"
+              "lo"
+              "lt"
+              "lv"
+              "mg"
+              "mi"
+              "mk"
+              "ml"
+              "mn"
+              "mr"
+              "ms"
+              "mt"
+              "my"
+              "ne"
+              "nl"
+              "nn"
+              "no"
+              "oc"
+              "pa"
+              "pl"
+              "ps"
+              "pt"
+              "ro"
+              "ru"
+              "sa"
+              "sd"
+              "si"
+              "sk"
+              "sl"
+              "sn"
+              "so"
+              "sq"
+              "sr"
+              "su"
+              "sv"
+              "sw"
+              "ta"
+              "te"
+              "tg"
+              "th"
+              "tk"
+              "tl"
+              "tr"
+              "tt"
+              "uk"
+              "ur"
+              "uz"
+              "vi"
+              "yi"
+              "yo"
+              "zh"
+            ];
+            example = "en";
+            description = mdDoc ''
+              The language used to to parse words and sentences.
+            '';
+          };
+
+          beamSize = mkOption {
+            type = ints.unsigned;
+            default = 1;
+            example = 5;
+            description = mdDoc ''
+              The number of beams to use in beam search.
+            '';
+            apply = toString;
+          };
+
+          extraArgs = mkOption {
+            type = listOf str;
+            default = [ ];
+            description = mdDoc ''
+              Extra arguments to pass to the server commandline.
+            '';
+            apply = escapeShellArgs;
+          };
+        };
+      }));
     };
   };
 
-  config = let
-    inherit (lib)
-      mapAttrs'
-      mkIf
-      nameValuePair
-    ;
-  in mkIf (cfg.servers != {}) {
+  config = let inherit (lib) mapAttrs' mkIf nameValuePair;
+  in mkIf (cfg.servers != { }) {
     systemd.services = mapAttrs' (server: options:
       nameValuePair "wyoming-faster-whisper-${server}" {
         description = "Wyoming faster-whisper server instance ${server}";
-        after = [
-          "network-online.target"
-        ];
-        wantedBy = [
-          "multi-user.target"
-        ];
+        after = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           DynamicUser = true;
           User = "wyoming-faster-whisper";
@@ -153,7 +223,8 @@ in
             "/dev/nvidia-modeset"
             "/dev/nvidia-uvm"
             "/dev/nvidia-uvm-tools"
-          ] else "";
+          ] else
+            "";
           DevicePolicy = "closed";
           LockPersonality = true;
           MemoryDenyWriteExecute = true;
@@ -167,18 +238,11 @@ in
           ProtectControlGroups = true;
           ProtectProc = "invisible";
           ProcSubset = "pid";
-          RestrictAddressFamilies = [
-            "AF_INET"
-            "AF_INET6"
-            "AF_UNIX"
-          ];
+          RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
           RestrictNamespaces = true;
           RestrictRealtime = true;
           SystemCallArchitectures = "native";
-          SystemCallFilter = [
-            "@system-service"
-            "~@privileged"
-          ];
+          SystemCallFilter = [ "@system-service" "~@privileged" ];
           UMask = "0077";
         };
       }) cfg.servers;

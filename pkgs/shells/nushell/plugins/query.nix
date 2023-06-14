@@ -1,10 +1,4 @@
-{ stdenv
-, lib
-, rustPlatform
-, nushell
-, IOKit
-, CoreFoundation
-, nix-update-script
+{ stdenv, lib, rustPlatform, nushell, IOKit, CoreFoundation, nix-update-script
 }:
 
 rustPlatform.buildRustPackage {
@@ -22,13 +16,12 @@ rustPlatform.buildRustPackage {
   # compilation fails with a missing symbol
   doCheck = false;
 
-  passthru = {
-    updateScript = nix-update-script { };
-  };
+  passthru = { updateScript = nix-update-script { }; };
 
   meta = with lib; {
     description = "A Nushell plugin to query JSON, XML, and various web data";
-    homepage = "https://github.com/nushell/nushell/tree/main/crates/nu_plugin_query";
+    homepage =
+      "https://github.com/nushell/nushell/tree/main/crates/nu_plugin_query";
     license = licenses.mpl20;
     maintainers = with maintainers; [ happysalada ];
     platforms = with platforms; all;

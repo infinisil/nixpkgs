@@ -10,9 +10,7 @@ buildPythonPackage rec {
     hash = "sha256-8VxkrzADp3yCeb02BxtT6oSP1FCX8GW4oc6OECK2hJw=";
   };
 
-  propagatedBuildInputs = [
-    sphinx
-  ];
+  propagatedBuildInputs = [ sphinx ];
 
   pythonImportsCheck = [ "piccolo_theme" ];
 

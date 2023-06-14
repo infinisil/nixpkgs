@@ -1,45 +1,13 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, fetchpatch
+{ lib, stdenv, fetchFromGitLab, fetchpatch
 
 # build time
-, bison
-, docbook_xsl
-, docutils
-, flex
-, gtk-doc
-, meson
-, ninja
-, pkg-config
+, bison, docbook_xsl, docutils, flex, gtk-doc, meson, ninja, pkg-config
 , utilmacros
 
 # runtime
-, alsa-lib
-, cairo
-, curl
-, elfutils
-, glib
-, gsl
-, json_c
-, kmod
-, libdrm
-, liboping
-, libpciaccess
-, libunwind
-, libX11
-, libXext
-, libXrandr
-, libXv
-, openssl
-, peg
-, procps
-, python3
-, udev
-, valgrind
-, xmlrpc_c
-, xorgproto
-}:
+, alsa-lib, cairo, curl, elfutils, glib, gsl, json_c, kmod, libdrm, liboping
+, libpciaccess, libunwind, libX11, libXext, libXrandr, libXv, openssl, peg
+, procps, python3, udev, valgrind, xmlrpc_c, xorgproto }:
 
 stdenv.mkDerivation rec {
   pname = "intel-gpu-tools";
@@ -57,7 +25,8 @@ stdenv.mkDerivation rec {
     # fixes pkgsMusl.intel-gpu-tools
     # https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/issues/138
     (fetchpatch {
-      url = "https://raw.githubusercontent.com/void-linux/void-packages/111918317d06598fe1459dbe139923404f3f4b9d/srcpkgs/igt-gpu-tools/patches/musl.patch";
+      url =
+        "https://raw.githubusercontent.com/void-linux/void-packages/111918317d06598fe1459dbe139923404f3f4b9d/srcpkgs/igt-gpu-tools/patches/musl.patch";
       hash = "sha256-cvtwZg7js7O/Ww7puBTfVzLRji2bHTyV91+PvpH8qrg=";
     })
   ];
@@ -108,7 +77,8 @@ stdenv.mkDerivation rec {
   hardeningDisable = [ "bindnow" ];
 
   meta = with lib; {
-    changelog = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/blob/v${version}/NEWS";
+    changelog =
+      "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/blob/v${version}/NEWS";
     homepage = "https://drm.pages.freedesktop.org/igt-gpu-tools/";
     description = "Tools for development and testing of the Intel DRM driver";
     license = licenses.mit;

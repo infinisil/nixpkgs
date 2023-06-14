@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, cryptography
-, fetchFromGitHub
-, pytestCheckHook
-, pythonOlder
-, pyzipper
-, setuptools
-}:
+{ lib, buildPythonPackage, cryptography, fetchFromGitHub, pytestCheckHook
+, pythonOlder, pyzipper, setuptools }:
 
 buildPythonPackage rec {
   pname = "xknxproject";
@@ -22,22 +15,13 @@ buildPythonPackage rec {
     hash = "sha256-4FZJsw/x7yYPyAc26YTMWMzJuSGC3fkh3PunfUXmEUw=";
   };
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
-  propagatedBuildInputs = [
-    cryptography
-    pyzipper
-  ];
+  propagatedBuildInputs = [ cryptography pyzipper ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "xknxproject"
-  ];
+  pythonImportsCheck = [ "xknxproject" ];
 
   meta = with lib; {
     description = "ETS project parser";

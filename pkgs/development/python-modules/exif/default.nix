@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitLab
-, pythonOlder
-, plum-py
-, pytestCheckHook
-, baseline
-}:
+{ lib, buildPythonPackage, fetchFromGitLab, pythonOlder, plum-py
+, pytestCheckHook, baseline }:
 
 buildPythonPackage rec {
   pname = "exif";
@@ -21,23 +15,17 @@ buildPythonPackage rec {
     hash = "sha256-uiHL3m0C6+YnAHRLwzMCSzffrQsSyVcuem6FBtTLxek=";
   };
 
-  propagatedBuildInputs = [
-    plum-py
-  ];
+  propagatedBuildInputs = [ plum-py ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    baseline
-  ];
+  nativeCheckInputs = [ pytestCheckHook baseline ];
 
-  pythonImportsCheck = [
-    "exif"
-  ];
+  pythonImportsCheck = [ "exif" ];
 
   meta = with lib; {
     description = "Read and modify image EXIF metadata using Python";
     homepage = "https://gitlab.com/TNThieding/exif";
-    changelog = "https://gitlab.com/TNThieding/exif/-/blob/v${version}/docs/release_notes.rst";
+    changelog =
+      "https://gitlab.com/TNThieding/exif/-/blob/v${version}/docs/release_notes.rst";
     license = licenses.mit;
     maintainers = with maintainers; [ dnr ];
   };

@@ -1,29 +1,10 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, SDL2
-, cmake
-, ffmpeg
-, libedit
-, libelf
-, libepoxy
-, libzip
-, lua5_4
-, minizip
-, pkg-config
-, libsForQt5
-, wrapGAppsHook
-}:
+{ lib, stdenv, fetchFromGitHub, SDL2, cmake, ffmpeg, libedit, libelf, libepoxy
+, libzip, lua5_4, minizip, pkg-config, libsForQt5, wrapGAppsHook }:
 
 let
-    lua = lua5_4;
-    inherit (libsForQt5)
-      qtbase
-      qtmultimedia
-      qttools
-      wrapQtAppsHook;
-in
-stdenv.mkDerivation (finalAttrs: {
+  lua = lua5_4;
+  inherit (libsForQt5) qtbase qtmultimedia qttools wrapQtAppsHook;
+in stdenv.mkDerivation (finalAttrs: {
   pname = "mgba";
   version = "0.10.2";
 
@@ -34,12 +15,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-+AwIYhnqp984Banwb7zmB5yzenExfLLU1oGJSxeTl/M=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-    wrapGAppsHook
-    wrapQtAppsHook
-  ];
+  nativeBuildInputs = [ cmake pkg-config wrapGAppsHook wrapQtAppsHook ];
 
   dontWrapGApps = true;
   preFixup = ''
@@ -77,7 +53,8 @@ stdenv.mkDerivation (finalAttrs: {
       runners, and a modern feature set for emulators that older emulators may
       not support.
     '';
-    changelog = "https://github.com/mgba-emu/mgba/blob/${finalAttrs.version}/CHANGES";
+    changelog =
+      "https://github.com/mgba-emu/mgba/blob/${finalAttrs.version}/CHANGES";
     license = licenses.mpl20;
     maintainers = with maintainers; [ MP2E AndersonTorres ];
     platforms = platforms.linux;

@@ -1,14 +1,5 @@
-{ buildGoModule
-, fetchFromGitHub
-, fetchurl
-, go-bindata
-, lib
-, perl
-, pkg-config
-, rustPlatform
-, stdenv
-, libiconv
-}:
+{ buildGoModule, fetchFromGitHub, fetchurl, go-bindata, lib, perl, pkg-config
+, rustPlatform, stdenv, libiconv }:
 
 let
   version = "2.5.1";
@@ -26,7 +17,8 @@ let
   };
 
   ui = fetchurl {
-    url = "https://github.com/influxdata/ui/releases/download/${ui_version}/build.tar.gz";
+    url =
+      "https://github.com/influxdata/ui/releases/download/${ui_version}/build.tar.gz";
     sha256 = "sha256-YKDp1jLyo4n+YTeMaWl8dhN4Lr3H8FXV7stJ3p3zFe8=";
   };
 

@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchgit, pkg-config, zlib, pciutils, openssl, coreutils, acpica-tools, makeWrapper, gnugrep, gnused, file, buildEnv }:
+{ lib, stdenv, fetchgit, pkg-config, zlib, pciutils, openssl, coreutils
+, acpica-tools, makeWrapper, gnugrep, gnused, file, buildEnv }:
 
 let
   version = "4.20";
@@ -11,30 +12,28 @@ let
     platforms = platforms.linux;
   };
 
-  generic = { pname, path ? "util/${pname}", ... }@args: stdenv.mkDerivation (rec {
-    inherit pname version;
+  generic = { pname, path ? "util/${pname}", ... }@args:
+    stdenv.mkDerivation (rec {
+      inherit pname version;
 
-    src = fetchgit {
-      url = "https://review.coreboot.org/coreboot";
-      rev = "465fbbe93ee01b4576689a90b7ddbeec23cdace2";
-      sha256 = "sha256-DPaudCeK9SKu2eN1fad6a52ICs5d/GXCUFMdqAl65BE=";
-    };
+      src = fetchgit {
+        url = "https://review.coreboot.org/coreboot";
+        rev = "465fbbe93ee01b4576689a90b7ddbeec23cdace2";
+        sha256 = "sha256-DPaudCeK9SKu2eN1fad6a52ICs5d/GXCUFMdqAl65BE=";
+      };
 
-    enableParallelBuilding = true;
+      enableParallelBuilding = true;
 
-    postPatch = ''
-      substituteInPlace 3rdparty/vboot/Makefile --replace 'ar qc ' '$$AR qc '
-      cd ${path}
-      patchShebangs .
-    '';
+      postPatch = ''
+        substituteInPlace 3rdparty/vboot/Makefile --replace 'ar qc ' '$$AR qc '
+        cd ${path}
+        patchShebangs .
+      '';
 
-    makeFlags = [
-      "INSTALL=install"
-      "PREFIX=${placeholder "out"}"
-    ];
+      makeFlags = [ "INSTALL=install" "PREFIX=${placeholder "out"}" ];
 
-    meta = commonMeta // args.meta;
-  } // (removeAttrs args [ "meta" ]));
+      meta = commonMeta // args.meta;
+    } // (removeAttrs args [ "meta" ]));
 
   utils = {
     msrtool = generic {
@@ -50,7 +49,8 @@ let
     };
     ifdtool = generic {
       pname = "ifdtool";
-      meta.description = "Extract and dump Intel Firmware Descriptor information";
+      meta.description =
+        "Extract and dump Intel Firmware Descriptor information";
     };
     intelmetool = generic {
       pname = "intelmetool";
@@ -64,23 +64,27 @@ let
     };
     nvramtool = generic {
       pname = "nvramtool";
-      meta.description = "Read and write coreboot parameters and display information from the coreboot table in CMOS/NVRAM";
+      meta.description =
+        "Read and write coreboot parameters and display information from the coreboot table in CMOS/NVRAM";
     };
     superiotool = generic {
       pname = "superiotool";
-      meta.description = "User-space utility to detect Super I/O of a mainboard and provide detailed information about the register contents of the Super I/O";
+      meta.description =
+        "User-space utility to detect Super I/O of a mainboard and provide detailed information about the register contents of the Super I/O";
       meta.platforms = [ "x86_64-linux" "i686-linux" ];
       buildInputs = [ pciutils zlib ];
     };
     ectool = generic {
       pname = "ectool";
-      meta.description = "Dump the RAM of a laptop's Embedded/Environmental Controller (EC)";
+      meta.description =
+        "Dump the RAM of a laptop's Embedded/Environmental Controller (EC)";
       meta.platforms = [ "x86_64-linux" "i686-linux" ];
       preInstall = "mkdir -p $out/sbin";
     };
     inteltool = generic {
       pname = "inteltool";
-      meta.description = "Provides information about Intel CPU/chipset hardware configuration (register contents, MSRs, etc)";
+      meta.description =
+        "Provides information about Intel CPU/chipset hardware configuration (register contents, MSRs, etc)";
       meta.platforms = [ "x86_64-linux" "i686-linux" ];
       buildInputs = [ pciutils zlib ];
     };
@@ -112,16 +116,18 @@ let
       '';
       postFixup = ''
         wrapProgram $out/bin/acpidump-all \
-          --set PATH ${lib.makeBinPath [ coreutils acpica-tools gnugrep gnused file ]}
+          --set PATH ${
+            lib.makeBinPath [ coreutils acpica-tools gnugrep gnused file ]
+          }
       '';
     };
   };
 
-in
-utils // {
+in utils // {
   coreboot-utils = (buildEnv {
     name = "coreboot-utils-${version}";
-    paths = lib.filter (lib.meta.availableOn stdenv.hostPlatform) (lib.attrValues utils);
+    paths = lib.filter (lib.meta.availableOn stdenv.hostPlatform)
+      (lib.attrValues utils);
     postBuild = "rm -rf $out/sbin";
   }) // {
     inherit version;

@@ -1,10 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pytestCheckHook
-, pythonOlder
-, setuptools
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pytestCheckHook, pythonOlder
+, setuptools }:
 
 buildPythonPackage rec {
   pname = "polyline";
@@ -25,26 +20,22 @@ buildPythonPackage rec {
       --replace " --cov=polyline --cov-report term-missing" ""
   '';
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "polyline"
-  ];
+  pythonImportsCheck = [ "polyline" ];
 
   meta = with lib; {
-    description = "Python implementation of Google's Encoded Polyline Algorithm Format";
+    description =
+      "Python implementation of Google's Encoded Polyline Algorithm Format";
     longDescription = ''
       polyline is a Python implementation of Google's Encoded Polyline Algorithm Format. It is
       essentially a port of https://github.com/mapbox/polyline.
     '';
     homepage = "https://github.com/frederickjansen/polyline";
-    changelog = "https://github.com/frederickjansen/polyline/releases/tag/${version}";
+    changelog =
+      "https://github.com/frederickjansen/polyline/releases/tag/${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ ersin ];
   };

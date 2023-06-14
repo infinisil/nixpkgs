@@ -16,7 +16,8 @@ stdenv.mkDerivation rec {
     # https://gitlab.com/ddcci-driver-linux/ddcci-driver-linux/-/merge_requests/12
     (fetchpatch {
       name = "kernel-6.2-6.3.patch";
-      url = "https://gitlab.com/ddcci-driver-linux/ddcci-driver-linux/-/commit/1ef6079679acc455f75057dd7097b5b494a241dc.patch";
+      url =
+        "https://gitlab.com/ddcci-driver-linux/ddcci-driver-linux/-/commit/1ef6079679acc455f75057dd7097b5b494a241dc.patch";
       hash = "sha256-2C2leS20egGY3J2tq96gsUQXYw13wBJ3ZWrdIXxmEYs=";
     })
   ];

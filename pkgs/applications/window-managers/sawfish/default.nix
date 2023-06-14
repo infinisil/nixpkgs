@@ -1,43 +1,19 @@
-{ lib
-, stdenv
-, fetchurl
-, autoreconfHook
-, gdk-pixbuf-xlib
-, gettext
-, gtk2-x11
-, libICE
-, libSM
-, libxcrypt
-, libXinerama
-, libXrandr
-, libXtst
-, librep
-, makeWrapper
-, pango
-, pkg-config
-, rep-gtk
-, texinfo
-, which
-}:
+{ lib, stdenv, fetchurl, autoreconfHook, gdk-pixbuf-xlib, gettext, gtk2-x11
+, libICE, libSM, libxcrypt, libXinerama, libXrandr, libXtst, librep, makeWrapper
+, pango, pkg-config, rep-gtk, texinfo, which }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "sawfish";
   version = "1.13.0";
 
   src = fetchurl {
-    url = "https://download.tuxfamily.org/sawfish/sawfish_${finalAttrs.version}.tar.xz";
+    url =
+      "https://download.tuxfamily.org/sawfish/sawfish_${finalAttrs.version}.tar.xz";
     hash = "sha256-gWs8W/pMtQjbH8FEifzNAj3siZzxPd6xm8PmXXhyr10=";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-    gettext
-    librep
-    makeWrapper
-    pkg-config
-    texinfo
-    which
-  ];
+  nativeBuildInputs =
+    [ autoreconfHook gettext librep makeWrapper pkg-config texinfo which ];
 
   buildInputs = [
     gdk-pixbuf-xlib

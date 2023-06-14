@@ -18,10 +18,8 @@ tcl.mkTclDerivation rec {
   nativeBuildInputs = [ makeWrapper which ];
   buildInputs = [ tk libX11 zlib ];
 
-  configureFlags = [
-    "BINDIR=${placeholder "out"}/bin"
-    "SHAREDIR=${placeholder "out"}/share"
-  ];
+  configureFlags =
+    [ "BINDIR=${placeholder "out"}/bin" "SHAREDIR=${placeholder "out"}/share" ];
 
   postInstall = ''
     mkdir -p $out/share/applications

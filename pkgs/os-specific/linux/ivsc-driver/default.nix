@@ -1,8 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, kernel
-}:
+{ lib, stdenv, fetchFromGitHub, kernel }:
 
 stdenv.mkDerivation {
   pname = "ivsc-driver";
@@ -28,9 +24,7 @@ stdenv.mkDerivation {
     sed -i -e "s,INSTALL_MOD_DIR=,INSTALL_MOD_PATH=$out INSTALL_MOD_DIR=," Makefile
   '';
 
-  installTargets = [
-    "modules_install"
-  ];
+  installTargets = [ "modules_install" ];
 
   meta = {
     homepage = "https://github.com/intel/ivsc-driver";

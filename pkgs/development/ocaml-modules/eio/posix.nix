@@ -1,10 +1,4 @@
-{ buildDunePackage
-, dune-configurator
-, eio
-, fmt
-, logs
-, iomux
-}:
+{ buildDunePackage, dune-configurator, eio, fmt, logs, iomux }:
 
 buildDunePackage {
   pname = "eio_posix";
@@ -15,14 +9,7 @@ buildDunePackage {
 
   dontStrip = true;
 
-  buildInputs = [
-    dune-configurator
-  ];
+  buildInputs = [ dune-configurator ];
 
-  propagatedBuildInputs = [
-    eio
-    fmt
-    logs
-    iomux
-  ];
+  propagatedBuildInputs = [ eio fmt logs iomux ];
 }

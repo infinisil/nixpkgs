@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, requests
-}:
+{ lib, buildPythonPackage, fetchPypi, requests }:
 
 buildPythonPackage rec {
   pname = "nlpcloud";
@@ -14,21 +10,18 @@ buildPythonPackage rec {
     hash = "sha256-XT3aadYrdYZk8EEkUTdFtTMR1LociO0jQo/QCFcJcWw=";
   };
 
-  propagatedBuildInputs = [
-    requests
-  ];
+  propagatedBuildInputs = [ requests ];
 
   # upstream has no tests
   doCheck = false;
 
-  pythonImportsCheck = [
-    "nlpcloud"
-  ];
+  pythonImportsCheck = [ "nlpcloud" ];
 
   meta = with lib; {
     description = "Python client for the NLP Cloud API";
     homepage = "https://nlpcloud.com/";
-    changelog = "https://github.com/nlpcloud/nlpcloud-python/releases/tag/v${version}";
+    changelog =
+      "https://github.com/nlpcloud/nlpcloud-python/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ natsukium ];
   };

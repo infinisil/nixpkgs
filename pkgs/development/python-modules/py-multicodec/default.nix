@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, morphys
-, pytestCheckHook
-, pythonOlder
-, six
-, varint
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, morphys, pytestCheckHook
+, pythonOlder, six, varint }:
 
 buildPythonPackage rec {
   pname = "py-multicodec";
@@ -31,19 +24,11 @@ buildPythonPackage rec {
       --replace "'pytest-runner'," ""
   '';
 
-  propagatedBuildInputs = [
-    morphys
-    six
-    varint
-  ];
+  propagatedBuildInputs = [ morphys six varint ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "multicodec"
-  ];
+  pythonImportsCheck = [ "multicodec" ];
 
   meta = with lib; {
     description = "Compact self-describing codecs";

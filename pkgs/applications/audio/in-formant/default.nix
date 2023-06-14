@@ -1,23 +1,6 @@
-{ stdenv
-, cmake
-, lib
-, fetchFromGitHub
-, wrapQtAppsHook
-, qtbase
-, qtcharts
-, fftw
-, libtorch-bin
-, portaudio
-, eigen
-, xorg
-, pkg-config
-, autoPatchelfHook
-, soxr
-, freetype
-, libsamplerate
-, armadillo
-, tomlplusplus
-}:
+{ stdenv, cmake, lib, fetchFromGitHub, wrapQtAppsHook, qtbase, qtcharts, fftw
+, libtorch-bin, portaudio, eigen, xorg, pkg-config, autoPatchelfHook, soxr
+, freetype, libsamplerate, armadillo, tomlplusplus }:
 
 stdenv.mkDerivation rec {
   pname = "in-formant";

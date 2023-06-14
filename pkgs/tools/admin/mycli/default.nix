@@ -1,8 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-, glibcLocales
-}:
+{ lib, python3, fetchPypi, glibcLocales }:
 
 with python3.pkgs;
 
@@ -38,9 +34,7 @@ buildPythonApplication rec {
     export LC_ALL="en_US.UTF-8"
   '';
 
-  disabledTestPaths = [
-    "mycli/packages/paramiko_stub/__init__.py"
-  ];
+  disabledTestPaths = [ "mycli/packages/paramiko_stub/__init__.py" ];
 
   disabledTests = [
     # Note: test_auto_escaped_col_names is currently failing due to a bug upstream.

@@ -1,18 +1,15 @@
-{ lib, stdenv, fetchurl, fetchpatch
-, cmake, pkg-config, perl, go, python3
-, protobuf, zlib, gtest, brotli, lz4, zstd, libusb1, pcre2
-}:
+{ lib, stdenv, fetchurl, fetchpatch, cmake, pkg-config, perl, go, python3
+, protobuf, zlib, gtest, brotli, lz4, zstd, libusb1, pcre2 }:
 
-let
-  pythonEnv = python3.withPackages(ps: [ ps.protobuf ]);
-in
+let pythonEnv = python3.withPackages (ps: [ ps.protobuf ]);
 
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   pname = "android-tools";
   version = "34.0.1";
 
   src = fetchurl {
-    url = "https://github.com/nmeum/android-tools/releases/download/${version}/android-tools-${version}.tar.xz";
+    url =
+      "https://github.com/nmeum/android-tools/releases/download/${version}/android-tools-${version}.tar.xz";
     hash = "sha256-YCNOy8oZoXp+L0akWBlg1kW3xVuHDZJKIUlMdqb1SOw=";
   };
 

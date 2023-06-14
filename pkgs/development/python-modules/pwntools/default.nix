@@ -1,33 +1,10 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, debugger
-, fetchPypi
-, mako
-, packaging
-, pysocks
-, pygments
-, ropgadget
-, capstone
-, colored-traceback
-, paramiko
-, pip
-, psutil
-, pyelftools
-, pyserial
-, python-dateutil
-, requests
-, rpyc
-, tox
-, unicorn
-, intervaltree
-, installShellFiles
-}:
+{ lib, stdenv, buildPythonPackage, debugger, fetchPypi, mako, packaging, pysocks
+, pygments, ropgadget, capstone, colored-traceback, paramiko, pip, psutil
+, pyelftools, pyserial, python-dateutil, requests, rpyc, tox, unicorn
+, intervaltree, installShellFiles }:
 
-let
-  debuggerName = lib.strings.getName debugger;
-in
-buildPythonPackage rec {
+let debuggerName = lib.strings.getName debugger;
+in buildPythonPackage rec {
   pname = "pwntools";
   version = "4.10.0";
 
@@ -42,9 +19,7 @@ buildPythonPackage rec {
     sed -i 's/gdb-multiarch/${debuggerName}/' pwnlib/gdb.py
   '';
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   propagatedBuildInputs = [
     mako
@@ -81,7 +56,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "CTF framework and exploit development library";
     homepage = "https://pwntools.com";
-    changelog = "https://github.com/Gallopsled/pwntools/releases/tag/${version}";
+    changelog =
+      "https://github.com/Gallopsled/pwntools/releases/tag/${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ bennofs kristoff3r pamplemousse ];
   };

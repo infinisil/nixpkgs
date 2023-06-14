@@ -1,30 +1,7 @@
-{ lib
-, fetchFromGitHub
-, gitUpdater
-, python3Packages
-, blueprint-compiler
-, meson
-, ninja
-, pkg-config
-, wrapGAppsHook4
-, appstream-glib
-, desktop-file-utils
-, librsvg
-, gtk4
-, gtksourceview5
-, libadwaita
-, cabextract
-, p7zip
-, xdpyinfo
-, imagemagick
-, lsb-release
-, pciutils
-, procps
-, gamescope
-, mangohud
-, vkbasalt-cli
-, vmtouch
-}:
+{ lib, fetchFromGitHub, gitUpdater, python3Packages, blueprint-compiler, meson
+, ninja, pkg-config, wrapGAppsHook4, appstream-glib, desktop-file-utils, librsvg
+, gtk4, gtksourceview5, libadwaita, cabextract, p7zip, xdpyinfo, imagemagick
+, lsb-release, pciutils, procps, gamescope, mangohud, vkbasalt-cli, vmtouch }:
 
 python3Packages.buildPythonApplication rec {
   pname = "bottles-unwrapped";
@@ -37,9 +14,7 @@ python3Packages.buildPythonApplication rec {
     sha256 = "sha256-9oEC+ksgHz2HP4jVwTbLzjqc8WG1+S8hmVgl2dcuPB0=";
   };
 
-  patches = [
-    ./vulkan_icd.patch
-  ];
+  patches = [ ./vulkan_icd.patch ];
 
   # https://github.com/bottlesdevs/Bottles/wiki/Packaging
   nativeBuildInputs = [
@@ -53,45 +28,41 @@ python3Packages.buildPythonApplication rec {
     desktop-file-utils
   ];
 
-  buildInputs = [
-    librsvg
-    gtk4
-    gtksourceview5
-    libadwaita
-  ];
+  buildInputs = [ librsvg gtk4 gtksourceview5 libadwaita ];
 
-  propagatedBuildInputs = with python3Packages; [
-    pathvalidate
-    pycurl
-    pyyaml
-    requests
-    pygobject3
-    patool
-    markdown
-    fvs
-    pefile
-    urllib3
-    chardet
-    certifi
-    idna
-    orjson
-    icoextract
-  ] ++ [
-    cabextract
-    p7zip
-    xdpyinfo
-    imagemagick
-    vkbasalt-cli
+  propagatedBuildInputs = with python3Packages;
+    [
+      pathvalidate
+      pycurl
+      pyyaml
+      requests
+      pygobject3
+      patool
+      markdown
+      fvs
+      pefile
+      urllib3
+      chardet
+      certifi
+      idna
+      orjson
+      icoextract
+    ] ++ [
+      cabextract
+      p7zip
+      xdpyinfo
+      imagemagick
+      vkbasalt-cli
 
-    gamescope
-    mangohud
-    vmtouch
+      gamescope
+      mangohud
+      vmtouch
 
-    # Undocumented (subprocess.Popen())
-    lsb-release
-    pciutils
-    procps
-  ];
+      # Undocumented (subprocess.Popen())
+      lsb-release
+      pciutils
+      procps
+    ];
 
   format = "other";
   dontWrapGApps = true; # prevent double wrapping

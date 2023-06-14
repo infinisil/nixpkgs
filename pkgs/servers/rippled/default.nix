@@ -1,5 +1,5 @@
-{ lib, stdenv, fetchgit, fetchurl, git, cmake, pkg-config
-, openssl, boost, grpc, protobuf, libnsl, rocksdb_6_23, snappy }:
+{ lib, stdenv, fetchgit, fetchurl, git, cmake, pkg-config, openssl, boost, grpc
+, protobuf, libnsl, rocksdb_6_23, snappy }:
 
 let
   sqlite3 = fetchurl rec {
@@ -100,11 +100,24 @@ in stdenv.mkDerivation rec {
     hash = "sha256-VW/VmnhtF2xyHfEud3D6b3n8uTE0a/nDW1GISs5QfwM=";
   };
 
-  hardeningDisable = ["format"];
-  cmakeFlags = ["-Dstatic=OFF" "-DBoost_NO_BOOST_CMAKE=ON" "-DSNAPPY_INCLUDE_DIR=${snappy}/include" ];
+  hardeningDisable = [ "format" ];
+  cmakeFlags = [
+    "-Dstatic=OFF"
+    "-DBoost_NO_BOOST_CMAKE=ON"
+    "-DSNAPPY_INCLUDE_DIR=${snappy}/include"
+  ];
 
   nativeBuildInputs = [ pkg-config cmake git ];
-  buildInputs = [ openssl openssl.dev boostSharedStatic grpc protobuf libnsl rocksdb_6_23 snappy ];
+  buildInputs = [
+    openssl
+    openssl.dev
+    boostSharedStatic
+    grpc
+    protobuf
+    libnsl
+    rocksdb_6_23
+    snappy
+  ];
 
   preConfigure = ''
     export HOME=$PWD

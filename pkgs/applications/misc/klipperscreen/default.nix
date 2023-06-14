@@ -1,10 +1,6 @@
-{ lib
-, python3
-, fetchFromGitHub
-, wrapGAppsHook
-, gobject-introspection
-, gitUpdater
-}: python3.pkgs.buildPythonApplication rec {
+{ lib, python3, fetchFromGitHub, wrapGAppsHook, gobject-introspection
+, gitUpdater }:
+python3.pkgs.buildPythonApplication rec {
   pname = "KlipperScreen";
   version = "0.3.2";
   format = "other";
@@ -16,10 +12,7 @@
     hash = "sha256-LweO5EVWr3OxziHrjtQDdWyUBCVUJ17afkw7RCZWgcg=";
   };
 
-  nativeBuildInputs = [
-    gobject-introspection
-    wrapGAppsHook
-  ];
+  nativeBuildInputs = [ gobject-introspection wrapGAppsHook ];
 
   pythonPath = with python3.pkgs; [
     jinja2

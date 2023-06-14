@@ -1,14 +1,8 @@
-{ stdenv, lib, elixir, erlang, findutils, hex, rebar, rebar3, fetchMixDeps, makeWrapper, git, ripgrep }@inputs:
+{ stdenv, lib, elixir, erlang, findutils, hex, rebar, rebar3, fetchMixDeps
+, makeWrapper, git, ripgrep }@inputs:
 
-{ pname
-, version
-, src
-, nativeBuildInputs ? [ ]
-, buildInputs ? [ ]
-, meta ? { }
-, enableDebugInfo ? false
-, mixEnv ? "prod"
-, compileFlags ? [ ]
+{ pname, version, src, nativeBuildInputs ? [ ], buildInputs ? [ ], meta ? { }
+, enableDebugInfo ? false, mixEnv ? "prod", compileFlags ? [ ]
 
   # mix fixed output derivation dependencies
 , mixFodDeps ? null
@@ -19,8 +13,9 @@
   # this is how mix will find dependencies
 , mixNixDeps ? { }
 
-, elixir ? inputs.elixir
-, hex ? inputs.hex.override { inherit elixir; }
+, elixir ? inputs.elixir, hex ? inputs.hex.override {
+  inherit elixir;
+}
 
 # This reduces closure size, but can lead to some hard to understand runtime
 # errors, so use with caution. See e.g.
@@ -28,18 +23,17 @@
 # https://framagit.org/framasoft/mobilizon/-/issues/1169
 , stripDebug ? false
 
-, ...
-}@attrs:
+, ... }@attrs:
 let
   # remove non standard attributes that cannot be coerced to strings
   overridable = builtins.removeAttrs attrs [ "compileFlags" "mixNixDeps" ];
-in
-assert mixNixDeps != { } -> mixFodDeps == null;
+in assert mixNixDeps != { } -> mixFodDeps == null;
 assert stripDebug -> !enableDebugInfo;
 
 stdenv.mkDerivation (overridable // {
   # rg is used as a better grep to search for erlang references in the final release
-  nativeBuildInputs = nativeBuildInputs ++ [ erlang hex elixir makeWrapper git ripgrep ];
+  nativeBuildInputs = nativeBuildInputs
+    ++ [ erlang hex elixir makeWrapper git ripgrep ];
   buildInputs = buildInputs ++ builtins.attrValues mixNixDeps;
 
   MIX_ENV = mixEnv;
@@ -65,8 +59,7 @@ stdenv.mkDerivation (overridable // {
       # thus a copy to the TEMPDIR is inevitable here
       export MIX_DEPS_PATH="$TEMPDIR/deps"
       cp --no-preserve=mode -R "${mixFodDeps}" "$MIX_DEPS_PATH"
-    ''
-    }
+    ''}
 
   '' + (attrs.postUnpack or "");
 
@@ -90,7 +83,6 @@ stdenv.mkDerivation (overridable // {
 
     runHook postBuild
   '';
-
 
   installPhase = attrs.installPhase or ''
     runHook preInstall

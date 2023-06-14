@@ -1,18 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchYarnDeps
-, nodejs
-, yarn
-, fixup_yarn_lock
-, python3
-, npmHooks
-, darwin
-, sqlite
-, srcOnly
-, buildPackages
-, nixosTests
-}:
+{ lib, stdenv, fetchFromGitHub, fetchYarnDeps, nodejs, yarn, fixup_yarn_lock
+, python3, npmHooks, darwin, sqlite, srcOnly, buildPackages, nixosTests }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "thelounge";
@@ -38,7 +25,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-OKLsNGl94EDyLgP2X2tiwihgRQFXGvf5XgXwgX+JEpk=";
   };
 
-  nativeBuildInputs = [ nodejs yarn fixup_yarn_lock python3 npmHooks.npmInstallHook ] ++ lib.optional stdenv.isDarwin darwin.cctools;
+  nativeBuildInputs =
+    [ nodejs yarn fixup_yarn_lock python3 npmHooks.npmInstallHook ]
+    ++ lib.optional stdenv.isDarwin darwin.cctools;
   buildInputs = [ sqlite ];
 
   configurePhase = ''
@@ -68,7 +57,9 @@ stdenv.mkDerivation (finalAttrs: {
     patchShebangs node_modules
 
     # Build the sqlite3 package.
-    npm_config_nodedir="${srcOnly nodejs}" npm_config_node_gyp="${buildPackages.nodejs}/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" npm rebuild --verbose --sqlite=${sqlite.dev}
+    npm_config_nodedir="${
+      srcOnly nodejs
+    }" npm_config_node_gyp="${buildPackages.nodejs}/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" npm rebuild --verbose --sqlite=${sqlite.dev}
 
     # These files seemingly aren't needed, and also might not exist when the Darwin sandbox is disabled?
     rm -rf node_modules/sqlite3/build-tmp-napi-v6/{Release/obj.target,node_sqlite3.target.mk}
@@ -82,9 +73,11 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.tests = nixosTests.thelounge;
 
   meta = with lib; {
-    description = "Modern, responsive, cross-platform, self-hosted web IRC client";
+    description =
+      "Modern, responsive, cross-platform, self-hosted web IRC client";
     homepage = "https://thelounge.chat";
-    changelog = "https://github.com/thelounge/thelounge/releases/tag/v${finalAttrs.version}";
+    changelog =
+      "https://github.com/thelounge/thelounge/releases/tag/v${finalAttrs.version}";
     maintainers = with maintainers; [ winter raitobezarius ];
     license = licenses.mit;
     inherit (nodejs.meta) platforms;

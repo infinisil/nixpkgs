@@ -1,38 +1,10 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, fetchFromGitHub
-, fetchurl
-, substituteAll
-, coreutils
-, curl
-, glxinfo
-, gnugrep
-, gnused
-, xdg-utils
-, dbus
-, hwdata
-, mangohud32
-, addOpenGLRunpath
-, appstream
-, glslang
-, mako
-, meson
-, ninja
-, pkg-config
-, unzip
-, libXNVCtrl
-, wayland
-, libX11
-, nlohmann_json
-, spdlog
-, glew
-, glfw
-, xorg
+{ lib, stdenv, fetchFromGitLab, fetchFromGitHub, fetchurl, substituteAll
+, coreutils, curl, glxinfo, gnugrep, gnused, xdg-utils, dbus, hwdata, mangohud32
+, addOpenGLRunpath, appstream, glslang, mako, meson, ninja, pkg-config, unzip
+, libXNVCtrl, wayland, libX11, nlohmann_json, spdlog, glew, glfw, xorg
 , gamescopeSupport ? true # build mangoapp and mangohudctl
 , lowerBitnessSupport ? stdenv.hostPlatform.is64bit # Support 32 bit on 64bit
-, nix-update-script
-}:
+, nix-update-script }:
 
 let
   # Derived from subprojects/cmocka.wrap
@@ -71,12 +43,12 @@ let
       hash = "sha256-5uyk2nMwV1MjXoa3hK/WUeGLwpINJJEvY16kc5DEaks=";
     };
     patch = fetchurl {
-      url = "https://wrapdb.mesonbuild.com/v2/vulkan-headers_${version}-2/get_patch";
+      url =
+        "https://wrapdb.mesonbuild.com/v2/vulkan-headers_${version}-2/get_patch";
       hash = "sha256-hgNYz15z9FjNHoj4w4EW0SOrQh1c4uQSnsOOrt2CDhc=";
     };
   };
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "mangohud";
   version = "0.6.9-1";
 
@@ -91,14 +63,17 @@ stdenv.mkDerivation (finalAttrs: {
   outputs = [ "out" "doc" "man" ];
 
   # Unpack subproject sources
-  postUnpack = ''(
-    cd "$sourceRoot/subprojects"
-    ${lib.optionalString finalAttrs.doCheck ''
-      cp -R --no-preserve=mode,ownership ${cmocka.src} cmocka
-    ''}
-    cp -R --no-preserve=mode,ownership ${imgui.src} imgui-${imgui.version}
-    cp -R --no-preserve=mode,ownership ${vulkan-headers.src} Vulkan-Headers-${vulkan-headers.version}
-  )'';
+  postUnpack = ''
+    (
+        cd "$sourceRoot/subprojects"
+        ${
+          lib.optionalString finalAttrs.doCheck ''
+            cp -R --no-preserve=mode,ownership ${cmocka.src} cmocka
+          ''
+        }
+        cp -R --no-preserve=mode,ownership ${imgui.src} imgui-${imgui.version}
+        cp -R --no-preserve=mode,ownership ${vulkan-headers.src} Vulkan-Headers-${vulkan-headers.version}
+      )'';
 
   patches = [
     # Add @libraryPath@ template variable to fix loading the preload
@@ -111,14 +86,8 @@ stdenv.mkDerivation (finalAttrs: {
     (substituteAll {
       src = ./hardcode-dependencies.patch;
 
-      path = lib.makeBinPath [
-        coreutils
-        curl
-        glxinfo
-        gnugrep
-        gnused
-        xdg-utils
-      ];
+      path =
+        lib.makeBinPath [ coreutils curl glxinfo gnugrep gnused xdg-utils ];
 
       libdbus = dbus.lib;
       inherit hwdata;
@@ -127,11 +96,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     substituteInPlace bin/mangohud.in \
-      --subst-var-by libraryPath ${lib.makeSearchPath "lib/mangohud" ([
-        (placeholder "out")
-      ] ++ lib.optionals lowerBitnessSupport [
-        mangohud32
-      ])} \
+      --subst-var-by libraryPath ${
+        lib.makeSearchPath "lib/mangohud" ([ (placeholder "out") ]
+          ++ lib.optionals lowerBitnessSupport [ mangohud32 ])
+      } \
       --subst-var-by dataDir ${placeholder "out"}/share
 
     (
@@ -167,21 +135,12 @@ stdenv.mkDerivation (finalAttrs: {
     libX11
   ];
 
-  buildInputs = [
-    dbus
-    nlohmann_json
-    spdlog
-  ] ++ lib.optionals gamescopeSupport [
-    glew
-    glfw
-    xorg.libXrandr
-  ];
+  buildInputs = [ dbus nlohmann_json spdlog ]
+    ++ lib.optionals gamescopeSupport [ glew glfw xorg.libXrandr ];
 
   doCheck = true;
 
-  nativeCheckInputs = [
-    appstream
-  ];
+  nativeCheckInputs = [ appstream ];
 
   # Support 32bit Vulkan applications by linking in 32bit Vulkan layers
   # This is needed for the same reason the 32bit preload workaround is needed.
@@ -206,7 +165,9 @@ stdenv.mkDerivation (finalAttrs: {
     # layer under the same name.
   in lib.optionalString (layerPlatform != null) ''
     substituteInPlace $out/share/vulkan/implicit_layer.d/MangoHud.${layerPlatform}.json \
-      --replace "VK_LAYER_MANGOHUD_overlay" "VK_LAYER_MANGOHUD_overlay_${toString stdenv.hostPlatform.parsed.cpu.bits}"
+      --replace "VK_LAYER_MANGOHUD_overlay" "VK_LAYER_MANGOHUD_overlay_${
+        toString stdenv.hostPlatform.parsed.cpu.bits
+      }"
   '' + ''
     # Add OpenGL driver path to RUNPATH to support NVIDIA cards
     addOpenGLRunpath "$out/lib/mangohud/libMangoHud.so"
@@ -220,7 +181,8 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
-    description = "A Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more";
+    description =
+      "A Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more";
     homepage = "https://github.com/flightlessmango/MangoHud";
     platforms = platforms.linux;
     license = licenses.mit;

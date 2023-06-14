@@ -1,16 +1,6 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, backoff
-, googleapis-common-protos
-, grpcio
-, hatchling
-, opentelemetry-test-utils
-, opentelemetry-exporter-otlp-proto-common
-, pytest-grpc
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, backoff
+, googleapis-common-protos, grpcio, hatchling, opentelemetry-test-utils
+, opentelemetry-exporter-otlp-proto-common, pytest-grpc, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-exporter-otlp-proto-grpc";
@@ -27,9 +17,7 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
   propagatedBuildInputs = [
     backoff
@@ -38,19 +26,15 @@ buildPythonPackage rec {
     opentelemetry-exporter-otlp-proto-common
   ];
 
-  nativeCheckInputs = [
-    opentelemetry-test-utils
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
-  disabledTestPaths = [
-    "tests/performance/benchmarks/"
-  ];
+  disabledTestPaths = [ "tests/performance/benchmarks/" ];
 
   pythonImportsCheck = [ "opentelemetry.exporter.otlp.proto.grpc" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-proto-grpc";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-proto-grpc";
     description = "OpenTelemetry Collector Protobuf over gRPC Exporter";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

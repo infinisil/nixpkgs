@@ -1,58 +1,27 @@
-{ lib
-, mkDerivation
+{ lib, mkDerivation
 
-, cmake
-, extra-cmake-modules
-, makeWrapper
-, shared-mime-info
+, cmake, extra-cmake-modules, makeWrapper, shared-mime-info
 
-, qtbase
-, qtsvg
-, qttools
-, qtwebengine
-, qtxmlpatterns
+, qtbase, qtsvg, qttools, qtwebengine, qtxmlpatterns
 
 , poppler
 
-, karchive
-, kcompletion
-, kconfig
-, kcoreaddons
-, kcrash
-, kdoctools
-, ki18n
-, kiconthemes
-, kio
-, knewstuff
-, kparts
-, kpty
-, ktexteditor
-, ktextwidgets
-, kxmlgui
+, karchive, kcompletion, kconfig, kcoreaddons, kcrash, kdoctools, ki18n
+, kiconthemes, kio, knewstuff, kparts, kpty, ktexteditor, ktextwidgets, kxmlgui
 , syntax-highlighting
 
 , libspectre
 
 # Backends. Set to null if you want to omit from the build
-, withAnalitza ? true, analitza
-, wtihJulia ? true, julia
-, withQalculate ? true, libqalculate
-, withLua ? true, luajit
-, withPython ? true, python3
-, withR ? true, R
-, withSage ? true, sage, sage-with-env ? sage.with-env
-}:
+, withAnalitza ? true, analitza, wtihJulia ? true, julia, withQalculate ? true
+, libqalculate, withLua ? true, luajit, withPython ? true, python3, withR ? true
+, R, withSage ? true, sage, sage-with-env ? sage.with-env }:
 
 mkDerivation {
   pname = "cantor";
 
-  nativeBuildInputs = [
-    cmake
-    extra-cmake-modules
-    makeWrapper
-    shared-mime-info
-    qttools
-  ];
+  nativeBuildInputs =
+    [ cmake extra-cmake-modules makeWrapper shared-mime-info qttools ];
 
   buildInputs = [
     qtbase
@@ -82,18 +51,12 @@ mkDerivation {
     libspectre
   ]
   # backends
-  ++ lib.optional withAnalitza analitza
-  ++ lib.optional wtihJulia julia
-  ++ lib.optional withQalculate libqalculate
-  ++ lib.optional withLua luajit
-  ++ lib.optional withPython python3
-  ++ lib.optional withR R
-  ++ lib.optional withSage sage-with-env
-  ;
+    ++ lib.optional withAnalitza analitza ++ lib.optional wtihJulia julia
+    ++ lib.optional withQalculate libqalculate ++ lib.optional withLua luajit
+    ++ lib.optional withPython python3 ++ lib.optional withR R
+    ++ lib.optional withSage sage-with-env;
 
-  qtWrapperArgs = [
-    "--prefix PATH : ${placeholder "out"}/bin"
-  ];
+  qtWrapperArgs = [ "--prefix PATH : ${placeholder "out"}/bin" ];
 
   postInstall = lib.optionalString withSage ''
     wrapProgram $out/share/cantor/sagebackend/cantor-execsage \

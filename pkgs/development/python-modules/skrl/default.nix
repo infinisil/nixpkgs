@@ -1,17 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, fetchpatch
-, pythonOlder
-, pytestCheckHook
-, gym
-, gymnasium
-, torch
-, tensorboard
-, tqdm
-, wandb
-, packaging
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, fetchpatch, pythonOlder
+, pytestCheckHook, gym, gymnasium, torch, tensorboard, tqdm, wandb, packaging }:
 
 buildPythonPackage rec {
   pname = "skrl";
@@ -30,21 +18,15 @@ buildPythonPackage rec {
   patches = [
     # remove after next release:
     (fetchpatch {
-       name = "fix-python_requires-specification";
-       url = "https://github.com/Toni-SM/skrl/pull/62/commits/9b554adfe2da6cd97cccbbcd418a349cc8f1de80.patch";
-       hash = "sha256-GeASMU1Pgy8U1zaIAVroBDjYaY+n93XP5uFyP4U9lok=";
+      name = "fix-python_requires-specification";
+      url =
+        "https://github.com/Toni-SM/skrl/pull/62/commits/9b554adfe2da6cd97cccbbcd418a349cc8f1de80.patch";
+      hash = "sha256-GeASMU1Pgy8U1zaIAVroBDjYaY+n93XP5uFyP4U9lok=";
     })
   ];
 
-  propagatedBuildInputs = [
-    gym
-    gymnasium
-    torch
-    tensorboard
-    tqdm
-    wandb
-    packaging
-  ];
+  propagatedBuildInputs =
+    [ gym gymnasium torch tensorboard tqdm wandb packaging ];
 
   nativeCheckInputs = [ pytestCheckHook ];
   doCheck = torch.cudaSupport;
@@ -69,7 +51,8 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Reinforcement learning library using PyTorch focusing on readability and simplicity";
+    description =
+      "Reinforcement learning library using PyTorch focusing on readability and simplicity";
     homepage = "https://skrl.readthedocs.io";
     license = licenses.mit;
     maintainers = with maintainers; [ bcdarwin ];

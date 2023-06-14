@@ -1,15 +1,5 @@
-{ lib
-, buildPythonPackage
-, duckdb
-, google-cloud-storage
-, mypy
-, numpy
-, pandas
-, psutil
-, pybind11
-, setuptools-scm
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, duckdb, google-cloud-storage, mypy, numpy, pandas
+, psutil, pybind11, setuptools-scm, pytestCheckHook }:
 
 buildPythonPackage rec {
   inherit (duckdb) pname version src patches;
@@ -29,22 +19,11 @@ buildPythonPackage rec {
 
   SETUPTOOLS_SCM_PRETEND_VERSION = version;
 
-  nativeBuildInputs = [
-    pybind11
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ pybind11 setuptools-scm ];
 
-  propagatedBuildInputs = [
-    numpy
-    pandas
-  ];
+  propagatedBuildInputs = [ numpy pandas ];
 
-  nativeCheckInputs = [
-    google-cloud-storage
-    mypy
-    psutil
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ google-cloud-storage mypy psutil pytestCheckHook ];
 
   disabledTests = [
     # tries to make http request
@@ -55,9 +34,7 @@ buildPythonPackage rec {
     export HOME="$(mktemp -d)"
   '';
 
-  pythonImportsCheck = [
-    "duckdb"
-  ];
+  pythonImportsCheck = [ "duckdb" ];
 
   meta = with lib; {
     description = "Python binding for DuckDB";

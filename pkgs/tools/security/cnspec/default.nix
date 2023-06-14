@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "cnspec";
@@ -17,15 +14,9 @@ buildGoModule rec {
   proxyVendor = true;
   vendorHash = "sha256-iM86sTyu/GvWFV+iqXUMafg0uxpDJA8YqfB2SkglK/A=";
 
-  subPackages = [
-    "apps/cnspec"
-  ];
+  subPackages = [ "apps/cnspec" ];
 
-  ldflags = [
-    "-s"
-    "-w"
-    "-X=go.mondoo.com/cnspec.Version=${version}"
-  ];
+  ldflags = [ "-s" "-w" "-X=go.mondoo.com/cnspec.Version=${version}" ];
 
   meta = with lib; {
     description = "An open source, cloud-native security and policy project";

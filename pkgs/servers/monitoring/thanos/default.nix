@@ -13,7 +13,8 @@ buildGoModule rec {
   patches = [
     # https://github.com/thanos-io/thanos/pull/6126
     (fetchpatch {
-      url = "https://github.com/thanos-io/thanos/commit/a4c218bd690259fc0c78fe67e0739bd33d38541e.patch";
+      url =
+        "https://github.com/thanos-io/thanos/commit/a4c218bd690259fc0c78fe67e0739bd33d38541e.patch";
       hash = "sha256-Hxc1s5IXAyw01/o4JvOXuyYuOFy0+cBUv3OkRv4DCXs=";
     })
   ];
@@ -24,7 +25,8 @@ buildGoModule rec {
 
   subPackages = "cmd/thanos";
 
-  ldflags = let t = "github.com/prometheus/common/version"; in [
+  ldflags = let t = "github.com/prometheus/common/version";
+  in [
     "-X ${t}.Version=${version}"
     "-X ${t}.Revision=unknown"
     "-X ${t}.Branch=unknown"
@@ -33,7 +35,8 @@ buildGoModule rec {
   ];
 
   meta = with lib; {
-    description = "Highly available Prometheus setup with long term storage capabilities";
+    description =
+      "Highly available Prometheus setup with long term storage capabilities";
     homepage = "https://github.com/thanos-io/thanos";
     license = licenses.asl20;
     maintainers = with maintainers; [ basvandijk ];

@@ -27,8 +27,7 @@ let
       runHook postInstall
     '';
   };
-in
-buildGoModule rec {
+in buildGoModule rec {
   pname = "filebrowser";
   version = "2.23.0";
 
@@ -47,12 +46,11 @@ buildGoModule rec {
     cp -r ${frontend}/dist frontend/
   '';
 
-  passthru = {
-    inherit frontend;
-  };
+  passthru = { inherit frontend; };
 
   meta = with lib; {
-    description = "Filebrowser is a web application for managing files and directories";
+    description =
+      "Filebrowser is a web application for managing files and directories";
     homepage = "https://filebrowser.org";
     license = licenses.asl20;
     maintainers = with maintainers; [ nielsegberts ];

@@ -11,12 +11,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ flex ];
 
-  buildInputs = [
-    alsa-lib
-    fftw
-    fftwFloat
-    libjack2
-  ];
+  buildInputs = [ alsa-lib fftw fftwFloat libjack2 ];
 
   postPatch = "substituteInPlace bfconf.c --replace /usr/local $out";
 

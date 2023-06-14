@@ -1,7 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-}:
+{ lib, stdenv, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   pname = "encpipe";
@@ -15,9 +12,7 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  installFlags = [
-    "PREFIX=$(out)"
-  ];
+  installFlags = [ "PREFIX=$(out)" ];
 
   meta = with lib; {
     description = "An encryption tool";

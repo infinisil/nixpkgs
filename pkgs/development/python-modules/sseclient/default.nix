@@ -1,12 +1,5 @@
-{ lib
-, backports_unittest-mock
-, buildPythonPackage
-, fetchPypi
-, pytestCheckHook
-, pythonOlder
-, requests
-, six
-}:
+{ lib, backports_unittest-mock, buildPythonPackage, fetchPypi, pytestCheckHook
+, pythonOlder, requests, six }:
 
 buildPythonPackage rec {
   pname = "sseclient";
@@ -20,19 +13,11 @@ buildPythonPackage rec {
     hash = "sha256-sv5TTcszsdP6rRPWDFp8cY4o+FmH8qA07PXsJ5kYwRw=";
   };
 
-  propagatedBuildInputs = [
-    requests
-    six
-  ];
+  propagatedBuildInputs = [ requests six ];
 
-  nativeCheckInputs = [
-    backports_unittest-mock
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ backports_unittest-mock pytestCheckHook ];
 
-  disabledTests = [
-    "event_stream"
-  ];
+  disabledTests = [ "event_stream" ];
 
   meta = with lib; {
     description = "Client library for reading Server Sent Event streams";

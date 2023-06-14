@@ -1,14 +1,10 @@
 { lib, config, pkgs, ... }:
 
-let
-  cfg = config.programs.trippy;
-in
+let cfg = config.programs.trippy;
 
-{
+in {
   options = {
-    programs.trippy = {
-      enable = lib.mkEnableOption (lib.mdDoc "trippy");
-    };
+    programs.trippy = { enable = lib.mkEnableOption (lib.mdDoc "trippy"); };
   };
 
   config = lib.mkIf cfg.enable {

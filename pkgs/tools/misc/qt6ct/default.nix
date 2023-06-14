@@ -1,17 +1,7 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, qtbase
-, qtsvg
-, qtwayland
-, qmake
-, qttools
-, wrapQtAppsHook
-}:
-let
-  inherit (lib) getDev;
-in
-stdenv.mkDerivation rec {
+{ lib, stdenv, fetchFromGitHub, qtbase, qtsvg, qtwayland, qmake, qttools
+, wrapQtAppsHook }:
+let inherit (lib) getDev;
+in stdenv.mkDerivation rec {
   pname = "qt6ct";
   version = "0.8";
 

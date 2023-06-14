@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, cmake, pkg-config, zlib, pcre2, expat, sqlite, openssl, unixODBC, libmysqlclient }:
+{ lib, stdenv, fetchFromGitHub, cmake, pkg-config, zlib, pcre2, expat, sqlite
+, openssl, unixODBC, libmysqlclient }:
 
 stdenv.mkDerivation rec {
   pname = "poco";
@@ -22,9 +23,7 @@ stdenv.mkDerivation rec {
   MYSQL_DIR = libmysqlclient;
   MYSQL_INCLUDE_DIR = "${MYSQL_DIR}/include/mysql";
 
-  cmakeFlags = [
-    "-DPOCO_UNBUNDLED=ON"
-  ];
+  cmakeFlags = [ "-DPOCO_UNBUNDLED=ON" ];
 
   postFixup = ''
     grep -rlF INTERFACE_INCLUDE_DIRECTORIES "$dev/lib/cmake/Poco" | while read -r f; do

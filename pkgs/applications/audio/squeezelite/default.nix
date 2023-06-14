@@ -1,34 +1,10 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, flac
-, libmad
-, libpulseaudio
-, libvorbis
-, mpg123
+{ lib, stdenv, fetchFromGitHub, flac, libmad, libpulseaudio, libvorbis, mpg123
 , audioBackend ? if stdenv.isLinux then "alsa" else "portaudio"
-, alsaSupport ? stdenv.isLinux
-, alsa-lib
-, dsdSupport ? true
-, faad2Support ? true
-, faad2
-, ffmpegSupport ? true
-, ffmpeg
-, opusSupport ? true
-, opusfile
-, resampleSupport ? true
-, soxr
-, sslSupport ? true
-, openssl
-, portaudioSupport ? stdenv.isDarwin
-, portaudio
-, AudioToolbox
-, AudioUnit
-, Carbon
-, CoreAudio
-, CoreVideo
-, VideoDecodeAcceleration
-}:
+, alsaSupport ? stdenv.isLinux, alsa-lib, dsdSupport ? true, faad2Support ? true
+, faad2, ffmpegSupport ? true, ffmpeg, opusSupport ? true, opusfile
+, resampleSupport ? true, soxr, sslSupport ? true, openssl
+, portaudioSupport ? stdenv.isDarwin, portaudio, AudioToolbox, AudioUnit, Carbon
+, CoreAudio, CoreVideo, VideoDecodeAcceleration }:
 
 let
   inherit (lib) optional optionals optionalString;
@@ -37,8 +13,7 @@ let
 
   binName = "squeezelite${optionalString pulseSupport "-pulse"}";
 
-in
-stdenv.mkDerivation {
+in stdenv.mkDerivation {
   # the nixos module uses the pname as the binary name
   pname = binName;
   # versions are specified in `squeezelite.h`
@@ -53,14 +28,16 @@ stdenv.mkDerivation {
   };
 
   buildInputs = [ flac libmad libvorbis mpg123 ]
-    ++ optional pulseSupport libpulseaudio
-    ++ optional alsaSupport alsa-lib
-    ++ optional portaudioSupport portaudio
-    ++ optionals stdenv.isDarwin [ CoreVideo VideoDecodeAcceleration CoreAudio AudioToolbox AudioUnit Carbon ]
-    ++ optional faad2Support faad2
-    ++ optional ffmpegSupport ffmpeg
-    ++ optional opusSupport opusfile
-    ++ optional resampleSupport soxr
+    ++ optional pulseSupport libpulseaudio ++ optional alsaSupport alsa-lib
+    ++ optional portaudioSupport portaudio ++ optionals stdenv.isDarwin [
+      CoreVideo
+      VideoDecodeAcceleration
+      CoreAudio
+      AudioToolbox
+      AudioUnit
+      Carbon
+    ] ++ optional faad2Support faad2 ++ optional ffmpegSupport ffmpeg
+    ++ optional opusSupport opusfile ++ optional resampleSupport soxr
     ++ optional sslSupport openssl;
 
   enableParallelBuilding = true;
@@ -72,19 +49,13 @@ stdenv.mkDerivation {
 
   EXECUTABLE = binName;
 
-  OPTS = [ "-DLINKALL" "-DGPIO" ]
-    ++ optional dsdSupport "-DDSD"
-    ++ optional (!faad2Support) "-DNO_FAAD"
-    ++ optional ffmpegSupport "-DFFMPEG"
-    ++ optional opusSupport "-DOPUS"
-    ++ optional portaudioSupport "-DPORTAUDIO"
+  OPTS = [ "-DLINKALL" "-DGPIO" ] ++ optional dsdSupport "-DDSD"
+    ++ optional (!faad2Support) "-DNO_FAAD" ++ optional ffmpegSupport "-DFFMPEG"
+    ++ optional opusSupport "-DOPUS" ++ optional portaudioSupport "-DPORTAUDIO"
     ++ optional pulseSupport "-DPULSEAUDIO"
-    ++ optional resampleSupport "-DRESAMPLE"
-    ++ optional sslSupport "-DUSE_SSL";
+    ++ optional resampleSupport "-DRESAMPLE" ++ optional sslSupport "-DUSE_SSL";
 
-  env = lib.optionalAttrs stdenv.isDarwin {
-    LDADD = "-lportaudio -lpthread";
-  };
+  env = lib.optionalAttrs stdenv.isDarwin { LDADD = "-lportaudio -lpthread"; };
 
   installPhase = ''
     runHook preInstall
@@ -102,6 +73,9 @@ stdenv.mkDerivation {
     homepage = "https://github.com/ralph-irving/squeezelite";
     license = with licenses; [ gpl3Plus ] ++ optional dsdSupport bsd2;
     maintainers = with maintainers; [ adamcstephens ];
-    platforms = if (audioBackend == "pulse") then platforms.linux else platforms.linux ++ platforms.darwin;
+    platforms = if (audioBackend == "pulse") then
+      platforms.linux
+    else
+      platforms.linux ++ platforms.darwin;
   };
 }

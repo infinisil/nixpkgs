@@ -201,7 +201,8 @@ in {
     };
     users.groups.pixelfed = mkIf (cfg.group == "pixelfed") { };
 
-    services.redis.servers.pixelfed.enable = lib.mkIf cfg.redis.createLocally true;
+    services.redis.servers.pixelfed.enable =
+      lib.mkIf cfg.redis.createLocally true;
     services.pixelfed.settings = mkMerge [
       ({
         APP_ENV = mkDefault "production";
@@ -276,17 +277,18 @@ in {
       };
 
     # Make each individual option overridable with lib.mkDefault.
-    services.pixelfed.poolConfig = lib.mapAttrs' (n: v: lib.nameValuePair n (lib.mkDefault v)) {
-      "pm" = "dynamic";
-      "php_admin_value[error_log]" = "stderr";
-      "php_admin_flag[log_errors]" = true;
-      "catch_workers_output" = true;
-      "pm.max_children" = "32";
-      "pm.start_servers" = "2";
-      "pm.min_spare_servers" = "2";
-      "pm.max_spare_servers" = "4";
-      "pm.max_requests" = "500";
-    };
+    services.pixelfed.poolConfig =
+      lib.mapAttrs' (n: v: lib.nameValuePair n (lib.mkDefault v)) {
+        "pm" = "dynamic";
+        "php_admin_value[error_log]" = "stderr";
+        "php_admin_flag[log_errors]" = true;
+        "catch_workers_output" = true;
+        "pm.max_children" = "32";
+        "pm.start_servers" = "2";
+        "pm.min_spare_servers" = "2";
+        "pm.max_spare_servers" = "4";
+        "pm.max_requests" = "500";
+      };
 
     services.phpfpm.pools.pixelfed = {
       inherit user group;

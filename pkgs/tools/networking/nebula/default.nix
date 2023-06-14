@@ -1,8 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, nixosTests
-}:
+{ lib, buildGoModule, fetchFromGitHub, nixosTests }:
 
 buildGoModule rec {
   pname = "nebula";
@@ -21,12 +17,11 @@ buildGoModule rec {
 
   ldflags = [ "-X main.Build=${version}" ];
 
-  passthru.tests = {
-    inherit (nixosTests) nebula;
-  };
+  passthru.tests = { inherit (nixosTests) nebula; };
 
   meta = with lib; {
-    description = "Overlay networking tool with a focus on performance, simplicity and security";
+    description =
+      "Overlay networking tool with a focus on performance, simplicity and security";
     longDescription = ''
       Nebula is a scalable overlay networking tool with a focus on performance,
       simplicity and security. It lets you seamlessly connect computers
@@ -43,7 +38,8 @@ buildGoModule rec {
       parts.
     '';
     homepage = "https://github.com/slackhq/nebula";
-    changelog = "https://github.com/slackhq/nebula/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/slackhq/nebula/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ Br1ght0ne numinit ];
   };

@@ -1,8 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, fetchpatch
-}:
+{ lib, rustPlatform, fetchFromGitHub, fetchpatch }:
 
 rustPlatform.buildRustPackage rec {
   pname = "lurk";
@@ -21,7 +17,8 @@ rustPlatform.buildRustPackage rec {
     # update the version to 0.3.3
     (fetchpatch {
       name = "chore-prepare-release.patch";
-      url = "https://github.com/JakWai01/lurk/commit/cb4355674159255ac4186283a93de294de057d1b.patch";
+      url =
+        "https://github.com/JakWai01/lurk/commit/cb4355674159255ac4186283a93de294de057d1b.patch";
       hash = "sha256-N+/8AGEToEqhkQ6BYGQP279foZbt6DzUBmAUaHm9hW4=";
     })
   ];
@@ -29,7 +26,8 @@ rustPlatform.buildRustPackage rec {
   patches = [
     (fetchpatch {
       name = "fix-tests.patch";
-      url = "https://github.com/JakWai01/lurk/commit/87eb4aa8bf9a551b24cec2146699cb2c22d62019.patch";
+      url =
+        "https://github.com/JakWai01/lurk/commit/87eb4aa8bf9a551b24cec2146699cb2c22d62019.patch";
       hash = "sha256-m44m1338VODX+HGEVMLozKfVvXsQxvLIpo28VBK//vM=";
     })
   ];

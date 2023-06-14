@@ -1,10 +1,4 @@
-{ lib
-, fetchurl
-, callPackage
-, kaem
-, m2libc
-, mescc-tools
-}:
+{ lib, fetchurl, callPackage, kaem, m2libc, mescc-tools }:
 
 # Maintenance note:
 # Build steps have been adapted from build-aux/bootstrap.sh.in
@@ -120,27 +114,29 @@ let
 
   cc = "${srcPost.bin}/bin/mes-m2";
   ccArgs = [
-    "-e" "main"
+    "-e"
+    "main"
     "${srcPost.bin}/bin/mescc.scm"
     "--"
-    "-D" "HAVE_CONFIG_H=1"
-    "-I" "${srcPrefix}/include"
-    "-I" "${srcPrefix}/include/linux/x86"
+    "-D"
+    "HAVE_CONFIG_H=1"
+    "-I"
+    "${srcPrefix}/include"
+    "-I"
+    "${srcPrefix}/include/linux/x86"
   ];
 
   CC = toString ([ cc ] ++ ccArgs);
 
   stripExt = source:
-    lib.replaceStrings
-      [ ".c" ]
-      [ "" ]
-      (builtins.baseNameOf source);
+    lib.replaceStrings [ ".c" ] [ "" ] (builtins.baseNameOf source);
 
-  compile = source: kaem.runCommand (stripExt source) {} ''
-    mkdir ''${out}
-    cd ''${out}
-    ${CC} -c ${srcPrefix}/${source}
-  '';
+  compile = source:
+    kaem.runCommand (stripExt source) { } ''
+      mkdir ''${out}
+      cd ''${out}
+      ${CC} -c ${srcPrefix}/${source}
+    '';
 
   crt1 = compile "/lib/linux/x86-mes-mescc/crt1.c";
 
@@ -151,18 +147,16 @@ let
   sourceArchive = out: sources:
     "catm ${out} ${lib.concatMapStringsSep " " (getRes ".s") sources}";
 
-  mkLib = libname: sources: let
-    os = map compile sources;
-  in kaem.runCommand "${pname}-${libname}-${version}" {
-    inherit meta;
-  } ''
-    LIBDIR=''${out}/lib
-    mkdir -p ''${LIBDIR}
-    cd ''${LIBDIR}
+  mkLib = libname: sources:
+    let os = map compile sources;
+    in kaem.runCommand "${pname}-${libname}-${version}" { inherit meta; } ''
+      LIBDIR=''${out}/lib
+      mkdir -p ''${LIBDIR}
+      cd ''${LIBDIR}
 
-    ${archive "${libname}.a" os}
-    ${sourceArchive "${libname}.s" os}
-  '';
+      ${archive "${libname}.a" os}
+      ${sourceArchive "${libname}.s" os}
+    '';
 
   libc-mini = mkLib "libc-mini" libc_mini_SOURCES;
   libmescc = mkLib "libmescc" libmescc_SOURCES;
@@ -173,14 +167,14 @@ let
   libs = kaem.runCommand "${pname}-m2-libs-${version}" {
     inherit pname version;
 
-    passthru.tests.get-version = result: kaem.runCommand "${pname}-get-version-${version}" {} ''
-      ${result}/bin/mes --version
-      mkdir ''${out}
-    '';
+    passthru.tests.get-version = result:
+      kaem.runCommand "${pname}-get-version-${version}" { } ''
+        ${result}/bin/mes --version
+        mkdir ''${out}
+      '';
 
     inherit meta;
-  }
-  ''
+  } ''
     LIBDIR=''${out}/lib
     mkdir -p ''${out} ''${LIBDIR}
 
@@ -211,14 +205,14 @@ let
   compiler = kaem.runCommand "${pname}-${version}" {
     inherit pname version;
 
-    passthru.tests.get-version = result: kaem.runCommand "${pname}-get-version-${version}" {} ''
-      ${result}/bin/mes --version
-      mkdir ''${out}
-    '';
+    passthru.tests.get-version = result:
+      kaem.runCommand "${pname}-get-version-${version}" { } ''
+        ${result}/bin/mes --version
+        mkdir ''${out}
+      '';
 
     inherit meta;
-  }
-  ''
+  } ''
     mkdir -p ''${out}/bin
 
     ${srcPost.bin}/bin/mes-m2 -e main ${srcPost.bin}/bin/mescc.scm -- \

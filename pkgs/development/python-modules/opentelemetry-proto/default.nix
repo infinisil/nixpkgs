@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, hatchling
-, protobuf
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, hatchling, protobuf
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-proto";
@@ -22,22 +16,17 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    protobuf
-  ];
+  propagatedBuildInputs = [ protobuf ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.proto" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-proto";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-proto";
     description = "OpenTelemetry Python Proto";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

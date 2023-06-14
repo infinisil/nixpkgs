@@ -1,10 +1,4 @@
-{ lib
-, fetchFromGitHub
-, buildPythonPackage
-, pythonOlder
-, click
-, redis
-}:
+{ lib, fetchFromGitHub, buildPythonPackage, pythonOlder, click, redis }:
 
 buildPythonPackage rec {
   pname = "rq";
@@ -20,17 +14,12 @@ buildPythonPackage rec {
     hash = "sha256-QTQ90ZJQU6UWPjNCjmR4ez6av+B9M8gDof2Gq+R86aY=";
   };
 
-  propagatedBuildInputs = [
-    click
-    redis
-  ];
+  propagatedBuildInputs = [ click redis ];
 
   # Tests require a running Redis rerver
   doCheck = false;
 
-  pythonImportsCheck = [
-    "rq"
-  ];
+  pythonImportsCheck = [ "rq" ];
 
   meta = with lib; {
     description = "Library for creating background jobs and processing them";

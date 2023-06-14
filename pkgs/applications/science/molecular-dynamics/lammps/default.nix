@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, libpng
-, gzip
-, fftw
-, blas
-, lapack
-, withMPI ? false
-, mpi
-, cmake
+{ lib, stdenv, fetchFromGitHub, libpng, gzip, fftw, blas, lapack
+, withMPI ? false, mpi, cmake
 # Available list of packages can be found near here:
 # https://github.com/lammps/lammps/blob/develop/cmake/CMakeLists.txt#L222
 , packages ? {
@@ -34,8 +25,7 @@
   ML-SNAP = true;
   SRD = true;
   REAXFF = true;
-}
-}:
+} }:
 
 stdenv.mkDerivation rec {
   # LAMMPS has weird versioning converted to ISO 8601 format
@@ -51,26 +41,17 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     cd cmake
   '';
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
   passthru = {
     inherit mpi;
     inherit packages;
   };
-  cmakeFlags = [
-  ] ++ (builtins.map (p: "-DPKG_${p}=ON") (builtins.attrNames (lib.filterAttrs (n: v: v) packages)));
+  cmakeFlags = [ ] ++ (builtins.map (p: "-DPKG_${p}=ON")
+    (builtins.attrNames (lib.filterAttrs (n: v: v) packages)));
 
-  buildInputs = [
-    fftw
-    libpng
-    blas
-    lapack
-    gzip
-  ] ++ lib.optionals withMPI [
-    mpi
-  ];
+  buildInputs = [ fftw libpng blas lapack gzip ]
+    ++ lib.optionals withMPI [ mpi ];
 
   # For backwards compatibility
   postInstall = ''
@@ -85,7 +66,7 @@ stdenv.mkDerivation rec {
       National Laboratories, a US Department of Energy facility, with
       funding from the DOE. It is an open-source code, distributed freely
       under the terms of the GNU Public License (GPL).
-      '';
+    '';
     homepage = "https://lammps.sandia.gov";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;

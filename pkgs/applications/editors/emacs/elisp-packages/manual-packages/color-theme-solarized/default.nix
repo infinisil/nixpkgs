@@ -1,8 +1,4 @@
-{ lib
-, trivialBuild
-, fetchFromGitHub
-, color-theme
-}:
+{ lib, trivialBuild, fetchFromGitHub, color-theme }:
 
 trivialBuild {
   pname = "color-theme-solarized";
@@ -19,7 +15,8 @@ trivialBuild {
 
   meta = with lib; {
     homepage = "http://ethanschoonover.com/solarized";
-    description = "Precision colors for machines and people; Emacs implementation";
+    description =
+      "Precision colors for machines and people; Emacs implementation";
     license = licenses.mit;
     maintainers = with maintainers; [ samuelrivas AndersonTorres ];
   };

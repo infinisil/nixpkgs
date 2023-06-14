@@ -1,23 +1,6 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchpatch
-, buildPythonPackage
-, cryptography
-, click
-, construct
-, ecdsa
-, flit-core
-, hidapi
-, intelhex
-, pillow
-, protobuf3
-, requests
-, setuptools
-, tabulate
-, toml
-, AppKit
-}:
+{ lib, stdenv, fetchFromGitHub, fetchpatch, buildPythonPackage, cryptography
+, click, construct, ecdsa, flit-core, hidapi, intelhex, pillow, protobuf3
+, requests, setuptools, tabulate, toml, AppKit }:
 
 buildPythonPackage rec {
   pname = "ledgerwallet";
@@ -31,7 +14,8 @@ buildPythonPackage rec {
     hash = "sha256-IcStYYkKEdZxwgJKL8l2Y1BtO/Oncd4aKUAZD8umbHs=";
   };
 
-  buildInputs = [ flit-core setuptools ] ++ lib.optionals stdenv.isDarwin [ AppKit ];
+  buildInputs = [ flit-core setuptools ]
+    ++ lib.optionals stdenv.isDarwin [ AppKit ];
   propagatedBuildInputs = [
     cryptography
     click

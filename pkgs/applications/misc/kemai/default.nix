@@ -1,17 +1,6 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, magic-enum
-, spdlog
-, qtbase
-, qtconnectivity
-, qttools
-, qtlanguageserver
-, wrapQtAppsHook
-, libXScrnSaver
-, nix-update-script
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, magic-enum, spdlog, qtbase
+, qtconnectivity, qttools, qtlanguageserver, wrapQtAppsHook, libXScrnSaver
+, nix-update-script }:
 
 stdenv.mkDerivation rec {
   pname = "kemai";
@@ -38,15 +27,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake wrapQtAppsHook ];
 
-  passthru = {
-    updateScript = nix-update-script { };
-  };
+  passthru = { updateScript = nix-update-script { }; };
 
   meta = with lib; {
     description = "Kimai desktop client written in QT6";
     homepage = "https://github.com/AlexandrePTJ/kemai";
     license = licenses.mit;
     maintainers = with maintainers; [ poelzi ];
-    platforms   = platforms.unix;
+    platforms = platforms.unix;
   };
 }

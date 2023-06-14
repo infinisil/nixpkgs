@@ -1,7 +1,4 @@
-{ lib
-, buildNpmPackage
-, fetchFromGitHub
-}:
+{ lib, buildNpmPackage, fetchFromGitHub }:
 
 buildNpmPackage rec {
   pname = "docker-compose-language-service";
@@ -19,7 +16,8 @@ buildNpmPackage rec {
   meta = with lib; {
     description = "Language service for Docker Compose documents";
     homepage = "https://github.com/microsoft/compose-language-service";
-    changelog = "https://github.com/microsoft/compose-language-service/releases/tag/v${version}";
+    changelog =
+      "https://github.com/microsoft/compose-language-service/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ natsukium ];
     mainProgram = "docker-compose-langserver";

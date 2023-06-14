@@ -1,22 +1,6 @@
-{ lib
-, stdenv
-, buildGoModule
-, fetchurl
-, makeWrapper
-, git
-, bash
-, coreutils
-, gitea
-, gzip
-, openssh
-, pam
-, sqliteSupport ? true
-, pamSupport ? true
-, runCommand
-, brotli
-, xorg
-, nixosTests
-}:
+{ lib, stdenv, buildGoModule, fetchurl, makeWrapper, git, bash, coreutils, gitea
+, gzip, openssh, pam, sqliteSupport ? true, pamSupport ? true, runCommand
+, brotli, xorg, nixosTests }:
 
 buildGoModule rec {
   pname = "gitea";
@@ -30,9 +14,7 @@ buildGoModule rec {
 
   vendorHash = null;
 
-  patches = [
-    ./static-root-path.patch
-  ];
+  patches = [ ./static-root-path.patch ];
 
   postPatch = ''
     substituteInPlace modules/setting/server.go --subst-var data
@@ -86,7 +68,12 @@ buildGoModule rec {
     description = "Git with a cup of tea";
     homepage = "https://gitea.io";
     license = licenses.mit;
-    maintainers = with maintainers; [ disassembler kolaente ma27 techknowlogick ];
+    maintainers = with maintainers; [
+      disassembler
+      kolaente
+      ma27
+      techknowlogick
+    ];
     broken = stdenv.isDarwin;
   };
 }

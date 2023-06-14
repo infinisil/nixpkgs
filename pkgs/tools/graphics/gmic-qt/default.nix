@@ -1,60 +1,33 @@
-{ lib
-, stdenv
-, fetchzip
-, cimg
-, cmake
-, coreutils
-, curl
-, fftw
-, gimp
-, gimpPlugins
-, gmic
-, gnugrep
-, gnused
-, graphicsmagick
-, libjpeg
-, libpng
-, libtiff
-, ninja
-, nix-update
-, opencv3
-, openexr
-, pkg-config
-, qtbase
-, qttools
-, wrapQtAppsHook
-, writeShellScript
-, zlib
-, variant ? "standalone"
-}:
+{ lib, stdenv, fetchzip, cimg, cmake, coreutils, curl, fftw, gimp, gimpPlugins
+, gmic, gnugrep, gnused, graphicsmagick, libjpeg, libpng, libtiff, ninja
+, nix-update, opencv3, openexr, pkg-config, qtbase, qttools, wrapQtAppsHook
+, writeShellScript, zlib, variant ? "standalone" }:
 
 let
   variants = {
     gimp = {
-      extraDeps = [
-        gimp
-        gimp.gtk
-      ];
+      extraDeps = [ gimp gimp.gtk ];
       description = "GIMP plugin for the G'MIC image processing framework";
     };
 
     standalone = {
-      description = "Versatile front-end to the image processing framework G'MIC";
+      description =
+        "Versatile front-end to the image processing framework G'MIC";
     };
   };
 
-in
+in assert lib.assertMsg (builtins.hasAttr variant variants) ''
+  gmic-qt variant "${variant}" is not supported. Please use one of ${
+    lib.concatStringsSep ", " (builtins.attrNames variants)
+  }.'';
 
 assert lib.assertMsg
-  (builtins.hasAttr variant variants)
-  "gmic-qt variant \"${variant}\" is not supported. Please use one of ${lib.concatStringsSep ", " (builtins.attrNames variants)}.";
-
-assert lib.assertMsg
-  (builtins.all (d: d != null) variants.${variant}.extraDeps or [])
-  "gmic-qt variant \"${variant}\" is missing one of its dependencies.";
+  (builtins.all (d: d != null) variants.${variant}.extraDeps or [ ])
+  ''gmic-qt variant "${variant}" is missing one of its dependencies.'';
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "gmic-qt${lib.optionalString (variant != "standalone") "-${variant}"}";
+  pname =
+    "gmic-qt${lib.optionalString (variant != "standalone") "-${variant}"}";
   version = "3.2.5";
 
   src = fetchzip {
@@ -62,12 +35,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-mfDcRG6zEjEuemCaLUOLzbbcq8FN9+n+EqN0NeR9H7U=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-    ninja
-    wrapQtAppsHook
-  ];
+  nativeBuildInputs = [ cmake pkg-config ninja wrapQtAppsHook ];
 
   buildInputs = [
     gmic
@@ -82,7 +50,7 @@ stdenv.mkDerivation (finalAttrs: {
     openexr
     graphicsmagick
     curl
-  ] ++ variants.${variant}.extraDeps or [];
+  ] ++ variants.${variant}.extraDeps or [ ];
 
   preConfigure = ''
     cd gmic-qt
@@ -115,7 +83,9 @@ stdenv.mkDerivation (finalAttrs: {
     updateScript = writeShellScript "gmic-qt-update-script" ''
       set -euo pipefail
 
-      export PATH="${lib.makeBinPath [ coreutils curl gnugrep gnused nix-update ]}:$PATH"
+      export PATH="${
+        lib.makeBinPath [ coreutils curl gnugrep gnused nix-update ]
+      }:$PATH"
 
       latestVersion=$(curl 'https://gmic.eu/files/source/' \
                        | grep -E 'gmic_[^"]+\.tar\.gz' \

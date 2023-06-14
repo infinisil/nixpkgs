@@ -1,11 +1,5 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, stdenv
-, darwin
-, nix-update-script
-}:
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, stdenv, darwin
+, nix-update-script }:
 
 rustPlatform.buildRustPackage rec {
   pname = "rome";
@@ -44,12 +38,12 @@ rustPlatform.buildRustPackage rec {
     "--skip commands::check::fs_error_dereferenced_symlink"
   ];
 
-  passthru.updateScript = nix-update-script {
-    extraArgs = [ "--version-regex" "cli%2Fv(.*)" ];
-  };
+  passthru.updateScript =
+    nix-update-script { extraArgs = [ "--version-regex" "cli%2Fv(.*)" ]; };
 
   meta = with lib; {
-    description = "A formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS";
+    description =
+      "A formatter, linter, bundler, and more for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS";
     homepage = "https://rome.tools";
     changelog = "https://github.com/rome/tools/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;

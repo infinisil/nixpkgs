@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pylint
-, pytest
-, pytestCheckHook
-, pythonOlder
-, toml
-}:
+{ lib, buildPythonPackage, fetchPypi, pylint, pytest, pytestCheckHook
+, pythonOlder, toml }:
 
 buildPythonPackage rec {
   pname = "pytest-pylint";
@@ -25,22 +18,13 @@ buildPythonPackage rec {
       --replace "pytest-runner" ""
   '';
 
-  buildInputs = [
-    pytest
-  ];
+  buildInputs = [ pytest ];
 
-  propagatedBuildInputs = [
-    pylint
-    toml
-  ];
+  propagatedBuildInputs = [ pylint toml ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "pytest_pylint"
-  ];
+  pythonImportsCheck = [ "pytest_pylint" ];
 
   meta = with lib; {
     description = "Pytest plugin to check source code with pylint";

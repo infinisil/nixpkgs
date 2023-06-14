@@ -21,7 +21,8 @@ stdenvNoCC.mkDerivation (finalAttrs: rec {
 
   meta = with lib; {
     homepage = "https://github.com/kdabir/has";
-    description = "Checks presence of various command line tools and their versions on the path";
+    description =
+      "Checks presence of various command line tools and their versions on the path";
     license = licenses.mit;
     maintainers = with maintainers; [ Freed-Wu ];
     platforms = platforms.unix;

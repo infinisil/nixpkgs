@@ -1,29 +1,8 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, numpy
-, pydantic
-, redis
-, requests
-, aiohttp
-, sqlitedict
-, tenacity
-, tiktoken
-, xxhash
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, numpy, pydantic, redis
+, requests, aiohttp, sqlitedict, tenacity, tiktoken, xxhash
 , # optional dependencies
-  accelerate
-, flask
-, sentence-transformers
-, torch
-, transformers
-, fastapi
-, uvicorn
-, pillow
-, pg8000
-, sqlalchemy
-, pytestCheckHook
-}:
+accelerate, flask, sentence-transformers, torch, transformers, fastapi, uvicorn
+, pillow, pg8000, sqlalchemy, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "manifest-ml";
@@ -61,13 +40,8 @@ buildPythonPackage rec {
       torch
       transformers
     ];
-    app = [
-      fastapi
-      uvicorn
-    ];
-    diffusers = [
-      pillow
-    ];
+    app = [ fastapi uvicorn ];
+    diffusers = [ pillow ];
     gcp = [
       pg8000
       # cloud-sql-python-connector
@@ -75,9 +49,7 @@ buildPythonPackage rec {
     ];
   };
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   preCheck = ''
     export HOME=$TMPDIR
@@ -100,7 +72,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Manifest for Prompting Foundation Models";
     homepage = "https://github.com/HazyResearch/manifest";
-    changelog = "https://github.com/HazyResearch/manifest/releases/tag/v${version}";
+    changelog =
+      "https://github.com/HazyResearch/manifest/releases/tag/v${version}";
     license = licenses.asl20;
     maintainers = with maintainers; [ natsukium ];
   };

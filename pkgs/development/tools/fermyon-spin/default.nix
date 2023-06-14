@@ -1,10 +1,4 @@
-{ lib
-, stdenv
-, fetchzip
-, autoPatchelfHook
-, gcc-unwrapped
-, zlib
-}:
+{ lib, stdenv, fetchzip, autoPatchelfHook, gcc-unwrapped, zlib }:
 
 let
   system = stdenv.hostPlatform.system;
@@ -28,19 +22,15 @@ in stdenv.mkDerivation rec {
   version = "1.2.1";
 
   src = fetchzip {
-    url = "https://github.com/fermyon/spin/releases/download/v${version}/spin-v${version}-${platform}.tar.gz";
+    url =
+      "https://github.com/fermyon/spin/releases/download/v${version}/spin-v${version}-${platform}.tar.gz";
     stripRoot = false;
     sha256 = packageHash;
   };
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-  ];
+  nativeBuildInputs = [ autoPatchelfHook ];
 
-  buildInputs = [
-    gcc-unwrapped.lib
-    zlib
-  ];
+  buildInputs = [ gcc-unwrapped.lib zlib ];
 
   installPhase = ''
     mkdir -p $out/bin
@@ -48,7 +38,8 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Framework for building, deploying, and running fast, secure, and composable cloud microservices with WebAssembly.";
+    description =
+      "Framework for building, deploying, and running fast, secure, and composable cloud microservices with WebAssembly.";
     homepage = "https://github.com/fermyon/spin";
     license = with licenses; [ asl20 ];
     maintainers = with maintainers; [ mglolenstine ];

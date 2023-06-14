@@ -1,31 +1,17 @@
-{ lib
-, stdenv
-, fetchurl
-, autoPatchelfHook
-, gtk3
-, zlib
-, alsa-lib
-, dbus
-, libXcursor
-, libXext
-, libXi
-, libXinerama
-, libxkbcommon
-, libXrandr
-, libXScrnSaver
-, libXxf86vm
-, udev
+{ lib, stdenv, fetchurl, autoPatchelfHook, gtk3, zlib, alsa-lib, dbus
+, libXcursor, libXext, libXi, libXinerama, libxkbcommon, libXrandr
+, libXScrnSaver, libXxf86vm, udev
 , vulkan-loader # (not used by default, enable in settings menu)
 , wayland # (not used by default, enable with SDL_VIDEODRIVER=wayland - doesn't support HiDPI)
-, makeDesktopItem
-}:
+, makeDesktopItem }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "clonehero";
   version = "1.0.0.4080";
 
   src = fetchurl {
-    url = "https://pubdl.clonehero.net/clonehero-v${finalAttrs.version}-final/clonehero-linux.tar.xz";
+    url =
+      "https://pubdl.clonehero.net/clonehero-v${finalAttrs.version}-final/clonehero-linux.tar.xz";
     hash = "sha256-YWLV+wgQ9RfKRSSWh/x0PMjB6tFA4YpHb9WtYOOgZZI=";
   };
 

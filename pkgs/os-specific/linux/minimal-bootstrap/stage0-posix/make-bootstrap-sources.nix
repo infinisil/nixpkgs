@@ -13,7 +13,7 @@
 #   => ./result/stage0-posix-$version-$rev-source.nar.xz
 #
 
-{ pkgs ? import ../../../../.. {} }:
+{ pkgs ? import ../../../../.. { } }:
 let
   inherit (pkgs) callPackage runCommand fetchFromGitHub nix xz;
 
@@ -35,8 +35,7 @@ let
         $out/mescc-tools-extra/M2libc
     '';
   };
-in
-runCommand name {
+in runCommand name {
   nativeBuildInputs = [ nix xz ];
 
   passthru = { inherit src; };

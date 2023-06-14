@@ -1,27 +1,8 @@
-{ config
-, lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, macdylibbundler
-, makeWrapper
-, darwin
-, codec2
-, libpulseaudio
-, libsamplerate
-, libsndfile
-, lpcnetfreedv
-, portaudio
-, speexdsp
-, hamlib_4
-, wxGTK32
-, sioclient
-, pulseSupport ? config.pulseaudio or stdenv.isLinux
-, AppKit
-, AVFoundation
-, Cocoa
-, CoreMedia
-}:
+{ config, lib, stdenv, fetchFromGitHub, cmake, macdylibbundler, makeWrapper
+, darwin, codec2, libpulseaudio, libsamplerate, libsndfile, lpcnetfreedv
+, portaudio, speexdsp, hamlib_4, wxGTK32, sioclient
+, pulseSupport ? config.pulseaudio or stdenv.isLinux, AppKit, AVFoundation
+, Cocoa, CoreMedia }:
 
 stdenv.mkDerivation rec {
   pname = "freedv";
@@ -40,9 +21,7 @@ stdenv.mkDerivation rec {
     sed -i "/hdiutil/d" src/CMakeLists.txt
   '';
 
-  nativeBuildInputs = [
-    cmake
-  ] ++ lib.optionals stdenv.isDarwin [
+  nativeBuildInputs = [ cmake ] ++ lib.optionals stdenv.isDarwin [
     macdylibbundler
     makeWrapper
     darwin.autoSignDarwinBinariesHook
@@ -58,12 +37,7 @@ stdenv.mkDerivation rec {
     wxGTK32
     sioclient
   ] ++ (if pulseSupport then [ libpulseaudio ] else [ portaudio ])
-  ++ lib.optionals stdenv.isDarwin [
-    AppKit
-    AVFoundation
-    Cocoa
-    CoreMedia
-  ];
+    ++ lib.optionals stdenv.isDarwin [ AppKit AVFoundation Cocoa CoreMedia ];
 
   cmakeFlags = [
     "-DUSE_INTERNAL_CODEC2:BOOL=FALSE"
@@ -71,9 +45,9 @@ stdenv.mkDerivation rec {
     "-DUNITTEST=ON"
   ] ++ lib.optionals pulseSupport [ "-DUSE_PULSEAUDIO:BOOL=TRUE" ];
 
-  env.NIX_CFLAGS_COMPILE = toString (lib.optionals (stdenv.isDarwin && stdenv.isx86_64) [
-    "-DAPPLE_OLD_XCODE"
-  ]);
+  env.NIX_CFLAGS_COMPILE = toString
+    (lib.optionals (stdenv.isDarwin && stdenv.isx86_64)
+      [ "-DAPPLE_OLD_XCODE" ]);
 
   doCheck = true;
 

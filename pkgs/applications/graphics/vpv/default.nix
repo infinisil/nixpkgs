@@ -1,17 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, pkg-config
-, libpng
-, libtiff
-, libjpeg
-, SDL2
-, gdal
-, octave
-, rustPlatform
-, cargo
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, pkg-config, libpng, libtiff, libjpeg
+, SDL2, gdal, octave, rustPlatform, cargo }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "vpv";
   version = "0.8.2";
@@ -30,21 +18,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-CDKlmwA2Wj78xPaSiYPmIJ7xmiE5Co+oGGejZU3v1zI=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-    rustPlatform.cargoSetupHook
-    cargo
-  ];
+  nativeBuildInputs = [ cmake pkg-config rustPlatform.cargoSetupHook cargo ];
 
-  buildInputs = [
-    libpng
-    libtiff
-    libjpeg
-    SDL2
-    gdal
-    octave
-  ];
+  buildInputs = [ libpng libtiff libjpeg SDL2 gdal octave ];
 
   cmakeFlags = [
     "-DUSE_GDAL=ON"
@@ -58,6 +34,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Image viewer for image processing experts";
     maintainers = [ lib.maintainers.kidanger ];
     license = lib.licenses.gpl3;
-    broken = stdenv.isDarwin; # the CMake expects the SDL2::SDL2main target for darwin
+    broken =
+      stdenv.isDarwin; # the CMake expects the SDL2::SDL2main target for darwin
   };
 })

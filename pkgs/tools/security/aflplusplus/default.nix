@@ -1,9 +1,6 @@
-{ lib, stdenv, stdenvNoCC, fetchFromGitHub, callPackage, makeWrapper
-, clang, llvm, gcc, which, libcgroup, python3, perl, gmp
-, file, wine ? null, fetchpatch
-, cmocka
-, llvmPackages
-}:
+{ lib, stdenv, stdenvNoCC, fetchFromGitHub, callPackage, makeWrapper, clang
+, llvm, gcc, which, libcgroup, python3, perl, gmp, file, wine ? null, fetchpatch
+, cmocka, llvmPackages }:
 
 # wine fuzzing is only known to work for win32 binaries, and using a mixture of
 # 32 and 64-bit libraries ... complicates things, so it's recommended to build
@@ -12,9 +9,12 @@ assert (wine != null) -> (stdenv.targetPlatform.system == "i686-linux");
 
 let
   aflplusplus-qemu = callPackage ./qemu.nix { inherit aflplusplus; };
-  qemu-exe-name = if stdenv.targetPlatform.system == "x86_64-linux" then "qemu-x86_64"
-    else if stdenv.targetPlatform.system == "i686-linux" then "qemu-i386"
-    else throw "aflplusplus: no support for ${stdenv.targetPlatform.system}!";
+  qemu-exe-name = if stdenv.targetPlatform.system == "x86_64-linux" then
+    "qemu-x86_64"
+  else if stdenv.targetPlatform.system == "i686-linux" then
+    "qemu-i386"
+  else
+    throw "aflplusplus: no support for ${stdenv.targetPlatform.system}!";
   libdislocator = callPackage ./libdislocator.nix { inherit aflplusplus; };
   libtokencap = callPackage ./libtokencap.nix { inherit aflplusplus; };
   aflplusplus = stdenvNoCC.mkDerivation rec {
@@ -71,10 +71,7 @@ let
       "-Wno-error=use-after-free"
     ];
 
-    makeFlags = [
-      "PREFIX=$(out)"
-      "USE_BINDIR=0"
-    ];
+    makeFlags = [ "PREFIX=$(out)" "USE_BINDIR=0" ];
     buildPhase = ''
       runHook preBuild
 
@@ -164,9 +161,9 @@ let
         A heavily enhanced version of AFL, incorporating many features
         and improvements from the community
       '';
-      homepage    = "https://aflplus.plus";
-      license     = lib.licenses.asl20;
-      platforms   = ["x86_64-linux" "i686-linux"];
+      homepage = "https://aflplus.plus";
+      license = lib.licenses.asl20;
+      platforms = [ "x86_64-linux" "i686-linux" ];
       maintainers = with lib.maintainers; [ ris mindavi ];
     };
   };

@@ -1,13 +1,5 @@
-{ lib
-, buildPythonPackage
-, internetarchive
-, fetchPypi
-, yt-dlp
-, docopt
-, pythonOlder
-, urllib3
-, pythonRelaxDepsHook
-}:
+{ lib, buildPythonPackage, internetarchive, fetchPypi, yt-dlp, docopt
+, pythonOlder, urllib3, pythonRelaxDepsHook }:
 
 buildPythonPackage rec {
   pname = "tubeup";
@@ -21,26 +13,13 @@ buildPythonPackage rec {
     sha256 = "sha256-5tvRaIXVzZcNy40uOEPwwN4EKPvvZPiR3qIdmiZSXWw=";
   };
 
-  nativeBuildInputs = [
-    pythonRelaxDepsHook
-  ];
+  nativeBuildInputs = [ pythonRelaxDepsHook ];
 
-  propagatedBuildInputs = [
-    internetarchive
-    docopt
-    urllib3
-    yt-dlp
-  ];
+  propagatedBuildInputs = [ internetarchive docopt urllib3 yt-dlp ];
 
-  pythonRelaxDeps = [
-    "internetarchive"
-    "urllib3"
-    "docopt"
-  ];
+  pythonRelaxDeps = [ "internetarchive" "urllib3" "docopt" ];
 
-  pythonImportsCheck = [
-    "tubeup"
-  ];
+  pythonImportsCheck = [ "tubeup" ];
 
   # Tests failing upstream
   doCheck = false;

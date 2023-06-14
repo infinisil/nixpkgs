@@ -1,13 +1,5 @@
-{ stdenv
-, lib
-, fetchurl
-, extra-cmake-modules
-, qca-qt5
-, kauth
-, kio
-, polkit-qt
-, util-linux
-}:
+{ stdenv, lib, fetchurl, extra-cmake-modules, qca-qt5, kauth, kio, polkit-qt
+, util-linux }:
 
 stdenv.mkDerivation rec {
   pname = "kpmcore";
@@ -15,13 +7,12 @@ stdenv.mkDerivation rec {
   version = "23.04.1";
 
   src = fetchurl {
-    url = "mirror://kde/stable/release-service/${version}/src/${pname}-${version}.tar.xz";
+    url =
+      "mirror://kde/stable/release-service/${version}/src/${pname}-${version}.tar.xz";
     hash = "sha256-NFIq8CZwYvpqDOOYLlBqoGdgfNPsyf15FkB3dToDCB8=";
   };
 
-  patches = [
-    ./nixostrustedprefix.patch
-  ];
+  patches = [ ./nixostrustedprefix.patch ];
 
   nativeBuildInputs = [ extra-cmake-modules ];
 

@@ -1,15 +1,11 @@
 { lib, stdenv, fetchFromGitHub, python3, openssl, cargo, rustPlatform, rustc
 , enableSystemd ? lib.meta.availableOn stdenv.hostPlatform python3.pkgs.systemd
-, nixosTests
-, enableRedis ? true
-, callPackage
-}:
+, nixosTests, enableRedis ? true, callPackage }:
 
 let
   plugins = python3.pkgs.callPackage ./plugins { };
   tools = callPackage ./tools { };
-in
-with python3.pkgs;
+in with python3.pkgs;
 buildPythonApplication rec {
   pname = "matrix-synapse";
   version = "1.85.2";
@@ -34,13 +30,8 @@ buildPythonApplication rec {
     sed -i '/^setuptools_rust =/d' pyproject.toml
   '';
 
-  nativeBuildInputs = [
-    poetry-core
-    rustPlatform.cargoSetupHook
-    setuptools-rust
-    cargo
-    rustc
-  ];
+  nativeBuildInputs =
+    [ poetry-core rustPlatform.cargoSetupHook setuptools-rust cargo rustc ];
 
   buildInputs = [ openssl ];
 
@@ -86,7 +77,9 @@ buildPythonApplication rec {
 
   doCheck = !stdenv.isDarwin;
 
-  checkPhase = let testFlags = lib.optionalString (!stdenv.isAarch64) "-j $NIX_BUILD_CORES"; in ''
+  checkPhase = let
+    testFlags = lib.optionalString (!stdenv.isAarch64) "-j $NIX_BUILD_CORES";
+  in ''
     runHook preCheck
 
     # remove src module, so tests use the installed module instead

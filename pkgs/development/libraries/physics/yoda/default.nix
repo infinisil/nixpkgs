@@ -1,13 +1,5 @@
-{ lib
-, stdenv
-, fetchurl
-, fetchpatch
-, python
-, root
-, makeWrapper
-, zlib
-, withRootSupport ? false
-}:
+{ lib, stdenv, fetchurl, fetchpatch, python, root, makeWrapper, zlib
+, withRootSupport ? false }:
 
 stdenv.mkDerivation rec {
   pname = "yoda";
@@ -21,29 +13,19 @@ stdenv.mkDerivation rec {
   patches = [
     # A bugfix https://gitlab.com/hepcedar/yoda/-/merge_requests/116
     (fetchpatch {
-      url = "https://gitlab.com/hepcedar/yoda/-/commit/ba1275033522c66bc473dfeffae1a7971e985611.diff";
+      url =
+        "https://gitlab.com/hepcedar/yoda/-/commit/ba1275033522c66bc473dfeffae1a7971e985611.diff";
       hash = "sha256-/8UJuypiQzywarE+o3BEMtqM+f+YzkHylugi+xTJf+w=";
       excludes = [ "ChangeLog" ];
     })
   ];
 
-  nativeBuildInputs = with python.pkgs; [
-    cython
-    makeWrapper
-  ];
+  nativeBuildInputs = with python.pkgs; [ cython makeWrapper ];
 
-  buildInputs = [
-    python
-  ] ++ (with python.pkgs; [
-    numpy
-    matplotlib
-  ]) ++ lib.optionals withRootSupport [
-    root
-  ];
+  buildInputs = [ python ] ++ (with python.pkgs; [ numpy matplotlib ])
+    ++ lib.optionals withRootSupport [ root ];
 
-  propagatedBuildInputs = [
-    zlib
-  ];
+  propagatedBuildInputs = [ zlib ];
 
   enableParallelBuilding = true;
 
@@ -68,10 +50,12 @@ stdenv.mkDerivation rec {
   installCheckTarget = "check";
 
   meta = with lib; {
-    description = "Provides small set of data analysis (specifically histogramming) classes";
+    description =
+      "Provides small set of data analysis (specifically histogramming) classes";
     license = licenses.gpl3Only;
     homepage = "https://yoda.hepforge.org";
-    changelog = "https://gitlab.com/hepcedar/yoda/-/blob/yoda-${version}/ChangeLog";
+    changelog =
+      "https://gitlab.com/hepcedar/yoda/-/blob/yoda-${version}/ChangeLog";
     platforms = platforms.unix;
     maintainers = with maintainers; [ veprbl ];
   };

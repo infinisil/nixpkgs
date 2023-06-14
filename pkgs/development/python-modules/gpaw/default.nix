@@ -1,21 +1,6 @@
-{ buildPythonPackage
-, lib
-, fetchFromGitLab
-, writeTextFile
-, fetchurl
-, blas
-, lapack
-, mpi
-, scalapack
-, libxc
-, libvdwxc
-, which
-, ase
-, numpy
-, scipy
-, pyyaml
-, inetutils
-}:
+{ buildPythonPackage, lib, fetchFromGitLab, writeTextFile, fetchurl, blas
+, lapack, mpi, scalapack, libxc, libvdwxc, which, ase, numpy, scipy, pyyaml
+, inetutils }:
 
 assert lib.asserts.assertMsg (!blas.isILP64)
   "A 32 bit integer implementation of BLAS is required.";
@@ -68,7 +53,8 @@ let
 
   setupVersion = "0.9.20000";
   pawDataSets = fetchurl {
-    url = "https://wiki.fysik.dtu.dk/gpaw-files/gpaw-setups-${setupVersion}.tar.gz";
+    url =
+      "https://wiki.fysik.dtu.dk/gpaw-files/gpaw-setups-${setupVersion}.tar.gz";
     sha256 = "07yldxnn38gky39fxyv3rfzag9p4lb0xfpzn15wy2h9aw4mnhwbc";
   };
 
@@ -119,7 +105,8 @@ in buildPythonPackage rec {
   passthru = { inherit mpi; };
 
   meta = with lib; {
-    description = "Density functional theory and beyond within the projector-augmented wave method";
+    description =
+      "Density functional theory and beyond within the projector-augmented wave method";
     homepage = "https://wiki.fysik.dtu.dk/gpaw/index.html";
     license = licenses.gpl3Only;
     platforms = platforms.unix;

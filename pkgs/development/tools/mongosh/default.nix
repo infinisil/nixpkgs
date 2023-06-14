@@ -1,14 +1,7 @@
-{ lib
-, buildNpmPackage
-, fetchurl
-, testers
-, mongosh
-}:
+{ lib, buildNpmPackage, fetchurl, testers, mongosh }:
 
-let
-  source = lib.importJSON ./source.json;
-in
-buildNpmPackage {
+let source = lib.importJSON ./source.json;
+in buildNpmPackage {
   pname = "mongosh";
   inherit (source) version;
 
@@ -28,9 +21,7 @@ buildNpmPackage {
   npmFlags = [ "--omit=optional" ];
 
   passthru = {
-    tests.version = testers.testVersion {
-      package = mongosh;
-    };
+    tests.version = testers.testVersion { package = mongosh; };
     updateScript = ./update.sh;
   };
 

@@ -1,13 +1,5 @@
-{ lib
-, fetchFromGitHub
-, buildGoModule
-, fetchYarnDeps
-, stdenv
-, yarn
-, nodejs
-, git
-, fixup_yarn_lock
-}:
+{ lib, fetchFromGitHub, buildGoModule, fetchYarnDeps, stdenv, yarn, nodejs, git
+, fixup_yarn_lock }:
 
 buildGoModule rec {
   pname = "alice-lg";

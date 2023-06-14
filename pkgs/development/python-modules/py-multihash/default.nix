@@ -1,13 +1,5 @@
-{ lib
-, base58
-, buildPythonPackage
-, fetchFromGitHub
-, morphys
-, pytestCheckHook
-, pythonOlder
-, six
-, varint
-}:
+{ lib, base58, buildPythonPackage, fetchFromGitHub, morphys, pytestCheckHook
+, pythonOlder, six, varint }:
 
 buildPythonPackage rec {
   pname = "py-multihash";
@@ -28,20 +20,11 @@ buildPythonPackage rec {
       --replace "'pytest-runner', " ""
   '';
 
-  propagatedBuildInputs = [
-    base58
-    morphys
-    six
-    varint
-  ];
+  propagatedBuildInputs = [ base58 morphys six varint ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "multihash"
-  ];
+  pythonImportsCheck = [ "multihash" ];
 
   meta = with lib; {
     description = "Self describing hashes - for future proofing";

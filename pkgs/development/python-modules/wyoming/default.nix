@@ -1,7 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-}:
+{ lib, buildPythonPackage, fetchPypi }:
 
 buildPythonPackage rec {
   pname = "wyoming";
@@ -13,9 +10,7 @@ buildPythonPackage rec {
     hash = "sha256-EIUbKL8DNFNNGmLRcu12mlw4H+gAHmCUw09eLG0s8+M=";
   };
 
-  pythonImportsCheck = [
-    "wyoming"
-  ];
+  pythonImportsCheck = [ "wyoming" ];
 
   # no tests
   doCheck = false;

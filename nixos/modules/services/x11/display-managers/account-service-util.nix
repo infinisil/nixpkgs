@@ -1,9 +1,4 @@
-{ accountsservice
-, glib
-, gobject-introspection
-, python3
-, wrapGAppsNoGuiHook
-, lib
+{ accountsservice, glib, gobject-introspection, python3, wrapGAppsNoGuiHook, lib
 }:
 
 python3.pkgs.buildPythonApplication {
@@ -17,20 +12,11 @@ python3.pkgs.buildPythonApplication {
 
   strictDeps = false;
 
-  nativeBuildInputs = [
-    wrapGAppsNoGuiHook
-    gobject-introspection
-  ];
+  nativeBuildInputs = [ wrapGAppsNoGuiHook gobject-introspection ];
 
-  buildInputs = [
-    accountsservice
-    glib
-  ];
+  buildInputs = [ accountsservice glib ];
 
-  propagatedBuildInputs = with python3.pkgs; [
-    pygobject3
-    ordered-set
-  ];
+  propagatedBuildInputs = with python3.pkgs; [ pygobject3 ordered-set ];
 
   installPhase = ''
     mkdir -p $out/bin

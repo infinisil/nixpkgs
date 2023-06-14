@@ -1,31 +1,7 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, buildGoModule
-, makeWrapper
-, cacert
-, moreutils
-, jq
-, git
-, rsync
-, pkg-config
-, yarn
-, python3
-, esbuild
-, nodejs
-, node-gyp
-, libsecret
-, xorg
-, ripgrep
-, AppKit
-, Cocoa
-, CoreServices
-, Security
-, cctools
-, xcbuild
-, quilt
-, nixosTests
-}:
+{ lib, stdenv, fetchFromGitHub, buildGoModule, makeWrapper, cacert, moreutils
+, jq, git, rsync, pkg-config, yarn, python3, esbuild, nodejs, node-gyp
+, libsecret, xorg, ripgrep, AppKit, Cocoa, CoreServices, Security, cctools
+, xcbuild, quilt, nixosTests }:
 
 let
   system = stdenv.hostPlatform.system;
@@ -35,16 +11,17 @@ let
   defaultYarnOpts = [ ];
 
   esbuild' = esbuild.override {
-    buildGoModule = args: buildGoModule (args // rec {
-      version = "0.16.17";
-      src = fetchFromGitHub {
-        owner = "evanw";
-        repo = "esbuild";
-        rev = "v${version}";
-        hash = "sha256-8L8h0FaexNsb3Mj6/ohA37nYLFogo5wXkAhGztGUUsQ=";
-      };
-      vendorHash = "sha256-+BfxCyg0KkDQpHt/wycy/8CTG6YBA/VJvJFhhzUnSiQ=";
-    });
+    buildGoModule = args:
+      buildGoModule (args // rec {
+        version = "0.16.17";
+        src = fetchFromGitHub {
+          owner = "evanw";
+          repo = "esbuild";
+          rev = "v${version}";
+          hash = "sha256-8L8h0FaexNsb3Mj6/ohA37nYLFogo5wXkAhGztGUUsQ=";
+        };
+        vendorHash = "sha256-+BfxCyg0KkDQpHt/wycy/8CTG6YBA/VJvJFhhzUnSiQ=";
+      });
   };
 
   # replaces esbuild's download script with a binary from nixpkgs
@@ -54,8 +31,7 @@ let
     sed -i 's/${version}/${esbuild'.version}/g' ${path}/node_modules/esbuild/lib/main.js
     ln -s -f ${esbuild'}/bin/esbuild ${path}/node_modules/esbuild/bin/esbuild
   '';
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "code-server";
   version = "4.12.0";
 
@@ -95,29 +71,18 @@ stdenv.mkDerivation (finalAttrs: {
     outputHash = "sha256-4Vr9u3+W/IhbbTc39jyDyDNQODlmdF+M/N8oJn0Z4+w=";
   };
 
-  nativeBuildInputs = [
-    nodejs
-    yarn'
-    python
-    pkg-config
-    makeWrapper
-    git
-    rsync
-    jq
-    moreutils
-    quilt
-  ];
+  nativeBuildInputs =
+    [ nodejs yarn' python pkg-config makeWrapper git rsync jq moreutils quilt ];
 
   buildInputs = lib.optionals (!stdenv.isDarwin) [ libsecret ]
-    ++ (with xorg; [ libX11 libxkbfile ])
-    ++ lib.optionals stdenv.isDarwin [
-    AppKit
-    Cocoa
-    CoreServices
-    Security
-    cctools
-    xcbuild
-  ];
+    ++ (with xorg; [ libX11 libxkbfile ]) ++ lib.optionals stdenv.isDarwin [
+      AppKit
+      Cocoa
+      CoreServices
+      Security
+      cctools
+      xcbuild
+    ];
 
   patches = [
     # remove git calls from vscode build script
@@ -267,12 +232,9 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru = {
-    prefetchYarnCache = lib.overrideDerivation finalAttrs.yarnCache (d: {
-      outputHash = lib.fakeSha256;
-    });
-    tests = {
-      inherit (nixosTests) code-server;
-    };
+    prefetchYarnCache = lib.overrideDerivation finalAttrs.yarnCache
+      (d: { outputHash = lib.fakeSha256; });
+    tests = { inherit (nixosTests) code-server; };
   };
 
   meta = {

@@ -1,18 +1,6 @@
-{ lib
-, argcomplete
-, buildPythonPackage
-, colorlog
-, fetchFromGitHub
-, hatchling
-, importlib-metadata
-, jinja2
-, packaging
-, pytestCheckHook
-, pythonOlder
-, tox
-, typing-extensions
-, virtualenv
-}:
+{ lib, argcomplete, buildPythonPackage, colorlog, fetchFromGitHub, hatchling
+, importlib-metadata, jinja2, packaging, pytestCheckHook, pythonOlder, tox
+, typing-extensions, virtualenv }:
 
 buildPythonPackage rec {
   pname = "nox";
@@ -28,29 +16,17 @@ buildPythonPackage rec {
     hash = "sha256-WuyNp3jxIktI72zbk+1CK8xflTKrYE5evn/gVdMx+cQ=";
   };
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    argcomplete
-    colorlog
-    packaging
-    virtualenv
-  ] ++ lib.optionals (pythonOlder "3.8") [
-    typing-extensions
-    importlib-metadata
-  ];
+  propagatedBuildInputs = [ argcomplete colorlog packaging virtualenv ]
+    ++ lib.optionals (pythonOlder "3.8") [
+      typing-extensions
+      importlib-metadata
+    ];
 
-  checkInputs = [
-    jinja2
-    tox
-    pytestCheckHook
-  ];
+  checkInputs = [ jinja2 tox pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "nox"
-  ];
+  pythonImportsCheck = [ "nox" ];
 
   disabledTestPaths = [
     # AttributeError: module 'tox.config' has...

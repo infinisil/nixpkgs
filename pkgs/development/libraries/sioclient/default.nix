@@ -1,11 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, asio
-, rapidjson
-, websocketpp
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, asio, rapidjson, websocketpp }:
 
 stdenv.mkDerivation {
   pname = "sioclient";
@@ -18,15 +11,9 @@ stdenv.mkDerivation {
     hash = "sha256-bkuFA6AvZvBpnO6Lixqx8Ux5Dy5NHWGB2y1VF7allC0=";
   };
 
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
-  buildInputs = [
-    asio
-    rapidjson
-    websocketpp
-  ];
+  buildInputs = [ asio rapidjson websocketpp ];
 
   meta = with lib; {
     description = "C++11 implementation of Socket.IO client";

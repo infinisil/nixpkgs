@@ -1,11 +1,5 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, IOKit
-, nvidiaSupport ? false
-, makeWrapper
-}:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, IOKit, nvidiaSupport ? false
+, makeWrapper }:
 
 assert nvidiaSupport -> stdenv.isLinux;
 
@@ -33,7 +27,8 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  nativeBuildInputs = [ rustPlatform.bindgenHook ] ++ lib.optional nvidiaSupport makeWrapper;
+  nativeBuildInputs = [ rustPlatform.bindgenHook ]
+    ++ lib.optional nvidiaSupport makeWrapper;
   buildInputs = lib.optionals stdenv.isDarwin [ IOKit ];
 
   buildFeatures = lib.optional nvidiaSupport "nvidia";
@@ -44,7 +39,8 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "Sort of like top or htop but with zoom-able charts, network, and disk usage"
+    description =
+      "Sort of like top or htop but with zoom-able charts, network, and disk usage"
       + lib.optionalString nvidiaSupport ", and NVIDIA GPU usage";
     homepage = "https://github.com/bvaisvil/zenith";
     license = licenses.mit;

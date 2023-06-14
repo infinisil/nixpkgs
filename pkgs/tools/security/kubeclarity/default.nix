@@ -1,10 +1,4 @@
-{ lib
-, btrfs-progs
-, buildGoModule
-, fetchFromGitHub
-, lvm2
-, pkg-config
-}:
+{ lib, btrfs-progs, buildGoModule, fetchFromGitHub, lvm2, pkg-config }:
 
 buildGoModule rec {
   pname = "kubeclarity";
@@ -19,21 +13,13 @@ buildGoModule rec {
 
   vendorHash = "sha256-vAR/RqPL4PWvCC3QevaLFtA9JEIy/DuCIrIN5Ilb3Ko=";
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    btrfs-progs
-    lvm2
-  ];
+  buildInputs = [ btrfs-progs lvm2 ];
 
   sourceRoot = "${src.name}/cli";
 
-  ldflags = [
-    "-s"
-    "-w"
-  ];
+  ldflags = [ "-s" "-w" ];
 
   postInstall = ''
     mv $out/bin/cli $out/bin/kubeclarity
@@ -48,7 +34,8 @@ buildGoModule rec {
       Kubernetes cluster, including images of application pods and system pods.
     '';
     homepage = "https://github.com/openclarity/kubeclarity";
-    changelog = "https://github.com/openclarity/kubeclarity/releases/tag/v${version}";
+    changelog =
+      "https://github.com/openclarity/kubeclarity/releases/tag/v${version}";
     license = with licenses; [ asl20 ];
     maintainers = with maintainers; [ fab ];
   };

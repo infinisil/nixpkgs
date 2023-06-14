@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cloudsmith-cli";
@@ -33,14 +30,13 @@ python3.pkgs.buildPythonApplication rec {
   # Wheels have no tests
   doCheck = false;
 
-  pythonImportsCheck = [
-    "cloudsmith_cli"
-  ];
+  pythonImportsCheck = [ "cloudsmith_cli" ];
 
   meta = with lib; {
     homepage = "https://help.cloudsmith.io/docs/cli/";
     description = "Cloudsmith Command Line Interface";
-    changelog = "https://github.com/cloudsmith-io/cloudsmith-cli/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/cloudsmith-io/cloudsmith-cli/blob/v${version}/CHANGELOG.md";
     maintainers = with maintainers; [ ];
     license = licenses.asl20;
     platforms = with platforms; unix;

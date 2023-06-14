@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, fetchFromSourcehut
-, audit
-, pkg-config
-, libcap
-, gperf
-, meson
-, ninja
-, python3
-}:
+{ lib, stdenv, fetchFromSourcehut, audit, pkg-config, libcap, gperf, meson
+, ninja, python3 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "basu";
@@ -23,18 +14,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   outputs = [ "out" "dev" "lib" ];
 
-  buildInputs = [
-    audit
-    gperf
-    libcap
-  ];
+  buildInputs = [ audit gperf libcap ];
 
-  nativeBuildInputs = [
-    pkg-config
-    meson
-    ninja
-    python3
-  ];
+  nativeBuildInputs = [ pkg-config meson ninja python3 ];
 
   preConfigure = ''
     pushd src/basic

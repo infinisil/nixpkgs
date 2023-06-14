@@ -1,9 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, stdenv
-, darwin
-}:
+{ lib, rustPlatform, fetchFromGitHub, stdenv, darwin }:
 
 rustPlatform.buildRustPackage rec {
   pname = "cargo-supply-chain";
@@ -18,14 +13,15 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-Fx1C4X0dQqePqLa+X+4ZDrIMFKBQ6J50nBApYXcGbFM=";
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-  ];
+  buildInputs =
+    lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   meta = with lib; {
-    description = "Gather author, contributor and publisher data on crates in your dependency graph";
+    description =
+      "Gather author, contributor and publisher data on crates in your dependency graph";
     homepage = "https://github.com/rust-secure-code/cargo-supply-chain";
-    changelog = "https://github.com/rust-secure-code/cargo-supply-chain/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/rust-secure-code/cargo-supply-chain/blob/${src.rev}/CHANGELOG.md";
     license = with licenses; [ asl20 mit zlib ]; # any of three
     maintainers = with maintainers; [ figsoda ];
   };

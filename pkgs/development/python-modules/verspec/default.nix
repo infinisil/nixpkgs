@@ -1,10 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pretend
-, pytestCheckHook
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, pretend, pytestCheckHook, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "verspec";
@@ -18,25 +12,24 @@ buildPythonPackage rec {
     sha256 = "sha256-xFBMppeyBWzbS/pxIUYfWg6BgJJVtBwD3aS6gjY3wB4=";
   };
 
-  nativeCheckInputs = [
-    pretend
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pretend pytestCheckHook ];
 
   disabledTestPaths = [
     # Import fail
     "test/test_specifiers.py"
   ];
 
-  pythonImportsCheck = [
-    "verspec"
-  ];
+  pythonImportsCheck = [ "verspec" ];
 
   meta = with lib; {
     description = "Flexible version handling";
     homepage = "https://github.com/jimporter/verspec";
-    changelog = "https://github.com/jimporter/averspec/releases/tag/v${version}";
-    license = with licenses; [ bsd2 /* and */ asl20 ];
+    changelog =
+      "https://github.com/jimporter/averspec/releases/tag/v${version}";
+    license = with licenses; [
+      bsd2 # and
+      asl20
+    ];
     maintainers = with maintainers; [ marsam ];
   };
 }

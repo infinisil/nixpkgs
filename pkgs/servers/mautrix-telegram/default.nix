@@ -1,9 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-, fetchFromGitHub
-, withE2BE ? true
-}:
+{ lib, python3, fetchPypi, fetchFromGitHub, withE2BE ? true }:
 
 let
   python = python3.override {
@@ -19,8 +14,7 @@ let
       });
     };
   };
-in
-python.pkgs.buildPythonPackage rec {
+in python.pkgs.buildPythonPackage rec {
   pname = "mautrix-telegram";
   version = "0.14.0";
   disabled = python.pythonOlder "3.8";
@@ -36,36 +30,37 @@ python.pkgs.buildPythonPackage rec {
 
   patches = [ ./0001-Re-add-entrypoint.patch ];
 
-  propagatedBuildInputs = with python.pkgs; ([
-    ruamel-yaml
-    python-magic
-    commonmark
-    aiohttp
-    yarl
-    mautrix
-    tulir-telethon
-    asyncpg
-    mako
-    setuptools
-    # speedups
-    cryptg
-    aiodns
-    brotli
-    # qr_login
-    pillow
-    qrcode
-    # formattednumbers
-    phonenumbers
-    # metrics
-    prometheus-client
-    # sqlite
-    aiosqlite
-  ] ++ lib.optionals withE2BE [
-    # e2be
-    python-olm
-    pycryptodome
-    unpaddedbase64
-  ]);
+  propagatedBuildInputs = with python.pkgs;
+    ([
+      ruamel-yaml
+      python-magic
+      commonmark
+      aiohttp
+      yarl
+      mautrix
+      tulir-telethon
+      asyncpg
+      mako
+      setuptools
+      # speedups
+      cryptg
+      aiodns
+      brotli
+      # qr_login
+      pillow
+      qrcode
+      # formattednumbers
+      phonenumbers
+      # metrics
+      prometheus-client
+      # sqlite
+      aiosqlite
+    ] ++ lib.optionals withE2BE [
+      # e2be
+      python-olm
+      pycryptodome
+      unpaddedbase64
+    ]);
 
   # has no tests
   doCheck = false;

@@ -1,8 +1,4 @@
-{ qtModule
-, qtdeclarative
-, qtbase
-, qttools
-}:
+{ qtModule, qtdeclarative, qtbase, qttools }:
 
 qtModule {
   pname = "qtdoc";
@@ -15,9 +11,7 @@ qtModule {
   '';
   nativeBuildInputs = [ qttools ];
   qtInputs = [ qtdeclarative ];
-  cmakeFlags = [
-    "-DCMAKE_MESSAGE_LOG_LEVEL=STATUS"
-  ];
+  cmakeFlags = [ "-DCMAKE_MESSAGE_LOG_LEVEL=STATUS" ];
   dontUseNinjaBuild = true;
   buildFlags = [ "docs" ];
   dontUseNinjaInstall = true;

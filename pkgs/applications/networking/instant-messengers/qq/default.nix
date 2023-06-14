@@ -1,50 +1,30 @@
-{ alsa-lib
-, cups
-, dpkg
-, fetchurl
-, gjs
-, glib
-, gtk3
-, lib
-, libayatana-appindicator
-, libdrm
-, libgcrypt
-, libkrb5
-, mesa # for libgbm
-, nss
-, xorg
-, systemd
-, stdenv
-, vips
-, at-spi2-core
-, autoPatchelfHook
-, wrapGAppsHook
-}:
+{ alsa-lib, cups, dpkg, fetchurl, gjs, glib, gtk3, lib, libayatana-appindicator
+, libdrm, libgcrypt, libkrb5, mesa # for libgbm
+, nss, xorg, systemd, stdenv, vips, at-spi2-core, autoPatchelfHook
+, wrapGAppsHook }:
 
 let
   version = "3.1.2-13107";
   _hash = "ad5b5393";
   srcs = {
     x86_64-linux = fetchurl {
-      url = "https://dldir1.qq.com/qqfile/qq/QQNT/${_hash}/linuxqq_${version}_amd64.deb";
+      url =
+        "https://dldir1.qq.com/qqfile/qq/QQNT/${_hash}/linuxqq_${version}_amd64.deb";
       hash = "sha256-mBfeexWEYpGybFFianUFvlzMv0HoFR4EeFcwlGVXIRA=";
     };
     aarch64-linux = fetchurl {
-      url = "https://dldir1.qq.com/qqfile/qq/QQNT/${_hash}/linuxqq_${version}_arm64.deb";
+      url =
+        "https://dldir1.qq.com/qqfile/qq/QQNT/${_hash}/linuxqq_${version}_arm64.deb";
       hash = "sha256-V6kR2lb63nnNIEhn64Yg0BYYlz7W0Cw60TwnKaJuLgs=";
     };
   };
-  src = srcs.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
-in
-stdenv.mkDerivation {
+  src = srcs.${stdenv.hostPlatform.system} or (throw
+    "Unsupported system: ${stdenv.hostPlatform.system}");
+in stdenv.mkDerivation {
   pname = "qq";
   inherit version src;
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-    wrapGAppsHook
-    dpkg
-  ];
+  nativeBuildInputs = [ autoPatchelfHook wrapGAppsHook dpkg ];
 
   buildInputs = [
     alsa-lib
@@ -61,9 +41,7 @@ stdenv.mkDerivation {
     xorg.libXdamage
   ];
 
-  runtimeDependencies = map lib.getLib [
-    systemd
-  ];
+  runtimeDependencies = map lib.getLib [ systemd ];
 
   installPhase = ''
     runHook preInstall

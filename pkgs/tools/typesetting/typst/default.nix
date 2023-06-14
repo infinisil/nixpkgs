@@ -1,10 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, installShellFiles
-, stdenv
-, darwin
-}:
+{ lib, rustPlatform, fetchFromGitHub, installShellFiles, stdenv, darwin }:
 
 rustPlatform.buildRustPackage rec {
   pname = "typst";
@@ -25,17 +19,12 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.CoreServices
-  ];
+  buildInputs =
+    lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.CoreServices ];
 
-  env = {
-    GEN_ARTIFACTS = "artifacts";
-  };
+  env = { GEN_ARTIFACTS = "artifacts"; };
 
   postInstall = ''
     installManPage cli/artifacts/*.1
@@ -45,7 +34,8 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "A new markup-based typesetting system that is powerful and easy to learn";
+    description =
+      "A new markup-based typesetting system that is powerful and easy to learn";
     homepage = "https://typst.app";
     changelog = "https://github.com/typst/typst/releases/tag/${src.rev}";
     license = licenses.asl20;

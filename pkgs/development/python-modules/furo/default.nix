@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchPypi
-, pythonRelaxDepsHook
-, sphinx
-, beautifulsoup4
-, sphinx-basic-ng
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchPypi, pythonRelaxDepsHook, sphinx
+, beautifulsoup4, sphinx-basic-ng }:
 
 buildPythonPackage rec {
   pname = "furo";
@@ -22,19 +15,11 @@ buildPythonPackage rec {
     hash = "sha256-WUqENt3+DAcfOp6aIJwxSiGdg0Hz8a8z/ffGlUT6ueY=";
   };
 
-  nativeBuildInputs = [
-    pythonRelaxDepsHook
-  ];
+  nativeBuildInputs = [ pythonRelaxDepsHook ];
 
-  pythonRelaxDeps = [
-    "sphinx"
-  ];
+  pythonRelaxDeps = [ "sphinx" ];
 
-  propagatedBuildInputs = [
-    sphinx
-    beautifulsoup4
-    sphinx-basic-ng
-  ];
+  propagatedBuildInputs = [ sphinx beautifulsoup4 sphinx-basic-ng ];
 
   installCheckPhase = ''
     # furo was built incorrectly if this directory is empty
@@ -47,14 +32,13 @@ buildPythonPackage rec {
     cd -
   '';
 
-  pythonImportsCheck = [
-    "furo"
-  ];
+  pythonImportsCheck = [ "furo" ];
 
   meta = with lib; {
     description = "A clean customizable documentation theme for Sphinx";
     homepage = "https://github.com/pradyunsg/furo";
-    changelog = "https://github.com/pradyunsg/furo/blob/${version}/docs/changelog.md";
+    changelog =
+      "https://github.com/pradyunsg/furo/blob/${version}/docs/changelog.md";
     license = licenses.mit;
     maintainers = with maintainers; [ Luflosi ];
   };

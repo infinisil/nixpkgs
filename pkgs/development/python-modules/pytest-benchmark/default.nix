@@ -1,19 +1,6 @@
-{ lib
-, aspectlib
-, buildPythonPackage
-, elasticsearch
-, fetchFromGitHub
-, fetchpatch
-, freezegun
-, git
-, mercurial
-, py-cpuinfo
-, pygal
-, pytest
-, pytestCheckHook
-, pythonOlder
-, isPy311
-}:
+{ lib, aspectlib, buildPythonPackage, elasticsearch, fetchFromGitHub, fetchpatch
+, freezegun, git, mercurial, py-cpuinfo, pygal, pytest, pytestCheckHook
+, pythonOlder, isPy311 }:
 
 buildPythonPackage rec {
   pname = "pytest-benchmark";
@@ -32,32 +19,20 @@ buildPythonPackage rec {
 
   patches = [
     (fetchpatch {
-      url = "https://github.com/ionelmc/pytest-benchmark/commit/728752d2976ef53fde7e40beb3e55f09cf4d4736.patch";
+      url =
+        "https://github.com/ionelmc/pytest-benchmark/commit/728752d2976ef53fde7e40beb3e55f09cf4d4736.patch";
       hash = "sha256-WIQADCLey5Y79UJUj9J5E02HQ0O86xBh/3IeGLpVrWI=";
     })
   ];
 
-  buildInputs = [
-    pytest
-  ];
+  buildInputs = [ pytest ];
 
-  propagatedBuildInputs = [
-    py-cpuinfo
-  ];
+  propagatedBuildInputs = [ py-cpuinfo ];
 
-  pythonImportsCheck = [
-    "pytest_benchmark"
-  ];
+  pythonImportsCheck = [ "pytest_benchmark" ];
 
-  nativeCheckInputs = [
-    aspectlib
-    elasticsearch
-    freezegun
-    git
-    mercurial
-    pygal
-    pytestCheckHook
-  ];
+  nativeCheckInputs =
+    [ aspectlib elasticsearch freezegun git mercurial pygal pytestCheckHook ];
 
   preCheck = ''
     export PATH="$out/bin:$PATH"
@@ -72,13 +47,11 @@ buildPythonPackage rec {
   ]
   # tests are broken in 3.11
   # https://github.com/ionelmc/pytest-benchmark/issues/231
-  ++ lib.optionals isPy311 [
-    "test_abort_broken"
-    "test_clonefunc"
-  ];
+    ++ lib.optionals isPy311 [ "test_abort_broken" "test_clonefunc" ];
 
   meta = with lib; {
-    changelog = "https://github.com/ionelmc/pytest-benchmark/blob/${src.rev}/CHANGELOG.rst";
+    changelog =
+      "https://github.com/ionelmc/pytest-benchmark/blob/${src.rev}/CHANGELOG.rst";
     description = "Pytest fixture for benchmarking code";
     homepage = "https://github.com/ionelmc/pytest-benchmark";
     license = licenses.bsd2;

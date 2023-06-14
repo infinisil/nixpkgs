@@ -1,25 +1,16 @@
-{ callPackage
-, lib
-, stdenv
-, stdenvNoCC
-, fetchFromGitHub
-, fixDarwinDylibNames
-, genBytecode ? false
-, bqn-path ? null
-, mbqn-source
-, enableReplxx ? false
-, enableLibcbqn ? ((stdenv.hostPlatform.isLinux || stdenv.hostPlatform.isDarwin) && !enableReplxx)
-, libffi
-, pkg-config
-}:
+{ callPackage, lib, stdenv, stdenvNoCC, fetchFromGitHub, fixDarwinDylibNames
+, genBytecode ? false, bqn-path ? null, mbqn-source, enableReplxx ? false
+, enableLibcbqn ? ((stdenv.hostPlatform.isLinux || stdenv.hostPlatform.isDarwin)
+  && !enableReplxx), libffi, pkg-config }:
 
 let
   cbqn-bytecode-submodule =
     callPackage ./cbqn-bytecode.nix { inherit lib fetchFromGitHub stdenvNoCC; };
-  replxx-submodule = callPackage ./replxx.nix { inherit lib fetchFromGitHub stdenvNoCC; };
-  singeli-submodule = callPackage ./singeli.nix { inherit lib fetchFromGitHub stdenvNoCC; };
-in
-assert genBytecode -> ((bqn-path != null) && (mbqn-source != null));
+  replxx-submodule =
+    callPackage ./replxx.nix { inherit lib fetchFromGitHub stdenvNoCC; };
+  singeli-submodule =
+    callPackage ./singeli.nix { inherit lib fetchFromGitHub stdenvNoCC; };
+in assert genBytecode -> ((bqn-path != null) && (mbqn-source != null));
 
 stdenv.mkDerivation rec {
   pname = "cbqn" + lib.optionalString (!genBytecode) "-standalone";
@@ -32,13 +23,10 @@ stdenv.mkDerivation rec {
     hash = "sha256-LoxwNxuadbYJgIkr1+bZoErTc9WllN2siAsKnxoom3Y=";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-  ] ++ lib.optional stdenv.hostPlatform.isDarwin fixDarwinDylibNames;
+  nativeBuildInputs = [ pkg-config ]
+    ++ lib.optional stdenv.hostPlatform.isDarwin fixDarwinDylibNames;
 
-  buildInputs = [
-    libffi
-  ];
+  buildInputs = [ libffi ];
 
   dontConfigure = true;
   doInstallCheck = true;
@@ -48,21 +36,18 @@ stdenv.mkDerivation rec {
     patchShebangs build/build
   '';
 
-  makeFlags = [
-    "CC=${stdenv.cc.targetPrefix}cc"
-  ];
+  makeFlags = [ "CC=${stdenv.cc.targetPrefix}cc" ];
 
   buildFlags = [
     # interpreter binary
     "o3"
     "notui=1" # display build progress in a plain-text format
     "REPLXX=${if enableReplxx then "1" else "0"}"
-  ] ++ lib.optionals stdenv.hostPlatform.avx2Support [
-    "has=avx2"
-  ] ++ lib.optionals enableLibcbqn [
-    # embeddable interpreter as a shared lib
-    "shared-o3"
-  ];
+  ] ++ lib.optionals stdenv.hostPlatform.avx2Support [ "has=avx2" ]
+    ++ lib.optionals enableLibcbqn [
+      # embeddable interpreter as a shared lib
+      "shared-o3"
+    ];
 
   preBuild = ''
     # Purity: avoids git downloading bytecode files
@@ -72,17 +57,11 @@ stdenv.mkDerivation rec {
     ${bqn-path} ./build/genRuntime ${mbqn-source} build/bytecodeLocal/
   '' else ''
     cp -r ${cbqn-bytecode-submodule}/dev/* build/bytecodeLocal/gen/
-  '')
-  + lib.optionalString enableReplxx ''
+  '') + lib.optionalString enableReplxx ''
     cp -r ${replxx-submodule}/dev/* build/replxxLocal/
   '';
 
-  outputs = [
-    "out"
-  ] ++ lib.optionals enableLibcbqn [
-    "lib"
-    "dev"
-  ];
+  outputs = [ "out" ] ++ lib.optionals enableLibcbqn [ "lib" "dev" ];
 
   installPhase = ''
     runHook preInstall
@@ -92,12 +71,10 @@ stdenv.mkDerivation rec {
     # note guard condition for case-insensitive filesystems
     [ -e $out/bin/bqn ] || ln -s $out/bin/BQN $out/bin/bqn
     [ -e $out/bin/cbqn ] || ln -s $out/bin/BQN $out/bin/cbqn
-  ''
-  + lib.optionalString enableLibcbqn ''
+  '' + lib.optionalString enableLibcbqn ''
     install -Dm644 include/bqnffi.h -t "$dev/include"
     install -Dm755 libcbqn${stdenv.hostPlatform.extensions.sharedLibrary} -t "$lib/lib"
-  ''
-  + ''
+  '' + ''
     runHook postInstall
   '';
 
@@ -125,7 +102,13 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/dzaima/CBQN/";
     description = "BQN implementation in C";
     license = licenses.gpl3Plus;
-    maintainers = with maintainers; [ AndersonTorres sternenseemann synthetica shnarazk detegr ];
+    maintainers = with maintainers; [
+      AndersonTorres
+      sternenseemann
+      synthetica
+      shnarazk
+      detegr
+    ];
     platforms = platforms.all;
   };
 }

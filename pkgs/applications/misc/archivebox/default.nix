@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 let
   python = python3.override {
@@ -26,9 +23,8 @@ let
       });
     };
   };
-in
 
-python.pkgs.buildPythonApplication rec {
+in python.pkgs.buildPythonApplication rec {
   pname = "archivebox";
   version = "0.6.2";
 

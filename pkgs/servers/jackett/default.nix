@@ -1,11 +1,5 @@
-{ lib
-, stdenv
-, buildDotnetModule
-, fetchFromGitHub
-, dotnetCorePackages
-, openssl
-, mono
-}:
+{ lib, stdenv, buildDotnetModule, fetchFromGitHub, dotnetCorePackages, openssl
+, mono }:
 
 buildDotnetModule rec {
   pname = "jackett";
@@ -15,7 +9,8 @@ buildDotnetModule rec {
     owner = pname;
     repo = pname;
     rev = "v${version}";
-    hash = "sha512-22OiSh/jStVsA7ghjM+P+eVkViBFyhzNwhZbEIhWRlmpOaIC3NUSwMTKuZlq5I6J8Zc6gVW6kCOaKZoAWWWYfA==";
+    hash =
+      "sha512-22OiSh/jStVsA7ghjM+P+eVkViBFyhzNwhZbEIhWRlmpOaIC3NUSwMTKuZlq5I6J8Zc6gVW6kCOaKZoAWWWYfA==";
   };
 
   projectFile = "src/Jackett.Server/Jackett.Server.csproj";
@@ -27,7 +22,8 @@ buildDotnetModule rec {
 
   runtimeDeps = [ openssl ];
 
-  doCheck = !(stdenv.isDarwin && stdenv.isAarch64); # mono is not available on aarch64-darwin
+  doCheck = !(stdenv.isDarwin
+    && stdenv.isAarch64); # mono is not available on aarch64-darwin
   nativeCheckInputs = [ mono ];
   testProjectFile = "src/Jackett.Test/Jackett.Test.csproj";
 

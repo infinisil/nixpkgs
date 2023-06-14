@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.services.alice-lg;
   settingsFormat = pkgs.formats.ini { };
-in
-{
+in {
   options = {
     services.alice-lg = {
       enable = mkEnableOption (lib.mdDoc "Alice Looking Glass");
@@ -50,7 +49,8 @@ in
 
   config = lib.mkIf cfg.enable {
     environment = {
-      etc."alice-lg/alice.conf".source = settingsFormat.generate "alice-lg.conf" cfg.settings;
+      etc."alice-lg/alice.conf".source =
+        settingsFormat.generate "alice-lg.conf" cfg.settings;
     };
     systemd.services = {
       alice-lg = {
@@ -85,7 +85,8 @@ in
           RestrictSUIDSGID = true;
           PrivateMounts = true;
           SystemCallArchitectures = "native";
-          SystemCallFilter = "~@clock @privileged @cpu-emulation @debug @keyring @module @mount @obsolete @raw-io @reboot @setuid @swap";
+          SystemCallFilter =
+            "~@clock @privileged @cpu-emulation @debug @keyring @module @mount @obsolete @raw-io @reboot @setuid @swap";
           BindReadOnlyPaths = [
             "-/etc/resolv.conf"
             "-/etc/nsswitch.conf"

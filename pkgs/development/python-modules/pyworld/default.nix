@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, numpy
-, cython
-}:
+{ lib, buildPythonPackage, fetchPypi, numpy, cython }:
 
 buildPythonPackage rec {
   pname = "pyworld";
@@ -14,19 +9,16 @@ buildPythonPackage rec {
     hash = "sha256-o6gXVZg9+iKZqeKUd1JYLdzISlwnewT0WVzkQGNy0eU=";
   };
 
-  nativeBuildInputs = [
-    cython
-  ];
+  nativeBuildInputs = [ cython ];
 
-  propagatedBuildInputs = [
-    numpy
-  ];
+  propagatedBuildInputs = [ numpy ];
 
   pythonImportsCheck = [ "pyworld" ];
 
   meta = with lib; {
     description = "PyWorld is a Python wrapper for WORLD vocoder";
-    homepage = "https://github.com/JeremyCCHsu/Python-Wrapper-for-World-Vocoder";
+    homepage =
+      "https://github.com/JeremyCCHsu/Python-Wrapper-for-World-Vocoder";
     license = licenses.mit;
     maintainers = [ maintainers.mic92 ];
   };

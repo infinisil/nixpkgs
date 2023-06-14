@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "dasel";
@@ -17,7 +14,9 @@ buildGoModule rec {
   vendorHash = "sha256-cLf0MzEAykmtnPjT2vGOSPwIXJP6BhxheUaicT7o/X4=";
 
   ldflags = [
-    "-s" "-w" "-X github.com/tomwright/dasel/v2/internal.Version=${version}"
+    "-s"
+    "-w"
+    "-X github.com/tomwright/dasel/v2/internal.Version=${version}"
   ];
 
   doInstallCheck = true;
@@ -40,7 +39,8 @@ buildGoModule rec {
       Comparable to jq / yq, but supports JSON, YAML, TOML and XML with zero runtime dependencies.
     '';
     homepage = "https://github.com/TomWright/dasel";
-    changelog = "https://github.com/TomWright/dasel/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/TomWright/dasel/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ _0x4A6F ];
   };

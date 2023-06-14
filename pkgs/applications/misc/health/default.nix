@@ -1,20 +1,6 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, fetchpatch
-, meson
-, ninja
-, pkg-config
-, rustPlatform
-, rustc
-, cargo
-, wrapGAppsHook4
-, blueprint-compiler
-, libadwaita
-, libsecret
-, tracker
-, darwin
-}:
+{ lib, stdenv, fetchFromGitLab, fetchpatch, meson, ninja, pkg-config
+, rustPlatform, rustc, cargo, wrapGAppsHook4, blueprint-compiler, libadwaita
+, libsecret, tracker, darwin }:
 
 stdenv.mkDerivation rec {
   pname = "health";
@@ -37,11 +23,13 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchpatch {
-      url = "https://aur.archlinux.org/cgit/aur.git/plain/max_size_tightending_thresh_0.94.0.patch?h=health&id=d35d89760964b00ad457eca07855143a1dcbabdf";
+      url =
+        "https://aur.archlinux.org/cgit/aur.git/plain/max_size_tightending_thresh_0.94.0.patch?h=health&id=d35d89760964b00ad457eca07855143a1dcbabdf";
       hash = "sha256-ndoxyrm+SVGVxfUbc5sQItQwzK75ZtKMSGUOB9mzBmo=";
     })
     (fetchpatch {
-      url = "https://aur.archlinux.org/cgit/aur.git/plain/max_value_0.94.0.patch?h=health&id=d35d89760964b00ad457eca07855143a1dcbabdf";
+      url =
+        "https://aur.archlinux.org/cgit/aur.git/plain/max_value_0.94.0.patch?h=health&id=d35d89760964b00ad457eca07855143a1dcbabdf";
       hash = "sha256-YKVQNtz+RWN6Ydw+kbStCVf0vu0eTrMKGd6kEijFG00=";
     })
     # patch both or it will complain Cargo.lock mismatch
@@ -59,14 +47,11 @@ stdenv.mkDerivation rec {
     blueprint-compiler
   ];
 
-  buildInputs = [
-    libadwaita
-    libsecret
-    tracker
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-    darwin.apple_sdk.frameworks.Foundation
-  ];
+  buildInputs = [ libadwaita libsecret tracker ]
+    ++ lib.optionals stdenv.isDarwin [
+      darwin.apple_sdk.frameworks.Security
+      darwin.apple_sdk.frameworks.Foundation
+    ];
 
   meta = with lib; {
     description = "A health tracking app for the GNOME desktop";

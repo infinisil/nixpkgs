@@ -1,10 +1,8 @@
-{ lib, stdenv, fetchurl, pkg-config, perl
-, openssl, db, cyrus_sasl, zlib
+{ lib, stdenv, fetchurl, pkg-config, perl, openssl, db, cyrus_sasl, zlib
 , Security
 # Disabled by default as XOAUTH2 is an "OBSOLETE" SASL mechanism and this relies
 # on a package that isn't really maintained anymore:
-, withCyrusSaslXoauth2 ? false, cyrus-sasl-xoauth2, makeWrapper
-}:
+, withCyrusSaslXoauth2 ? false, cyrus-sasl-xoauth2, makeWrapper }:
 
 stdenv.mkDerivation rec {
   pname = "isync";
@@ -30,13 +28,16 @@ stdenv.mkDerivation rec {
 
   postInstall = lib.optionalString withCyrusSaslXoauth2 ''
     wrapProgram "$out/bin/mbsync" \
-        --prefix SASL_PATH : "${lib.makeSearchPath "lib/sasl2" [ cyrus-sasl-xoauth2 ]}"
+        --prefix SASL_PATH : "${
+          lib.makeSearchPath "lib/sasl2" [ cyrus-sasl-xoauth2 ]
+        }"
   '';
 
   meta = with lib; {
     homepage = "http://isync.sourceforge.net/";
     # https://sourceforge.net/projects/isync/
-    changelog = "https://sourceforge.net/p/isync/isync/ci/v${version}/tree/NEWS";
+    changelog =
+      "https://sourceforge.net/p/isync/isync/ci/v${version}/tree/NEWS";
     description = "Free IMAP and MailDir mailbox synchronizer";
     longDescription = ''
       mbsync (formerly isync) is a command line application which synchronizes

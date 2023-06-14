@@ -1,8 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, nixosTests
-}:
+{ lib, buildGoModule, fetchFromGitHub, nixosTests }:
 
 buildGoModule rec {
   pname = "acme-dns";
@@ -25,7 +21,8 @@ buildGoModule rec {
   passthru.tests = { inherit (nixosTests) acme-dns; };
 
   meta = {
-    description = "Limited DNS server to handle ACME DNS challenges easily and securely";
+    description =
+      "Limited DNS server to handle ACME DNS challenges easily and securely";
     homepage = "https://github.com/joohoi/acme-dns";
     changelog = "https://github.com/joohoi/acme-dns/releases/tag/${src.rev}";
     license = lib.licenses.mit;

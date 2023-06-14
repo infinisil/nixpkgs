@@ -1,49 +1,48 @@
-{ lib, stdenv, fetchurl
-, meson, ninja, pkg-config, python3, wayland-scanner
+{ lib, stdenv, fetchurl, meson, ninja, pkg-config, python3, wayland-scanner
 , cairo, dbus, libdrm, libevdev, libinput, libxkbcommon, mesa, seatd, wayland
 , wayland-protocols, xcbutilcursor
 
-, demoSupport ? true
-, hdrSupport ? true, libdisplay-info
-, jpegSupport ? true, libjpeg
-, lcmsSupport ? true, lcms2
-, pangoSupport ? true, pango
-, pipewireSupport ? true, pipewire
-, rdpSupport ? true, freerdp
-, remotingSupport ? true, gst_all_1
-, vaapiSupport ? true, libva
-, vncSupport ? true, aml, neatvnc, pam
-, webpSupport ? true, libwebp
-, xwaylandSupport ? true, libXcursor, xwayland
-}:
+, demoSupport ? true, hdrSupport ? true, libdisplay-info, jpegSupport ? true
+, libjpeg, lcmsSupport ? true, lcms2, pangoSupport ? true, pango
+, pipewireSupport ? true, pipewire, rdpSupport ? true, freerdp
+, remotingSupport ? true, gst_all_1, vaapiSupport ? true, libva
+, vncSupport ? true, aml, neatvnc, pam, webpSupport ? true, libwebp
+, xwaylandSupport ? true, libXcursor, xwayland }:
 
 stdenv.mkDerivation rec {
   pname = "weston";
   version = "12.0.1";
 
   src = fetchurl {
-    url = "https://gitlab.freedesktop.org/wayland/weston/-/releases/${version}/downloads/weston-${version}.tar.xz";
+    url =
+      "https://gitlab.freedesktop.org/wayland/weston/-/releases/${version}/downloads/weston-${version}.tar.xz";
     hash = "sha256-sYWR6rJ4vBkXIPbAkVgEC3lecRivHV3cpqzZqOIDlTU=";
   };
 
   depsBuildBuild = [ pkg-config ];
   nativeBuildInputs = [ meson ninja pkg-config python3 wayland-scanner ];
   buildInputs = [
-    cairo libdrm libevdev libinput libxkbcommon mesa seatd wayland
+    cairo
+    libdrm
+    libevdev
+    libinput
+    libxkbcommon
+    mesa
+    seatd
+    wayland
     wayland-protocols
   ] ++ lib.optional hdrSupport libdisplay-info
-    ++ lib.optional jpegSupport libjpeg
-    ++ lib.optional lcmsSupport lcms2
-    ++ lib.optional pangoSupport pango
-    ++ lib.optional pipewireSupport pipewire
-    ++ lib.optional rdpSupport freerdp
-    ++ lib.optionals remotingSupport [ gst_all_1.gstreamer gst_all_1.gst-plugins-base ]
-    ++ lib.optional vaapiSupport libva
+    ++ lib.optional jpegSupport libjpeg ++ lib.optional lcmsSupport lcms2
+    ++ lib.optional pangoSupport pango ++ lib.optional pipewireSupport pipewire
+    ++ lib.optional rdpSupport freerdp ++ lib.optionals remotingSupport [
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-base
+    ] ++ lib.optional vaapiSupport libva
     ++ lib.optionals vncSupport [ aml neatvnc pam ]
     ++ lib.optional webpSupport libwebp
     ++ lib.optionals xwaylandSupport [ libXcursor xcbutilcursor xwayland ];
 
-  mesonFlags= [
+  mesonFlags = [
     (lib.mesonBool "backend-drm-screencast-vaapi" vaapiSupport)
     (lib.mesonBool "backend-pipewire" pipewireSupport)
     (lib.mesonBool "backend-rdp" rdpSupport)
@@ -57,9 +56,8 @@ stdenv.mkDerivation rec {
     (lib.mesonOption "simple-clients" "")
     (lib.mesonBool "test-junit-xml" false)
     (lib.mesonBool "xwayland" xwaylandSupport)
-  ] ++ lib.optionals xwaylandSupport [
-    (lib.mesonOption "xwayland-path" (lib.getExe xwayland))
-  ];
+  ] ++ lib.optionals xwaylandSupport
+    [ (lib.mesonOption "xwayland-path" (lib.getExe xwayland)) ];
 
   passthru.providedSessions = [ "weston" ];
 

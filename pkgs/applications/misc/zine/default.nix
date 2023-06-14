@@ -1,12 +1,5 @@
-{ lib
-, rustPlatform
-, fetchCrate
-, pkg-config
-, openssl
-, stdenv
-, CoreServices
-, Security
-}:
+{ lib, rustPlatform, fetchCrate, pkg-config, openssl, stdenv, CoreServices
+, Security }:
 
 rustPlatform.buildRustPackage rec {
   pname = "zine";
@@ -19,9 +12,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-QRxh67WKRUukKGbKQHwWYdDSazN+2g/kf2A3BgePOUM=";
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [ openssl ]
     ++ lib.optionals stdenv.isDarwin [ CoreServices Security ];

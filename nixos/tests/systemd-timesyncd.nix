@@ -10,8 +10,8 @@ import ./make-test-python.nix (let
 in {
   name = "systemd-timesyncd";
   nodes = {
-    current = mkVM {};
-    pre1909 = mkVM ({lib, ... }: {
+    current = mkVM { };
+    pre1909 = mkVM ({ lib, ... }: {
       # create the path that should be migrated by our activation script when
       # upgrading to a newer nixos version
       system.stateVersion = "19.03";

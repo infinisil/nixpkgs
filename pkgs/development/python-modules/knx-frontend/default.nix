@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, setuptools
-}:
+{ lib, buildPythonPackage, fetchPypi, setuptools }:
 
 buildPythonPackage rec {
   pname = "knx-frontend";
@@ -16,13 +12,9 @@ buildPythonPackage rec {
     hash = "sha256-lShWlrnELpDamXT2OQvQTKOCOODv+iSxJ9pA5tIgxdM=";
   };
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
-  pythonImportsCheck = [
-    "knx_frontend"
-  ];
+  pythonImportsCheck = [ "knx_frontend" ];
 
   # no tests
   doCheck = false;

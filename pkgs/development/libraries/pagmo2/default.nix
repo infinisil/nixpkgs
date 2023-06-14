@@ -1,28 +1,21 @@
-{ fetchFromGitHub
-, lib, stdenv
-, cmake
-, eigen
-, nlopt
-, ipopt
-, boost
-, tbb
- # tests pass but take 30+ minutes
-, runTests ? false
-}:
+{ fetchFromGitHub, lib, stdenv, cmake, eigen, nlopt, ipopt, boost, tbb
+# tests pass but take 30+ minutes
+, runTests ? false }:
 
 stdenv.mkDerivation rec {
   pname = "pagmo2";
   version = "2.19.0";
 
   src = fetchFromGitHub {
-     owner = "esa";
-     repo = "pagmo2";
-     rev = "v${version}";
-     sha256 = "sha256-z5kg2xKZ666EPK844yp+hi4iGisaIPme9xNdzsAEEjw=";
+    owner = "esa";
+    repo = "pagmo2";
+    rev = "v${version}";
+    sha256 = "sha256-z5kg2xKZ666EPK844yp+hi4iGisaIPme9xNdzsAEEjw=";
   };
 
   nativeBuildInputs = [ cmake ];
-  buildInputs = [ eigen nlopt boost tbb ] ++ lib.optional (!stdenv.isDarwin) ipopt;
+  buildInputs = [ eigen nlopt boost tbb ]
+    ++ lib.optional (!stdenv.isDarwin) ipopt;
 
   cmakeFlags = [
     "-DPAGMO_BUILD_TESTS=${if runTests then "ON" else "OFF"}"

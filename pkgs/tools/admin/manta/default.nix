@@ -1,16 +1,8 @@
-{ lib
-, buildNpmPackage
-, fetchurl
-, nodejs
-, installShellFiles
-, testers
-, node-manta
+{ lib, buildNpmPackage, fetchurl, nodejs, installShellFiles, testers, node-manta
 }:
 
-let
-  source = lib.importJSON ./source.json;
-in
-buildNpmPackage rec {
+let source = lib.importJSON ./source.json;
+in buildNpmPackage rec {
   pname = "manta";
   inherit (source) version;
 
@@ -49,9 +41,7 @@ buildNpmPackage rec {
   '';
 
   passthru = {
-    tests.version = testers.testVersion {
-      package = node-manta;
-    };
+    tests.version = testers.testVersion { package = node-manta; };
     updateScript = ./update.sh;
   };
 

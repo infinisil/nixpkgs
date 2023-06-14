@@ -1,6 +1,5 @@
 # Test a minimal HDFS cluster with no HA
-import ../make-test-python.nix ({ package, lib, ... }:
-{
+import ../make-test-python.nix ({ package, lib, ... }: {
   name = "hadoop-hdfs";
 
   nodes = let
@@ -9,7 +8,7 @@ import ../make-test-python.nix ({ package, lib, ... }:
       "hadoop.proxyuser.httpfs.groups" = "*";
       "hadoop.proxyuser.httpfs.hosts" = "*";
     };
-    in {
+  in {
     namenode = { pkgs, ... }: {
       services.hadoop = {
         inherit package;
@@ -68,14 +67,14 @@ import ../make-test-python.nix ({ package, lib, ... }:
     datanode.wait_for_open_port(50020)
 
     datanode.succeed("curl -f http://datanode:50075")
-  '' ) + ''
+  '') + ''
     namenode.succeed("curl -f http://namenode:9870")
 
     datanode.succeed("sudo -u hdfs hdfs dfsadmin -safemode wait")
     datanode.succeed("echo testfilecontents | sudo -u hdfs hdfs dfs -put - /testfile")
     assert "testfilecontents" in datanode.succeed("sudo -u hdfs hdfs dfs -cat /testfile")
 
-  '' + lib.optionalString (lib.versionAtLeast package.version "3.3" ) ''
+  '' + lib.optionalString (lib.versionAtLeast package.version "3.3") ''
     namenode.wait_for_unit("hdfs-httpfs")
     namenode.wait_for_open_port(14000)
     assert "testfilecontents" in datanode.succeed("curl -f \"http://namenode:14000/webhdfs/v1/testfile?user.name=hdfs&op=OPEN\" 2>&1")

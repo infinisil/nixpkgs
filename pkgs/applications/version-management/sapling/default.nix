@@ -1,27 +1,9 @@
-{ lib
-, stdenv
-, python3Packages
-, fetchFromGitHub
-, fetchurl
-, sd
-, cargo
-, curl
-, pkg-config
-, openssl
-, rustPlatform
-, rustc
-, fetchYarnDeps
-, yarn
-, nodejs
-, fixup_yarn_lock
-, glibcLocales
-, libiconv
-, CoreFoundation
-, CoreServices
+{ lib, stdenv, python3Packages, fetchFromGitHub, fetchurl, sd, cargo, curl
+, pkg-config, openssl, rustPlatform, rustc, fetchYarnDeps, yarn, nodejs
+, fixup_yarn_lock, glibcLocales, libiconv, CoreFoundation, CoreServices
 , Security
 
-, enableMinimal ? false
-}:
+, enableMinimal ? false }:
 
 let
   inherit (lib.importJSON ./deps.json) links version versionHash;
@@ -37,9 +19,8 @@ let
   # on macOS.
   #
   # See https://github.com/NixOS/nixpkgs/pull/198311#issuecomment-1326894295
-  myCargoSetupHook = rustPlatform.cargoSetupHook.overrideAttrs (old: {
-    cargoConfig = if stdenv.isDarwin then "" else old.cargoConfig;
-  });
+  myCargoSetupHook = rustPlatform.cargoSetupHook.overrideAttrs
+    (old: { cargoConfig = if stdenv.isDarwin then "" else old.cargoConfig; });
 
   src = fetchFromGitHub {
     owner = "facebook";
@@ -62,11 +43,7 @@ let
     src = addonsSrc;
     inherit version;
 
-    nativeBuildInputs = [
-      fixup_yarn_lock
-      nodejs
-      yarn
-    ];
+    nativeBuildInputs = [ fixup_yarn_lock nodejs yarn ];
 
     buildPhase = ''
       runHook preBuild
@@ -90,9 +67,8 @@ let
       runHook postInstall
     '';
   };
-in
-# Builds the main `sl` binary and its Python extensions
-python3Packages.buildPythonApplication {
+  # Builds the main `sl` binary and its Python extensions
+in python3Packages.buildPythonApplication {
   pname = "sapling";
   inherit src version;
 
@@ -102,11 +78,15 @@ python3Packages.buildPythonApplication {
   cargoDeps = rustPlatform.importCargoLock {
     lockFile = ./Cargo.lock;
     outputHashes = {
-      "abomonation-0.7.3+smallvec1" = "sha256-AxEXR6GC8gHjycIPOfoViP7KceM29p2ZISIt4iwJzvM=";
+      "abomonation-0.7.3+smallvec1" =
+        "sha256-AxEXR6GC8gHjycIPOfoViP7KceM29p2ZISIt4iwJzvM=";
       "cloned-0.1.0" = "sha256-MKyj91z+hciJOg4Lhb6ik7zUgCwuHsX8N9HVSP2JkKE=";
-      "fb303_core-0.0.0" = "sha256-5AU54rpeDub2Iol56S4X+xfdU07zWAtOyCNRBZLzUZA=";
-      "fbthrift-0.0.1+unstable" = "sha256-n4ES6zRyTgsNxbrM4AUraJ6W4tLHiKdfSyL3Yd0ET34=";
-      "serde_bser-0.3.1" = "sha256-PkQx2/axT/7LQ4Mvfz1AYBWKXGvaTHkOP2jtljvuYxY=";
+      "fb303_core-0.0.0" =
+        "sha256-5AU54rpeDub2Iol56S4X+xfdU07zWAtOyCNRBZLzUZA=";
+      "fbthrift-0.0.1+unstable" =
+        "sha256-n4ES6zRyTgsNxbrM4AUraJ6W4tLHiKdfSyL3Yd0ET34=";
+      "serde_bser-0.3.1" =
+        "sha256-PkQx2/axT/7LQ4Mvfz1AYBWKXGvaTHkOP2jtljvuYxY=";
     };
   };
   postPatch = ''
@@ -118,7 +98,9 @@ python3Packages.buildPythonApplication {
   # with filesystem paths for the curl calls.
   postUnpack = ''
     mkdir $sourceRoot/hack_pydeps
-    ${lib.concatStrings (map (li: "ln -s ${fetchurl li} $sourceRoot/hack_pydeps/${baseNameOf li.url}\n") links)}
+    ${lib.concatStrings (map (li: ''
+      ln -s ${fetchurl li} $sourceRoot/hack_pydeps/${baseNameOf li.url}
+    '') links)}
     sed -i "s|https://files.pythonhosted.org/packages/[[:alnum:]]*/[[:alnum:]]*/[[:alnum:]]*/|file://$NIX_BUILD_TOP/$sourceRoot/hack_pydeps/|g" $sourceRoot/setup.py
   '';
 
@@ -146,17 +128,9 @@ python3Packages.buildPythonApplication {
       --set LOCALE_ARCHIVE "${glibcLocales}/lib/locale/locale-archive"
   '';
 
-  nativeBuildInputs = [
-    curl
-    pkg-config
-    myCargoSetupHook
-    cargo
-    rustc
-  ];
+  nativeBuildInputs = [ curl pkg-config myCargoSetupHook cargo rustc ];
 
-  buildInputs = [
-    openssl
-  ] ++ lib.optionals stdenv.isDarwin [
+  buildInputs = [ openssl ] ++ lib.optionals stdenv.isDarwin [
     curl
     libiconv
     CoreFoundation

@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, llvmPackages_10
-, fetchFromGitHub
-, cmake
-, llvm_12
-, ncurses
-, readline
-, zlib
-, libxml2
-, python3
-}:
+{ lib, stdenv, llvmPackages_10, fetchFromGitHub, cmake, llvm_12, ncurses
+, readline, zlib, libxml2, python3 }:
 llvmPackages_10.stdenv.mkDerivation {
   pname = "hobbes";
   version = "unstable-2023-06-03";
@@ -27,18 +17,9 @@ llvmPackages_10.stdenv.mkDerivation {
     rm test/Python.C
   '';
 
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
-  buildInputs = [
-    llvm_12
-    ncurses
-    readline
-    zlib
-    libxml2
-    python3
-  ];
+  buildInputs = [ llvm_12 ncurses readline zlib libxml2 python3 ];
 
   doCheck = true;
   checkTarget = "test";

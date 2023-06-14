@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, blas
-, superlu
-, suitesparse
-, python3
-, libintl
-, libiconv
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, blas, superlu, suitesparse, python3
+, libintl, libiconv }:
 let
   # this is a fork version of fetk (http://www.fetk.org/)
   # which is maintained by apbs team
@@ -23,9 +14,7 @@ let
       hash = "sha256-uFA1JRR05cNcUGaJj9IyGNONB2hU9IOBPzOj/HucNH4=";
     };
 
-    nativeBuildInputs = [
-      cmake
-    ];
+    nativeBuildInputs = [ cmake ];
 
     cmakeFlags = [
       "-DBLAS_LIBRARIES=${blas}/lib"
@@ -33,23 +22,19 @@ let
       "-DBUILD_SUPERLU=OFF"
     ];
 
-    buildInputs = [
-      blas
-      superlu
-      suitesparse
-    ];
+    buildInputs = [ blas superlu suitesparse ];
 
     meta = with lib; {
       description = "Fork of the Finite Element ToolKit from fetk.org";
       homepage = "https://github.com/Electrostatics/FETK";
-      changelog = "https://github.com/Electrostatics/FETK/releases/tag/${finalAttrs.version}";
+      changelog =
+        "https://github.com/Electrostatics/FETK/releases/tag/${finalAttrs.version}";
       license = licenses.lgpl21Plus;
       maintainers = with maintainers; [ natsukium ];
       platforms = platforms.unix;
     };
   });
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "apbs";
   version = "3.4.1";
 
@@ -67,19 +52,10 @@ stdenv.mkDerivation (finalAttrs: {
       --replace 'import_fetk(''${FETK_VERSION})' ""
   '';
 
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
-  buildInputs = [
-    fetk
-    suitesparse
-    blas
-    python3
-  ] ++ lib.optionals stdenv.isDarwin [
-    libintl
-    libiconv
-  ];
+  buildInputs = [ fetk suitesparse blas python3 ]
+    ++ lib.optionals stdenv.isDarwin [ libintl libiconv ];
 
   cmakeFlags = [
     "-DPYTHON_VERSION=${python3.version}"
@@ -91,9 +67,11 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   meta = with lib; {
-    description = "Software for biomolecular electrostatics and solvation calculations";
+    description =
+      "Software for biomolecular electrostatics and solvation calculations";
     homepage = "https://www.poissonboltzmann.org/";
-    changelog = "https://github.com/Electrostatics/apbs/releases/tag/v${finalAttrs.version}";
+    changelog =
+      "https://github.com/Electrostatics/apbs/releases/tag/v${finalAttrs.version}";
     license = licenses.bsd3;
     maintainers = with maintainers; [ natsukium ];
     platforms = platforms.unix;

@@ -1,11 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, stdenv
-, openssl
-, darwin
-}:
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, stdenv, openssl, darwin }:
 
 rustPlatform.buildRustPackage rec {
   pname = "chit";
@@ -18,17 +11,12 @@ rustPlatform.buildRustPackage rec {
     sha256 = "0iixczy3cad44j2d7zzj8f3lnmp4jwnb0snmwfgiq3vj9wrn28pz";
   };
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-  };
+  cargoLock = { lockFile = ./Cargo.lock; };
 
   nativeBuildInputs = lib.optionals stdenv.isLinux [ pkg-config ];
 
-  buildInputs = lib.optionals stdenv.isLinux [
-    openssl
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-  ];
+  buildInputs = lib.optionals stdenv.isLinux [ openssl ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   # update Carg.lock to work with openssl 3
   postPatch = ''
@@ -36,7 +24,8 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "Crate help in terminal: A tool for looking up details about rust crates without going to crates.io";
+    description =
+      "Crate help in terminal: A tool for looking up details about rust crates without going to crates.io";
     longDescription = ''
       Chit helps answer these questions:
 

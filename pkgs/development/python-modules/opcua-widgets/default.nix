@@ -1,10 +1,4 @@
-{ pkgs
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, pyqt5
-, asyncua
-}:
+{ pkgs, buildPythonPackage, pythonOlder, fetchFromGitHub, pyqt5, asyncua }:
 
 buildPythonPackage rec {
   pname = "opcua-widgets";
@@ -19,10 +13,7 @@ buildPythonPackage rec {
 
   disabled = pythonOlder "3.10";
 
-  propagatedBuildInputs = [
-    pyqt5
-    asyncua
-  ];
+  propagatedBuildInputs = [ pyqt5 asyncua ];
 
   pythonImportChecks = [ "opcua-widgets" ];
 

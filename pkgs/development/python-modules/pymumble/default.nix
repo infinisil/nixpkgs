@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, opuslib
-, protobuf
-, pytestCheckHook
-, pycrypto
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, opuslib, protobuf, pytestCheckHook
+, pycrypto, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "pymumble";
@@ -28,20 +21,11 @@ buildPythonPackage rec {
     sed -i 's/\(.*\)==.*/\1/' requirements.txt
   '';
 
-  propagatedBuildInputs = [
-    opuslib
-    protobuf
-  ];
+  propagatedBuildInputs = [ opuslib protobuf ];
 
-  nativeCheckInputs = [
-    pycrypto
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pycrypto pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "pymumble_py3"
-    "pymumble_py3.constants"
-  ];
+  pythonImportsCheck = [ "pymumble_py3" "pymumble_py3.constants" ];
 
   meta = with lib; {
     description = "Library to create mumble bots";

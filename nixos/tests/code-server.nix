@@ -1,9 +1,8 @@
-import ./make-test-python.nix ({pkgs, lib, ...}:
-{
+import ./make-test-python.nix ({ pkgs, lib, ... }: {
   name = "code-server";
 
   nodes = {
-    machine = {pkgs, ...}: {
+    machine = { pkgs, ... }: {
       services.code-server = {
         enable = true;
         auth = "none";

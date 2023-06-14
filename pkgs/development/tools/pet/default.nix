@@ -13,17 +13,13 @@ buildGoModule rec {
 
   vendorHash = "sha256-JOP7hcCOwVZ0hb2UXHHdxpKxpZqs6a8AjOFbrs711ps=";
 
-  ldflags = [
-    "-s" "-w" "-X=github.com/knqyf263/pet/cmd.version=${version}"
-  ];
+  ldflags = [ "-s" "-w" "-X=github.com/knqyf263/pet/cmd.version=${version}" ];
 
   doCheck = false;
 
   subPackages = [ "." ];
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   postInstall = ''
     installShellCompletion --cmd pet \

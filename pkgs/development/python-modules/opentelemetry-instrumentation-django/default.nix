@@ -1,18 +1,8 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, django
-, hatchling
-, opentelemetry-api
-, opentelemetry-instrumentation
-, opentelemetry-instrumentation-asgi
-, opentelemetry-instrumentation-wsgi
-, opentelemetry-semantic-conventions
-, opentelemetry-test-utils
-, opentelemetry-util-http
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, django, hatchling
+, opentelemetry-api, opentelemetry-instrumentation
+, opentelemetry-instrumentation-asgi, opentelemetry-instrumentation-wsgi
+, opentelemetry-semantic-conventions, opentelemetry-test-utils
+, opentelemetry-util-http, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-instrumentation-django";
@@ -29,9 +19,7 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
   propagatedBuildInputs = [
     django
@@ -43,15 +31,13 @@ buildPythonPackage rec {
     opentelemetry-util-http
   ];
 
-  nativeCheckInputs = [
-    opentelemetry-test-utils
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.instrumentation.django" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/instrumentation/opentelemetry-instrumentation-django";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/instrumentation/opentelemetry-instrumentation-django";
     description = "OpenTelemetry Instrumentation for Django";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

@@ -1,4 +1,5 @@
-{ lib, stdenv, rustPlatform, fetchFromGitHub, shared-mime-info, libiconv, installShellFiles }:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, shared-mime-info, libiconv
+, installShellFiles }:
 
 rustPlatform.buildRustPackage rec {
   pname = "handlr-regex";

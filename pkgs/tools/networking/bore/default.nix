@@ -1,4 +1,5 @@
-{ lib, stdenv, rustPlatform, fetchFromBitbucket, Libsystem, SystemConfiguration, installShellFiles }:
+{ lib, stdenv, rustPlatform, fetchFromBitbucket, Libsystem, SystemConfiguration
+, installShellFiles }:
 
 rustPlatform.buildRustPackage rec {
   pname = "bore";
@@ -24,10 +25,7 @@ rustPlatform.buildRustPackage rec {
   nativeBuildInputs = [ installShellFiles ]
     ++ lib.optional stdenv.isDarwin rustPlatform.bindgenHook;
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    Libsystem
-    SystemConfiguration
-  ];
+  buildInputs = lib.optionals stdenv.isDarwin [ Libsystem SystemConfiguration ];
 
   postInstall = ''
     installManPage $src/bore/doc/bore.1

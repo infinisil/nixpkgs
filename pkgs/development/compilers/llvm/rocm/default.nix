@@ -1,36 +1,15 @@
-{ lib
-, stdenv
-, callPackage
-, overrideCC
-, wrapCCWith
-, wrapBintoolsWith
-, runCommand
-, lit
-, glibc
-, spirv-llvm-translator
-, xz
-, swig
-, lua5_3
-, gtest
-, hip
-, rocm-comgr
-, vulkan-loader
-, vulkan-headers
-, glslang
-, shaderc
-, perl
-, rocm-device-libs
-, rocm-runtime
-, elfutils
-, python3Packages
-}:
+{ lib, stdenv, callPackage, overrideCC, wrapCCWith, wrapBintoolsWith, runCommand
+, lit, glibc, spirv-llvm-translator, xz, swig, lua5_3, gtest, hip, rocm-comgr
+, vulkan-loader, vulkan-headers, glslang, shaderc, perl, rocm-device-libs
+, rocm-runtime, elfutils, python3Packages }:
 
 let
   # Stage 1
   # Base
   llvm = callPackage ./llvm.nix {
     requiredSystemFeatures = [ "big-parallel" ];
-    isBroken = stdenv.isAarch64; # https://github.com/RadeonOpenCompute/ROCm/issues/1831#issuecomment-1278205344
+    isBroken =
+      stdenv.isAarch64; # https://github.com/RadeonOpenCompute/ROCm/issues/1831#issuecomment-1278205344
   };
 
   # Projects
@@ -50,7 +29,8 @@ let
       ln -s ../cmake/Modules/FindLibEdit.cmake cmake/modules
 
       substituteInPlace CMakeLists.txt \
-        --replace "include(CheckIncludeFile)" "include(CheckIncludeFile)''\nfind_package(LibEdit)"
+        --replace "include(CheckIncludeFile)" "include(CheckIncludeFile)
+      find_package(LibEdit)"
 
       # `No such file or directory: '/build/source/clang/tools/scan-build/bin/scan-build'`
       rm test/Analysis/scan-build/*.test
@@ -110,10 +90,7 @@ let
     libcxx = runtimes;
     cc = clang-unwrapped;
 
-    extraPackages = [
-      llvm
-      lld
-    ];
+    extraPackages = [ llvm lld ];
 
     nixSupport.cc-cflags = [
       "-resource-dir=$out/resource-root"
@@ -133,7 +110,9 @@ let
 
   bintools = wrapBintoolsWith { bintools = bintools-unwrapped; };
 
-  bintools-unwrapped = runCommand "rocm-llvm-binutils-${llvm.version}" { preferLocalBuild = true; } ''
+  bintools-unwrapped = runCommand "rocm-llvm-binutils-${llvm.version}" {
+    preferLocalBuild = true;
+  } ''
     mkdir -p $out/bin
 
     for prog in ${lld}/bin/*; do
@@ -157,12 +136,7 @@ let
     ln -s ${lld}/bin/lld $out/bin/ld
   '';
 in rec {
-  inherit
-  llvm
-  clang-unwrapped
-  lld
-  bintools
-  bintools-unwrapped;
+  inherit llvm clang-unwrapped lld bintools bintools-unwrapped;
 
   # Runtimes
   libc = callPackage ./llvm.nix rec {
@@ -194,11 +168,7 @@ in rec {
     targetName = "libcxxabi";
     targetDir = "runtimes";
 
-    targetRuntimes = [
-      "libunwind"
-      targetName
-      "libcxx"
-    ];
+    targetRuntimes = [ "libunwind" targetName "libcxx" ];
 
     extraCMakeFlags = [
       "-DLIBCXXABI_INCLUDE_TESTS=ON"
@@ -226,11 +196,7 @@ in rec {
     targetName = "libcxx";
     targetDir = "runtimes";
 
-    targetRuntimes = [
-      "libunwind"
-      "libcxxabi"
-      targetName
-    ];
+    targetRuntimes = [ "libunwind" "libcxxabi" targetName ];
 
     extraCMakeFlags = [
       "-DLIBCXX_INCLUDE_DOCS=ON"
@@ -272,12 +238,7 @@ in rec {
     targetName = "compiler-rt";
     targetDir = "runtimes";
 
-    targetRuntimes = [
-      "libunwind"
-      "libcxxabi"
-      "libcxx"
-      targetName
-    ];
+    targetRuntimes = [ "libunwind" "libcxxabi" "libcxx" targetName ];
 
     extraCMakeFlags = [
       "-DCMAKE_POLICY_DEFAULT_CMP0114=NEW"
@@ -312,7 +273,9 @@ in rec {
 
       # We can run these
       substituteInPlace ../compiler-rt/test/CMakeLists.txt \
-        --replace "endfunction()" "endfunction()''\nadd_subdirectory(builtins)''\nadd_subdirectory(shadowcallstack)"
+        --replace "endfunction()" "endfunction()
+      add_subdirectory(builtins)
+      add_subdirectory(shadowcallstack)"
     '';
 
     extraLicenses = [ lib.licenses.mit ];
@@ -352,13 +315,7 @@ in rec {
       passthru.isClang = true;
     });
 
-    extraPackages = [
-      llvm
-      lld
-      libunwind
-      libcxxabi
-      compiler-rt
-    ];
+    extraPackages = [ llvm lld libunwind libcxxabi compiler-rt ];
 
     nixSupport.cc-cflags = [
       "-resource-dir=$out/resource-root"
@@ -379,7 +336,8 @@ in rec {
 
       # GPU compilation uses builtin `lld`
       substituteInPlace $out/bin/{clang,clang++} \
-        --replace "-MM) dontLink=1 ;;" "-MM | --cuda-device-only) dontLink=1 ;;''\n--cuda-host-only | --cuda-compile-host-device) dontLink=0 ;;"
+        --replace "-MM) dontLink=1 ;;" "-MM | --cuda-device-only) dontLink=1 ;;
+      --cuda-host-only | --cuda-compile-host-device) dontLink=0 ;;"
     '';
   };
 
@@ -387,13 +345,11 @@ in rec {
   # Unfortunately, we cannot build `clang-tools-extra` separately.
   clang-tools-extra = callPackage ./llvm.nix {
     stdenv = rocmClangStdenv;
-    buildTests = false; # `invalid operands to binary expression ('std::basic_stringstream<char>' and 'const llvm::StringRef')`
+    buildTests =
+      false; # `invalid operands to binary expression ('std::basic_stringstream<char>' and 'const llvm::StringRef')`
     targetName = "clang-tools-extra";
 
-    targetProjects = [
-      "clang"
-      "clang-tools-extra"
-    ];
+    targetProjects = [ "clang" "clang-tools-extra" ];
 
     extraBuildInputs = [ gtest ];
 
@@ -419,8 +375,7 @@ in rec {
   };
 
   # Projects
-  libclc = let
-    spirv = (spirv-llvm-translator.override { inherit llvm; });
+  libclc = let spirv = (spirv-llvm-translator.override { inherit llvm; });
   in callPackage ./llvm.nix rec {
     stdenv = rocmClangStdenv;
     buildDocs = false; # No documentation to build
@@ -449,17 +404,13 @@ in rec {
 
   lldb = callPackage ./llvm.nix rec {
     stdenv = rocmClangStdenv;
-    buildTests = false; # ld.lld: error: unable to find library -lllvm_gtest_main
+    buildTests =
+      false; # ld.lld: error: unable to find library -lllvm_gtest_main
     targetName = "lldb";
     targetDir = targetName;
     extraNativeBuildInputs = [ python3Packages.sphinx-automodapi ];
 
-    extraBuildInputs = [
-      xz
-      swig
-      lua5_3
-      gtest
-    ];
+    extraBuildInputs = [ xz swig lua5_3 gtest ];
 
     extraCMakeFlags = [
       "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped"
@@ -476,13 +427,8 @@ in rec {
     targetDir = targetName;
     extraNativeBuildInputs = [ hip ];
 
-    extraBuildInputs = [
-      rocm-comgr
-      vulkan-headers
-      vulkan-loader
-      glslang
-      shaderc
-    ];
+    extraBuildInputs =
+      [ rocm-comgr vulkan-headers vulkan-loader glslang shaderc ];
 
     extraCMakeFlags = [
       "-DCMAKE_POLICY_DEFAULT_CMP0116=NEW"
@@ -564,11 +510,7 @@ in rec {
     extraPatches = [ ./0000-fix-openmp.patch ];
     extraNativeBuildInputs = [ perl ];
 
-    extraBuildInputs = [
-      rocm-device-libs
-      rocm-runtime
-      elfutils
-    ];
+    extraBuildInputs = [ rocm-device-libs rocm-runtime elfutils ];
 
     extraCMakeFlags = [
       "-DCMAKE_MODULE_PATH=/build/source/llvm/cmake/modules" # For docs

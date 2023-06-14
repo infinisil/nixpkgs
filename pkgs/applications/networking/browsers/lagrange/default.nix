@@ -1,20 +1,6 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, fetchpatch
-, nix-update-script
-, cmake
-, pkg-config
-, fribidi
-, harfbuzz
-, libwebp
-, mpg123
-, SDL2
-, the-foundation
-, AppKit
-, zip
-, enableTUI ? false, ncurses, sealcurses
-}:
+{ stdenv, lib, fetchFromGitHub, fetchpatch, nix-update-script, cmake, pkg-config
+, fribidi, harfbuzz, libwebp, mpg123, SDL2, the-foundation, AppKit, zip
+, enableTUI ? false, ncurses, sealcurses }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "lagrange";
@@ -32,7 +18,8 @@ stdenv.mkDerivation (finalAttrs: {
     # remove when 1.64.4 comes out
     (fetchpatch {
       name = "tui-fixed-build-after-changes-to-text-init.patch";
-      url = "https://github.com/skyjake/lagrange/commit/1c811221acc5b8eb47210fba90dc3a789a093e9b.patch";
+      url =
+        "https://github.com/skyjake/lagrange/commit/1c811221acc5b8eb47210fba90dc3a789a093e9b.patch";
       hash = "sha256-K0njCcEOOYAwo3FI8eBg53Qo8J/iNBqCn3WCKQb0cgk=";
     })
   ];
@@ -60,9 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
     mv Lagrange.app $out/Applications
   '';
 
-  passthru = {
-    updateScript = nix-update-script { };
-  };
+  passthru = { updateScript = nix-update-script { }; };
 
   meta = with lib; {
     description = "A Beautiful Gemini Client";

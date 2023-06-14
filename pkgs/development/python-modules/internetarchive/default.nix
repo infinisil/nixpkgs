@@ -1,17 +1,5 @@
-{ lib
-, buildPythonPackage
-, docopt
-, fetchFromGitHub
-, pytestCheckHook
-, requests
-, jsonpatch
-, schema
-, responses
-, setuptools
-, tqdm
-, urllib3
-, pythonOlder
-}:
+{ lib, buildPythonPackage, docopt, fetchFromGitHub, pytestCheckHook, requests
+, jsonpatch, schema, responses, setuptools, tqdm, urllib3, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "internetarchive";
@@ -39,10 +27,7 @@ buildPythonPackage rec {
     urllib3
   ];
 
-  nativeCheckInputs = [
-    responses
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ responses pytestCheckHook ];
 
   disabledTests = [
     # Tests require network access
@@ -60,14 +45,13 @@ buildPythonPackage rec {
     "tests/cli/test_ia_download.py"
   ];
 
-  pythonImportsCheck = [
-    "internetarchive"
-  ];
+  pythonImportsCheck = [ "internetarchive" ];
 
   meta = with lib; {
     description = "A Python and Command-Line Interface to Archive.org";
     homepage = "https://github.com/jjjake/internetarchive";
-    changelog = "https://github.com/jjjake/internetarchive/raw/v${version}/HISTORY.rst";
+    changelog =
+      "https://github.com/jjjake/internetarchive/raw/v${version}/HISTORY.rst";
     license = licenses.agpl3Plus;
     maintainers = [ maintainers.marsam ];
     mainProgram = "ia";

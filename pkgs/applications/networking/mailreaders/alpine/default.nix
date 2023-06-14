@@ -1,16 +1,5 @@
-{ lib
-, stdenv
-, fetchgit
-, buildPackages
-, ncurses
-, tcl
-, openssl
-, pam
-, libkrb5
-, openldap
-, libxcrypt
-, gitUpdater
-}:
+{ lib, stdenv, fetchgit, buildPackages, ncurses, tcl, openssl, pam, libkrb5
+, openldap, libxcrypt, gitUpdater }:
 
 stdenv.mkDerivation rec {
   pname = "alpine";
@@ -24,9 +13,7 @@ stdenv.mkDerivation rec {
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
 
-  buildInputs = [
-    ncurses tcl openssl pam libkrb5 openldap libxcrypt
-  ];
+  buildInputs = [ ncurses tcl openssl pam libkrb5 openldap libxcrypt ];
 
   hardeningDisable = [ "format" ];
 

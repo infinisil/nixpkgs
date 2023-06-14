@@ -1,10 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, poetry-core
-, more-itertools
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, poetry-core, more-itertools
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "class-doc";
@@ -18,9 +13,7 @@ buildPythonPackage rec {
     hash = "sha256-4Sn/TuBvBpl1nvJBg327+sVrjGavkYKEYP32DwLWako=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
   postPatch = ''
     substituteInPlace pyproject.toml --replace \
@@ -28,17 +21,11 @@ buildPythonPackage rec {
       "poetry.core.masonry.api"
   '';
 
-  propagatedBuildInputs = [
-    more-itertools
-  ];
+  propagatedBuildInputs = [ more-itertools ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "class_doc"
-  ];
+  pythonImportsCheck = [ "class_doc" ];
 
   meta = with lib; {
     description = "Extract attributes docstrings defined in various ways";

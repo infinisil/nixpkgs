@@ -11,9 +11,7 @@ buildPythonPackage rec {
     hash = "sha256-XVsZckNVJ1H5q8FzqoVd1UWRw0zOygvRtb7arX9dwGE=";
   };
 
-  nativeBuildInputs = [
-    cython
-  ];
+  nativeBuildInputs = [ cython ];
 
   # Regenerating the bindings keeps later versions of Python happy
   postPatch = ''

@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, postgresql
-, openssl
-, zlib
-, readline
-, flex
-, curl
-, json_c
-}:
+{ lib, stdenv, fetchFromGitHub, postgresql, openssl, zlib, readline, flex, curl
+, json_c }:
 
 stdenv.mkDerivation rec {
   pname = "repmgr";

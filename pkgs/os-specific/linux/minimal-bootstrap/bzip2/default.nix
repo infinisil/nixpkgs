@@ -1,11 +1,4 @@
-{ lib
-, fetchurl
-, bash
-, tinycc
-, gnumake
-, gnupatch
-, gzip
-}:
+{ lib, fetchurl, bash, tinycc, gnumake, gnupatch, gzip }:
 let
   pname = "bzip2";
   version = "1.0.8";
@@ -20,23 +13,18 @@ let
     # It also does not have fch{own,mod}, which we don't care about in the bootstrap
     # anyway, so we can null-op those calls.
     (fetchurl {
-      url = "https://github.com/fosslinux/live-bootstrap/raw/87e9d7db9d22b400d1c05247254ac39ee2577e80/sysa/bzip2-1.0.8/patches/mes-libc.patch";
+      url =
+        "https://github.com/fosslinux/live-bootstrap/raw/87e9d7db9d22b400d1c05247254ac39ee2577e80/sysa/bzip2-1.0.8/patches/mes-libc.patch";
       sha256 = "14dciwib28h413skzfkh7samzh8x87dmwhldyxxphff04pvl1j3c";
     })
   ];
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnupatch
-    gzip
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnupatch gzip ];
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/bzip2 --version --help
       mkdir $out
     '';

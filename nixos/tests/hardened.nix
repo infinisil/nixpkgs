@@ -1,43 +1,44 @@
-import ./make-test-python.nix ({ pkgs, ... } : {
+import ./make-test-python.nix ({ pkgs, ... }: {
   name = "hardened";
-  meta = with pkgs.lib.maintainers; {
-    maintainers = [ joachifm ];
+  meta = with pkgs.lib.maintainers; { maintainers = [ joachifm ]; };
+
+  nodes.machine = { lib, pkgs, config, ... }: {
+    users.users.alice = {
+      isNormalUser = true;
+      extraGroups = [ "proc" ];
+    };
+    users.users.sybil = {
+      isNormalUser = true;
+      group = "wheel";
+    };
+    imports = [ ../modules/profiles/hardened.nix ];
+    environment.memoryAllocator.provider = "graphene-hardened";
+    nix.settings.sandbox = false;
+    nixpkgs.overlays = [
+      (final: super: {
+        dhcpcd = super.dhcpcd.override { enablePrivSep = false; };
+      })
+    ];
+    virtualisation.emptyDiskImages = [ 4096 ];
+    boot.initrd.postDeviceCommands = ''
+      ${pkgs.dosfstools}/bin/mkfs.vfat -n EFISYS /dev/vdb
+    '';
+    virtualisation.fileSystems = {
+      "/efi" = {
+        device = "/dev/disk/by-label/EFISYS";
+        fsType = "vfat";
+        options = [ "noauto" ];
+      };
+    };
+    boot.extraModulePackages =
+      optional (versionOlder config.boot.kernelPackages.kernel.version "5.6")
+      config.boot.kernelPackages.wireguard;
+    boot.kernelModules = [ "wireguard" ];
   };
 
-  nodes.machine =
-    { lib, pkgs, config, ... }:
-    { users.users.alice = { isNormalUser = true; extraGroups = [ "proc" ]; };
-      users.users.sybil = { isNormalUser = true; group = "wheel"; };
-      imports = [ ../modules/profiles/hardened.nix ];
-      environment.memoryAllocator.provider = "graphene-hardened";
-      nix.settings.sandbox = false;
-      nixpkgs.overlays = [
-        (final: super: {
-          dhcpcd = super.dhcpcd.override { enablePrivSep = false; };
-        })
-      ];
-      virtualisation.emptyDiskImages = [ 4096 ];
-      boot.initrd.postDeviceCommands = ''
-        ${pkgs.dosfstools}/bin/mkfs.vfat -n EFISYS /dev/vdb
-      '';
-      virtualisation.fileSystems = {
-        "/efi" = {
-          device = "/dev/disk/by-label/EFISYS";
-          fsType = "vfat";
-          options = [ "noauto" ];
-        };
-      };
-      boot.extraModulePackages =
-        optional (versionOlder config.boot.kernelPackages.kernel.version "5.6")
-          config.boot.kernelPackages.wireguard;
-      boot.kernelModules = [ "wireguard" ];
-    };
-
   testScript =
-    let
-      hardened-malloc-tests = pkgs.graphene-hardened-malloc.ld-preload-tests;
-    in
-    ''
+    let hardened-malloc-tests = pkgs.graphene-hardened-malloc.ld-preload-tests;
+    in ''
       machine.wait_for_unit("multi-user.target")
 
 

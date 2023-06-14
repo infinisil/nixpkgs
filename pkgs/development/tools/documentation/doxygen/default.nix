@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, cmake
-, fetchFromGitHub
-, python3
-, flex
-, bison
-, qt5
-, CoreServices
-, libiconv
-, withSqlite ? true, sqlite
-}:
+{ lib, stdenv, cmake, fetchFromGitHub, python3, flex, bison, qt5, CoreServices
+, libiconv, withSqlite ? true, sqlite }:
 
 stdenv.mkDerivation rec {
   pname = "doxygen";
@@ -22,15 +12,9 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-ezeMQk+Vyi9qNsYwbaRRruaIYGY8stFf71W7GonXqco=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    python3
-    flex
-    bison
-  ];
+  nativeBuildInputs = [ cmake python3 flex bison ];
 
-  buildInputs = [ libiconv ]
-    ++ lib.optionals withSqlite [ sqlite ]
+  buildInputs = [ libiconv ] ++ lib.optionals withSqlite [ sqlite ]
     ++ lib.optionals (qt5 != null) (with qt5; [ qtbase wrapQtAppsHook ])
     ++ lib.optionals stdenv.isDarwin [ CoreServices ];
 

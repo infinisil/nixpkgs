@@ -1,15 +1,14 @@
-{ lib, stdenv, fetchFromGitHub, meson, ninja, pkg-config
-, libdrm, libva, libX11, libXext, libXfixes, wayland
-}:
+{ lib, stdenv, fetchFromGitHub, meson, ninja, pkg-config, libdrm, libva, libX11
+, libXext, libXfixes, wayland }:
 
 stdenv.mkDerivation rec {
   pname = "libva-utils";
   version = "2.18.2";
 
   src = fetchFromGitHub {
-    owner  = "intel";
-    repo   = "libva-utils";
-    rev    = version;
+    owner = "intel";
+    repo = "libva-utils";
+    rev = version;
     sha256 = "sha256-D7GPS/46jiIY8K0qPlMlYhmn+yWhTA+I6jAuxclNJSU=";
   };
 
@@ -24,7 +23,8 @@ stdenv.mkDerivation rec {
       in accordance with the libva project.
     '';
     homepage = "https://github.com/intel/libva-utils";
-    changelog = "https://raw.githubusercontent.com/intel/libva-utils/${version}/NEWS";
+    changelog =
+      "https://raw.githubusercontent.com/intel/libva-utils/${version}/NEWS";
     license = licenses.mit;
     maintainers = with maintainers; [ SuperSandro2000 ];
     platforms = platforms.unix;

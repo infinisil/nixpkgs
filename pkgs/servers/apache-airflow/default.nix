@@ -1,17 +1,12 @@
-{ lib
-, fetchFromGitHub
-, fetchPypi
-, python3
-}:
+{ lib, fetchFromGitHub, fetchPypi, python3 }:
 
 let
   python = python3.override {
     packageOverrides = pySelf: pySuper: {
       # flask-appbuilder doesn't work with sqlalchemy 2.x, flask-appbuilder 3.x
       # https://github.com/dpgaspar/Flask-AppBuilder/issues/2038
-      flask-appbuilder = pySuper.flask-appbuilder.overridePythonAttrs (o: {
-        meta.broken = false;
-      });
+      flask-appbuilder = pySuper.flask-appbuilder.overridePythonAttrs
+        (o: { meta.broken = false; });
       # a knock-on effect from overriding the sqlalchemy version
       flask-sqlalchemy = pySuper.flask-sqlalchemy.overridePythonAttrs (o: {
         src = fetchPypi {
@@ -36,10 +31,10 @@ let
       apache-airflow = pySelf.callPackage ./python-package.nix { };
     };
   };
-in
-# See note in ./python-package.nix for
-# instructions on manually testing the web UI
-with python.pkgs; (toPythonApplication apache-airflow).overrideAttrs (_:{
+  # See note in ./python-package.nix for
+  # instructions on manually testing the web UI
+in with python.pkgs;
+(toPythonApplication apache-airflow).overrideAttrs (_: {
   # Provide access to airflow's modified python package set
   # for the cases where external scripts need to import
   # airflow modules, though *caveat emptor* because many of

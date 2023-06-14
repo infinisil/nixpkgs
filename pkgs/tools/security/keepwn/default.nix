@@ -1,8 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, python3
-}:
+{ lib, stdenv, fetchFromGitHub, python3 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "keepwn";
@@ -30,14 +26,13 @@ python3.pkgs.buildPythonApplication rec {
   # Project has no tests
   doCheck = false;
 
-  pythonImportsCheck = [
-    "keepwn"
-  ];
+  pythonImportsCheck = [ "keepwn" ];
 
   meta = with lib; {
     description = "Tool to automate KeePass discovery and secret extraction";
     homepage = "https://github.com/Orange-Cyberdefense/KeePwn";
-    changelog = "https://github.com/Orange-Cyberdefense/KeePwn/releases/tag/${version}";
+    changelog =
+      "https://github.com/Orange-Cyberdefense/KeePwn/releases/tag/${version}";
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ fab ];
   };

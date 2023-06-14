@@ -1,30 +1,9 @@
-{ lib
-, stdenv
-, callPackage
-, fetchurl
-, cmake
-, flex
-, bison
-, spicy-parser-generator
-, openssl
-, libkqueue
-, libpcap
-, zlib
-, file
-, curl
-, libmaxminddb
-, gperftools
-, python3
-, swig
-, gettext
-, coreutils
-, ncurses
-}:
+{ lib, stdenv, callPackage, fetchurl, cmake, flex, bison, spicy-parser-generator
+, openssl, libkqueue, libpcap, zlib, file, curl, libmaxminddb, gperftools
+, python3, swig, gettext, coreutils, ncurses }:
 
-let
-  broker = callPackage ./broker { };
-in
-stdenv.mkDerivation rec {
+let broker = callPackage ./broker { };
+in stdenv.mkDerivation rec {
   pname = "zeek";
   version = "5.2.2";
 
@@ -41,13 +20,7 @@ stdenv.mkDerivation rec {
     ./fix-installation.patch
   ];
 
-  nativeBuildInputs = [
-    bison
-    cmake
-    file
-    flex
-    python3
-  ];
+  nativeBuildInputs = [ bison cmake file flex python3 ];
 
   buildInputs = [
     broker
@@ -60,11 +33,8 @@ stdenv.mkDerivation rec {
     openssl
     swig
     zlib
-  ] ++ lib.optionals stdenv.isLinux [
-    libkqueue
-  ] ++ lib.optionals stdenv.isDarwin [
-    gettext
-  ];
+  ] ++ lib.optionals stdenv.isLinux [ libkqueue ]
+    ++ lib.optionals stdenv.isDarwin [ gettext ];
 
   postPatch = ''
     patchShebangs ./auxil/spicy/spicy/scripts
@@ -82,9 +52,7 @@ stdenv.mkDerivation rec {
     "-DZEEK_LOG_DIR=/var/log/zeek"
     "-DZEEK_STATE_DIR=/var/lib/zeek"
     "-DZEEK_SPOOL_DIR=/var/spool/zeek"
-  ] ++ lib.optionals stdenv.isLinux [
-    "-DLIBKQUEUE_ROOT_DIR=${libkqueue}"
-  ];
+  ] ++ lib.optionals stdenv.isLinux [ "-DLIBKQUEUE_ROOT_DIR=${libkqueue}" ];
 
   postInstall = ''
     for file in $out/share/zeek/base/frameworks/notice/actions/pp-alarms.zeek $out/share/zeek/base/frameworks/notice/main.zeek; do
@@ -98,12 +66,11 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  passthru = {
-    inherit broker;
-  };
+  passthru = { inherit broker; };
 
   meta = with lib; {
-    description = "Network analysis framework much different from a typical IDS";
+    description =
+      "Network analysis framework much different from a typical IDS";
     homepage = "https://www.zeek.org";
     changelog = "https://github.com/zeek/zeek/blob/v${version}/CHANGES";
     license = licenses.bsd3;

@@ -1,37 +1,8 @@
-{ lib
-, fetchFromGitHub
-, rustPlatform
-, pkg-config
-, extra-cmake-modules
-, dbus
-, libX11
-, libXi
-, libXtst
-, libnotify
-, libxkbcommon
-, openssl
-, xclip
-, xdotool
-, setxkbmap
-, wl-clipboard
-, wxGTK32
-, makeWrapper
-, stdenv
-, AppKit
-, Cocoa
-, Foundation
-, IOKit
-, Kernel
-, AVFoundation
-, Carbon
-, QTKit
-, AVKit
-, WebKit
-, waylandSupport ? false
-, x11Support ? stdenv.isLinux
-, testers
-, espanso
-}:
+{ lib, fetchFromGitHub, rustPlatform, pkg-config, extra-cmake-modules, dbus
+, libX11, libXi, libXtst, libnotify, libxkbcommon, openssl, xclip, xdotool
+, setxkbmap, wl-clipboard, wxGTK32, makeWrapper, stdenv, AppKit, Cocoa
+, Foundation, IOKit, Kernel, AVFoundation, Carbon, QTKit, AVKit, WebKit
+, waylandSupport ? false, x11Support ? stdenv.isLinux, testers, espanso }:
 # espanso does not support building with both X11 and Wayland support at the same time
 assert stdenv.isLinux -> x11Support != waylandSupport;
 assert stdenv.isDarwin -> !x11Support;
@@ -54,77 +25,45 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  cargoPatches = lib.optionals stdenv.isDarwin [
-    ./inject-wx-on-darwin.patch
-  ];
+  cargoPatches = lib.optionals stdenv.isDarwin [ ./inject-wx-on-darwin.patch ];
 
-  nativeBuildInputs = [
-    extra-cmake-modules
-    pkg-config
-    makeWrapper
-    wxGTK32
-  ];
+  nativeBuildInputs = [ extra-cmake-modules pkg-config makeWrapper wxGTK32 ];
 
   # Ref: https://github.com/espanso/espanso/blob/78df1b704fe2cc5ea26f88fdc443b6ae1df8a989/scripts/build_binary.rs#LL49C3-L62C4
   buildNoDefaultFeatures = true;
-  buildFeatures = [
-    "modulo"
-  ] ++ lib.optionals waylandSupport[
-    "wayland"
-  ] ++ lib.optionals stdenv.isLinux [
-    "vendored-tls"
-  ] ++ lib.optionals stdenv.isDarwin [
-    "native-tls"
-  ];
+  buildFeatures = [ "modulo" ] ++ lib.optionals waylandSupport [ "wayland" ]
+    ++ lib.optionals stdenv.isLinux [ "vendored-tls" ]
+    ++ lib.optionals stdenv.isDarwin [ "native-tls" ];
 
-  buildInputs = [
-    wxGTK32
-  ] ++ lib.optionals stdenv.isLinux [
-    openssl
-    dbus
-    libnotify
-    libxkbcommon
-  ] ++ lib.optionals stdenv.isDarwin [
-    AppKit
-    Cocoa
-    Foundation
-    IOKit
-    Kernel
-    AVFoundation
-    Carbon
-    QTKit
-    AVKit
-    WebKit
-  ] ++ lib.optionals waylandSupport [
-    wl-clipboard
-  ] ++ lib.optionals x11Support [
-    libXi
-    libXtst
-    libX11
-    xclip
-    xdotool
-  ];
+  buildInputs = [ wxGTK32 ]
+    ++ lib.optionals stdenv.isLinux [ openssl dbus libnotify libxkbcommon ]
+    ++ lib.optionals stdenv.isDarwin [
+      AppKit
+      Cocoa
+      Foundation
+      IOKit
+      Kernel
+      AVFoundation
+      Carbon
+      QTKit
+      AVKit
+      WebKit
+    ] ++ lib.optionals waylandSupport [ wl-clipboard ]
+    ++ lib.optionals x11Support [ libXi libXtst libX11 xclip xdotool ];
 
   # Some tests require networking
   doCheck = false;
 
   postInstall = ''
     wrapProgram $out/bin/espanso \
-      --prefix PATH : ${lib.makeBinPath (
-        lib.optionals stdenv.isLinux [
-          libnotify
-          setxkbmap
-        ] ++ lib.optionals waylandSupport [
-          wl-clipboard
-        ] ++ lib.optionals x11Support [
-          xclip
-        ]
-      )}
+      --prefix PATH : ${
+        lib.makeBinPath (lib.optionals stdenv.isLinux [ libnotify setxkbmap ]
+          ++ lib.optionals waylandSupport [ wl-clipboard ]
+          ++ lib.optionals x11Support [ xclip ])
+      }
   '';
 
-  passthru.tests.version = testers.testVersion {
-    package = espanso;
-  };
+  passthru.tests.version = testers.testVersion { package = espanso; };
 
   meta = with lib; {
     description = "Cross-platform Text Expander written in Rust";

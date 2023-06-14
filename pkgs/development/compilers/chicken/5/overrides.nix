@@ -18,12 +18,13 @@ let
   broken = addMetaAttrs { broken = true; };
   brokenOnDarwin = addMetaAttrs { broken = stdenv.isDarwin; };
   addToCscOptions = opt: old: {
-    CSC_OPTIONS = lib.concatStringsSep " " ([ old.CSC_OPTIONS or "" ] ++ lib.toList opt);
+    CSC_OPTIONS =
+      lib.concatStringsSep " " ([ old.CSC_OPTIONS or "" ] ++ lib.toList opt);
   };
-in
-{
+in {
   allegro = addToBuildInputsWithPkgConfig ([ pkgs.allegro5 pkgs.libglvnd ]
-    ++ lib.optionals stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.OpenGL ]);
+    ++ lib.optionals stdenv.isDarwin
+    [ pkgs.darwin.apple_sdk.frameworks.OpenGL ]);
   breadline = addToBuildInputs pkgs.readline;
   blas = addToBuildInputsWithPkgConfig pkgs.blas;
   blosc = addToBuildInputs pkgs.c-blosc;
@@ -54,7 +55,8 @@ in
   nanomsg = addToBuildInputs pkgs.nanomsg;
   ncurses = addToBuildInputsWithPkgConfig [ pkgs.ncurses ];
   opencl = addToBuildInputs ([ pkgs.opencl-headers pkgs.ocl-icd ]
-    ++ lib.optionals stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.OpenCL ]);
+    ++ lib.optionals stdenv.isDarwin
+    [ pkgs.darwin.apple_sdk.frameworks.OpenCL ]);
   openssl = addToBuildInputs pkgs.openssl;
   plot = addToBuildInputs pkgs.plotutils;
   postgresql = addToBuildInputsWithPkgConfig pkgs.postgresql;
@@ -82,29 +84,32 @@ in
   zstd = addToBuildInputs pkgs.zstd;
 
   # less trivial fixes, should be upstreamed
-  git = old: (addToBuildInputsWithPkgConfig pkgs.libgit2 old) // {
-    postPatch = ''
-      substituteInPlace libgit2.scm \
-        --replace "asize" "reserved"
-    '';
-  };
-  lazy-ffi = old: (addToBuildInputs pkgs.libffi old) // {
-    postPatch = ''
-      substituteInPlace lazy-ffi.scm \
-        --replace "ffi/ffi.h" "ffi.h"
-    '';
-  };
+  git = old:
+    (addToBuildInputsWithPkgConfig pkgs.libgit2 old) // {
+      postPatch = ''
+        substituteInPlace libgit2.scm \
+          --replace "asize" "reserved"
+      '';
+    };
+  lazy-ffi = old:
+    (addToBuildInputs pkgs.libffi old) // {
+      postPatch = ''
+        substituteInPlace lazy-ffi.scm \
+          --replace "ffi/ffi.h" "ffi.h"
+      '';
+    };
   opengl = old:
     (addToBuildInputsWithPkgConfig
       (lib.optionals (!stdenv.isDarwin) [ pkgs.libGL pkgs.libGLU ]
-      ++ lib.optionals stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.Foundation pkgs.darwin.apple_sdk.frameworks.OpenGL ])
-      old)
-    // {
-      postPatch = ''
-        substituteInPlace opengl.egg \
-          --replace 'framework ' 'framework" "'
-      '';
-    };
+        ++ lib.optionals stdenv.isDarwin [
+          pkgs.darwin.apple_sdk.frameworks.Foundation
+          pkgs.darwin.apple_sdk.frameworks.OpenGL
+        ]) old) // {
+          postPatch = ''
+            substituteInPlace opengl.egg \
+              --replace 'framework ' 'framework" "'
+          '';
+        };
   posix-shm = old: {
     postPatch = lib.optionalString stdenv.isDarwin ''
       substituteInPlace build.scm \

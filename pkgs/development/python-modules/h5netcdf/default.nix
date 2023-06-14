@@ -1,13 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, fetchpatch
-, h5py
-, pytestCheckHook
-, netcdf4
-, pythonOlder
-, setuptools-scm
-}:
+{ lib, buildPythonPackage, fetchPypi, fetchpatch, h5py, pytestCheckHook, netcdf4
+, pythonOlder, setuptools-scm }:
 
 buildPythonPackage rec {
   pname = "h5netcdf";
@@ -23,24 +15,15 @@ buildPythonPackage rec {
 
   SETUPTOOLS_SCM_PRETEND_VERSION = version;
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [
-    h5py
-  ];
+  propagatedBuildInputs = [ h5py ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    netcdf4
-  ];
+  nativeCheckInputs = [ pytestCheckHook netcdf4 ];
 
   dontUseSetuptoolsCheck = true;
 
-  pythonImportsCheck = [
-    "h5netcdf"
-  ];
+  pythonImportsCheck = [ "h5netcdf" ];
 
   meta = with lib; {
     description = "netCDF4 via h5py";

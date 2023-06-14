@@ -1,18 +1,6 @@
-{ stdenv
-, lib
-, substituteAll
-, buildPythonPackage
-, fetchPypi
-, catch2
-, cmake
-, cxxopts
-, ghc_filesystem
-, pybind11
-, pytestCheckHook
-, pythonOlder
-, psutil
-, setuptools-scm
-}:
+{ stdenv, lib, substituteAll, buildPythonPackage, fetchPypi, catch2, cmake
+, cxxopts, ghc_filesystem, pybind11, pytestCheckHook, pythonOlder, psutil
+, setuptools-scm }:
 
 buildPythonPackage rec {
   pname = "chiapos";
@@ -38,10 +26,7 @@ buildPythonPackage rec {
 
   buildInputs = [ pybind11 ];
 
-  nativeCheckInputs = [
-    psutil
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ psutil pytestCheckHook ];
 
   # A fix for cxxopts >=3.1
   postPatch = ''

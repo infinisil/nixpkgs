@@ -6,8 +6,7 @@ import ./make-test-python.nix ({ pkgs, ... }:
     testCredentials = {
       password = "Password1_cZPEwpCWvrReripJmAZdmVIZd8HHoHcl";
     };
-  in
-  {
+  in {
     name = "kanidm";
     meta.maintainers = with pkgs.lib.maintainers; [ erictapen Flakebi ];
 
@@ -43,28 +42,28 @@ import ./make-test-python.nix ({ pkgs, ... }:
           verify_hostnames = true;
         };
         enablePam = true;
-        unixSettings = {
-          pam_allowed_login_groups = [ "shell" ];
-        };
+        unixSettings = { pam_allowed_login_groups = [ "shell" ]; };
       };
 
-      networking.hosts."${nodes.server.networking.primaryIPAddress}" = [ serverDomain ];
+      networking.hosts."${nodes.server.networking.primaryIPAddress}" =
+        [ serverDomain ];
 
       security.pki.certificateFiles = [ certs.ca.cert ];
     };
 
     testScript = { nodes, ... }:
       let
-        ldapBaseDN = builtins.concatStringsSep "," (map (s: "dc=" + s) (pkgs.lib.splitString "." serverDomain));
+        ldapBaseDN = builtins.concatStringsSep ","
+          (map (s: "dc=" + s) (pkgs.lib.splitString "." serverDomain));
 
         # We need access to the config file in the test script.
-        filteredConfig = pkgs.lib.converge
-          (pkgs.lib.filterAttrsRecursive (_: v: v != null))
+        filteredConfig =
+          pkgs.lib.converge (pkgs.lib.filterAttrsRecursive (_: v: v != null))
           nodes.server.services.kanidm.serverSettings;
-        serverConfigFile = (pkgs.formats.toml { }).generate "server.toml" filteredConfig;
+        serverConfigFile =
+          (pkgs.formats.toml { }).generate "server.toml" filteredConfig;
 
-      in
-      ''
+      in ''
         start_all()
         server.wait_for_unit("kanidm.service")
 

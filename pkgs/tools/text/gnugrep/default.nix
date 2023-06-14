@@ -5,9 +5,9 @@
 # cgit) that are needed here should be included directly in Nixpkgs as
 # files.
 
-let version = "3.11"; in
+let version = "3.11";
 
-stdenv.mkDerivation {
+in stdenv.mkDerivation {
   pname = "gnugrep";
   inherit version;
 
@@ -19,7 +19,8 @@ stdenv.mkDerivation {
   # Some gnulib tests fail on Musl: https://github.com/NixOS/nixpkgs/pull/228714
   postPatch = if stdenv.hostPlatform.isMusl then ''
     sed -i 's:gnulib-tests::g' Makefile.in
-  '' else null;
+  '' else
+    null;
 
   nativeCheckInputs = [ perl glibcLocales ];
   outputs = [ "out" "info" ]; # the man pages are rather small
@@ -38,15 +39,14 @@ stdenv.mkDerivation {
 
   # Fix reference to sh in bootstrap-tools, and invoke grep via
   # absolute path rather than looking at argv[0].
-  postInstall =
-    ''
-      rm $out/bin/egrep $out/bin/fgrep
-      echo "#! /bin/sh" > $out/bin/egrep
-      echo "exec $out/bin/grep -E \"\$@\"" >> $out/bin/egrep
-      echo "#! /bin/sh" > $out/bin/fgrep
-      echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
-      chmod +x $out/bin/egrep $out/bin/fgrep
-    '';
+  postInstall = ''
+    rm $out/bin/egrep $out/bin/fgrep
+    echo "#! /bin/sh" > $out/bin/egrep
+    echo "exec $out/bin/grep -E \"\$@\"" >> $out/bin/egrep
+    echo "#! /bin/sh" > $out/bin/fgrep
+    echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
+    chmod +x $out/bin/egrep $out/bin/fgrep
+  '';
 
   meta = with lib; {
     homepage = "https://www.gnu.org/software/grep/";
@@ -60,15 +60,10 @@ stdenv.mkDerivation {
 
     license = licenses.gpl3Plus;
 
-    maintainers = [
-      maintainers.das_j
-      maintainers.m00wl
-    ];
+    maintainers = [ maintainers.das_j maintainers.m00wl ];
     platforms = platforms.all;
     mainProgram = "grep";
   };
 
-  passthru = {
-    inherit pcre2;
-  };
+  passthru = { inherit pcre2; };
 }

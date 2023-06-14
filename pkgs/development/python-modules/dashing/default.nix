@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 python3.pkgs.buildPythonPackage rec {
   pname = "dashing";
@@ -15,9 +12,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-JRRgjg8pp3Xb0bERFWEhnOg9U8+kuqL+QQH6uE/Vbxs=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
-    blessed
-  ];
+  propagatedBuildInputs = with python3.pkgs; [ blessed ];
 
   meta = with lib; {
     homepage = "https://github.com/FedericoCeratto/dashing";

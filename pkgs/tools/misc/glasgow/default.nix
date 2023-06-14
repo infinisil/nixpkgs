@@ -1,11 +1,4 @@
-{ lib
-, python3
-, fetchFromGitHub
-, sdcc
-, yosys
-, icestorm
-, nextpnr
-}:
+{ lib, python3, fetchFromGitHub, sdcc, yosys, icestorm, nextpnr }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "glasgow";
@@ -22,10 +15,7 @@ python3.pkgs.buildPythonApplication rec {
     sha256 = "sha256-s4fWpKJj6n2+CIAsD2bjr5K8RhJz1H1sFnjiartNGf0=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools-scm
-    sdcc
-  ];
+  nativeBuildInputs = [ python3.pkgs.setuptools-scm sdcc ];
 
   propagatedBuildInputs = with python3.pkgs; [
     aiohttp
@@ -57,9 +47,15 @@ python3.pkgs.buildPythonApplication rec {
   '';
 
   makeWrapperArgs = [
-    "--set" "YOSYS" "${yosys}/bin/yosys"
-    "--set" "ICEPACK" "${icestorm}/bin/icepack"
-    "--set" "NEXTPNR_ICE40" "${nextpnr}/bin/nextpnr-ice40"
+    "--set"
+    "YOSYS"
+    "${yosys}/bin/yosys"
+    "--set"
+    "ICEPACK"
+    "${icestorm}/bin/icepack"
+    "--set"
+    "NEXTPNR_ICE40"
+    "${nextpnr}/bin/nextpnr-ice40"
   ];
 
   meta = with lib; {

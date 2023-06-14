@@ -1,11 +1,6 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, stdenv
-, installShellFiles
+{ lib, rustPlatform, fetchFromGitHub, stdenv, installShellFiles
 , installShellCompletions ? stdenv.hostPlatform == stdenv.buildPlatform
-, installManPages ? stdenv.hostPlatform == stdenv.buildPlatform
-, withTcp ? true
+, installManPages ? stdenv.hostPlatform == stdenv.buildPlatform, withTcp ? true
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -21,7 +16,8 @@ rustPlatform.buildRustPackage rec {
 
   cargoSha256 = "jpshuavywCLN03xD/gFgQeGbKtmHq5pULbxd+RUbaDk=";
 
-  nativeBuildInputs = lib.optional (installManPages || installShellCompletions) installShellFiles;
+  nativeBuildInputs =
+    lib.optional (installManPages || installShellCompletions) installShellFiles;
 
   buildNoDefaultFeatures = true;
   buildFeatures = lib.optional withTcp "tcp";
@@ -40,7 +36,8 @@ rustPlatform.buildRustPackage rec {
   meta = with lib; {
     description = "CLI to manage your time.";
     homepage = "https://pimalaya.org/comodoro/";
-    changelog = "https://github.com/soywod/comodoro/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/soywod/comodoro/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ soywod ];
   };

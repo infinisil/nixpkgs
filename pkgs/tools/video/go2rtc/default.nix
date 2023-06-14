@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "go2rtc";
@@ -16,21 +13,17 @@ buildGoModule rec {
 
   vendorHash = "sha256-iav7k4HLyXO94qofcHxVxhV8BV2k5oiTtX8kVyxnpoI=";
 
-  buildFlagArrays = [
-    "-trimpath"
-  ];
+  buildFlagArrays = [ "-trimpath" ];
 
   CGO_ENABLED = 0;
 
-  ldflags = [
-    "-s"
-    "-w"
-  ];
+  ldflags = [ "-s" "-w" ];
 
   doCheck = false; # tests fail
 
   meta = with lib; {
-    description = "Ultimate camera streaming application with support RTSP, RTMP, HTTP-FLV, WebRTC, MSE, HLS, MJPEG, HomeKit, FFmpeg, etc.";
+    description =
+      "Ultimate camera streaming application with support RTSP, RTMP, HTTP-FLV, WebRTC, MSE, HLS, MJPEG, HomeKit, FFmpeg, etc.";
     homepage = "https://github.com/AlexxIT/go2rtc";
     changelog = "https://github.com/AlexxIT/go2rtc/releases/tag/v${version}";
     license = licenses.mit;

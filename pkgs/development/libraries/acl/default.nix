@@ -14,9 +14,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-dgxhxokBs3/dXu/ur0wMeia9/disdHoe3/HODiQ8Ea8=";
   };
 
-  patches = [
-    ./LFS64.patch
-  ];
+  patches = [ ./LFS64.patch ];
 
   outputs = [ "bin" "dev" "out" "man" "doc" ];
 

@@ -13,12 +13,17 @@ buildGoModule rec {
 
   vendorHash = "sha256-D2Gi90seLPTM0ttlz7V6FW1ZMiVN22YLWKeTquXvagY=";
 
-  ldflags = [ "-s" "-w" "-X github.com/kubefirst/runtime/configs.K1Version=v${version}"];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X github.com/kubefirst/runtime/configs.K1Version=v${version}"
+  ];
 
   doCheck = false;
 
   meta = with lib; {
-    description = "The Kubefirst CLI creates instant GitOps platforms that integrate some of the best tools in cloud native from scratch.";
+    description =
+      "The Kubefirst CLI creates instant GitOps platforms that integrate some of the best tools in cloud native from scratch.";
     homepage = "https://github.com/kubefirst/kubefirst/";
     license = licenses.mit;
     maintainers = with maintainers; [ qjoly ];

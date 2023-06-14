@@ -1,10 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, hatchling
-, rich
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, hatchling, rich, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "rich-argparse";
@@ -18,23 +12,17 @@ buildPythonPackage rec {
     hash = "sha256-Rnv4A9pZ5VHpNjrWnsKyxQ4ISCLjIUu3tbbOzP4uFuw=";
   };
 
-  propagatedBuildInputs = [
-    hatchling
-    rich
-  ];
+  propagatedBuildInputs = [ hatchling rich ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "rich_argparse"
-  ];
+  pythonImportsCheck = [ "rich_argparse" ];
 
   meta = with lib; {
     description = "Format argparse help output using rich.";
     homepage = "https://github.com/hamdanal/rich-argparse";
-    changelog = "https://github.com/hamdanal/rich-argparse/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/hamdanal/rich-argparse/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ graham33 ];
   };

@@ -1,15 +1,5 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, atk
-, cairo
-, gdk-pixbuf
-, glib
-, gtk3
-, openssl
-, pango
-}:
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, atk, cairo, gdk-pixbuf, glib
+, gtk3, openssl, pango }:
 
 rustPlatform.buildRustPackage rec {
   pname = "noaa-apt";
@@ -22,19 +12,9 @@ rustPlatform.buildRustPackage rec {
     sha256 = "sha256-wmjglF2+BFmlTfvqt90nbCxuldN8AEFXj7y9tgTvA2Y=";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    atk
-    cairo
-    gdk-pixbuf
-    glib
-    gtk3
-    openssl
-    pango
-  ];
+  buildInputs = [ atk cairo gdk-pixbuf glib gtk3 openssl pango ];
 
   cargoLock = {
     lockFile = ./Cargo.lock;
@@ -65,6 +45,7 @@ rustPlatform.buildRustPackage rec {
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ trepetti tmarkus ];
     platforms = platforms.all;
-    changelog = "https://github.com/martinber/noaa-apt/releases/tag/v${version}";
+    changelog =
+      "https://github.com/martinber/noaa-apt/releases/tag/v${version}";
   };
 }

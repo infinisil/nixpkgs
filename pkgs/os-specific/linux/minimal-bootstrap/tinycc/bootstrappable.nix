@@ -7,13 +7,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-{ lib
-, callPackage
-, fetchurl
-, kaem
-, mes
-, mes-libc
-}:
+{ lib, callPackage, fetchurl, kaem, mes, mes-libc }:
 let
   inherit (callPackage ./common.nix { }) buildTinyccMes recompileLibc;
 
@@ -21,10 +15,11 @@ let
   rev = "80114c4da6b17fbaabb399cc29f427e368309bc8";
 
   tarball = fetchurl {
-    url = "https://gitlab.com/janneke/tinycc/-/archive/${rev}/tinycc-${rev}.tar.gz";
+    url =
+      "https://gitlab.com/janneke/tinycc/-/archive/${rev}/tinycc-${rev}.tar.gz";
     sha256 = "1a0cw9a62qc76qqn5sjmp3xrbbvsz2dxrw21lrnx9q0s74mwaxbq";
   };
-  src = (kaem.runCommand "tinycc-bootstrappable-${version}-source" {} ''
+  src = (kaem.runCommand "tinycc-bootstrappable-${version}-source" { } ''
     ungz --file ${tarball} --output tinycc.tar
     mkdir -p ''${out}
     cd ''${out}
@@ -48,10 +43,11 @@ let
 
   tinycc-boot-mes = rec {
     compiler = kaem.runCommand "${pname}-${version}" {
-      passthru.tests.get-version = result: kaem.runCommand "${pname}-get-version-${version}" {} ''
-        ${result}/bin/tcc -version
-        mkdir ''${out}
-      '';
+      passthru.tests.get-version = result:
+        kaem.runCommand "${pname}-get-version-${version}" { } ''
+          ${result}/bin/tcc -version
+          mkdir ''${out}
+        '';
     } ''
       catm config.h
       ${mes.compiler}/bin/mes --no-auto-compile -e main ${mes.srcPost.bin}/bin/mescc.scm -- \
@@ -100,27 +96,17 @@ let
     pname = "tinycc-boot0";
     inherit src version meta;
     prev = tinycc-boot-mes;
-    buildOptions = [
-      "-D HAVE_LONG_LONG_STUB=1"
-      "-D HAVE_SETJMP=1"
-    ];
-    libtccBuildOptions = [
-      "-D HAVE_LONG_LONG_STUB=1"
-    ];
+    buildOptions = [ "-D HAVE_LONG_LONG_STUB=1" "-D HAVE_SETJMP=1" ];
+    libtccBuildOptions = [ "-D HAVE_LONG_LONG_STUB=1" ];
   };
 
   tinycc-boot1 = buildTinyccMes {
     pname = "tinycc-boot1";
     inherit src version meta;
     prev = tinycc-boot0;
-    buildOptions = [
-      "-D HAVE_BITFIELD=1"
-      "-D HAVE_LONG_LONG=1"
-      "-D HAVE_SETJMP=1"
-    ];
-    libtccBuildOptions = [
-      "-D HAVE_LONG_LONG=1"
-    ];
+    buildOptions =
+      [ "-D HAVE_BITFIELD=1" "-D HAVE_LONG_LONG=1" "-D HAVE_SETJMP=1" ];
+    libtccBuildOptions = [ "-D HAVE_LONG_LONG=1" ];
   };
 
   tinycc-boot2 = buildTinyccMes {
@@ -133,10 +119,7 @@ let
       "-D HAVE_LONG_LONG=1"
       "-D HAVE_SETJMP=1"
     ];
-    libtccBuildOptions = [
-      "-D HAVE_FLOAT_STUB=1"
-      "-D HAVE_LONG_LONG=1"
-    ];
+    libtccBuildOptions = [ "-D HAVE_FLOAT_STUB=1" "-D HAVE_LONG_LONG=1" ];
   };
 
   tinycc-boot3 = buildTinyccMes {
@@ -149,13 +132,9 @@ let
       "-D HAVE_LONG_LONG=1"
       "-D HAVE_SETJMP=1"
     ];
-    libtccBuildOptions = [
-      "-D HAVE_FLOAT=1"
-      "-D HAVE_LONG_LONG=1"
-    ];
+    libtccBuildOptions = [ "-D HAVE_FLOAT=1" "-D HAVE_LONG_LONG=1" ];
   };
-in
-buildTinyccMes {
+in buildTinyccMes {
   pname = "tinycc-bootstrappable";
   inherit src version meta;
   prev = tinycc-boot3;
@@ -165,8 +144,5 @@ buildTinyccMes {
     "-D HAVE_LONG_LONG=1"
     "-D HAVE_SETJMP=1"
   ];
-  libtccBuildOptions = [
-    "-D HAVE_FLOAT=1"
-    "-D HAVE_LONG_LONG=1"
-  ];
+  libtccBuildOptions = [ "-D HAVE_FLOAT=1" "-D HAVE_LONG_LONG=1" ];
 }

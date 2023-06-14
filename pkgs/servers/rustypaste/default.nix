@@ -13,9 +13,8 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-A651PTooQjITjxCLKPhnFSCxa27uesTOP8ZbAlRbOUk=";
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.CoreServices
-  ];
+  buildInputs =
+    lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.CoreServices ];
 
   # Some tests need network
   checkFlags = [
@@ -28,7 +27,8 @@ rustPlatform.buildRustPackage rec {
   meta = with lib; {
     description = "A minimal file upload/pastebin service";
     homepage = "https://github.com/orhun/rustypaste";
-    changelog = "https://github.com/orhun/rustypaste/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/orhun/rustypaste/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ figsoda seqizz ];
   };

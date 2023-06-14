@@ -1,14 +1,5 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, cmake
-, flac
-, libpulseaudio
-, qtbase
-, qtgraphicaleffects
-, qtquickcontrols2
-, wrapQtAppsHook
-}:
+{ stdenv, lib, fetchFromGitHub, cmake, flac, libpulseaudio, qtbase
+, qtgraphicaleffects, qtquickcontrols2, wrapQtAppsHook }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "noson";
@@ -21,18 +12,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-7RrBfkUCRVzUGl+OT3OuoMlu4D3Sa7RpBefFgmfX1Fs=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    wrapQtAppsHook
-  ];
+  nativeBuildInputs = [ cmake wrapQtAppsHook ];
 
-  buildInputs = [
-    flac
-    libpulseaudio
-    qtbase
-    qtgraphicaleffects
-    qtquickcontrols2
-  ];
+  buildInputs =
+    [ flac libpulseaudio qtbase qtgraphicaleffects qtquickcontrols2 ];
 
   # wrapQtAppsHook doesn't automatically find noson-gui
   dontWrapQtApps = true;

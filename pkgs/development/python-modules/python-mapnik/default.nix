@@ -1,30 +1,7 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, fetchpatch
-, substituteAll
-, isPyPy
-, python
-, pillow
-, pycairo
-, pkg-config
-, boost182
-, cairo
-, harfbuzz
-, icu
-, libjpeg
-, libpng
-, libtiff
-, libwebp
-, mapnik
-, proj
-, zlib
-, libxml2
-, sqlite
-, nose
-, pytestCheckHook
-, stdenv
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, fetchpatch, substituteAll, isPyPy
+, python, pillow, pycairo, pkg-config, boost182, cairo, harfbuzz, icu, libjpeg
+, libpng, libtiff, libwebp, mapnik, proj, zlib, libxml2, sqlite, nose
+, pytestCheckHook, stdenv }:
 
 buildPythonPackage rec {
   pname = "python-mapnik";
@@ -42,7 +19,8 @@ buildPythonPackage rec {
   patches = [
     # https://github.com/mapnik/python-mapnik/issues/239
     (fetchpatch {
-      url = "https://github.com/koordinates/python-mapnik/commit/318b1edac16f48a7f21902c192c1dd86f6210a44.patch";
+      url =
+        "https://github.com/koordinates/python-mapnik/commit/318b1edac16f48a7f21902c192c1dd86f6210a44.patch";
       hash = "sha256-cfU8ZqPPGCqoHEyGvJ8Xy/bGpbN2vSDct6A3N5+I8xM=";
     })
     ./find-pycairo-with-pkg-config.patch
@@ -77,24 +55,21 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ pillow pycairo ];
 
-  configureFlags = [
-    "XMLPARSER=libxml2"
-  ];
+  configureFlags = [ "XMLPARSER=libxml2" ];
 
   disabled = isPyPy;
 
   preBuild = ''
-    export BOOST_PYTHON_LIB="boost_python${"${lib.versions.major python.version}${lib.versions.minor python.version}"}"
+    export BOOST_PYTHON_LIB="boost_python${
+      "${lib.versions.major python.version}${lib.versions.minor python.version}"
+    }"
     export BOOST_THREAD_LIB="boost_thread"
     export BOOST_SYSTEM_LIB="boost_system"
     export PYCAIRO=true
     export XMLPARSER=libxml2
   '';
 
-  nativeCheckInputs = [
-    nose
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ nose pytestCheckHook ];
 
   preCheck = ''
     # import from $out
@@ -133,9 +108,7 @@ buildPythonPackage rec {
     "test_visual_zoom_all_rendering1"
     "test_visual_zoom_all_rendering2"
     "test_wgs84_inverse_forward"
-  ] ++ lib.optionals stdenv.isDarwin [
-    "test_passing_pycairo_context_pdf"
-  ];
+  ] ++ lib.optionals stdenv.isDarwin [ "test_passing_pycairo_context_pdf" ];
 
   pythonImportsCheck = [ "mapnik" ];
 

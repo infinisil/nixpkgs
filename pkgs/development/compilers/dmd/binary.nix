@@ -1,5 +1,5 @@
-{ lib, stdenv, fetchurl, curl, tzdata, autoPatchelfHook, fixDarwinDylibNames, glibc
-, version, hashes }:
+{ lib, stdenv, fetchurl, curl, tzdata, autoPatchelfHook, fixDarwinDylibNames
+, glibc, version, hashes }:
 
 let
   inherit (stdenv) hostPlatform;
@@ -18,18 +18,10 @@ in stdenv.mkDerivation {
   dontConfigure = true;
   dontBuild = true;
 
-  nativeBuildInputs = lib.optionals hostPlatform.isLinux [
-    autoPatchelfHook
-  ] ++ lib.optionals hostPlatform.isDarwin [
-    fixDarwinDylibNames
-  ];
-  propagatedBuildInputs = [
-    curl
-    tzdata
-  ] ++ lib.optionals hostPlatform.isLinux [
-    glibc
-    stdenv.cc.cc.libgcc
-  ];
+  nativeBuildInputs = lib.optionals hostPlatform.isLinux [ autoPatchelfHook ]
+    ++ lib.optionals hostPlatform.isDarwin [ fixDarwinDylibNames ];
+  propagatedBuildInputs = [ curl tzdata ]
+    ++ lib.optionals hostPlatform.isLinux [ glibc stdenv.cc.cc.libgcc ];
 
   installPhase = ''
     runHook preInstall

@@ -1,16 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, docutils
-, lockfile
-, pytestCheckHook
-, testscenarios
-, testtools
-, twine
-, python
-, pythonOlder
-, fetchpatch
-}:
+{ lib, buildPythonPackage, fetchPypi, docutils, lockfile, pytestCheckHook
+, testscenarios, testtools, twine, python, pythonOlder, fetchpatch }:
 
 buildPythonPackage rec {
   pname = "python-daemon";
@@ -24,20 +13,11 @@ buildPythonPackage rec {
     sha256 = "sha256-bFdFI3L36v9Ak0ocA60YJr9eeTVY6H/vSRMeZGS02uU=";
   };
 
-  nativeBuildInputs = [
-    twine
-  ];
+  nativeBuildInputs = [ twine ];
 
-  propagatedBuildInputs = [
-    docutils
-    lockfile
-  ];
+  propagatedBuildInputs = [ docutils lockfile ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    testscenarios
-    testtools
-  ];
+  nativeCheckInputs = [ pytestCheckHook testscenarios testtools ];
 
   disabledTests = [
     "begin_with_TestCase"
@@ -56,11 +36,7 @@ buildPythonPackage rec {
     "YearRange_TestCase"
   ];
 
-  pythonImportsCheck = [
-    "daemon"
-    "daemon.daemon"
-    "daemon.pidfile"
-  ];
+  pythonImportsCheck = [ "daemon" "daemon.daemon" "daemon.pidfile" ];
 
   meta = with lib; {
     description = "Library to implement a well-behaved Unix daemon process";

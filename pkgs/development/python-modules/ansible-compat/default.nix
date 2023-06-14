@@ -1,15 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, ansible-core
-, flaky
-, pytest-mock
-, pytestCheckHook
-, pyyaml
-, setuptools-scm
-, subprocess-tee
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, ansible-core, flaky, pytest-mock
+, pytestCheckHook, pyyaml, setuptools-scm, subprocess-tee, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "ansible-compat";
@@ -23,26 +13,16 @@ buildPythonPackage rec {
     hash = "sha256-aWFi28EiPAtHQTamFmKz/kQRXUkN6NpgaxSc7lcrAe0=";
   };
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [
-    pyyaml
-    subprocess-tee
-  ];
+  propagatedBuildInputs = [ pyyaml subprocess-tee ];
 
   preCheck = ''
     export HOME=$(mktemp -d)
     export PATH=$PATH:$out/bin
   '';
 
-  nativeCheckInputs = [
-    ansible-core
-    flaky
-    pytest-mock
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ ansible-core flaky pytest-mock pytestCheckHook ];
 
   disabledTests = [
     # require network
@@ -58,14 +38,14 @@ buildPythonPackage rec {
     "test_runtime"
   ];
 
-  pythonImportsCheck = [
-    "ansible_compat"
-  ];
+  pythonImportsCheck = [ "ansible_compat" ];
 
   meta = with lib; {
-    description = "Function collection that help interacting with various versions of Ansible";
+    description =
+      "Function collection that help interacting with various versions of Ansible";
     homepage = "https://github.com/ansible/ansible-compat";
-    changelog = "https://github.com/ansible/ansible-compat/releases/tag/v${version}";
+    changelog =
+      "https://github.com/ansible/ansible-compat/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ ];
   };

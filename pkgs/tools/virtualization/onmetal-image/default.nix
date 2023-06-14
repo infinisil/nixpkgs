@@ -1,8 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-}:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles }:
 
 buildGoModule rec {
   pname = "onmetal-image";
@@ -17,9 +13,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-aCL8hLcBnIs5BJM7opIwcOLvOS3uL9mYXs1vOAMlX/M=";
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   postInstall = ''
     mv $out/bin/cmd $out/bin/onmetal-image

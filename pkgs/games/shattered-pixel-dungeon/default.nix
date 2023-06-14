@@ -1,12 +1,5 @@
-{ lib, stdenv
-, makeWrapper
-, fetchFromGitHub
-, nixosTests
-, gradle
-, perl
-, jre
-, libpulseaudio
-}:
+{ lib, stdenv, makeWrapper, fetchFromGitHub, nixosTests, gradle, perl, jre
+, libpulseaudio }:
 
 let
   pname = "shattered-pixel-dungeon";
@@ -19,9 +12,7 @@ let
     sha256 = "sha256-gg8FHLkw964mYejXvK5GClTvTLGK3FyXR8Kkxjl/pRs=";
   };
 
-  patches = [
-    ./disable-beryx.patch
-  ];
+  patches = [ ./disable-beryx.patch ];
 
   postPatch = ''
     # disable gradle plugins with native code and their targets
@@ -80,11 +71,13 @@ in stdenv.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://shatteredpixel.com/";
-    downloadPage = "https://github.com/00-Evan/shattered-pixel-dungeon/releases";
-    description = "Traditional roguelike game with pixel-art graphics and simple interface";
+    downloadPage =
+      "https://github.com/00-Evan/shattered-pixel-dungeon/releases";
+    description =
+      "Traditional roguelike game with pixel-art graphics and simple interface";
     sourceProvenance = with sourceTypes; [
       fromSource
-      binaryBytecode  # deps
+      binaryBytecode # deps
     ];
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ fgaz ];

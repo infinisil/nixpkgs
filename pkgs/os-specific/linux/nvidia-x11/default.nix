@@ -1,28 +1,28 @@
-{ lib, callPackage, fetchFromGitHub, fetchurl, fetchpatch, stdenv, pkgsi686Linux }:
+{ lib, callPackage, fetchFromGitHub, fetchurl, fetchpatch, stdenv, pkgsi686Linux
+}:
 
 let
-  generic = args: let
-    imported = import ./generic.nix args;
-  in callPackage imported {
-    lib32 = (pkgsi686Linux.callPackage imported {
-      libsOnly = true;
-      kernel = null;
-    }).out;
-  };
+  generic = args:
+    let imported = import ./generic.nix args;
+    in callPackage imported {
+      lib32 = (pkgsi686Linux.callPackage imported {
+        libsOnly = true;
+        kernel = null;
+      }).out;
+    };
 
   kernel = callPackage # a hacky way of extracting parameters from callPackage
     ({ kernel, libsOnly ? false }: if libsOnly then { } else kernel) { };
 
-  selectHighestVersion = a: b: if lib.versionOlder a.version b.version
-    then b
-    else a;
-in
-rec {
+  selectHighestVersion = a: b:
+    if lib.versionOlder a.version b.version then b else a;
+in rec {
   # Official Unix Drivers - https://www.nvidia.com/en-us/drivers/unix/
   # Branch/Maturity data - http://people.freedesktop.org/~aplattner/nvidia-versions.txt
 
   # Policy: use the highest stable version as the default (on our master).
-  stable = if stdenv.hostPlatform.system == "i686-linux" then legacy_390 else latest;
+  stable =
+    if stdenv.hostPlatform.system == "i686-linux" then legacy_390 else latest;
 
   production = generic {
     version = "525.116.04";
@@ -47,7 +47,8 @@ rec {
     patches = [
       # source: https://gist.github.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c
       (fetchpatch {
-        url = "https://gist.github.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c/raw/688b612624945926676de28059fe749203b4b549/nvidia-470xx-fix-linux-6.4.patch";
+        url =
+          "https://gist.github.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c/raw/688b612624945926676de28059fe749203b4b549/nvidia-470xx-fix-linux-6.4.patch";
         hash = "sha256-OyRmezyzqAi7mSJHDjsWQVocSsgJPTW5DvHDFVNX7Dk=";
       })
     ];
@@ -72,7 +73,9 @@ rec {
     openSha256 = "sha256-QFpFRPpBXAB7v2+NP/M/1T1qKDqjdhigHkktnVyWw20=";
     settingsSha256 = "sha256-qNjfsT9NGV151EHnG4fgBonVFSKc4yFEVomtXg9uYD4=";
     persistencedSha256 = "sha256-ci86XGlno6DbHw6rkVSzBpopaapfJvk0+lHcR4LDq50=";
-    url = "https://developer.nvidia.com/downloads/vulkan-beta-${lib.concatStrings (lib.splitString "." version)}-linux";
+    url = "https://developer.nvidia.com/downloads/vulkan-beta-${
+        lib.concatStrings (lib.splitString "." version)
+      }-linux";
   };
 
   # Update note:
@@ -91,12 +94,14 @@ rec {
     patches = [
       # source: https://gist.github.com/joanbm/d10e9cbbbb8e245b6e7e27b2db338faf
       (fetchpatch {
-        url = "https://gist.github.com/joanbm/d10e9cbbbb8e245b6e7e27b2db338faf/raw/f5d5238bdbaa16cd4008658a0f82b9dd84f1b38f/nvidia-470xx-fix-linux-6.3.patch";
+        url =
+          "https://gist.github.com/joanbm/d10e9cbbbb8e245b6e7e27b2db338faf/raw/f5d5238bdbaa16cd4008658a0f82b9dd84f1b38f/nvidia-470xx-fix-linux-6.3.patch";
         hash = "sha256-mR+vXDHgVhWC0JeLgGlbNVCH8XTs7XnhEJS6BV75tI8=";
       })
       # source: https://gist.github.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c
       (fetchpatch {
-        url = "https://gist.github.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c/raw/688b612624945926676de28059fe749203b4b549/nvidia-470xx-fix-linux-6.4.patch";
+        url =
+          "https://gist.github.com/joanbm/77f0650d45747b9a4dc8e330ade2bf5c/raw/688b612624945926676de28059fe749203b4b549/nvidia-470xx-fix-linux-6.4.patch";
         hash = "sha256-OyRmezyzqAi7mSJHDjsWQVocSsgJPTW5DvHDFVNX7Dk=";
       })
     ];

@@ -1,9 +1,4 @@
-{ pkgs
-, buildPythonPackage
-, fetchPypi
-, azure-core
-, typing-extensions
-}:
+{ pkgs, buildPythonPackage, fetchPypi, azure-core, typing-extensions }:
 
 buildPythonPackage rec {
   version = "1.4.0";
@@ -15,10 +10,7 @@ buildPythonPackage rec {
     hash = "sha256-0ZUgg0AJT5jlpmYbeBzeb2oFHnnOMXyqvY/5cDCps64=";
   };
 
-  propagatedBuildInputs = [
-    azure-core
-    typing-extensions
-  ];
+  propagatedBuildInputs = [ azure-core typing-extensions ];
 
   pythonNamespaces = "azure.mgmt";
 

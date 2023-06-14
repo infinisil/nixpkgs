@@ -1,12 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, hatchling
-, numpy
-, scipy
-, matplotlib
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, hatchling, numpy, scipy, matplotlib
+, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "kneed";
@@ -25,19 +18,11 @@ buildPythonPackage rec {
       --replace "--cov=kneed" ""
   '';
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    numpy
-    scipy
-  ];
+  propagatedBuildInputs = [ numpy scipy ];
 
-  checkInputs = [
-    pytestCheckHook
-    matplotlib
-  ];
+  checkInputs = [ pytestCheckHook matplotlib ];
 
   disabledTestPaths = [
     # Fails when matplotlib is installed

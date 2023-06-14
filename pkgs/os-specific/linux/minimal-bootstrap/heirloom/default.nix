@@ -1,18 +1,11 @@
-{ lib
-, fetchurl
-, bash
-, tinycc
-, gnumake
-, gnupatch
-, heirloom-devtools
-, heirloom
-}:
+{ lib, fetchurl, bash, tinycc, gnumake, gnupatch, heirloom-devtools, heirloom }:
 let
   pname = "heirloom";
   version = "070715";
 
   src = fetchurl {
-    url = "mirror://sourceforge/heirloom/heirloom/${version}/heirloom-${version}.tar.bz2";
+    url =
+      "mirror://sourceforge/heirloom/heirloom/${version}/heirloom-${version}.tar.bz2";
     sha256 = "sha256-6zP3C8wBmx0OCkHx11UtRcV6FicuThxIY07D5ESWow8=";
   };
 
@@ -69,30 +62,24 @@ let
     "IWCHAR='-I../libwchar'"
     "LWCHAR='-L../libwchar -lwchar'"
   ];
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnupatch
-    heirloom-devtools
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnupatch heirloom-devtools ];
 
-  passthru.sed =
-    bash.runCommand "${pname}-sed-${version}" {} ''
-      install -D ${heirloom}/bin/sed $out/bin/sed
-    '';
+  passthru.sed = bash.runCommand "${pname}-sed-${version}" { } ''
+    install -D ${heirloom}/bin/sed $out/bin/sed
+  '';
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/banner Hello Heirloom
       mkdir $out
     '';
 
   meta = with lib; {
-    description = "The Heirloom Toolchest is a collection of standard Unix utilities";
+    description =
+      "The Heirloom Toolchest is a collection of standard Unix utilities";
     homepage = "https://heirloom.sourceforge.net/tools.html";
     license = with licenses; [
       # All licenses according to LICENSE/

@@ -13,15 +13,14 @@ buildGoModule rec {
 
   subPackages = [ "cmd/${pname}" ];
 
-  ldflags = [
-    "-X main.version=v${version}"
-  ];
+  ldflags = [ "-X main.version=v${version}" ];
 
   vendorHash = "sha256-TXFwfqyvCAEn24vtUBcFABzIg0KaYlstiFwS7y6WbKo=";
   doCheck = true;
 
   meta = with lib; {
-    description = "Prometheus / OpenMetrics exporter for GitLab CI pipelines insights";
+    description =
+      "Prometheus / OpenMetrics exporter for GitLab CI pipelines insights";
     homepage = "https://github.com/mvisonneau/gitlab-ci-pipelines-exporter";
     license = licenses.asl20;
     maintainers = with maintainers; [ mmahut mvisonneau ];

@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, psutil
-}:
+{ lib, buildPythonPackage, fetchPypi, psutil }:
 
 buildPythonPackage rec {
   pname = "python-pidfile";
@@ -13,9 +9,7 @@ buildPythonPackage rec {
     hash = "sha256-pgQBL2iagsHMRFEKI85ZwyaIL7kcIftAy6s+lX958M0=";
   };
 
-  propagatedBuildInputs = [
-    psutil
-  ];
+  propagatedBuildInputs = [ psutil ];
 
   pythonImportsCheck = [ "pidfile" ];
 

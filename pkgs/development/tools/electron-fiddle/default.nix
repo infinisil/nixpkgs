@@ -1,17 +1,6 @@
-{ buildFHSEnv
-, electron_24
-, fetchFromGitHub
-, fetchYarnDeps
-, fetchurl
-, fixup_yarn_lock
-, git
-, lib
-, makeDesktopItem
-, nodejs_18
-, stdenvNoCC
-, util-linux
-, zip
-}:
+{ buildFHSEnv, electron_24, fetchFromGitHub, fetchYarnDeps, fetchurl
+, fixup_yarn_lock, git, lib, makeDesktopItem, nodejs_18, stdenvNoCC, util-linux
+, zip }:
 
 let
   pname = "electron-fiddle";
@@ -30,7 +19,8 @@ let
   # from the network and has no stable hash.  Grab an old version from
   # the repository.
   releasesJson = fetchurl {
-    url = "https://raw.githubusercontent.com/electron/fiddle/v0.32.4~18/static/releases.json";
+    url =
+      "https://raw.githubusercontent.com/electron/fiddle/v0.32.4~18/static/releases.json";
     hash = "sha256-1sxd3eJ6/WjXS6XQbrgKUTNUmrhuc1dAvy+VAivGErg=";
   };
 
@@ -96,10 +86,10 @@ let
     mimeTypes = [ "x-scheme-handler/electron-fiddle" ];
   };
 
-in
-buildFHSEnv {
+in buildFHSEnv {
   name = "electron-fiddle";
-  runScript = "${electron}/bin/electron ${unwrapped}/lib/electron-fiddle/resources/app.asar";
+  runScript =
+    "${electron}/bin/electron ${unwrapped}/lib/electron-fiddle/resources/app.asar";
 
   extraInstallCommands = ''
     mkdir -p "$out/share/icons/hicolor/scalable/apps"

@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytestCheckHook
-, flit-core
-, requests
-, tomli
-}:
+{ lib, buildPythonPackage, fetchPypi, pytestCheckHook, flit-core, requests
+, tomli }:
 
 buildPythonPackage rec {
   pname = "wn";
@@ -17,26 +11,17 @@ buildPythonPackage rec {
     hash = "sha256-n03hFoGMAqLu57gw52tY2jkE8uuLFAbwTZ63sHG2168=";
   };
 
-  nativeBuildInputs = [
-    flit-core
-  ];
+  nativeBuildInputs = [ flit-core ];
 
-  propagatedBuildInputs = [
-    requests
-    tomli
-  ];
+  propagatedBuildInputs = [ requests tomli ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   preCheck = ''
     export HOME=$(mktemp -d)
   '';
 
-  pythonImportsCheck = [
-    "wn"
-  ];
+  pythonImportsCheck = [ "wn" ];
 
   meta = with lib; {
     description = "A modern, interlingual wordnet interface for Python";

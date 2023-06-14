@@ -1,7 +1,6 @@
-{ pname, version, src, meta, stdenv, binaryName, desktopName, lib, undmg, makeWrapper
-, branch
-, withOpenASAR ? false, openasar
-, withVencord ? false, vencord }:
+{ pname, version, src, meta, stdenv, binaryName, desktopName, lib, undmg
+, makeWrapper, branch, withOpenASAR ? false, openasar, withVencord ? false
+, vencord }:
 
 stdenv.mkDerivation {
   inherit pname version src meta;

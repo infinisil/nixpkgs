@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-}:
+{ lib, stdenv, buildGoModule, fetchFromGitHub, installShellFiles }:
 
 buildGoModule rec {
   pname = "packer";
@@ -29,10 +24,12 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "A tool for creating identical machine images for multiple platforms from a single source configuration";
-    homepage    = "https://www.packer.io";
-    license     = licenses.mpl20;
+    description =
+      "A tool for creating identical machine images for multiple platforms from a single source configuration";
+    homepage = "https://www.packer.io";
+    license = licenses.mpl20;
     maintainers = with maintainers; [ cstrahan zimbatm ma27 techknowlogick ];
-    changelog   = "https://github.com/hashicorp/packer/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/hashicorp/packer/blob/v${version}/CHANGELOG.md";
   };
 }

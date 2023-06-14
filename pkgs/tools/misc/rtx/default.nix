@@ -1,13 +1,5 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, installShellFiles
-, stdenv
-, coreutils
-, bash
-, direnv
-, Security
-}:
+{ lib, rustPlatform, fetchFromGitHub, installShellFiles, stdenv, coreutils, bash
+, direnv, Security }:
 
 rustPlatform.buildRustPackage rec {
   pname = "rtx";

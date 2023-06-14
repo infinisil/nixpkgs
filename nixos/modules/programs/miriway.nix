@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let
-  cfg = config.programs.miriway;
+let cfg = config.programs.miriway;
 in {
   options.programs.miriway = {
     enable = lib.mkEnableOption (lib.mdDoc ''
@@ -60,9 +59,7 @@ in {
   config = lib.mkIf cfg.enable {
     environment = {
       systemPackages = [ pkgs.miriway ];
-      etc = {
-        "xdg/xdg-miriway/miriway-shell.config".text = cfg.config;
-      };
+      etc = { "xdg/xdg-miriway/miriway-shell.config".text = cfg.config; };
     };
 
     hardware.opengl.enable = lib.mkDefault true;

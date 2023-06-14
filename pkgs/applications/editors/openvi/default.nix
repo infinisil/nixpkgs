@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchpatch
-, ncurses
-}:
+{ lib, stdenv, fetchFromGitHub, fetchpatch, ncurses }:
 
 stdenv.mkDerivation rec {
   pname = "openvi";
@@ -19,7 +14,8 @@ stdenv.mkDerivation rec {
   patches = [
     # do not attempt to install to /var/tmp/vi.recover
     (fetchpatch {
-      url = "https://github.com/johnsonjh/OpenVi/commit/5205f0234369963c443e83ca5028ca63feaaac91.patch";
+      url =
+        "https://github.com/johnsonjh/OpenVi/commit/5205f0234369963c443e83ca5028ca63feaaac91.patch";
       hash = "sha256-hoKzQLnpdRbc48wffWbzFtivr20VqEPs4WRPXuDa/88=";
     })
   ];

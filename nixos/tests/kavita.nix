@@ -1,8 +1,6 @@
-import ./make-test-python.nix ({ pkgs, ...} : {
+import ./make-test-python.nix ({ pkgs, ... }: {
   name = "kavita";
-  meta = with pkgs.lib.maintainers; {
-    maintainers = [ misterio77 ];
-  };
+  meta = with pkgs.lib.maintainers; { maintainers = [ misterio77 ]; };
 
   nodes = {
     kavita = { config, pkgs, ... }: {

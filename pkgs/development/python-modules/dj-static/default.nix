@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, django
-, static3
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, django, static3 }:
 
 buildPythonPackage rec {
   pname = "dj-static";
@@ -17,17 +12,11 @@ buildPythonPackage rec {
     hash = "sha256-B6TydlezbDkmfFgJjdFniZIYo/JjzPvFj43co+HYCdc=";
   };
 
-  buildInputs = [
-    django
-  ];
+  buildInputs = [ django ];
 
-  propagatedBuildInputs = [
-    static3
-  ];
+  propagatedBuildInputs = [ static3 ];
 
-  pythonImportsCheck = [
-    "dj_static"
-  ];
+  pythonImportsCheck = [ "dj_static" ];
 
   doCheck = false;
 

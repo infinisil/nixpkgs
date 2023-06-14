@@ -23,9 +23,7 @@ buildGoModule rec {
     "-X main.date=1970-01-01-00:00:01"
   ];
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   postInstall = ''
     installShellCompletion --cmd pv-migrate \
@@ -37,7 +35,8 @@ buildGoModule rec {
   meta = with lib; {
     description = "CLI tool to easily migrate Kubernetes persistent volumes ";
     homepage = "https://github.com/utkuozdemir/pv-migrate";
-    changelog = "https://github.com/utkuozdemir/pv-migrate/releases/tag/${version}";
+    changelog =
+      "https://github.com/utkuozdemir/pv-migrate/releases/tag/${version}";
     license = licenses.afl20;
     maintainers = with lib.maintainers; [ ivankovnatsky qjoly ];
   };

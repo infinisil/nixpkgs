@@ -5,7 +5,8 @@ stdenv.mkDerivation rec {
   version = "2.23.1";
 
   src = fetchurl {
-    url = "mirror://sourceforge/geoserver/GeoServer/${version}/geoserver-${version}-bin.zip";
+    url =
+      "mirror://sourceforge/geoserver/GeoServer/${version}/geoserver-${version}-bin.zip";
     sha256 = "sha256-0ZcHnDVw5atwdeqYeQXfRTio0/plRLTDljSMb81U+f4=";
   };
 

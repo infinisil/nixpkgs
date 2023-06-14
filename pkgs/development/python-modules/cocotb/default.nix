@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchFromGitHub
-, setuptools
-, setuptools-scm
-, cocotb-bus
-, find-libpython
-, pytestCheckHook
-, swig
-, verilog
-}:
+{ lib, stdenv, buildPythonPackage, fetchFromGitHub, setuptools, setuptools-scm
+, cocotb-bus, find-libpython, pytestCheckHook, swig, verilog }:
 
 buildPythonPackage rec {
   pname = "cocotb";
@@ -60,7 +50,8 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "cocotb" ];
 
   meta = with lib; {
-    description = "Coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python";
+    description =
+      "Coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python";
     homepage = "https://github.com/cocotb/cocotb";
     license = licenses.bsd3;
     maintainers = with maintainers; [ matthuszagh ];

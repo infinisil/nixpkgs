@@ -1,22 +1,26 @@
-{ lib, stdenv, fetchFromGitHub, flex, bison, pkg-config, zlib, libtiff, libpng, fftw
-, cairo, readline, ffmpeg, makeWrapper, wxGTK32, libiconv, netcdf, blas
-, proj, gdal, geos, sqlite, postgresql, libmysqlclient, python3Packages, proj-datumgrid
-, zstd, pdal, wrapGAppsHook
-}:
+{ lib, stdenv, fetchFromGitHub, flex, bison, pkg-config, zlib, libtiff, libpng
+, fftw, cairo, readline, ffmpeg, makeWrapper, wxGTK32, libiconv, netcdf, blas
+, proj, gdal, geos, sqlite, postgresql, libmysqlclient, python3Packages
+, proj-datumgrid, zstd, pdal, wrapGAppsHook }:
 
 stdenv.mkDerivation rec {
   pname = "grass";
   version = "8.2.1";
 
-  src = with lib; fetchFromGitHub {
-    owner = "OSGeo";
-    repo = "grass";
-    rev = version;
-    hash = "sha256-U3PQd3u9i+9Bc7BSd0gK8Ss+iV9BT1xLBDrKydtl3Qk=";
-  };
+  src = with lib;
+    fetchFromGitHub {
+      owner = "OSGeo";
+      repo = "grass";
+      rev = version;
+      hash = "sha256-U3PQd3u9i+9Bc7BSd0gK8Ss+iV9BT1xLBDrKydtl3Qk=";
+    };
 
   nativeBuildInputs = [
-    pkg-config bison flex makeWrapper wrapGAppsHook
+    pkg-config
+    bison
+    flex
+    makeWrapper
+    wrapGAppsHook
     gdal # for `gdal-config`
     geos # for `geos-config`
     netcdf # for `nc-config`
@@ -25,9 +29,20 @@ stdenv.mkDerivation rec {
   ] ++ (with python3Packages; [ python-dateutil numpy wxPython_4_2 ]);
 
   buildInputs = [
-    cairo zlib proj libtiff libpng fftw sqlite
-    readline ffmpeg postgresql blas wxGTK32
-    proj-datumgrid zstd
+    cairo
+    zlib
+    proj
+    libtiff
+    libpng
+    fftw
+    sqlite
+    readline
+    ffmpeg
+    postgresql
+    blas
+    wxGTK32
+    proj-datumgrid
+    zstd
     gdal
     geos
     netcdf
@@ -43,7 +58,7 @@ stdenv.mkDerivation rec {
 
   # Correct mysql_config query
   patchPhase = ''
-      substituteInPlace configure --replace "--libmysqld-libs" "--libs"
+    substituteInPlace configure --replace "--libmysqld-libs" "--libs"
   '';
 
   configureFlags = [
@@ -65,19 +80,18 @@ stdenv.mkDerivation rec {
     "--with-zstd"
     "--with-fftw"
     "--with-pthread"
-  ] ++ lib.optionals stdenv.isLinux [
-    "--with-pdal"
-  ] ++ lib.optionals stdenv.isDarwin [
-    "--without-cairo"
-    "--without-freetype"
-    "--without-x"
-  ];
+  ] ++ lib.optionals stdenv.isLinux [ "--with-pdal" ]
+    ++ lib.optionals stdenv.isDarwin [
+      "--without-cairo"
+      "--without-freetype"
+      "--without-x"
+    ];
 
   # Otherwise a very confusing "Can't load GDAL library" error
   makeFlags = lib.optional stdenv.isDarwin "GDAL_DYNAMIC=";
 
-  /* Ensures that the python script run at build time are actually executable;
-   * otherwise, patchShebangs ignores them.  */
+  # Ensures that the python script run at build time are actually executable;
+  # otherwise, patchShebangs ignores them.
   postConfigure = ''
     for f in $(find . -name '*.py'); do
       chmod +x $f
@@ -99,7 +113,8 @@ stdenv.mkDerivation rec {
 
   meta = {
     homepage = "https://grass.osgeo.org/";
-    description = "GIS software suite used for geospatial data management and analysis, image processing, graphics and maps production, spatial modeling, and visualization";
+    description =
+      "GIS software suite used for geospatial data management and analysis, image processing, graphics and maps production, spatial modeling, and visualization";
     license = lib.licenses.gpl2Plus;
     platforms = lib.platforms.all;
     maintainers = with lib.maintainers; [ mpickering willcohen ];

@@ -6,16 +6,12 @@ stdenv.mkDerivation rec {
   version = "2.7.3";
 
   src = fetchurl {
-    url = "https://download.todesktop.com/210203cqcj00tw1/morgen-${version}.deb";
+    url =
+      "https://download.todesktop.com/210203cqcj00tw1/morgen-${version}.deb";
     sha256 = "sha256-8cGL2xQI4NYDPGqnvlnVVvha3wXFT8IcjRWTTGO7OJQ=";
   };
 
-  nativeBuildInputs = [
-    dpkg
-    autoPatchelfHook
-    makeWrapper
-    nodePackages.asar
-  ];
+  nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper nodePackages.asar ];
 
   buildInputs = [ alsa-lib gtk3 libxshmfence mesa nss ];
 

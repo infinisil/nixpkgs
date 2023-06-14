@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, requests
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, requests }:
 
 buildPythonPackage rec {
   pname = "pyosf";
@@ -26,19 +21,16 @@ buildPythonPackage rec {
 
   preBuild = "export HOME=$TMP";
 
-  propagatedBuildInputs = [
-    requests
-  ];
+  propagatedBuildInputs = [ requests ];
 
   # Tests require network access
   doCheck = false;
 
-  pythonImportsCheck = [
-    "pyosf"
-  ];
+  pythonImportsCheck = [ "pyosf" ];
 
   meta = with lib; {
-    description = "Pure Python library for simple sync with Open Science Framework";
+    description =
+      "Pure Python library for simple sync with Open Science Framework";
     homepage = "https://github.com/psychopy/pyosf";
     changelog = "https://github.com/psychopy/pyosf/releases/tag/v${version}";
     license = licenses.mit;

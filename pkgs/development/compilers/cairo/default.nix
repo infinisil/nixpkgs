@@ -1,8 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, rustfmt
-}:
+{ lib, rustPlatform, fetchFromGitHub, rustfmt }:
 
 rustPlatform.buildRustPackage rec {
   pname = "cairo";
@@ -17,9 +13,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-IY3RE+EeNRhUSZX+bqojhPl6y8qm+i9C0zQmNApmat8=";
 
-  nativeCheckInputs = [
-    rustfmt
-  ];
+  nativeCheckInputs = [ rustfmt ];
 
   checkFlags = [
     # Requires a mythical rustfmt 2.0 or a nightly compiler
@@ -32,7 +26,8 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "Turing-complete language for creating provable programs for general computation";
+    description =
+      "Turing-complete language for creating provable programs for general computation";
     homepage = "https://github.com/starkware-libs/cairo";
     license = licenses.asl20;
     maintainers = with maintainers; [ raitobezarius ];

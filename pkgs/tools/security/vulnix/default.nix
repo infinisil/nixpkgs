@@ -1,9 +1,4 @@
-{ lib
-, python3Packages
-, fetchPypi
-, nix
-, ronn
-}:
+{ lib, python3Packages, fetchPypi, nix, ronn }:
 
 python3Packages.buildPythonApplication rec {
   pname = "vulnix";
@@ -22,15 +17,9 @@ python3Packages.buildPythonApplication rec {
   outputs = [ "out" "doc" "man" ];
   nativeBuildInputs = [ ronn ];
 
-  nativeCheckInputs = with python3Packages; [
-    freezegun
-    pytest
-    pytest-cov
-  ];
+  nativeCheckInputs = with python3Packages; [ freezegun pytest pytest-cov ];
 
-  propagatedBuildInputs = [
-    nix
-  ] ++ (with python3Packages; [
+  propagatedBuildInputs = [ nix ] ++ (with python3Packages; [
     click
     colorama
     pyyaml

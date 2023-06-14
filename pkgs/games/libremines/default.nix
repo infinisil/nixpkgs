@@ -1,10 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, wrapQtAppsHook
-, qtmultimedia
-, qtwayland
+{ lib, stdenv, fetchFromGitHub, cmake, wrapQtAppsHook, qtmultimedia, qtwayland
 }:
 
 stdenv.mkDerivation rec {
@@ -20,11 +14,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake wrapQtAppsHook ];
 
-  buildInputs = [
-    qtmultimedia
-  ] ++ lib.optionals stdenv.isLinux [
-    qtwayland
-  ];
+  buildInputs = [ qtmultimedia ] ++ lib.optionals stdenv.isLinux [ qtwayland ];
 
   cmakeFlags = [ "-DUSE_QT6=TRUE" ];
 

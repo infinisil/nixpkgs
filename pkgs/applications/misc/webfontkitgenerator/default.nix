@@ -1,21 +1,6 @@
-{ appstream-glib
-, desktop-file-utils
-, fetchFromGitHub
-, gettext
-, glib-networking
-, gobject-introspection
-, gtk4
-, gtksourceview5
-, lib
-, libadwaita
-, libsoup_3
-, meson
-, ninja
-, pkg-config
-, python3
-, stdenv
-, wrapGAppsHook4
-}:
+{ appstream-glib, desktop-file-utils, fetchFromGitHub, gettext, glib-networking
+, gobject-introspection, gtk4, gtksourceview5, lib, libadwaita, libsoup_3, meson
+, ninja, pkg-config, python3, stdenv, wrapGAppsHook4 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "webfont-kit-generator";
   version = "1.0.3";
@@ -45,15 +30,14 @@ stdenv.mkDerivation (finalAttrs: {
     gtksourceview5
     libadwaita
     libsoup_3
-    (python3.withPackages (ps: with ps; [
-      fonttools
-      pygobject3
-    ]))
+    (python3.withPackages (ps: with ps; [ fonttools pygobject3 ]))
   ];
 
   meta = with lib; {
-    description = "Webfont Kit Generator is a simple utility that allows you to generate woff, woff2 and the necessary CSS boilerplate from non-web font formats (otf & ttf)";
-    homepage = "https://apps.gnome.org/app/com.rafaelmardojai.WebfontKitGenerator";
+    description =
+      "Webfont Kit Generator is a simple utility that allows you to generate woff, woff2 and the necessary CSS boilerplate from non-web font formats (otf & ttf)";
+    homepage =
+      "https://apps.gnome.org/app/com.rafaelmardojai.WebfontKitGenerator";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ benediktbroich ];
     platforms = platforms.unix;

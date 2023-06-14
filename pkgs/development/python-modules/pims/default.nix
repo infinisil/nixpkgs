@@ -1,13 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, imageio
-, numpy
-, pytestCheckHook
-, pythonOlder
-, scikit-image
-, slicerator
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, imageio, numpy, pytestCheckHook
+, pythonOlder, scikit-image, slicerator }:
 
 buildPythonPackage rec {
   pname = "pims";
@@ -23,25 +15,13 @@ buildPythonPackage rec {
     hash = "sha256-QdllA1QTSJ8vWaSJ0XoUanX53sb4RaOmdXBCFEsoWMU=";
   };
 
-  propagatedBuildInputs = [
-    slicerator
-    imageio
-    numpy
-  ];
+  propagatedBuildInputs = [ slicerator imageio numpy ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    scikit-image
-  ];
+  nativeCheckInputs = [ pytestCheckHook scikit-image ];
 
-  pythonImportsCheck = [
-    "pims"
-  ];
+  pythonImportsCheck = [ "pims" ];
 
-  pytestFlagsArray = [
-    "-W"
-    "ignore::Warning"
-  ];
+  pytestFlagsArray = [ "-W" "ignore::Warning" ];
 
   disabledTests = [
     # NotImplementedError: Do not know how to deal with infinite readers
@@ -54,7 +34,8 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Module to load video and sequential images in various formats";
+    description =
+      "Module to load video and sequential images in various formats";
     homepage = "https://github.com/soft-matter/pims";
     changelog = "https://github.com/soft-matter/pims/releases/tag/v${version}";
     license = licenses.bsd3;

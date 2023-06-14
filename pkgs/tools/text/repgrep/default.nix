@@ -1,11 +1,5 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, asciidoctor
-, installShellFiles
-, makeWrapper
-, ripgrep
-}:
+{ lib, rustPlatform, fetchFromGitHub, asciidoctor, installShellFiles
+, makeWrapper, ripgrep }:
 
 rustPlatform.buildRustPackage rec {
   pname = "repgrep";
@@ -20,11 +14,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-TWu/TQsv8FM60kNPIxn6TiTHgHlKtSjubnfbg6IfS10=";
 
-  nativeBuildInputs = [
-    asciidoctor
-    installShellFiles
-    makeWrapper
-  ];
+  nativeBuildInputs = [ asciidoctor installShellFiles makeWrapper ];
 
   postInstall = ''
     wrapProgram $out/bin/rgr \
@@ -37,9 +27,11 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line";
+    description =
+      "An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line";
     homepage = "https://github.com/acheronfail/repgrep";
-    changelog = "https://github.com/acheronfail/repgrep/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/acheronfail/repgrep/blob/${src.rev}/CHANGELOG.md";
     license = with licenses; [ mit asl20 unlicense ];
     maintainers = with maintainers; [ figsoda ];
   };

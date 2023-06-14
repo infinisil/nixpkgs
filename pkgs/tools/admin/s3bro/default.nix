@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "s3bro";
@@ -13,12 +10,7 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-+OqcLbXilbY4h/zRAkvRd8taVIOPyiScOAcDyPZ4RUw=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
-    boto3
-    botocore
-    click
-    termcolor
-  ];
+  propagatedBuildInputs = with python3.pkgs; [ boto3 botocore click termcolor ];
 
   postPatch = ''
     substituteInPlace setup.py \
@@ -28,9 +20,7 @@ python3.pkgs.buildPythonApplication rec {
   # No tests
   doCheck = false;
 
-  pythonImportsCheck = [
-    "s3bro"
-  ];
+  pythonImportsCheck = [ "s3bro" ];
 
   meta = with lib; {
     description = "s3 CLI tool";

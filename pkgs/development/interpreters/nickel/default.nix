@@ -1,14 +1,10 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, nix-update-script
-}:
+{ lib, rustPlatform, fetchFromGitHub, nix-update-script }:
 
 rustPlatform.buildRustPackage rec {
   pname = "nickel";
   version = "1.0.0";
 
-  src  = fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "tweag";
     repo = pname;
     rev = "refs/tags/${version}"; # because pure ${version} doesn't work

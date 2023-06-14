@@ -1,29 +1,18 @@
-{ stdenv
-, lib
-, buildGoModule
-, fetchFromGitHub
-, writeShellScriptBin
-, runtimeShell
-, installShellFiles
-, ncurses
-, perl
-, glibcLocales
-, testers
-, fzf
-, fetchpatch
-}:
+{ stdenv, lib, buildGoModule, fetchFromGitHub, writeShellScriptBin, runtimeShell
+, installShellFiles, ncurses, perl, glibcLocales, testers, fzf, fetchpatch }:
 
 let
   # on Linux, wrap perl in the bash completion scripts with the glibc locales,
   # so that using the shell completion (ctrl+r, etc) doesn't result in ugly
   # warnings on non-nixos machines
-  ourPerl = if !stdenv.isLinux then perl else (
-    writeShellScriptBin "perl" ''
+  ourPerl = if !stdenv.isLinux then
+    perl
+  else
+    (writeShellScriptBin "perl" ''
       export LOCALE_ARCHIVE="${glibcLocales}/lib/locale/locale-archive"
       exec ${perl}/bin/perl "$@"
     '');
-in
-buildGoModule rec {
+in buildGoModule rec {
   pname = "fzf";
   version = "0.41.1";
 
@@ -37,7 +26,8 @@ buildGoModule rec {
   patches = [
     (fetchpatch {
       name = "update-test-case.patch";
-      url = "https://github.com/junegunn/fzf/commit/448d7e0c5a717128d499f6a09a978b7addd1d925.patch";
+      url =
+        "https://github.com/junegunn/fzf/commit/448d7e0c5a717128d499f6a09a978b7addd1d925.patch";
       hash = "sha256-54UYW8x78ZcjPwDWmGLVLxw2E910wme2TkBN7YAr1L8=";
     })
   ];
@@ -52,9 +42,8 @@ buildGoModule rec {
 
   buildInputs = [ ncurses ];
 
-  ldflags = [
-    "-s" "-w" "-X main.version=${version} -X main.revision=${src.rev}"
-  ];
+  ldflags =
+    [ "-s" "-w" "-X main.version=${version} -X main.revision=${src.rev}" ];
 
   # The vim plugin expects a relative path to the binary; patch it to abspath.
   postPatch = ''
@@ -95,9 +84,7 @@ buildGoModule rec {
     chmod +x $out/bin/fzf-share
   '';
 
-  passthru.tests.version = testers.testVersion {
-    package = fzf;
-  };
+  passthru.tests.version = testers.testVersion { package = fzf; };
 
   meta = with lib; {
     homepage = "https://github.com/junegunn/fzf";

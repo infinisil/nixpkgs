@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytestCheckHook
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, pytestCheckHook, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "dominate";
@@ -17,16 +12,13 @@ buildPythonPackage rec {
     hash = "sha256-TJDDvvr4jmErcfSzmve8vviXes+oVc7JVyJaj79QQAc=";
   };
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "dominate"
-  ];
+  pythonImportsCheck = [ "dominate" ];
 
   meta = with lib; {
-    description = "Library for creating and manipulating HTML documents using an elegant DOM API";
+    description =
+      "Library for creating and manipulating HTML documents using an elegant DOM API";
     homepage = "https://github.com/Knio/dominate/";
     license = licenses.lgpl3Plus;
     maintainers = with maintainers; [ ];

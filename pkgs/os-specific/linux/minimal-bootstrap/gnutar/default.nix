@@ -1,13 +1,5 @@
-{ lib
-, buildPlatform
-, hostPlatform
-, fetchurl
-, bash
-, tinycc
-, gnumake
-, gnused
-, gnugrep
-}:
+{ lib, buildPlatform, hostPlatform, fetchurl, bash, tinycc, gnumake, gnused
+, gnugrep }:
 let
   pname = "gnutar";
   # >= 1.13 is incompatible with mes-libc
@@ -17,19 +9,13 @@ let
     url = "mirror://gnu/tar/tar-${version}.tar.gz";
     sha256 = "02m6gajm647n8l9a5bnld6fnbgdpyi4i3i83p7xcwv0kif47xhy6";
   };
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnused
-    gnugrep
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnused gnugrep ];
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/tar --version
       mkdir $out
     '';

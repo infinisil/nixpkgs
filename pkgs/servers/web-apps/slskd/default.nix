@@ -1,13 +1,5 @@
-{ lib, stdenv
-, buildNpmPackage
-, fetchFromGitHub
-, fetchurl
-, unzip
-, dotnetCorePackages
-, buildDotnetModule
-, mono
-, nodejs_18
-}:
+{ lib, stdenv, buildNpmPackage, fetchFromGitHub, fetchurl, unzip
+, dotnetCorePackages, buildDotnetModule, mono, nodejs_18 }:
 let
   pname = "slskd";
   version = "0.17.8";
@@ -20,7 +12,8 @@ let
   };
 
   meta = with lib; {
-    description = "A modern client-server application for the Soulseek file sharing network";
+    description =
+      "A modern client-server application for the Soulseek file sharing network";
     homepage = "https://github.com/slskd/slskd";
     license = licenses.agpl3;
     maintainers = with maintainers; [ ppom ];

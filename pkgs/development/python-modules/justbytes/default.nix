@@ -1,10 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, justbases
-, unittestCheckHook
-, hypothesis
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, justbases, unittestCheckHook
+, hypothesis }:
 
 buildPythonPackage rec {
   pname = "justbytes";

@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "bodyclose";
@@ -19,7 +16,8 @@ buildGoModule rec {
   ldflags = [ "-s" "-w" ];
 
   meta = with lib; {
-    description = "Golang linter to check whether HTTP response body is closed and a re-use of TCP connection is not blocked";
+    description =
+      "Golang linter to check whether HTTP response body is closed and a re-use of TCP connection is not blocked";
     homepage = "https://github.com/timakin/bodyclose";
     license = licenses.mit;
     maintainers = with maintainers; [ meain ];

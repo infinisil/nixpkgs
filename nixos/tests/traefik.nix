@@ -2,9 +2,7 @@
 # and a Docker container.
 import ./make-test-python.nix ({ pkgs, ... }: {
   name = "traefik";
-  meta = with pkgs.lib.maintainers; {
-    maintainers = [ joko ];
-  };
+  meta = with pkgs.lib.maintainers; { maintainers = [ joko ]; };
 
   nodes = {
     client = { config, pkgs, ... }: {
@@ -40,9 +38,7 @@ import ./make-test-python.nix ({ pkgs, ... }: {
           };
 
           http.services.simplehttp = {
-            loadBalancer.servers = [{
-              url = "http://127.0.0.1:8000";
-            }];
+            loadBalancer.servers = [{ url = "http://127.0.0.1:8000"; }];
           };
         };
 
@@ -56,9 +52,11 @@ import ./make-test-python.nix ({ pkgs, ... }: {
 
           providers.docker.exposedByDefault = false;
         };
-        environmentFiles = [(pkgs.writeText "traefik.env" ''
-          HTTP_PORT=80
-        '')];
+        environmentFiles = [
+          (pkgs.writeText "traefik.env" ''
+            HTTP_PORT=80
+          '')
+        ];
       };
 
       systemd.services.simplehttp = {

@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchFromGitHub
-}:
+{ lib, python3, fetchFromGitHub }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "baboossh";
@@ -25,9 +22,7 @@ python3.pkgs.buildPythonApplication rec {
   # No tests available
   doCheck = false;
 
-  pythonImportsCheck = [
-    "baboossh"
-  ];
+  pythonImportsCheck = [ "baboossh" ];
 
   meta = with lib; {
     description = "Tool to do SSH spreading";

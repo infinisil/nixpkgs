@@ -1,14 +1,5 @@
-{ lib
-, buildPlatform
-, hostPlatform
-, fetchurl
-, bash
-, tinycc
-, gnumake
-, gnupatch
-, gnused
-, gnugrep
-}:
+{ lib, buildPlatform, hostPlatform, fetchurl, bash, tinycc, gnumake, gnupatch
+, gnused, gnugrep }:
 let
   pname = "gawk";
   # >=3.1.x is incompatible with mes-libc
@@ -23,20 +14,13 @@ let
     # for reproducibility don't generate date stamp
     ./no-stamp.patch
   ];
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnupatch
-    gnused
-    gnugrep
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnupatch gnused gnugrep ];
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/awk --version
       mkdir $out
     '';

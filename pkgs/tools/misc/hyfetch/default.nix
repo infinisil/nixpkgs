@@ -1,7 +1,4 @@
-{ lib
-, fetchFromGitHub
-, python3
-}:
+{ lib, fetchFromGitHub, python3 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "hyfetch";
@@ -15,17 +12,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-n+Aa6HrGB7aKrHLQijKNcUVGMYxuqYVrAAnHFPDYH40=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
-    typing-extensions
-    setuptools
-  ];
+  propagatedBuildInputs = with python3.pkgs; [ typing-extensions setuptools ];
 
   # No test available
   doCheck = false;
 
-  pythonImportsCheck = [
-    "hyfetch"
-  ];
+  pythonImportsCheck = [ "hyfetch" ];
 
   meta = with lib; {
     description = "neofetch with pride flags <3";

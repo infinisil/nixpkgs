@@ -1,18 +1,13 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
+{ lib, buildPythonPackage, fetchFromGitHub
 
 # build-system
 , setuptools
 
 # dependencies
-, django
-, mysqlclient
+, django, mysqlclient
 
 # tests
-, pytest-django
-, pytestCheckHook
-}:
+, pytest-django, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "django-mysql";
@@ -26,23 +21,15 @@ buildPythonPackage rec {
     hash = "sha256-mXAdwNqSIrWMh+YcCjksiqmkLSXGAd+ofyzJmiG+gNo=";
   };
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
-  buildInputs = [
-    django
-    mysqlclient
-  ];
+  buildInputs = [ django mysqlclient ];
 
   doCheck = false; # requires mysql/mariadb server
 
   env.DJANGO_SETTINGS_MODULE = "tests.settings";
 
-  nativeCheckInputs = [
-    pytest-django
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytest-django pytestCheckHook ];
 
   meta = with lib; {
     changelog = "https://django-mysql.readthedocs.io/en/latest/changelog.html";

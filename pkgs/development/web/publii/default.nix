@@ -1,27 +1,6 @@
-{ stdenv
-, lib
-, fetchurl
-, autoPatchelfHook
-, makeShellWrapper
-, wrapGAppsHook
-, alsa-lib
-, at-spi2-atk
-, at-spi2-core
-, atk
-, cairo
-, cups
-, dbus
-, expat
-, glib
-, gtk3
-, libsecret
-, mesa
-, nss
-, pango
-, udev
-, xdg-utils
-, xorg
-}:
+{ stdenv, lib, fetchurl, autoPatchelfHook, makeShellWrapper, wrapGAppsHook
+, alsa-lib, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, glib, gtk3
+, libsecret, mesa, nss, pango, udev, xdg-utils, xorg }:
 
 stdenv.mkDerivation rec {
   pname = "publii";
@@ -36,11 +15,7 @@ stdenv.mkDerivation rec {
   dontBuild = true;
   dontWrapGApps = true;
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-    makeShellWrapper
-    wrapGAppsHook
-  ];
+  nativeBuildInputs = [ autoPatchelfHook makeShellWrapper wrapGAppsHook ];
 
   buildInputs = [
     alsa-lib
@@ -87,7 +62,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Static Site CMS with GUI to build privacy-focused SEO-friendly website.";
+    description =
+      "Static Site CMS with GUI to build privacy-focused SEO-friendly website.";
     longDescription = ''
       Creating a website doesn't have to be complicated or expensive. With Publii, the most
       intuitive static site CMS, you can create a beautiful, safe, and privacy-friendly website

@@ -1,4 +1,5 @@
-{ stdenv, lib, mkDerivation, fetchFromGitHub, qmake, pkg-config, alsa-lib, libjack2, portaudio, libogg, flac, libvorbis, rtmidi, qtsvg, qttools }:
+{ stdenv, lib, mkDerivation, fetchFromGitHub, qmake, pkg-config, alsa-lib
+, libjack2, portaudio, libogg, flac, libvorbis, rtmidi, qtsvg, qttools }:
 
 mkDerivation rec {
   version = "2.3.0";
@@ -11,16 +12,8 @@ mkDerivation rec {
     sha256 = "09habv51pw71wrb39shqi80i2w39dx5a39klzswsald5j9sia0ir";
   };
 
-  buildInputs = [
-    alsa-lib
-    libjack2
-    portaudio
-    libogg
-    flac
-    libvorbis
-    rtmidi
-    qtsvg
-  ];
+  buildInputs =
+    [ alsa-lib libjack2 portaudio libogg flac libvorbis rtmidi qtsvg ];
 
   nativeBuildInputs = [ qmake qttools pkg-config ];
 
@@ -33,10 +26,7 @@ mkDerivation rec {
     install -m755 bin/polyphone $out/bin/
   '';
 
-  qmakeFlags = [
-    "DEFINES+=USE_LOCAL_STK"
-    "DEFINES+=USE_LOCAL_QCUSTOMPLOT"
-  ];
+  qmakeFlags = [ "DEFINES+=USE_LOCAL_STK" "DEFINES+=USE_LOCAL_QCUSTOMPLOT" ];
 
   meta = with lib; {
     broken = (stdenv.isLinux && stdenv.isAarch64);

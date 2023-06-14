@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, unstableGitUpdater
-, cmake
-, rocm-cmake
-, hip
-, openmp
-, clang-tools-extra
-, gtest
-, buildTests ? false
-, buildExamples ? false
+{ lib, stdenv, fetchFromGitHub, unstableGitUpdater, cmake, rocm-cmake, hip
+, openmp, clang-tools-extra, gtest, buildTests ? false, buildExamples ? false
 , gpuTargets ? [ ] # gpuTargets = [ "gfx803" "gfx900" "gfx1030" ... ]
 }:
 
@@ -17,13 +7,8 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "composable_kernel";
   version = "unstable-2023-01-16";
 
-  outputs = [
-    "out"
-  ] ++ lib.optionals buildTests [
-    "test"
-  ] ++ lib.optionals buildExamples [
-    "example"
-  ];
+  outputs = [ "out" ] ++ lib.optionals buildTests [ "test" ]
+    ++ lib.optionals buildExamples [ "example" ];
 
   # ROCm 5.6 should release composable_kernel as stable with a tag in the future
   src = fetchFromGitHub {
@@ -33,26 +18,17 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-+c0E2UtlG/abweLwCWWjNHDO5ZvSIVKwwwettT9mqR4=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    rocm-cmake
-    hip
-    clang-tools-extra
-  ];
+  nativeBuildInputs = [ cmake rocm-cmake hip clang-tools-extra ];
 
-  buildInputs = [
-    openmp
-  ];
+  buildInputs = [ openmp ];
 
-  cmakeFlags = [
-    "-DCMAKE_C_COMPILER=hipcc"
-    "-DCMAKE_CXX_COMPILER=hipcc"
-  ] ++ lib.optionals (gpuTargets != [ ]) [
-    "-DGPU_TARGETS=${lib.concatStringsSep ";" gpuTargets}"
-    "-DAMDGPU_TARGETS=${lib.concatStringsSep ";" gpuTargets}"
-  ] ++ lib.optionals buildTests [
-    "-DGOOGLETEST_DIR=${gtest.src}" # Custom linker names
-  ];
+  cmakeFlags = [ "-DCMAKE_C_COMPILER=hipcc" "-DCMAKE_CXX_COMPILER=hipcc" ]
+    ++ lib.optionals (gpuTargets != [ ]) [
+      "-DGPU_TARGETS=${lib.concatStringsSep ";" gpuTargets}"
+      "-DAMDGPU_TARGETS=${lib.concatStringsSep ";" gpuTargets}"
+    ] ++ lib.optionals buildTests [
+      "-DGOOGLETEST_DIR=${gtest.src}" # Custom linker names
+    ];
 
   # No flags to build selectively it seems...
   postPatch = lib.optionalString (!buildTests) ''
@@ -77,7 +53,8 @@ stdenv.mkDerivation (finalAttrs: {
   requiredSystemFeatures = [ "big-parallel" ];
 
   meta = with lib; {
-    description = "Performance portable programming model for machine learning tensor operators";
+    description =
+      "Performance portable programming model for machine learning tensor operators";
     homepage = "https://github.com/ROCmSoftwarePlatform/composable_kernel";
     license = with licenses; [ mit ];
     maintainers = teams.rocm.members;

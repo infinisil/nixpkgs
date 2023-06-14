@@ -1,21 +1,7 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchpatch
-, installShellFiles
-, makeWrapper
-, pkg-config
-, file
-, ncurses
-, readline
-, which
-, musl-fts
-  # options
-, conf ? null
-, withIcons ? false
-, withNerdIcons ? false
-, withEmojis ? false
-}:
+{ lib, stdenv, fetchFromGitHub, fetchpatch, installShellFiles, makeWrapper
+, pkg-config, file, ncurses, readline, which, musl-fts
+# options
+, conf ? null, withIcons ? false, withNerdIcons ? false, withEmojis ? false }:
 
 # Mutually exclusive options
 assert withIcons -> (withNerdIcons == false && withEmojis == false);
@@ -36,22 +22,25 @@ stdenv.mkDerivation (finalAttrs: {
   patches = [
     # FIXME: remove for next release
     (fetchpatch {
-      url = "https://github.com/jarun/nnn/commit/20e944f5e597239ed491c213a634eef3d5be735e.patch";
+      url =
+        "https://github.com/jarun/nnn/commit/20e944f5e597239ed491c213a634eef3d5be735e.patch";
       hash = "sha256-RxG3AU8i3lRPCjRVZPnej4m1No/SKtsHwbghj9JQ7RQ=";
     })
   ];
 
   configFile = lib.optionalString (conf != null) (builtins.toFile "nnn.h" conf);
-  preBuild = lib.optionalString (conf != null) "cp ${finalAttrs.configFile} src/nnn.h";
+  preBuild =
+    lib.optionalString (conf != null) "cp ${finalAttrs.configFile} src/nnn.h";
 
   nativeBuildInputs = [ installShellFiles makeWrapper pkg-config ];
-  buildInputs = [ readline ncurses ] ++ lib.optional stdenv.hostPlatform.isMusl musl-fts;
+  buildInputs = [ readline ncurses ]
+    ++ lib.optional stdenv.hostPlatform.isMusl musl-fts;
 
-  env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.hostPlatform.isMusl "-I${musl-fts}/include";
+  env.NIX_CFLAGS_COMPILE =
+    lib.optionalString stdenv.hostPlatform.isMusl "-I${musl-fts}/include";
   NIX_LDFLAGS = lib.optionalString stdenv.hostPlatform.isMusl "-lfts";
 
-  makeFlags = [ "PREFIX=$(out)" ]
-    ++ lib.optionals withIcons [ "O_ICONS=1" ]
+  makeFlags = [ "PREFIX=$(out)" ] ++ lib.optionals withIcons [ "O_ICONS=1" ]
     ++ lib.optionals withNerdIcons [ "O_NERD=1" ]
     ++ lib.optionals withEmojis [ "O_EMOJI=1" ];
 

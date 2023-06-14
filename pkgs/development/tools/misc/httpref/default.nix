@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "httpref";
@@ -19,7 +16,8 @@ buildGoModule rec {
   ldflags = [ "-s" "-w" ];
 
   meta = with lib; {
-    description = "Command line, offline, access to HTTP status code, common header, and port references";
+    description =
+      "Command line, offline, access to HTTP status code, common header, and port references";
     homepage = "https://github.com/dnnrly/httpref";
     changelog = "https://github.com/dnnrly/httpref/releases/tag/${src.rev}";
     license = licenses.asl20;

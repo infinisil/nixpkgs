@@ -6,13 +6,13 @@ let
   rshimCommand = [ "${cfg.package}/bin/rshim" ]
     ++ lib.optionals (cfg.backend != null) [ "--backend ${cfg.backend}" ]
     ++ lib.optionals (cfg.device != null) [ "--device ${cfg.device}" ]
-    ++ lib.optionals (cfg.index != null) [ "--index ${builtins.toString cfg.index}" ]
-    ++ [ "--log-level ${builtins.toString cfg.log-level}" ]
-  ;
-in
-{
+    ++ lib.optionals (cfg.index != null)
+    [ "--index ${builtins.toString cfg.index}" ]
+    ++ [ "--log-level ${builtins.toString cfg.log-level}" ];
+in {
   options.services.rshim = {
-    enable = lib.mkEnableOption (lib.mdDoc "User-space rshim driver for the BlueField SoC");
+    enable = lib.mkEnableOption
+      (lib.mdDoc "User-space rshim driver for the BlueField SoC");
 
     package = lib.mkPackageOptionMD pkgs "rshim-user-space" { };
 
@@ -76,9 +76,9 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.etc = lib.mkIf (cfg.config != { }) {
-      "rshim.conf".text = lib.generators.toKeyValue
-        { mkKeyValue = lib.generators.mkKeyValueDefault { } " "; }
-        cfg.config;
+      "rshim.conf".text = lib.generators.toKeyValue {
+        mkKeyValue = lib.generators.mkKeyValueDefault { } " ";
+      } cfg.config;
     };
 
     systemd.services.rshim = {
@@ -86,9 +86,7 @@ in
       serviceConfig = {
         Restart = "always";
         Type = "forking";
-        ExecStart = [
-          (lib.concatStringsSep " \\\n" rshimCommand)
-        ];
+        ExecStart = [ (lib.concatStringsSep " \\\n" rshimCommand) ];
         KillMode = "control-group";
       };
       wantedBy = [ "multi-user.target" ];

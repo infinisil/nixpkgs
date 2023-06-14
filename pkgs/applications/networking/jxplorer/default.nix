@@ -1,18 +1,17 @@
-{ lib, stdenv, fetchurl, makeDesktopItem, ant, jdk8, copyDesktopItems, makeWrapper }:
+{ lib, stdenv, fetchurl, makeDesktopItem, ant, jdk8, copyDesktopItems
+, makeWrapper }:
 
 stdenv.mkDerivation rec {
   pname = "jxplorer";
   version = "3.3.1.2";
 
   src = fetchurl {
-    url = "https://github.com/pegacat/jxplorer/releases/download/v${version}/jxplorer-${version}-project.tar.bz2";
+    url =
+      "https://github.com/pegacat/jxplorer/releases/download/v${version}/jxplorer-${version}-project.tar.bz2";
     hash = "sha256-/lWkavH51OqNFSLpgT+4WcQcfW3WvnnOkB03jB7bE/s=";
   };
 
-  nativeBuildInputs = [
-    copyDesktopItems
-    makeWrapper
-  ];
+  nativeBuildInputs = [ copyDesktopItems makeWrapper ];
 
   desktopItems = [
     (makeDesktopItem {
@@ -42,9 +41,9 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "A Java Ldap Browser";
-    homepage    = "https://sourceforge.net/projects/jxplorer/";
-    license     = lib.licenses.caossl;
+    homepage = "https://sourceforge.net/projects/jxplorer/";
+    license = lib.licenses.caossl;
     maintainers = with maintainers; [ benwbooth ];
-    platforms   = platforms.linux;
+    platforms = platforms.linux;
   };
 }

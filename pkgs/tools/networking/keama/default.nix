@@ -23,7 +23,8 @@ stdenv.mkDerivation rec {
       configuration and produces a JSON configuration in Kea format.
     '';
 
-    homepage = "https://gitlab.isc.org/isc-projects/dhcp/-/wikis/kea-migration-assistant";
+    homepage =
+      "https://gitlab.isc.org/isc-projects/dhcp/-/wikis/kea-migration-assistant";
     license = licenses.mpl20;
     platforms = platforms.unix;
     maintainers = with maintainers; [ blitz ];

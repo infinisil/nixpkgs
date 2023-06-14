@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchPypi, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "looseversion";
@@ -14,9 +10,7 @@ buildPythonPackage rec {
     sha256 = "sha256-xk5xwLKQMGg7Tqda7kMdstJcTm5TNZDlISnx2eUd4gQ=";
   };
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
   pytestFlagsArray = [ "tests.py" ];
   pythonImportsCheck = [ "looseversion" ];
 

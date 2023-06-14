@@ -1,11 +1,4 @@
-{ stdenv
-, buildPythonPackage
-, lib
-, python
-, fetchPypi
-, systemd
-, pytest
-, mock
+{ stdenv, buildPythonPackage, lib, python, fetchPypi, systemd, pytest, mock
 , pkg-config }:
 
 buildPythonPackage rec {

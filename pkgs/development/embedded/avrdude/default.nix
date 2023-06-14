@@ -23,12 +23,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ libusb-compat-0_1 libelf libftdi1 readline ];
 
-  cmakeFlags = lib.optionals docSupport [
-    "-DBUILD_DOC=ON"
-  ];
+  cmakeFlags = lib.optionals docSupport [ "-DBUILD_DOC=ON" ];
 
   meta = with lib; {
-    description = "Command-line tool for programming Atmel AVR microcontrollers";
+    description =
+      "Command-line tool for programming Atmel AVR microcontrollers";
     longDescription = ''
       AVRDUDE (AVR Downloader/UploaDEr) is an utility to
       download/upload/manipulate the ROM and EEPROM contents of AVR

@@ -1,12 +1,5 @@
-{ lib
-, fetchurl
-, fetchFromGitHub
-, installShellFiles
-, buildGoModule
-, go
-, makeWrapper
-, viceroy
-}:
+{ lib, fetchurl, fetchFromGitHub, installShellFiles, buildGoModule, go
+, makeWrapper, viceroy }:
 
 buildGoModule rec {
   pname = "fastly";
@@ -29,16 +22,11 @@ buildGoModule rec {
     '';
   };
 
-  subPackages = [
-    "cmd/fastly"
-  ];
+  subPackages = [ "cmd/fastly" ];
 
   vendorHash = "sha256-WF66oSkH46mA+WLazJ/qgfNSTXBbeWhbeBYIcP2Q3aQ=";
 
-  nativeBuildInputs = [
-    installShellFiles
-    makeWrapper
-  ];
+  nativeBuildInputs = [ installShellFiles makeWrapper ];
 
   # Flags as provided by the build automation of the project:
   #   https://github.com/fastly/cli/blob/7844f9f54d56f8326962112b5534e5c40e91bf09/.goreleaser.yml#L14-L18
@@ -52,7 +40,8 @@ buildGoModule rec {
   ];
   preBuild = let
     cliConfigToml = fetchurl {
-      url = "https://web.archive.org/web/20230523192914/https://developer.fastly.com/api/internal/cli-config";
+      url =
+        "https://web.archive.org/web/20230523192914/https://developer.fastly.com/api/internal/cli-config";
       hash = "sha256-zgZ3m69dRvuc1S7hHeLxzrM/Z/u0PKUn0XbyQOYO3es=";
     };
   in ''

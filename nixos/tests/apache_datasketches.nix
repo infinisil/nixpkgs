@@ -1,20 +1,18 @@
-import ./make-test-python.nix ({ pkgs, ...} : {
+import ./make-test-python.nix ({ pkgs, ... }: {
   name = "postgis";
   meta = with pkgs.lib.maintainers; {
     maintainers = [ lsix ]; # TODO: Who's the maintener now?
   };
 
   nodes = {
-    master =
-      { pkgs, ... }:
+    master = { pkgs, ... }:
 
       {
-        services.postgresql = let mypg = pkgs.postgresql_15; in {
-            enable = true;
-            package = mypg;
-            extraPlugins = with mypg.pkgs; [
-              apache_datasketches
-            ];
+        services.postgresql = let mypg = pkgs.postgresql_15;
+        in {
+          enable = true;
+          package = mypg;
+          extraPlugins = with mypg.pkgs; [ apache_datasketches ];
         };
       };
   };

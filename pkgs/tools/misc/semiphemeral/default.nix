@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "semiphemeral";
@@ -16,10 +13,17 @@ python3.pkgs.buildPythonApplication rec {
 
   pythonImportsCheck = [ "semiphemeral" ];
 
-  propagatedBuildInputs = with python3.pkgs; [ click sqlalchemy flask tweepy colorama ];
+  propagatedBuildInputs = with python3.pkgs; [
+    click
+    sqlalchemy
+    flask
+    tweepy
+    colorama
+  ];
 
   meta = with lib; {
-    description = "Automatically delete your old tweets, except for the ones you want to keep";
+    description =
+      "Automatically delete your old tweets, except for the ones you want to keep";
     homepage = "https://github.com/micahflee/semiphemeral";
     license = licenses.mit;
     maintainers = with maintainers; [ amanjeev ];

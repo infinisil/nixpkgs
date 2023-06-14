@@ -10,7 +10,7 @@
 #
 # Additional test coverage for the remaining protocols (i.e. ftp, http and webdav)
 # would be a nice to have for the future.
-{ pkgs, lib, ...  }:
+{ pkgs, lib, ... }:
 
 with lib;
 
@@ -22,18 +22,16 @@ let
     filterAttrs (name: user: user.isNormalUser) config.users.users;
 
   # Returns true if a user is a member of the given group
-  isMemberOf =
-    config:
+  isMemberOf = config:
     # str
     groupName:
     # users.users attrset
     user:
-      any (x: x == user.name) config.users.groups.${groupName}.members;
+    any (x: x == user.name) config.users.groups.${groupName}.members;
 
   # Generates a valid SFTPGo user configuration for a given user
   # Will be converted to JSON and loaded on application startup.
-  generateUserAttrSet =
-    config:
+  generateUserAttrSet = config:
     # attrset returned by config.users.users.<username>
     user: {
       # 0: user is disabled, login is not allowed
@@ -53,25 +51,23 @@ let
       # Supported for local filesystem only. If one or more of the specified folders are not
       # inside the dataprovider they will be automatically created.
       # You have to create the folder on the filesystem yourself
-      virtual_folders =
-        optional (isMemberOf config sharedFolderName user) {
-          name = sharedFolderName;
-          mapped_path = "${config.services.sftpgo.dataDir}/${sharedFolderName}";
-          virtual_path = "/${sharedFolderName}";
-        };
+      virtual_folders = optional (isMemberOf config sharedFolderName user) {
+        name = sharedFolderName;
+        mapped_path = "${config.services.sftpgo.dataDir}/${sharedFolderName}";
+        virtual_path = "/${sharedFolderName}";
+      };
 
       # Defines the ACL on the virtual filesystem
-      permissions =
-        recursiveUpdate {
-          "/" = [ "list" ];     # read-only top level directory
-          "/private" = [ "*" ]; # private subdirectory, not shared with others
-        } (optionalAttrs (isMemberOf config "shared" user) {
-          "/shared" = [ "*" ];
-        });
+      permissions = recursiveUpdate {
+        "/" = [ "list" ]; # read-only top level directory
+        "/private" = [ "*" ]; # private subdirectory, not shared with others
+      } (optionalAttrs (isMemberOf config "shared" user) {
+        "/shared" = [ "*" ];
+      });
 
       filters = {
-        allowed_ip = [];
-        denied_ip = [];
+        allowed_ip = [ ];
+        denied_ip = [ ];
         web_client = [
           "password-change-disabled"
           "password-reset-disabled"
@@ -89,12 +85,12 @@ let
 
   # Generates a json file containing a static configuration
   # of users and folders to import to SFTPGo.
-  loadDataJson = config: pkgs.writeText "users-and-folders.json" (builtins.toJSON {
-    users =
-      mapAttrsToList (name: user: generateUserAttrSet config user) (normalUsers config);
+  loadDataJson = config:
+    pkgs.writeText "users-and-folders.json" (builtins.toJSON {
+      users = mapAttrsToList (name: user: generateUserAttrSet config user)
+        (normalUsers config);
 
-    folders = [
-      {
+      folders = [{
         name = sharedFolderName;
         description = "shared folder";
 
@@ -108,9 +104,8 @@ let
 
         # All users in the matching group gain access
         users = config.users.groups.${sharedFolderName}.members;
-      }
-    ];
-  });
+      }];
+    });
 
   # Generated Host Key for connecting to SFTPGo's sftp subsystem.
   snakeOilHostKey = pkgs.writeText "sftpgo_ed25519_host_key" ''
@@ -142,8 +137,7 @@ let
 
   # Define the for exposing HTTP
   httpPort = 8080;
-in
-{
+in {
   name = "sftpgo";
 
   meta.maintainers = with maintainers; [ yayayayaka ];
@@ -179,16 +173,14 @@ in
             create_default_admin = true;
           };
 
-          httpd.bindings = [
-            {
-              address = ""; # listen on all interfaces
-              port = httpPort;
-              enable_https = false;
+          httpd.bindings = [{
+            address = ""; # listen on all interfaces
+            port = httpPort;
+            enable_https = false;
 
-              enable_web_client = true;
-              enable_web_admin = true;
-            }
-          ];
+            enable_web_client = true;
+            enable_web_admin = true;
+          }];
 
           # Enable sftpd
           sftpd = {
@@ -204,7 +196,7 @@ in
       };
 
       systemd.services.sftpgo = {
-        after = [ "postgresql.service"];
+        after = [ "postgresql.service" ];
         environment = {
           # Update existing users
           SFTPGO_LOADDATA_MODE = "0";
@@ -217,57 +209,49 @@ in
       };
 
       # Sets up the folder hierarchy on the local filesystem
-      systemd.tmpfiles.rules =
-        let
-          sftpgoUser = nodes.server.services.sftpgo.user;
-          sftpgoGroup = nodes.server.services.sftpgo.group;
-          statePath = nodes.server.services.sftpgo.dataDir;
-        in [
-          # Create state directory
-          "d ${statePath} 0750 ${sftpgoUser} ${sftpgoGroup} -"
-          "d ${statePath}/users 0750 ${sftpgoUser} ${sftpgoGroup} -"
+      systemd.tmpfiles.rules = let
+        sftpgoUser = nodes.server.services.sftpgo.user;
+        sftpgoGroup = nodes.server.services.sftpgo.group;
+        statePath = nodes.server.services.sftpgo.dataDir;
+      in [
+        # Create state directory
+        "d ${statePath} 0750 ${sftpgoUser} ${sftpgoGroup} -"
+        "d ${statePath}/users 0750 ${sftpgoUser} ${sftpgoGroup} -"
 
-          # Created shared folder directories
-          "d ${statePath}/${sharedFolderName} 2770 ${sftpgoUser} ${sharedFolderName}   -"
-        ]
-        ++ mapAttrsToList (name: user:
-          # Create private user directories
-          ''
-            d ${statePath}/users/${user.name} 0700 ${sftpgoUser} ${sftpgoGroup} -
-            d ${statePath}/users/${user.name}/private 0700 ${sftpgoUser} ${sftpgoGroup} -
-          ''
-        ) (normalUsers nodes.server);
+        # Created shared folder directories
+        "d ${statePath}/${sharedFolderName} 2770 ${sftpgoUser} ${sharedFolderName}   -"
+      ] ++ mapAttrsToList (name: user:
+        # Create private user directories
+        ''
+          d ${statePath}/users/${user.name} 0700 ${sftpgoUser} ${sftpgoGroup} -
+          d ${statePath}/users/${user.name}/private 0700 ${sftpgoUser} ${sftpgoGroup} -
+        '') (normalUsers nodes.server);
 
-      users.users =
-        let
-          commonAttrs = {
-            isNormalUser = true;
-            openssh.authorizedKeys.keys = [ snakeOilPublicKey ];
-          };
-        in {
-          # SFTPGo admin user
-          admin = commonAttrs // {
-            password = adminPassword;
-          };
+      users.users = let
+        commonAttrs = {
+          isNormalUser = true;
+          openssh.authorizedKeys.keys = [ snakeOilPublicKey ];
+        };
+      in {
+        # SFTPGo admin user
+        admin = commonAttrs // { password = adminPassword; };
 
-          # Alice and bob share folders with each other
-          alice = commonAttrs // {
-            password = alicePassword;
-            extraGroups = [ sharedFolderName ];
-          };
-
-          bob = commonAttrs // {
-            password = bobPassword;
-            extraGroups = [ sharedFolderName ];
-          };
-
-          # Eve has no shared folders
-          eve = commonAttrs // {
-            password = evePassword;
-          };
+        # Alice and bob share folders with each other
+        alice = commonAttrs // {
+          password = alicePassword;
+          extraGroups = [ sharedFolderName ];
         };
 
-      users.groups.${sharedFolderName} = {};
+        bob = commonAttrs // {
+          password = bobPassword;
+          extraGroups = [ sharedFolderName ];
+        };
+
+        # Eve has no shared folders
+        eve = commonAttrs // { password = evePassword; };
+      };
+
+      users.groups.${sharedFolderName} = { };
 
       specialisation = {
         # A specialisation for asserting that SFTPGo can bind to privileged ports.
@@ -292,93 +276,110 @@ in
 
     client = { nodes, ... }: {
       # Add the SFTPGo host key to the global known_hosts file
-      programs.ssh.knownHosts =
-        let
-          commonAttrs = {
-            publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE61C7pTXfnLG2u9So+ijNTKaSOg009UrquqNL3fpEu1";
-          };
-        in {
-          "server" = commonAttrs;
-          "[server]:2022" = commonAttrs;
+      programs.ssh.knownHosts = let
+        commonAttrs = {
+          publicKey =
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE61C7pTXfnLG2u9So+ijNTKaSOg009UrquqNL3fpEu1";
         };
+      in {
+        "server" = commonAttrs;
+        "[server]:2022" = commonAttrs;
       };
+    };
   };
 
-  testScript = { nodes, ... }: let
-    # A function to generate test cases for wheter
-    # a specified username is expected to access the shared folder.
-    accessSharedFoldersSubtest =
-      { # The username to run as
+  testScript = { nodes, ... }:
+    let
+      # A function to generate test cases for wheter
+      # a specified username is expected to access the shared folder.
+      accessSharedFoldersSubtest = { # The username to run as
         username
         # Whether the tests are expected to succeed or not
-      , shouldSucceed ? true
-      }: ''
-        with subtest("Test whether ${username} can access shared folders"):
-            client.${if shouldSucceed then "succeed" else "fail"}("sftp -P ${toString sftpPort} -b ${
-              pkgs.writeText "${username}-ls-${sharedFolderName}" ''
-                ls ${sharedFolderName}
-              ''
-            } ${username}@server")
-      '';
+        , shouldSucceed ? true }: ''
+          with subtest("Test whether ${username} can access shared folders"):
+              client.${if shouldSucceed then "succeed" else "fail"}("sftp -P ${
+                toString sftpPort
+              } -b ${
+                pkgs.writeText "${username}-ls-${sharedFolderName}" ''
+                  ls ${sharedFolderName}
+                ''
+              } ${username}@server")
+        '';
       statePath = nodes.server.services.sftpgo.dataDir;
-  in ''
-    start_all()
+    in ''
+      start_all()
 
-    client.wait_for_unit("default.target")
-    server.wait_for_unit("sftpgo.service")
+      client.wait_for_unit("default.target")
+      server.wait_for_unit("sftpgo.service")
 
-    with subtest("web client"):
-        client.wait_until_succeeds("curl -sSf http://server:${toString httpPort}/web/client/login")
+      with subtest("web client"):
+          client.wait_until_succeeds("curl -sSf http://server:${
+            toString httpPort
+          }/web/client/login")
 
-        # Ensure sftpgo found the static folder
-        client.wait_until_succeeds("curl -o /dev/null -sSf http://server:${toString httpPort}/static/favicon.ico")
+          # Ensure sftpgo found the static folder
+          client.wait_until_succeeds("curl -o /dev/null -sSf http://server:${
+            toString httpPort
+          }/static/favicon.ico")
 
-    with subtest("Setup SSH keys"):
-        client.succeed("mkdir -m 700 /root/.ssh")
-        client.succeed("cat ${snakeOilPrivateKey} > /root/.ssh/id_ecdsa")
-        client.succeed("chmod 600 /root/.ssh/id_ecdsa")
+      with subtest("Setup SSH keys"):
+          client.succeed("mkdir -m 700 /root/.ssh")
+          client.succeed("cat ${snakeOilPrivateKey} > /root/.ssh/id_ecdsa")
+          client.succeed("chmod 600 /root/.ssh/id_ecdsa")
 
-    with subtest("Copy a file over sftp"):
-        client.wait_until_succeeds("scp -P ${toString sftpPort} ${toString testFile} alice@server:/private/${testFile.name}")
-        server.succeed("test -s ${statePath}/users/alice/private/${testFile.name}")
+      with subtest("Copy a file over sftp"):
+          client.wait_until_succeeds("scp -P ${toString sftpPort} ${
+            toString testFile
+          } alice@server:/private/${testFile.name}")
+          server.succeed("test -s ${statePath}/users/alice/private/${testFile.name}")
 
-        # The configured ACL should prevent uploading files to the root directory
-        client.fail("scp -P ${toString sftpPort} ${toString testFile} alice@server:/")
+          # The configured ACL should prevent uploading files to the root directory
+          client.fail("scp -P ${toString sftpPort} ${
+            toString testFile
+          } alice@server:/")
 
-    with subtest("Attempting an interactive SSH sessions must fail"):
-        client.fail("ssh -p ${toString sftpPort} alice@server")
+      with subtest("Attempting an interactive SSH sessions must fail"):
+          client.fail("ssh -p ${toString sftpPort} alice@server")
 
-    ${accessSharedFoldersSubtest {
-      username = "alice";
-      shouldSucceed = true;
-    }}
+      ${accessSharedFoldersSubtest {
+        username = "alice";
+        shouldSucceed = true;
+      }}
 
-    ${accessSharedFoldersSubtest {
-      username = "bob";
-      shouldSucceed = true;
-    }}
+      ${accessSharedFoldersSubtest {
+        username = "bob";
+        shouldSucceed = true;
+      }}
 
-    ${accessSharedFoldersSubtest {
-      username = "eve";
-      shouldSucceed = false;
-    }}
+      ${accessSharedFoldersSubtest {
+        username = "eve";
+        shouldSucceed = false;
+      }}
 
-    with subtest("Test sharing files"):
-        # Alice uploads a file to shared folder
-        client.succeed("scp -P ${toString sftpPort} ${toString sharedFile} alice@server:/${sharedFolderName}/${sharedFile.name}")
-        server.succeed("test -s ${statePath}/${sharedFolderName}/${sharedFile.name}")
+      with subtest("Test sharing files"):
+          # Alice uploads a file to shared folder
+          client.succeed("scp -P ${toString sftpPort} ${
+            toString sharedFile
+          } alice@server:/${sharedFolderName}/${sharedFile.name}")
+          server.succeed("test -s ${statePath}/${sharedFolderName}/${sharedFile.name}")
 
-        # Bob downloads the file from shared folder
-        client.succeed("scp -P ${toString sftpPort} bob@server:/shared/${sharedFile.name} ${sharedFile.name}")
-        client.succeed("test -s ${sharedFile.name}")
+          # Bob downloads the file from shared folder
+          client.succeed("scp -P ${
+            toString sftpPort
+          } bob@server:/shared/${sharedFile.name} ${sharedFile.name}")
+          client.succeed("test -s ${sharedFile.name}")
 
-        # Eve should not get the file from shared folder
-        client.fail("scp -P ${toString sftpPort} eve@server:/shared/${sharedFile.name}")
+          # Eve should not get the file from shared folder
+          client.fail("scp -P ${
+            toString sftpPort
+          } eve@server:/shared/${sharedFile.name}")
 
-    server.succeed("/run/current-system/specialisation/privilegedPorts/bin/switch-to-configuration test")
+      server.succeed("/run/current-system/specialisation/privilegedPorts/bin/switch-to-configuration test")
 
-    client.wait_until_succeeds("sftp -P 22 -b ${pkgs.writeText "get-hello-world.txt" ''
-      get /private/${testFile.name}
-    ''} alice@server")
-  '';
+      client.wait_until_succeeds("sftp -P 22 -b ${
+        pkgs.writeText "get-hello-world.txt" ''
+          get /private/${testFile.name}
+        ''
+      } alice@server")
+    '';
 }

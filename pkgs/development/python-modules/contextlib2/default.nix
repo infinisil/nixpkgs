@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, python
-, pythonAtLeast
-, pythonOlder
-, unittestCheckHook
-}:
+{ lib, buildPythonPackage, fetchPypi, python, pythonAtLeast, pythonOlder
+, unittestCheckHook }:
 
 buildPythonPackage rec {
   pname = "contextlib2";
@@ -23,9 +17,7 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [ unittestCheckHook ];
 
-  pythonImportsCheck = [
-    "contextlib2"
-  ];
+  pythonImportsCheck = [ "contextlib2" ];
 
   meta = with lib; {
     description = "Backports and enhancements for the contextlib module";

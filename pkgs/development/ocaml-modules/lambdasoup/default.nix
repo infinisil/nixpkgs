@@ -1,4 +1,5 @@
-{ lib, fetchFromGitHub, buildDunePackage, ocaml, camlp-streams, markup, ounit2 }:
+{ lib, fetchFromGitHub, buildDunePackage, ocaml, camlp-streams, markup, ounit2
+}:
 
 buildDunePackage rec {
   pname = "lambdasoup";

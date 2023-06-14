@@ -1,7 +1,6 @@
-{ lib, stdenv, fetchFromGitHub, cmake, ragel, python3
-, util-linux, fetchpatch
-, boost
-, withStatic ? false # build only shared libs by default, build static+shared if true
+{ lib, stdenv, fetchFromGitHub, cmake, ragel, python3, util-linux, fetchpatch
+, boost, withStatic ?
+  false # build only shared libs by default, build static+shared if true
 }:
 
 # NOTICE: pkg-config, pcap and pcre intentionally omitted from build inputs
@@ -23,16 +22,11 @@ stdenv.mkDerivation (finalAttrs: {
   outputs = [ "out" "dev" ];
 
   buildInputs = [ boost ];
-  nativeBuildInputs = [
-    cmake ragel python3 util-linux
-  ];
+  nativeBuildInputs = [ cmake ragel python3 util-linux ];
 
-  cmakeFlags = [
-    "-DFAT_RUNTIME=ON"
-    "-DBUILD_AVX512=ON"
-  ]
-  ++ lib.optional (withStatic) "-DBUILD_STATIC_AND_SHARED=ON"
-  ++ lib.optional (!withStatic) "-DBUILD_SHARED_LIBS=ON";
+  cmakeFlags = [ "-DFAT_RUNTIME=ON" "-DBUILD_AVX512=ON" ]
+    ++ lib.optional (withStatic) "-DBUILD_STATIC_AND_SHARED=ON"
+    ++ lib.optional (!withStatic) "-DBUILD_SHARED_LIBS=ON";
 
   postPatch = ''
     sed -i '/examples/d' CMakeLists.txt

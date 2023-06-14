@@ -1,4 +1,5 @@
-{ pkgs, nodejs, lib, python3Packages, fetchFromGitHub, nixosTests, fetchNpmDeps, npmHooks }:
+{ pkgs, nodejs, lib, python3Packages, fetchFromGitHub, nixosTests, fetchNpmDeps
+, npmHooks }:
 
 with python3Packages;
 
@@ -18,28 +19,12 @@ buildPythonApplication rec {
     hash = "sha256-RBpuhFI0hdi8bB48Pks9Ac/UdcQ/DJw+WFnNj5f7IYE=";
   };
 
-  outputs = [
-    "out"
-    "doc"
-  ];
+  outputs = [ "out" "doc" ];
 
-  propagatedBuildInputs = [
-    itsdangerous
-    jinja2
-    misaka
-    html5lib
-    werkzeug
-    bleach
-    flask-caching
-  ];
+  propagatedBuildInputs =
+    [ itsdangerous jinja2 misaka html5lib werkzeug bleach flask-caching ];
 
-  nativeBuildInputs = [
-    cffi
-    sphinxHook
-    sphinx
-    nodejs
-    npmHooks.npmConfigHook
-  ];
+  nativeBuildInputs = [ cffi sphinxHook sphinx nodejs npmHooks.npmConfigHook ];
 
   NODE_PATH = "$npmDeps";
 
@@ -50,10 +35,7 @@ buildPythonApplication rec {
     make js
   '';
 
-  nativeCheckInputs = [
-    pytest
-    pytest-cov
-  ];
+  nativeCheckInputs = [ pytest pytest-cov ];
 
   checkPhase = ''
     pytest

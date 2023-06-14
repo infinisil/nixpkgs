@@ -1,9 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, testers
-, mermerd
-}:
+{ lib, buildGoModule, fetchFromGitHub, testers, mermerd }:
 
 buildGoModule rec {
   pname = "mermerd";
@@ -18,12 +13,8 @@ buildGoModule rec {
 
   vendorHash = "sha256-RSCpkQymvUvY2bOkjhsyKnDa3vezUjC33Nwv0+O4OOQ=";
 
-  ldflags = [
-    "-s"
-    "-w"
-    "-X=main.version=${version}"
-    "-X=main.commit=${src.rev}"
-  ];
+  ldflags =
+    [ "-s" "-w" "-X=main.version=${version}" "-X=main.commit=${src.rev}" ];
 
   # the tests expect a database to be running
   doCheck = false;

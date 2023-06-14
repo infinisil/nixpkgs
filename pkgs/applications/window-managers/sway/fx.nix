@@ -14,15 +14,10 @@ sway-unwrapped.overrideAttrs (oldAttrs: rec {
   # This patch was backported into SwayFX
   # remove when next release is rebased on Sway 1.9
   patches =
-    let
-      removePatches = [
-        "LIBINPUT_CONFIG_ACCEL_PROFILE_CUSTOM.patch"
-      ];
-    in
-    builtins.filter
-      (patch: !builtins.elem (patch.name or null) removePatches)
-      (oldAttrs.patches or [ ]);
-
+    let removePatches = [ "LIBINPUT_CONFIG_ACCEL_PROFILE_CUSTOM.patch" ];
+    in builtins.filter
+    (patch: !builtins.elem (patch.name or null) removePatches)
+    (oldAttrs.patches or [ ]);
 
   meta = with lib; {
     description = "Sway, but with eye candy!";

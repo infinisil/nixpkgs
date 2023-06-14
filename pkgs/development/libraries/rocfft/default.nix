@@ -1,19 +1,5 @@
-{ rocfft
-, lib
-, stdenv
-, fetchFromGitHub
-, rocmUpdateScript
-, cmake
-, hip
-, python3
-, rocm-cmake
-, sqlite
-, boost
-, fftw
-, fftwFloat
-, gtest
-, openmp
-, rocrand
+{ rocfft, lib, stdenv, fetchFromGitHub, rocmUpdateScript, cmake, hip, python3
+, rocm-cmake, sqlite, boost, fftw, fftwFloat, gtest, openmp, rocrand
 # NOTE: Update the default GPU targets on every update
 , gpuTargets ? [
   "gfx803"
@@ -24,38 +10,32 @@
   "gfx1030"
   "gfx1100"
   "gfx1102"
-]
-}:
+] }:
 
 let
   # To avoid output limit exceeded errors in hydra, we build kernel
   # device libs and the kernel RTC cache database in separate derivations
-  kernelDeviceLibs = map
-    (target:
-      (rocfft.overrideAttrs (prevAttrs: {
-        pname = "rocfft-device-${target}";
+  kernelDeviceLibs = map (target:
+    (rocfft.overrideAttrs (prevAttrs: {
+      pname = "rocfft-device-${target}";
 
-        patches = prevAttrs.patches ++ [
-          # Add back install rule for device library
-          # This workaround is needed because rocm_install_targets
-          # doesn't support an EXCLUDE_FROM_ALL option
-          ./device-install.patch
-        ];
+      patches = prevAttrs.patches ++ [
+        # Add back install rule for device library
+        # This workaround is needed because rocm_install_targets
+        # doesn't support an EXCLUDE_FROM_ALL option
+        ./device-install.patch
+      ];
 
-        buildFlags = [ "rocfft-device-${target}" ];
+      buildFlags = [ "rocfft-device-${target}" ];
 
-        installPhase = ''
-          runHook preInstall
-          cmake --install . --component device
-          runHook postInstall
-        '';
+      installPhase = ''
+        runHook preInstall
+        cmake --install . --component device
+        runHook postInstall
+      '';
 
-        requiredSystemFeatures = [ "big-parallel" ];
-      })).override {
-        gpuTargets = [ target ];
-      }
-    )
-    gpuTargets;
+      requiredSystemFeatures = [ "big-parallel" ];
+    })).override { gpuTargets = [ target ]; }) gpuTargets;
 
   # TODO: Figure out how to also split this by GPU target
   #
@@ -80,8 +60,7 @@ let
 
     requiredSystemFeatures = [ "big-parallel" ];
   });
-in
-stdenv.mkDerivation (finalAttrs: {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "rocfft";
   version = "5.4.3";
 
@@ -98,16 +77,10 @@ stdenv.mkDerivation (finalAttrs: {
     ./split-kernel-compilation.patch
   ];
 
-  nativeBuildInputs = [
-    cmake
-    hip
-    python3
-    rocm-cmake
-  ];
+  nativeBuildInputs = [ cmake hip python3 rocm-cmake ];
 
-  buildInputs = [
-    sqlite
-  ] ++ lib.optionals (finalAttrs.pname == "rocfft") kernelDeviceLibs;
+  buildInputs = [ sqlite ]
+    ++ lib.optionals (finalAttrs.pname == "rocfft") kernelDeviceLibs;
 
   cmakeFlags = [
     "-DCMAKE_C_COMPILER=hipcc"
@@ -133,26 +106,12 @@ stdenv.mkDerivation (finalAttrs: {
 
       sourceRoot = "source/clients/tests";
 
-      nativeBuildInputs = [
-        cmake
-        hip
-        rocm-cmake
-      ];
+      nativeBuildInputs = [ cmake hip rocm-cmake ];
 
-      buildInputs = [
-        boost
-        fftw
-        fftwFloat
-        finalAttrs.finalPackage
-        gtest
-        openmp
-        rocrand
-      ];
+      buildInputs =
+        [ boost fftw fftwFloat finalAttrs.finalPackage gtest openmp rocrand ];
 
-      cmakeFlags = [
-        "-DCMAKE_C_COMPILER=hipcc"
-        "-DCMAKE_CXX_COMPILER=hipcc"
-      ];
+      cmakeFlags = [ "-DCMAKE_C_COMPILER=hipcc" "-DCMAKE_CXX_COMPILER=hipcc" ];
 
       postInstall = ''
         rm -r "$out/lib/fftw"
@@ -166,27 +125,17 @@ stdenv.mkDerivation (finalAttrs: {
 
       sourceRoot = "source/clients/rider";
 
-      nativeBuildInputs = [
-        cmake
-        hip
-        rocm-cmake
-      ];
+      nativeBuildInputs = [ cmake hip rocm-cmake ];
 
       buildInputs = [
         boost
         finalAttrs.finalPackage
         openmp
-        (python3.withPackages (ps: with ps; [
-          pandas
-          scipy
-        ]))
+        (python3.withPackages (ps: with ps; [ pandas scipy ]))
         rocrand
       ];
 
-      cmakeFlags = [
-        "-DCMAKE_C_COMPILER=hipcc"
-        "-DCMAKE_CXX_COMPILER=hipcc"
-      ];
+      cmakeFlags = [ "-DCMAKE_C_COMPILER=hipcc" "-DCMAKE_CXX_COMPILER=hipcc" ];
 
       postInstall = ''
         cp -a ../../../scripts/perf "$out/bin"
@@ -199,23 +148,11 @@ stdenv.mkDerivation (finalAttrs: {
 
       sourceRoot = "source/clients/samples";
 
-      nativeBuildInputs = [
-        cmake
-        hip
-        rocm-cmake
-      ];
+      nativeBuildInputs = [ cmake hip rocm-cmake ];
 
-      buildInputs = [
-        boost
-        finalAttrs.finalPackage
-        openmp
-        rocrand
-      ];
+      buildInputs = [ boost finalAttrs.finalPackage openmp rocrand ];
 
-      cmakeFlags = [
-        "-DCMAKE_C_COMPILER=hipcc"
-        "-DCMAKE_CXX_COMPILER=hipcc"
-      ];
+      cmakeFlags = [ "-DCMAKE_C_COMPILER=hipcc" "-DCMAKE_CXX_COMPILER=hipcc" ];
 
       installPhase = ''
         runHook preInstall

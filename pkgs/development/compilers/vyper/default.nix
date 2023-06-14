@@ -1,19 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
-, pythonRelaxDepsHook
-, writeText
-, asttokens
-, pycryptodome
-, importlib-metadata
-, recommonmark
-, semantic-version
-, sphinx
-, sphinx-rtd-theme
-, pytest-runner
-, setuptools-scm
-, git
+{ lib, buildPythonPackage, fetchPypi, pythonOlder, pythonRelaxDepsHook
+, writeText, asttokens, pycryptodome, importlib-metadata, recommonmark
+, semantic-version, sphinx, sphinx-rtd-theme, pytest-runner, setuptools-scm, git
 }:
 
 let
@@ -25,8 +12,7 @@ let
         self.count = 1
   '';
 
-in
-buildPythonPackage rec {
+in buildPythonPackage rec {
   pname = "vyper";
   version = "0.3.9";
   format = "setuptools";

@@ -1,14 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
+{ lib, buildPythonPackage, fetchFromGitHub
 
 # optionals
 , genshi
 
 # tests
-, pytestCheckHook
-, webtest
-}:
+, pytestCheckHook, webtest }:
 
 buildPythonPackage rec {
   pname = "static3";
@@ -31,19 +27,13 @@ buildPythonPackage rec {
     KidMagic = [
       # TODO: kid
     ];
-    Genshimagic = [
-      genshi
-    ];
+    Genshimagic = [ genshi ];
   };
 
-  pythonImportsCheck = [
-    "static"
-  ];
+  pythonImportsCheck = [ "static" ];
 
-  nativeCheckInputs  = [
-    pytestCheckHook
-    webtest
-  ] ++ lib.flatten (builtins.attrValues passthru.optional-dependencies);
+  nativeCheckInputs = [ pytestCheckHook webtest ]
+    ++ lib.flatten (builtins.attrValues passthru.optional-dependencies);
 
   meta = with lib; {
     changelog = "https://github.com/rmohr/static3/releases/tag/v${version}";

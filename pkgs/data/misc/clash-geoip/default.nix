@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation rec {
   version = "20230612";
 
   src = fetchurl {
-    url = "https://github.com/Dreamacro/maxmind-geoip/releases/download/${version}/Country.mmdb";
+    url =
+      "https://github.com/Dreamacro/maxmind-geoip/releases/download/${version}/Country.mmdb";
     sha256 = "sha256-uD+UzMjpQvuNMcIxm4iHLnJwhxXstE3W+0xCuf9j/i8=";
   };
 
@@ -18,15 +19,13 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
-  passthru = {
-    updateScript = nix-update-script { };
-  };
+  passthru = { updateScript = nix-update-script { }; };
 
   meta = with lib; {
     description = "A GeoLite2 data created by MaxMind";
     homepage = "https://github.com/Dreamacro/maxmind-geoip";
     license = licenses.unfree;
-    maintainers = [];
+    maintainers = [ ];
     platforms = platforms.all;
   };
 }

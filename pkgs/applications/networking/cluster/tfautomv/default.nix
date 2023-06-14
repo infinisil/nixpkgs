@@ -1,7 +1,4 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-}:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "tfautomv";
@@ -20,7 +17,8 @@ buildGoModule rec {
 
   meta = with lib; {
     homepage = "https://github.com/busser/tfautomv";
-    description = "When refactoring a Terraform codebase, you often need to write moved blocks. This can be tedious. Let tfautomv do it for you";
+    description =
+      "When refactoring a Terraform codebase, you often need to write moved blocks. This can be tedious. Let tfautomv do it for you";
     license = licenses.asl20;
     maintainers = with maintainers; [ qjoly ];
   };

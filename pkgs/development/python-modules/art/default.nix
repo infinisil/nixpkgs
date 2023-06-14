@@ -1,7 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-}:
+{ lib, buildPythonPackage, fetchFromGitHub }:
 
 buildPythonPackage rec {
   pname = "art";
@@ -31,7 +28,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "ASCII art library for Python";
     homepage = "https://github.com/sepandhaghighi/art";
-    changelog = "https://github.com/sepandhaghighi/art/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/sepandhaghighi/art/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ figsoda ];
   };

@@ -1,14 +1,5 @@
-{ lib
-, derivationWithMeta
-, fetchurl
-, kaem
-, tinycc
-, gnumake
-, gnupatch
-, coreutils
-, mescc-tools-extra
-, bash_2_05
-}:
+{ lib, derivationWithMeta, fetchurl, kaem, tinycc, gnumake, gnupatch, coreutils
+, mescc-tools-extra, bash_2_05 }:
 let
   pname = "bash";
   version = "2.05b";
@@ -20,7 +11,8 @@ let
 
   # Thanks to the live-bootstrap project!
   # See https://github.com/fosslinux/live-bootstrap/blob/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/bash-2.05b/bash-2.05b.kaem
-  liveBootstrap = "https://github.com/fosslinux/live-bootstrap/raw/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/bash-2.05b";
+  liveBootstrap =
+    "https://github.com/fosslinux/live-bootstrap/raw/1bc4296091c51f53a5598050c8956d16e945b0f5/sysa/bash-2.05b";
 
   main_mk = fetchurl {
     url = "${liveBootstrap}/mk/main.mk";
@@ -65,16 +57,10 @@ let
       sha256 = "1315slv5f7ziajqyxg4jlyanf1xwd06xw14y6pq7xpm3jzjk55j9";
     })
   ];
-in
-kaem.runCommand "${pname}-${version}" {
+in kaem.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnupatch
-    coreutils
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnupatch coreutils ];
 
   passthru.runCommand = name: env: buildCommand:
     derivationWithMeta ({
@@ -90,7 +76,7 @@ kaem.runCommand "${pname}-${version}" {
       passAsFile = [ "buildCommand" ];
 
       SHELL = "${bash_2_05}/bin/bash";
-      PATH = lib.makeBinPath ((env.nativeBuildInputs or []) ++ [
+      PATH = lib.makeBinPath ((env.nativeBuildInputs or [ ]) ++ [
         bash_2_05
         coreutils
         # provides untar, ungz, and unbz2
@@ -99,13 +85,14 @@ kaem.runCommand "${pname}-${version}" {
     } // (builtins.removeAttrs env [ "nativeBuildInputs" ]));
 
   passthru.tests.get-version = result:
-    kaem.runCommand "${pname}-get-version-${version}" {} ''
+    kaem.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/bash --version
       mkdir ''${out}
     '';
 
   meta = with lib; {
-    description = "GNU Bourne-Again Shell, the de facto standard shell on Linux";
+    description =
+      "GNU Bourne-Again Shell, the de facto standard shell on Linux";
     homepage = "https://www.gnu.org/software/bash";
     license = licenses.gpl3Plus;
     maintainers = teams.minimal-bootstrap.members;

@@ -1,16 +1,5 @@
-{ lib
-, stdenv
-, fetchFromBitbucket
-, mlton
-, pkg-config
-, getopt
-, boehmgc
-, darwin
-, libbacktrace
-, libpng
-, ncurses
-, readline
-}:
+{ lib, stdenv, fetchFromBitbucket, mlton, pkg-config, getopt, boehmgc, darwin
+, libbacktrace, libpng, ncurses, readline }:
 
 stdenv.mkDerivation rec {
   pname = "c0";
@@ -23,9 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-uahF8fOp2ZJE8EhZke46sbPmN0MNHzsLkU4EXkV710U=";
   };
 
-  patches = [
-    ./use-system-libraries.patch
-  ];
+  patches = [ ./use-system-libraries.patch ];
 
   postPatch = ''
     substituteInPlace cc0/Makefile \
@@ -44,19 +31,10 @@ stdenv.mkDerivation rec {
     cd cc0/
   '';
 
-  nativeBuildInputs = [
-    getopt
-    mlton
-    pkg-config
-  ] ++ lib.optionals stdenv.isDarwin [ darwin.sigtool ];
+  nativeBuildInputs = [ getopt mlton pkg-config ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.sigtool ];
 
-  buildInputs = [
-    boehmgc
-    libbacktrace
-    libpng
-    ncurses
-    readline
-  ];
+  buildInputs = [ boehmgc libbacktrace libpng ncurses readline ];
 
   strictDeps = true;
 
@@ -68,7 +46,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "A small safe subset of the C programming language, augmented with contracts";
+    description =
+      "A small safe subset of the C programming language, augmented with contracts";
     homepage = "https://c0.cs.cmu.edu/";
     license = licenses.mit;
     maintainers = [ maintainers.marsam ];

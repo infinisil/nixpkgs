@@ -1,9 +1,4 @@
-{ lib
-, fetchurl
-, buildDunePackage
-, dune-configurator
-, alcotest
-}:
+{ lib, fetchurl, buildDunePackage, dune-configurator, alcotest }:
 
 buildDunePackage rec {
   pname = "iomux";
@@ -13,17 +8,14 @@ buildDunePackage rec {
   duneVersion = "3";
 
   src = fetchurl {
-    url = "https://github.com/haesbaert/ocaml-${pname}/releases/download/v${version}/${pname}-${version}.tbz";
+    url =
+      "https://github.com/haesbaert/ocaml-${pname}/releases/download/v${version}/${pname}-${version}.tbz";
     sha256 = "zNJ3vVOv0BEpHLiC8Y610F87uiMlfYNo28ej0H+EU+c=";
   };
 
-  buildInputs = [
-    dune-configurator
-  ];
+  buildInputs = [ dune-configurator ];
 
-  checkInputs = [
-    alcotest
-  ];
+  checkInputs = [ alcotest ];
 
   meta = {
     homepage = "https://github.com/haesbaert/ocaml-${pname}";

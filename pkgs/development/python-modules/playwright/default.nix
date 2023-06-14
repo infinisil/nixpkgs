@@ -1,19 +1,8 @@
-{ lib
-, buildPythonPackage
-, git
-, greenlet
-, fetchFromGitHub
-, pyee
-, python
-, pythonOlder
-, setuptools-scm
-, playwright-driver
-}:
+{ lib, buildPythonPackage, git, greenlet, fetchFromGitHub, pyee, python
+, pythonOlder, setuptools-scm, playwright-driver }:
 
-let
-  driver = playwright-driver;
-in
-buildPythonPackage rec {
+let driver = playwright-driver;
+in buildPythonPackage rec {
   pname = "playwright";
   # run ./pkgs/development/python-modules/playwright/update.sh to update
   version = "1.34.0";
@@ -61,13 +50,9 @@ buildPythonPackage rec {
       --replace "@driver@" "${driver}/bin/playwright"
   '';
 
-
   nativeBuildInputs = [ git setuptools-scm ];
 
-  propagatedBuildInputs = [
-    greenlet
-    pyee
-  ];
+  propagatedBuildInputs = [ greenlet pyee ];
 
   postInstall = ''
     ln -s ${driver} $out/${python.sitePackages}/playwright/driver
@@ -78,9 +63,7 @@ buildPythonPackage rec {
   # Skip tests because they require network access.
   doCheck = false;
 
-  pythonImportsCheck = [
-    "playwright"
-  ];
+  pythonImportsCheck = [ "playwright" ];
 
   passthru = {
     inherit driver;
@@ -91,10 +74,12 @@ buildPythonPackage rec {
   };
 
   meta = with lib; {
-    description = "Python version of the Playwright testing and automation library";
+    description =
+      "Python version of the Playwright testing and automation library";
     homepage = "https://github.com/microsoft/playwright-python";
     license = licenses.asl20;
     maintainers = with maintainers; [ techknowlogick yrd SuperSandro2000 ];
-    platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+    platforms =
+      [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
   };
 }

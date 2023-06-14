@@ -1,4 +1,5 @@
-{ ballerina, lib, writeText, runCommand, makeWrapper, fetchzip, stdenv, openjdk }:
+{ ballerina, lib, writeText, runCommand, makeWrapper, fetchzip, stdenv, openjdk
+}:
 let
   version = "2201.6.0";
   codeName = "swan-lake";
@@ -7,7 +8,8 @@ in stdenv.mkDerivation {
   inherit version;
 
   src = fetchzip {
-    url = "https://dist.ballerina.io/downloads/${version}/ballerina-${version}-${codeName}.zip";
+    url =
+      "https://dist.ballerina.io/downloads/${version}/ballerina-${version}-${codeName}.zip";
     sha256 = "sha256-yttRswqNq8Tam1OwnC9klwrryDDqdHMzzRs9T9pYlnU=";
   };
 

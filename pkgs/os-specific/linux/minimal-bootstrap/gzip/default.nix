@@ -1,11 +1,4 @@
-{ lib
-, fetchurl
-, bash
-, tinycc
-, gnumake
-, gnused
-, gnugrep
-}:
+{ lib, fetchurl, bash, tinycc, gnumake, gnused, gnugrep }:
 let
   pname = "gzip";
   version = "1.2.4";
@@ -14,19 +7,13 @@ let
     url = "mirror://gnu/gzip/gzip-${version}.tar.gz";
     sha256 = "0ryr5b00qz3xcdcv03qwjdfji8pasp0007ay3ppmk71wl8c1i90w";
   };
-in
-bash.runCommand "${pname}-${version}" {
+in bash.runCommand "${pname}-${version}" {
   inherit pname version;
 
-  nativeBuildInputs = [
-    tinycc.compiler
-    gnumake
-    gnused
-    gnugrep
-  ];
+  nativeBuildInputs = [ tinycc.compiler gnumake gnused gnugrep ];
 
   passthru.tests.get-version = result:
-    bash.runCommand "${pname}-get-version-${version}" {} ''
+    bash.runCommand "${pname}-get-version-${version}" { } ''
       ${result}/bin/gzip --version
       mkdir $out
     '';

@@ -1,8 +1,5 @@
-{ lib, stdenv, fetchFromGitHub
-, autoPatchelfHook
-, fuse3
-, maven, jdk, makeShellWrapper, glib, wrapGAppsHook
-}:
+{ lib, stdenv, fetchFromGitHub, autoPatchelfHook, fuse3, maven, jdk
+, makeShellWrapper, glib, wrapGAppsHook }:
 
 let
   pname = "cryptomator";
@@ -51,7 +48,6 @@ in stdenv.mkDerivation rec {
     mvn -Plinux package --offline -Dmaven.test.skip=true -Dmaven.repo.local=$(cp -dpR ${deps}/.m2 ./ && chmod +w -R .m2 && pwd)/.m2
   '';
 
-
   # This is based on the instructins in https://github.com/cryptomator/cryptomator/blob/develop/dist/linux/appimage/build.sh
   installPhase = ''
     mkdir -p $out/bin/ $out/share/cryptomator/libs/ $out/share/cryptomator/mods/
@@ -77,7 +73,9 @@ in stdenv.mkDerivation rec {
       --add-flags "-Djavafx.embed.singleThread=true " \
       --add-flags "-Dawt.useSystemAAFontSettings=on" \
       --add-flags "--module org.cryptomator.desktop/org.cryptomator.launcher.Cryptomator" \
-      --prefix PATH : "$out/share/cryptomator/libs/:${lib.makeBinPath [ jdk glib ]}" \
+      --prefix PATH : "$out/share/cryptomator/libs/:${
+        lib.makeBinPath [ jdk glib ]
+      }" \
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ fuse3 ]}" \
       --set JAVA_HOME "${jdk.home}"
 
@@ -93,13 +91,8 @@ in stdenv.mkDerivation rec {
     cp ${src}/dist/linux/common/application-vnd.cryptomator.vault.xml $out/share/mime/packages/application-vnd.cryptomator.vault.xml
   '';
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-    maven
-    makeShellWrapper
-    wrapGAppsHook
-    jdk
-  ];
+  nativeBuildInputs =
+    [ autoPatchelfHook maven makeShellWrapper wrapGAppsHook jdk ];
   buildInputs = [ fuse3 jdk glib ];
 
   meta = with lib; {
@@ -107,7 +100,7 @@ in stdenv.mkDerivation rec {
     homepage = "https://cryptomator.org";
     sourceProvenance = with sourceTypes; [
       fromSource
-      binaryBytecode  # deps
+      binaryBytecode # deps
     ];
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ bachp ];

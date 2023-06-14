@@ -1,7 +1,4 @@
-{ python3
-, lib
-, fetchFromGitea
-}:
+{ python3, lib, fetchFromGitea }:
 
 python3.pkgs.buildPythonApplication {
   pname = "lerpn";

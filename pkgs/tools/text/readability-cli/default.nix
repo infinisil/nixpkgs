@@ -31,7 +31,8 @@ buildNpmPackage rec {
   '';
 
   meta = with lib; {
-    description = "Firefox Reader Mode in your terminal - get useful text from a web page using Mozilla's Readability library";
+    description =
+      "Firefox Reader Mode in your terminal - get useful text from a web page using Mozilla's Readability library";
     homepage = "https://gitlab.com/gardenappl/readability-cli";
     license = licenses.gpl3Only;
     maintainers = [ maintainers.marsam ];

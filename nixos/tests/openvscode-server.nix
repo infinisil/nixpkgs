@@ -1,9 +1,8 @@
-import ./make-test-python.nix ({pkgs, lib, ...}:
-{
+import ./make-test-python.nix ({ pkgs, lib, ... }: {
   name = "openvscode-server";
 
   nodes = {
-    machine = {pkgs, ...}: {
+    machine = { pkgs, ... }: {
       services.openvscode-server = {
         enable = true;
         withoutConnectionToken = true;

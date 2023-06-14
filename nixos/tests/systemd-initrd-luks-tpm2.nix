@@ -9,16 +9,16 @@ import ./make-test-python.nix ({ lib, pkgs, ... }: {
       # Booting off the TPM2-encrypted device requires an available init script
       mountHostNixStore = true;
       useEFIBoot = true;
-      qemu.options = ["-chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock -tpmdev emulator,id=tpm0,chardev=chrtpm -device tpm-tis,tpmdev=tpm0"];
+      qemu.options = [
+        "-chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock -tpmdev emulator,id=tpm0,chardev=chrtpm -device tpm-tis,tpmdev=tpm0"
+      ];
     };
     boot.loader.systemd-boot.enable = true;
 
     boot.initrd.availableKernelModules = [ "tpm_tis" ];
 
     environment.systemPackages = with pkgs; [ cryptsetup ];
-    boot.initrd.systemd = {
-      enable = true;
-    };
+    boot.initrd.systemd = { enable = true; };
 
     specialisation.boot-luks.configuration = {
       boot.initrd.luks.devices = lib.mkVMOverride {

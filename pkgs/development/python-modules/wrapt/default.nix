@@ -1,10 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pytestCheckHook
-, sphinxHook
-, sphinx-rtd-theme
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pytestCheckHook, sphinxHook
+, sphinx-rtd-theme }:
 
 buildPythonPackage rec {
   pname = "wrapt";
@@ -19,18 +14,11 @@ buildPythonPackage rec {
     hash = "sha256-nXwDuNo4yZxgjnkus9bVwIZltPaSH93D+PcZMGT2nGM=";
   };
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  nativeBuildInputs = [
-    sphinxHook
-    sphinx-rtd-theme
-  ];
+  nativeBuildInputs = [ sphinxHook sphinx-rtd-theme ];
 
-  pythonImportsCheck = [
-    "wrapt"
-  ];
+  pythonImportsCheck = [ "wrapt" ];
 
   meta = with lib; {
     description = "Module for decorators, wrappers and monkey patching";

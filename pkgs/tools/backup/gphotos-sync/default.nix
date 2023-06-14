@@ -1,10 +1,4 @@
-{ lib
-, pkgs
-, fetchFromGitHub
-, fetchpatch
-, python3
-, ffmpeg
-}:
+{ lib, pkgs, fetchFromGitHub, fetchpatch, python3, ffmpeg }:
 python3.pkgs.buildPythonApplication rec {
   pname = "gphotos-sync";
   version = "3.1.2";
@@ -19,15 +13,10 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-lLw450Rk7tIENFTZWHoinkhv3VtctDv18NKxhox+NgI=";
   };
 
-  patches = [
-    ./skip-network-tests.patch
-  ];
+  patches = [ ./skip-network-tests.patch ];
 
   nativeBuildInputs = [ python3.pkgs.pythonRelaxDepsHook ];
-  pythonRelaxDeps = [
-    "psutil"
-    "exif"
-  ];
+  pythonRelaxDeps = [ "psutil" "exif" ];
 
   propagatedBuildInputs = with python3.pkgs; [
     appdirs
@@ -42,9 +31,7 @@ python3.pkgs.buildPythonApplication rec {
     types-requests
   ];
 
-  buildInputs = [
-    ffmpeg
-  ];
+  buildInputs = [ ffmpeg ];
 
   nativeCheckInputs = with python3.pkgs; [
     mock
@@ -59,7 +46,8 @@ python3.pkgs.buildPythonApplication rec {
   '';
 
   meta = with lib; {
-    description = "Google Photos and Albums backup with Google Photos Library API";
+    description =
+      "Google Photos and Albums backup with Google Photos Library API";
     homepage = "https://github.com/gilesknap/gphotos-sync";
     license = licenses.asl20;
     maintainers = with maintainers; [ dnr ];

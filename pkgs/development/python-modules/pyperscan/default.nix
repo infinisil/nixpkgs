@@ -1,12 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, buildPythonPackage
-, rustPlatform
-, pytestCheckHook
-, libiconv
-, vectorscan
-}:
+{ lib, stdenv, fetchFromGitHub, buildPythonPackage, rustPlatform
+, pytestCheckHook, libiconv, vectorscan }:
 
 buildPythonPackage rec {
   pname = "pyperscan";
@@ -45,7 +38,10 @@ buildPythonPackage rec {
     description = "a hyperscan binding for Python, which supports vectorscan";
     homepage = "https://github.com/vlaci/pyperscan";
     platforms = platforms.unix;
-    license = with licenses; [ asl20 /* or */ mit ];
+    license = with licenses; [
+      asl20 # or
+      mit
+    ];
     maintainers = with maintainers; [ tnias vlaci ];
   };
 }

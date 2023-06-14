@@ -6,7 +6,8 @@ stdenv.mkDerivation (finalAttrs: {
   version = "1.3.3";
 
   src = fetchurl {
-    url = "https://github.com/deepnight/ldtk/releases/download/v${finalAttrs.version}/ubuntu-distribution.zip";
+    url =
+      "https://github.com/deepnight/ldtk/releases/download/v${finalAttrs.version}/ubuntu-distribution.zip";
     hash = "sha256-egvAe4nAzPDBeTaAzrqhlDsG60bGNnKXB5Vt16vIZrQ";
   };
 
@@ -52,7 +53,8 @@ stdenv.mkDerivation (finalAttrs: {
   meta = with lib; {
     description = "Modern, lightweight and efficient 2D level editor";
     homepage = "https://ldtk.io/";
-    changelog = "https://github.com/deepnight/ldtk/releases/tag/v${finalAttrs.version}";
+    changelog =
+      "https://github.com/deepnight/ldtk/releases/tag/v${finalAttrs.version}";
     license = licenses.mit;
     platforms = [ "x86_64-linux" ];
     maintainers = with maintainers; [ felschr ];

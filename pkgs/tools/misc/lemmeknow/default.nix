@@ -14,7 +14,8 @@ rustPlatform.buildRustPackage rec {
   meta = with lib; {
     description = "A tool to identify anything";
     homepage = "https://github.com/swanandx/lemmeknow";
-    changelog = "https://github.com/swanandx/lemmeknow/releases/tag/v${version}";
+    changelog =
+      "https://github.com/swanandx/lemmeknow/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ figsoda Br1ght0ne ];
   };

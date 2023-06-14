@@ -1,4 +1,4 @@
-{ lib, buildPackages, fetchurl, perl, buildLinux, nixosTests, ... } @ args:
+{ lib, buildPackages, fetchurl, perl, buildLinux, nixosTests, ... }@args:
 
 with lib;
 
@@ -15,4 +15,4 @@ buildLinux (args // rec {
     url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
     sha256 = "1snrgvpqpmc0d4aphq8flsmlcjjx9kgknymjlrmazl4ghl57jf09";
   };
-} // (args.argsOverride or {}))
+} // (args.argsOverride or { }))

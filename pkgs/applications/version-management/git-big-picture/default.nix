@@ -14,7 +14,7 @@ python3Packages.buildPythonApplication rec {
 
   postFixup = ''
     wrapProgram $out/bin/git-big-picture \
-      --prefix PATH ":" ${ lib.makeBinPath [ git graphviz ]  }
+      --prefix PATH ":" ${lib.makeBinPath [ git graphviz ]}
   '';
 
   meta = {

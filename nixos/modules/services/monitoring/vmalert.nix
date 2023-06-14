@@ -1,23 +1,25 @@
-{ config, pkgs, lib, ... }: with lib;
+{ config, pkgs, lib, ... }:
+with lib;
 let
   cfg = config.services.vmalert;
 
-  format = pkgs.formats.yaml {};
+  format = pkgs.formats.yaml { };
 
-  confOpts = concatStringsSep " \\\n" (mapAttrsToList mkLine (filterAttrs (_: v: v != false) cfg.settings));
+  confOpts = concatStringsSep " \\\n"
+    (mapAttrsToList mkLine (filterAttrs (_: v: v != false) cfg.settings));
   confType = with types;
-    let
-      valueType = oneOf [ bool int path str ];
-    in
-    attrsOf (either valueType (listOf valueType));
+    let valueType = oneOf [ bool int path str ];
+    in attrsOf (either valueType (listOf valueType));
 
   mkLine = key: value:
-    if value == true then "-${key}"
-    else if isList value then concatMapStringsSep " " (v: "-${key}=${escapeShellArg (toString v)}") value
-    else "-${key}=${escapeShellArg (toString value)}"
-  ;
-in
-{
+    if value == true then
+      "-${key}"
+    else if isList value then
+      concatMapStringsSep " " (v: "-${key}=${escapeShellArg (toString v)}")
+      value
+    else
+      "-${key}=${escapeShellArg (toString value)}";
+in {
   # interface
   options.services.vmalert = {
     enable = mkEnableOption (mdDoc "vmalert");
@@ -46,7 +48,7 @@ in
 
           "notifier.url" = mkOption {
             type = with types; listOf nonEmptyStr;
-            default = [];
+            default = [ ];
             example = [ "http://127.0.0.1:9093" ];
             description = mdDoc ''
               Prometheus Alertmanager URL. List all Alertmanager URLs if it runs in the cluster mode to ensure high availability.
@@ -72,10 +74,7 @@ in
         "datasource.url" = "http://localhost:8428";
         "datasource.disableKeepAlive" = true;
         "datasource.showURL" = false;
-        "rule" = [
-          "http://<some-server-addr>/path/to/rules"
-          "dir/*.yaml"
-        ];
+        "rule" = [ "http://<some-server-addr>/path/to/rules" "dir/*.yaml" ];
       };
       description = mdDoc ''
         `vmalert` configuration, passed via command line flags. Refer to
@@ -86,20 +85,18 @@ in
 
     rules = mkOption {
       type = format.type;
-      default = {};
+      default = { };
       example = {
-        group = [
-          { name = "TestGroup";
-            rules = [
-              { alert = "ExampleAlertAlwaysFiring";
-                expr = ''
-                  sum by(job)
-                  (up == 1)
-                '';
-              }
-            ];
-          }
-        ];
+        group = [{
+          name = "TestGroup";
+          rules = [{
+            alert = "ExampleAlertAlwaysFiring";
+            expr = ''
+              sum by(job)
+              (up == 1)
+            '';
+          }];
+        }];
       };
       description = mdDoc ''
         A list of the given alerting or recording rules against configured `"datasource.url"` compatible with
@@ -113,11 +110,10 @@ in
   # implementation
   config = mkIf cfg.enable {
 
-    environment.etc."vmalert/rules.yml".source = format.generate "rules.yml" cfg.rules;
+    environment.etc."vmalert/rules.yml".source =
+      format.generate "rules.yml" cfg.rules;
 
-    services.vmalert.settings.rule = [
-      "/etc/vmalert/rules.yml"
-    ];
+    services.vmalert.settings.rule = [ "/etc/vmalert/rules.yml" ];
 
     systemd.services.vmalert = {
       description = "vmalert service";

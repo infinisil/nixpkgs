@@ -1,8 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "pyasn1";
@@ -16,9 +12,7 @@ buildPythonPackage rec {
     hash = "sha256-l7cpDKaOYqgyVY7Dl28Vy/kRv118cDnYuGHCoOzmn94=";
   };
 
-  pythonImportsCheck = [
-    "pyasn1"
-  ];
+  pythonImportsCheck = [ "pyasn1" ];
 
   meta = with lib; {
     description = "Generic ASN.1 library for Python";

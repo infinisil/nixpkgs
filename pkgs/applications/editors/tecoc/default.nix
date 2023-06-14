@@ -1,9 +1,4 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, ncurses
-, unstableGitUpdater
-}:
+{ stdenv, lib, fetchFromGitHub, ncurses, unstableGitUpdater }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tecoc";
@@ -18,15 +13,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [ ncurses ];
 
-  makefile = if stdenv.hostPlatform.isDarwin
-             then "makefile.osx"
-             else if stdenv.hostPlatform.isFreeBSD
-             then "makefile.bsd"
-             else if stdenv.hostPlatform.isOpenBSD
-             then "makefile.bsd"
-             else if stdenv.hostPlatform.isWindows
-             then "makefile.win"
-             else "makefile.linux"; # I think Linux is a safe default...
+  makefile = if stdenv.hostPlatform.isDarwin then
+    "makefile.osx"
+  else if stdenv.hostPlatform.isFreeBSD then
+    "makefile.bsd"
+  else if stdenv.hostPlatform.isOpenBSD then
+    "makefile.bsd"
+  else if stdenv.hostPlatform.isWindows then
+    "makefile.win"
+  else
+    "makefile.linux"; # I think Linux is a safe default...
 
   makeFlags = [ "CC=${stdenv.cc.targetPrefix}cc" "-C src/" ];
 
@@ -50,9 +46,8 @@ stdenv.mkDerivation (finalAttrs: {
     popd
   '';
 
-  passthru.updateScript = unstableGitUpdater {
-    url = finalAttrs.meta.homepage;
-  };
+  passthru.updateScript =
+    unstableGitUpdater { url = finalAttrs.meta.homepage; };
 
   meta = {
     homepage = "https://github.com/blakemcbride/TECOC";
@@ -72,7 +67,8 @@ stdenv.mkDerivation (finalAttrs: {
       TECOC is a portable C implementation of TECO-11.
     '';
     license = {
-      url = "https://github.com/blakemcbride/TECOC/tree/master/doc/readme-1st.txt";
+      url =
+        "https://github.com/blakemcbride/TECOC/tree/master/doc/readme-1st.txt";
     };
     maintainers = [ lib.maintainers.AndersonTorres ];
     platforms = lib.platforms.unix;

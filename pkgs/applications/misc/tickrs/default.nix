@@ -1,11 +1,4 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, openssl
-, zlib
-, stdenv
-, darwin
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, openssl, zlib, stdenv, darwin
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -21,25 +14,18 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-fOYxOiVpgflwIz9Z6ePhQKDa7DX4D/ZCnPOwq9vWOSk=";
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    openssl
-    zlib
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.SystemConfiguration
-  ];
+  buildInputs = [ openssl zlib ] ++ lib.optionals stdenv.isDarwin
+    [ darwin.apple_sdk.frameworks.SystemConfiguration ];
 
-  env = {
-    OPENSSL_NO_VENDOR = true;
-  };
+  env = { OPENSSL_NO_VENDOR = true; };
 
   meta = with lib; {
     description = "Realtime ticker data in your terminal";
     homepage = "https://github.com/tarkah/tickrs";
-    changelog = "https://github.com/tarkah/tickrs/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/tarkah/tickrs/blob/v${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ mredaelli ];
   };

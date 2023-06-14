@@ -1,17 +1,9 @@
-{ faust
-, baseName ? "faust2sc"
-, supercollider
-, makeWrapper
-, python3
-, stdenv
+{ faust, baseName ? "faust2sc", supercollider, makeWrapper, python3, stdenv
 }@args:
 let
-  faustDefaults = faust.faust2ApplBase
-    (args // {
-      baseName = "${baseName}.py";
-    });
-in
-stdenv.mkDerivation (faustDefaults // {
+  faustDefaults =
+    faust.faust2ApplBase (args // { baseName = "${baseName}.py"; });
+in stdenv.mkDerivation (faustDefaults // {
 
   nativeBuildInputs = [ makeWrapper ];
 

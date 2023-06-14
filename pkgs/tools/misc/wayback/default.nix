@@ -1,8 +1,4 @@
-{ lib
-, fetchFromGitHub
-, buildGoModule
-, chromium
-}:
+{ lib, fetchFromGitHub, buildGoModule, chromium }:
 
 buildGoModule rec {
   pname = "wayback";
@@ -19,9 +15,7 @@ buildGoModule rec {
 
   doCheck = false;
 
-  buildInputs = [
-    chromium
-  ];
+  buildInputs = [ chromium ];
 
   meta = with lib; {
     description = "An archiving tool with an IM-style interface";

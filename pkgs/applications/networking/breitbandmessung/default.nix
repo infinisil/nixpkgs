@@ -1,13 +1,5 @@
-{ lib
-, stdenv
-, fetchurl
-, dpkg
-, electron_24
-, makeWrapper
-, nixosTests
-, nodePackages
-, undmg
-}:
+{ lib, stdenv, fetchurl, dpkg, electron_24, makeWrapper, nixosTests
+, nodePackages, undmg }:
 
 let
   inherit (stdenv.hostPlatform) system;
@@ -17,15 +9,12 @@ let
   systemArgs = rec {
     x86_64-linux = rec {
       src = fetchurl {
-        url = "https://download.breitbandmessung.de/bbm/Breitbandmessung-${version}-linux.deb";
+        url =
+          "https://download.breitbandmessung.de/bbm/Breitbandmessung-${version}-linux.deb";
         sha256 = "sha256-12mbdxklje9msnRtNk1RAtIg3OCybev/vUersDZj2i4=";
       };
 
-      nativeBuildInputs = [
-        dpkg
-        makeWrapper
-        nodePackages.asar
-      ];
+      nativeBuildInputs = [ dpkg makeWrapper nodePackages.asar ];
 
       unpackPhase = "dpkg-deb -x $src .";
 
@@ -60,7 +49,8 @@ let
 
     x86_64-darwin = {
       src = fetchurl {
-        url = "https://download.breitbandmessung.de/bbm/Breitbandmessung-${version}-mac.dmg";
+        url =
+          "https://download.breitbandmessung.de/bbm/Breitbandmessung-${version}-mac.dmg";
         sha256 = "sha256-a27R/N13i4qU2znTKz+LGxSdgSzJ0MzIHeiPHyRd65k=";
       };
 
@@ -75,16 +65,18 @@ let
     };
 
     aarch64-darwin = x86_64-darwin;
-  }.${system} or { src = throw "Unsupported system: ${system}"; };
-in
-stdenv.mkDerivation ({
+  }.${system} or {
+    src = throw "Unsupported system: ${system}";
+  };
+in stdenv.mkDerivation ({
   pname = "breitbandmessung";
   inherit version;
 
   passthru.tests = { inherit (nixosTests) breitbandmessung; };
 
   meta = with lib; {
-    description = "Broadband internet speed test app from the german Bundesnetzagentur";
+    description =
+      "Broadband internet speed test app from the german Bundesnetzagentur";
     homepage = "https://www.breitbandmessung.de";
     license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];

@@ -1,12 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, rustPlatform
-, installShellFiles
-, pkg-config
-, openssl
-, Security
-}:
+{ lib, stdenv, fetchFromGitHub, rustPlatform, installShellFiles, pkg-config
+, openssl, Security }:
 
 rustPlatform.buildRustPackage rec {
   pname = "languagetool-rust";

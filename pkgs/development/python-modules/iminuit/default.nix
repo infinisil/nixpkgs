@@ -1,10 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, cmake
-, numpy
-, pytestCheckHook
-, pythonOlder
+{ lib, buildPythonPackage, fetchPypi, cmake, numpy, pytestCheckHook, pythonOlder
 }:
 
 buildPythonPackage rec {
@@ -19,19 +13,13 @@ buildPythonPackage rec {
     hash = "sha256-+zE/DMJ+IhubIhvNd5s6Zo+0x3sPkKv9UzaDPsvawBY=";
   };
 
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
-  propagatedBuildInputs = [
-    numpy
-  ];
+  propagatedBuildInputs = [ numpy ];
 
   dontUseCmakeConfigure = true;
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   meta = with lib; {
     homepage = "https://github.com/scikit-hep/iminuit";

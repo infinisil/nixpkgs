@@ -1,25 +1,9 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchPypi
-, pkg-config
-, dbus
-, lndir
-, setuptools
-, dbus-python
-, sip
-, pyqt6-sip
-, pyqt-builder
-, qt6Packages
-, pythonOlder
-, withMultimedia ? true
-, withWebSockets ? true
-, withLocation ? true
-# Not currently part of PyQt6
-#, withConnectivity ? true
-, withPrintSupport ? true
-, cups
-}:
+{ lib, stdenv, buildPythonPackage, fetchPypi, pkg-config, dbus, lndir
+, setuptools, dbus-python, sip, pyqt6-sip, pyqt-builder, qt6Packages
+, pythonOlder, withMultimedia ? true, withWebSockets ? true, withLocation ? true
+  # Not currently part of PyQt6
+  #, withConnectivity ? true
+, withPrintSupport ? true, cups }:
 
 buildPythonPackage rec {
   pname = "PyQt6";
@@ -65,37 +49,37 @@ buildPythonPackage rec {
 
   dontWrapQtApps = true;
 
-  nativeBuildInputs = with qt6Packages; [
-    pkg-config
-    lndir
-    sip
-    qtbase
-    qtsvg
-    qtdeclarative
-    qtwebchannel
-    qmake
-    qtquick3d
-    qtquicktimeline
-  ]
-  # ++ lib.optional withConnectivity qtconnectivity
-  ++ lib.optional withMultimedia qtmultimedia
-  ++ lib.optional withWebSockets qtwebsockets
-  ++ lib.optional withLocation qtlocation
-  ;
+  nativeBuildInputs = with qt6Packages;
+    [
+      pkg-config
+      lndir
+      sip
+      qtbase
+      qtsvg
+      qtdeclarative
+      qtwebchannel
+      qmake
+      qtquick3d
+      qtquicktimeline
+    ]
+    # ++ lib.optional withConnectivity qtconnectivity
+    ++ lib.optional withMultimedia qtmultimedia
+    ++ lib.optional withWebSockets qtwebsockets
+    ++ lib.optional withLocation qtlocation;
 
-  buildInputs = with qt6Packages; [
-    dbus
-    qtbase
-    qtsvg
-    qtdeclarative
-    pyqt-builder
-    qtquick3d
-    qtquicktimeline
-  ]
-  # ++ lib.optional withConnectivity qtconnectivity
-  ++ lib.optional withWebSockets qtwebsockets
-  ++ lib.optional withLocation qtlocation
-  ;
+  buildInputs = with qt6Packages;
+    [
+      dbus
+      qtbase
+      qtsvg
+      qtdeclarative
+      pyqt-builder
+      qtquick3d
+      qtquicktimeline
+    ]
+    # ++ lib.optional withConnectivity qtconnectivity
+    ++ lib.optional withWebSockets qtwebsockets
+    ++ lib.optional withLocation qtlocation;
 
   propagatedBuildInputs = [
     dbus-python
@@ -103,9 +87,7 @@ buildPythonPackage rec {
     setuptools
   ]
   # ld: library not found for -lcups
-  ++ lib.optionals (withPrintSupport && stdenv.isDarwin) [
-    cups
-  ];
+    ++ lib.optionals (withPrintSupport && stdenv.isDarwin) [ cups ];
 
   passthru = {
     inherit sip pyqt6-sip;
@@ -125,12 +107,10 @@ buildPythonPackage rec {
     "PyQt6.QtWidgets"
     "PyQt6.QtGui"
     "PyQt6.QtQuick"
-  ]
-  ++ lib.optional withWebSockets "PyQt6.QtWebSockets"
-  ++ lib.optional withMultimedia "PyQt6.QtMultimedia"
-  # ++ lib.optional withConnectivity "PyQt6.QtConnectivity"
-  ++ lib.optional withLocation "PyQt6.QtPositioning"
-  ;
+  ] ++ lib.optional withWebSockets "PyQt6.QtWebSockets"
+    ++ lib.optional withMultimedia "PyQt6.QtMultimedia"
+    # ++ lib.optional withConnectivity "PyQt6.QtConnectivity"
+    ++ lib.optional withLocation "PyQt6.QtPositioning";
 
   meta = with lib; {
     description = "Python bindings for Qt6";

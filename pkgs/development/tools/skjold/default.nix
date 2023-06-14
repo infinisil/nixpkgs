@@ -1,7 +1,4 @@
-{ lib
-, fetchFromGitHub
-, python3
-}:
+{ lib, fetchFromGitHub, python3 }:
 
 let
   py = python3.override {
@@ -17,8 +14,7 @@ let
       });
     };
   };
-in
-with py.pkgs;
+in with py.pkgs;
 
 buildPythonApplication rec {
   pname = "skjold";
@@ -32,16 +28,9 @@ buildPythonApplication rec {
     hash = "sha256-rsdstzNZvokYfTjEyPrWR+0SJpf9wL0HAesq8+A+tPY=";
   };
 
-  nativeBuildInputs = with py.pkgs; [
-    poetry-core
-  ];
+  nativeBuildInputs = with py.pkgs; [ poetry-core ];
 
-  propagatedBuildInputs = with py.pkgs; [
-    click
-    packaging
-    pyyaml
-    toml
-  ];
+  propagatedBuildInputs = with py.pkgs; [ click packaging pyyaml toml ];
 
   nativeCheckInputs = with py.pkgs; [
     pytest-mock
@@ -67,12 +56,11 @@ buildPythonApplication rec {
     "urllib3"
   ];
 
-  pythonImportsCheck = [
-    "skjold"
-  ];
+  pythonImportsCheck = [ "skjold" ];
 
   meta = with lib; {
-    description = "Tool to Python dependencies against security advisory databases";
+    description =
+      "Tool to Python dependencies against security advisory databases";
     homepage = "https://github.com/twu/skjold";
     changelog = "https://github.com/twu/skjold/releases/tag/v${version}";
     license = with licenses; [ mit ];

@@ -8,9 +8,8 @@ let
   memtest86 = pkgs.memtest86plus;
   efiSupport = config.boot.loader.grub.efiSupport;
   cfg = config.boot.loader.grub.memtest86;
-in
 
-{
+in {
   options = {
 
     boot.loader.grub.memtest86 = {
@@ -28,7 +27,7 @@ in
       };
 
       params = mkOption {
-        default = [];
+        default = [ ];
         example = [ "console=ttyS0,115200" ];
         type = types.listOf types.str;
         description = lib.mdDoc ''
@@ -65,12 +64,10 @@ in
 
   config = mkMerge [
     (mkIf (cfg.enable && efiSupport) {
-      assertions = [
-        {
-          assertion = cfg.params == [];
-          message = "Parameters are not available for MemTest86";
-        }
-      ];
+      assertions = [{
+        assertion = cfg.params == [ ];
+        message = "Parameters are not available for MemTest86";
+      }];
 
       boot.loader.grub.extraFiles = {
         "memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";

@@ -11,9 +11,7 @@ tcl.mkTclDerivation rec {
     sha256 = "sha256-apM57LEZ0Y9hXcEPWrKYOoTVtP5QSqiaQrjTHQc3pc4=";
   };
 
-  buildInputs = [
-    tcllib
-  ];
+  buildInputs = [ tcllib ];
 
   unpackPhase = ''
     mkdir -p $out/lib/mustache-tcl

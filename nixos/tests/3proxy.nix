@@ -79,11 +79,7 @@
             type = "proxy";
             bindPort = 3128;
             auth = [ "iponly" ];
-            acl = [
-              {
-                rule = "allow";
-              }
-            ];
+            acl = [{ rule = "allow"; }];
           }
         ];
       };
@@ -119,11 +115,7 @@
             type = "proxy";
             bindPort = 3128;
             auth = [ "strong" ];
-            acl = [
-              {
-                rule = "allow";
-              }
-            ];
+            acl = [{ rule = "allow"; }];
           }
         ];
       };

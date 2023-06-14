@@ -12,7 +12,8 @@ stdenvNoCC.mkDerivation rec {
   # Both methods produce the same file, but this way
   # we can safely reason about what version it is.
   src = fetchzip {
-    url = "https://github.com/rubjo/victor-mono/raw/v${version}/public/VictorMonoAll.zip";
+    url =
+      "https://github.com/rubjo/victor-mono/raw/v${version}/public/VictorMonoAll.zip";
     stripRoot = false;
     hash = "sha256-l8XeKE9PtluiazZO0PXfkGCcnm5o+VZdL7NZ6w0tp80=";
   };

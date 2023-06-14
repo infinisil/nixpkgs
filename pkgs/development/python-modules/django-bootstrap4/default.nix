@@ -1,6 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
+{ lib, buildPythonPackage, fetchFromGitHub
 
 # build-system
 , setuptools
@@ -9,9 +7,7 @@
 , beautifulsoup4
 
 # tests
-, django
-, python
-}:
+, django, python }:
 
 buildPythonPackage rec {
   pname = "django-bootstrap4";
@@ -25,21 +21,13 @@ buildPythonPackage rec {
     hash = "sha256-55pfUPwxDzpDn4stMEPvrQAexs+goN5SKFvwSR3J4aM=";
   };
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
-  propagatedBuildInputs = [
-    beautifulsoup4
-  ];
+  propagatedBuildInputs = [ beautifulsoup4 ];
 
-  pythonImportsCheck = [
-    "bootstrap4"
-  ];
+  pythonImportsCheck = [ "bootstrap4" ];
 
-  nativeCheckInputs = [
-    (django.override { withGdal = true; })
-  ];
+  nativeCheckInputs = [ (django.override { withGdal = true; }) ];
 
   checkPhase = ''
     runHook preCheck
@@ -50,7 +38,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Bootstrap 4 integration with Django";
     homepage = "https://github.com/zostera/django-bootstrap4";
-    changelog = "https://github.com/zostera/django-bootstrap4/blob/${src.rev}/CHANGELOG.md";
+    changelog =
+      "https://github.com/zostera/django-bootstrap4/blob/${src.rev}/CHANGELOG.md";
     license = licenses.bsd3;
     maintainers = with maintainers; [ hexa ];
   };

@@ -1,12 +1,5 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-, runtimeShell
-, stdenv
-, testers
-, runme
-}:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles, runtimeShell, stdenv
+, testers, runme }:
 
 buildGoModule rec {
   pname = "runme";
@@ -21,13 +14,9 @@ buildGoModule rec {
 
   vendorHash = "sha256-el+gM3GRN5KU4RlSAx02rn+22xj28IZq3erZUzPbUUw=";
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
-  subPackages = [
-    "."
-  ];
+  subPackages = [ "." ];
 
   ldflags = [
     "-s"
@@ -47,18 +36,15 @@ buildGoModule rec {
     unset ldflags
   '';
 
-  postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
-    installShellCompletion --cmd runme \
-      --bash <($out/bin/runme completion bash) \
-      --fish <($out/bin/runme completion fish) \
-      --zsh <($out/bin/runme completion zsh)
-  '';
+  postInstall =
+    lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
+      installShellCompletion --cmd runme \
+        --bash <($out/bin/runme completion bash) \
+        --fish <($out/bin/runme completion fish) \
+        --zsh <($out/bin/runme completion zsh)
+    '';
 
-  passthru.tests = {
-    version = testers.testVersion {
-      package = runme;
-    };
-  };
+  passthru.tests = { version = testers.testVersion { package = runme; }; };
 
   meta = with lib; {
     description = "Execute commands inside your runbooks, docs, and READMEs";

@@ -1,28 +1,11 @@
-{ lib
-, stdenv
-, aiohttp
-, boto3
-, buildPythonPackage
-, fetchFromGitHub
-, flask
-, flask-sockets
-, pythonOlder
-, mock
-, moto
-, psutil
-, pytest-mock
-, pytestCheckHook
-, requests
-, responses
-, sqlalchemy
-, websockets
-, websocket-client
-}:
+{ lib, stdenv, aiohttp, boto3, buildPythonPackage, fetchFromGitHub, flask
+, flask-sockets, pythonOlder, mock, moto, psutil, pytest-mock, pytestCheckHook
+, requests, responses, sqlalchemy, websockets, websocket-client }:
 
 buildPythonPackage rec {
   pname = "slackclient";
   version = "3.21.3";
-  format =  "setuptools";
+  format = "setuptools";
 
   disabled = pythonOlder "3.6";
 
@@ -33,11 +16,7 @@ buildPythonPackage rec {
     hash = "sha256-begpT/DaDqOi8HZE10FCuIIv18KSU/i5G/Z5DXKUT7Y=";
   };
 
-  propagatedBuildInputs = [
-    aiohttp
-    websocket-client
-    requests
-  ];
+  propagatedBuildInputs = [ aiohttp websocket-client requests ];
 
   nativeCheckInputs = [
     boto3
@@ -76,14 +55,14 @@ buildPythonPackage rec {
     "test_send_dict"
   ];
 
-  pythonImportsCheck = [
-    "slack"
-  ];
+  pythonImportsCheck = [ "slack" ];
 
   meta = with lib; {
-    description = "A client for Slack, which supports the Slack Web API and Real Time Messaging (RTM) API";
+    description =
+      "A client for Slack, which supports the Slack Web API and Real Time Messaging (RTM) API";
     homepage = "https://github.com/slackapi/python-slackclient";
-    changelog = "https://github.com/slackapi/python-slack-sdk/releases/tag/v${version}";
+    changelog =
+      "https://github.com/slackapi/python-slack-sdk/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ flokli psyanticy ];
   };

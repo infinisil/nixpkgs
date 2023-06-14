@@ -1,11 +1,5 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, substituteAll
-, installShellFiles
-, testers
-, org-stats
-}:
+{ lib, buildGoModule, fetchFromGitHub, substituteAll, installShellFiles, testers
+, org-stats }:
 
 buildGoModule rec {
   pname = "org-stats";
@@ -29,9 +23,7 @@ buildGoModule rec {
     })
   ];
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   ldflags = [ "-s" "-w" ];
 
@@ -53,7 +45,8 @@ buildGoModule rec {
   };
 
   meta = with lib; {
-    description = "Get the contributor stats summary from all repos of any given organization";
+    description =
+      "Get the contributor stats summary from all repos of any given organization";
     homepage = "https://github.com/caarlos0/org-stats";
     changelog = "https://github.com/caarlos0/org-stats/releases/tag/${src.rev}";
     license = licenses.mit;

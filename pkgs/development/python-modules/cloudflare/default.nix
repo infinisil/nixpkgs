@@ -1,14 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, attrs
-, beautifulsoup4
-, requests
-, future
-, pyyaml
-, jsonlines
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, attrs, beautifulsoup4, requests, future
+, pyyaml, jsonlines, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "cloudflare";
@@ -22,26 +13,19 @@ buildPythonPackage rec {
     hash = "sha256-ZTHUyvFguvME0Jl0JRzwWmJOaWPUz4RFeMEVTvupb14=";
   };
 
-  propagatedBuildInputs = [
-    attrs
-    beautifulsoup4
-    requests
-    future
-    pyyaml
-    jsonlines
-  ];
+  propagatedBuildInputs =
+    [ attrs beautifulsoup4 requests future pyyaml jsonlines ];
 
   # no tests associated with package
   doCheck = false;
 
-  pythonImportsCheck = [
-    "CloudFlare"
-  ];
+  pythonImportsCheck = [ "CloudFlare" ];
 
   meta = with lib; {
     description = "Python wrapper for the Cloudflare v4 API";
     homepage = "https://github.com/cloudflare/python-cloudflare";
-    changelog = "https://github.com/cloudflare/python-cloudflare/blob/${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/cloudflare/python-cloudflare/blob/${version}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ costrouc ];
   };

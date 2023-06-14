@@ -1,4 +1,4 @@
-{ lib, fetchFromGitHub, buildGoModule  }:
+{ lib, fetchFromGitHub, buildGoModule }:
 
 buildGoModule rec {
   pname = "coze";
@@ -18,7 +18,8 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "CLI client for Coze, a cryptographic JSON messaging specification.";
+    description =
+      "CLI client for Coze, a cryptographic JSON messaging specification.";
     homepage = "https://github.com/Cyphrme/coze_cli";
     license = with licenses; [ bsd3 ];
     maintainers = with maintainers; [ qbit ];

@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytestCheckHook
-, click
-, setuptools-scm
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, pytestCheckHook, click, setuptools-scm
+, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "cloup";
@@ -19,25 +13,18 @@ buildPythonPackage rec {
     hash = "sha256-3ULHyc1JP63FOkI2+WF4o/EYu72UWn+K2vzVA02CaXE=";
   };
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [
-    click
-  ];
+  propagatedBuildInputs = [ click ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "cloup"
-  ];
+  pythonImportsCheck = [ "cloup" ];
 
   meta = with lib; {
     homepage = "https://github.com/janLuke/cloup";
-    description = "Click extended with option groups, constraints, aliases, help themes";
+    description =
+      "Click extended with option groups, constraints, aliases, help themes";
     changelog = "https://github.com/janluke/cloup/releases/tag/v${version}";
     longDescription = ''
       Enriches Click with option groups, constraints, command aliases, help sections for subcommands, themes for --help and other stuff.

@@ -1,110 +1,22 @@
-{ lib
-, stdenv
-, fetchurl
-, substituteAll
-, meson
-, ninja
-, gettext
-, pkg-config
-, python3
-, gst-plugins-base
-, orc
-, gstreamer
-, gobject-introspection
-, enableZbar ? false
-, faacSupport ? false
-, faac
-, faad2
-, ldacbt
-, libass
-, libkate
-, lrdf
-, ladspaH
-, lcms2
-, libnice
-, webrtc-audio-processing
-, lilv
-, lv2
-, serd
-, sord
-, sratom
-, libbs2b
-, libmodplug
-, libmpeg2
-, libmicrodns
-, openjpeg
-, libopus
-, librsvg
-, bluez
-, chromaprint
-, curl
-, fdk_aac
-, flite
-, gsm
-, json-glib
-, libaom
-, libdc1394
-, libde265
-, libdrm
-, libdvdnav
-, libdvdread
-, libgudev
-, qrencode
-, libsndfile
-, libusb1
-, neon
-, openal
-, opencv4
-, openexr_3
-, openh264
-, libopenmpt
-, pango
-, rtmpdump
-, sbc
-, soundtouch
-, spandsp
-, srtp
-, zbar
-, wayland-protocols
-, wildmidi
-, fluidsynth
-, libva
-, libvdpau
-, wayland
-, libwebp
-, xvidcore
-, gnutls
-, mjpegtools
-, libGLU
-, libGL
-, addOpenGLRunpath
-, gtk3
-, libintl
-, game-music-emu
-, openssl
-, x265
-, libxml2
-, srt
-, vo-aacenc
-, libfreeaptx
-, zxing-cpp
-, usrsctp
-, VideoToolbox
-, AudioToolbox
-, AVFoundation
-, Cocoa
-, CoreMedia
-, CoreVideo
-, Foundation
-, MediaToolbox
-, enableGplPlugins ? true
-, bluezSupport ? stdenv.isLinux
-# Causes every application using GstDeviceMonitor to send mDNS queries every 2 seconds
+{ lib, stdenv, fetchurl, substituteAll, meson, ninja, gettext, pkg-config
+, python3, gst-plugins-base, orc, gstreamer, gobject-introspection
+, enableZbar ? false, faacSupport ? false, faac, faad2, ldacbt, libass, libkate
+, lrdf, ladspaH, lcms2, libnice, webrtc-audio-processing, lilv, lv2, serd, sord
+, sratom, libbs2b, libmodplug, libmpeg2, libmicrodns, openjpeg, libopus, librsvg
+, bluez, chromaprint, curl, fdk_aac, flite, gsm, json-glib, libaom, libdc1394
+, libde265, libdrm, libdvdnav, libdvdread, libgudev, qrencode, libsndfile
+, libusb1, neon, openal, opencv4, openexr_3, openh264, libopenmpt, pango
+, rtmpdump, sbc, soundtouch, spandsp, srtp, zbar, wayland-protocols, wildmidi
+, fluidsynth, libva, libvdpau, wayland, libwebp, xvidcore, gnutls, mjpegtools
+, libGLU, libGL, addOpenGLRunpath, gtk3, libintl, game-music-emu, openssl, x265
+, libxml2, srt, vo-aacenc, libfreeaptx, zxing-cpp, usrsctp, VideoToolbox
+, AudioToolbox, AVFoundation, Cocoa, CoreMedia, CoreVideo, Foundation
+, MediaToolbox, enableGplPlugins ? true, bluezSupport ? stdenv.isLinux
+  # Causes every application using GstDeviceMonitor to send mDNS queries every 2 seconds
 , microdnsSupport ? false
-# Checks meson.is_cross_build(), so even canExecute isn't enough.
+  # Checks meson.is_cross_build(), so even canExecute isn't enough.
 , enableDocumentation ? stdenv.hostPlatform == stdenv.buildPlatform, hotdoc
-, guiSupport ? true, directfb
-}:
+, guiSupport ? true, directfb }:
 
 stdenv.mkDerivation rec {
   pname = "gst-plugins-bad";
@@ -113,7 +25,8 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" ];
 
   src = fetchurl {
-    url = "https://gstreamer.freedesktop.org/src/${pname}/${pname}-${version}.tar.xz";
+    url =
+      "https://gstreamer.freedesktop.org/src/${pname}/${pname}-${version}.tar.xz";
     hash = "sha256-4XmP7i2GEn8GN0gcYH+YMpO/D9garXClx7RyBa82Idg=";
   };
 
@@ -134,11 +47,10 @@ stdenv.mkDerivation rec {
     gettext
     gstreamer # for gst-tester-1.0
     gobject-introspection
-  ] ++ lib.optionals enableDocumentation [
-    hotdoc
-  ] ++ lib.optionals stdenv.isLinux [
-    wayland # for wayland-scanner
-  ];
+  ] ++ lib.optionals enableDocumentation [ hotdoc ]
+    ++ lib.optionals stdenv.isLinux [
+      wayland # for wayland-scanner
+    ];
 
   buildInputs = [
     gobject-introspection
@@ -192,67 +104,56 @@ stdenv.mkDerivation rec {
     libfreeaptx
     zxing-cpp
     usrsctp
-  ] ++ lib.optionals enableZbar [
-    zbar
-  ] ++ lib.optionals faacSupport [
-    faac
-  ] ++ lib.optionals enableGplPlugins [
-    libmpeg2
-    mjpegtools
-    faad2
-    x265
-  ] ++ lib.optionals bluezSupport [
-    bluez
-  ] ++ lib.optionals microdnsSupport [
-    libmicrodns
-  ] ++ lib.optionals stdenv.isLinux [
-    libva # vaapi requires libva -> libdrm -> libpciaccess, which is Linux-only in nixpkgs
-    wayland
-    wayland-protocols
-  ] ++ lib.optionals (!stdenv.isDarwin) [
-    # wildmidi requires apple's OpenAL
-    # TODO: package apple's OpenAL, fix wildmidi, include on Darwin
-    wildmidi
-    # TODO: mjpegtools uint64_t is not compatible with guint64 on Darwin
-    mjpegtools
+  ] ++ lib.optionals enableZbar [ zbar ] ++ lib.optionals faacSupport [ faac ]
+    ++ lib.optionals enableGplPlugins [ libmpeg2 mjpegtools faad2 x265 ]
+    ++ lib.optionals bluezSupport [ bluez ]
+    ++ lib.optionals microdnsSupport [ libmicrodns ]
+    ++ lib.optionals stdenv.isLinux [
+      libva # vaapi requires libva -> libdrm -> libpciaccess, which is Linux-only in nixpkgs
+      wayland
+      wayland-protocols
+    ] ++ lib.optionals (!stdenv.isDarwin) [
+      # wildmidi requires apple's OpenAL
+      # TODO: package apple's OpenAL, fix wildmidi, include on Darwin
+      wildmidi
+      # TODO: mjpegtools uint64_t is not compatible with guint64 on Darwin
+      mjpegtools
 
-    chromaprint
-    flite
-    libdrm
-    libgudev
-    sbc
-    spandsp
+      chromaprint
+      flite
+      libdrm
+      libgudev
+      sbc
+      spandsp
 
-    # ladspa plug-in
-    ladspaH
-    lrdf # TODO: make build on Darwin
+      # ladspa plug-in
+      ladspaH
+      lrdf # TODO: make build on Darwin
 
-    # lv2 plug-in
-    lilv
-    lv2
-    serd
-    sord
-    sratom
+      # lv2 plug-in
+      lilv
+      lv2
+      serd
+      sord
+      sratom
 
-    libGL
-    libGLU
-  ] ++ lib.optionals guiSupport [
-    gtk3
-  ] ++ lib.optionals (stdenv.isLinux && guiSupport) [
-    directfb
-  ] ++ lib.optionals stdenv.isDarwin [
-    # For unknown reasons the order is important, e.g. if
-    # VideoToolbox is last, we get:
-    #     fatal error: 'VideoToolbox/VideoToolbox.h' file not found
-    VideoToolbox
-    AudioToolbox
-    AVFoundation
-    Cocoa
-    CoreMedia
-    CoreVideo
-    Foundation
-    MediaToolbox
-  ];
+      libGL
+      libGLU
+    ] ++ lib.optionals guiSupport [ gtk3 ]
+    ++ lib.optionals (stdenv.isLinux && guiSupport) [ directfb ]
+    ++ lib.optionals stdenv.isDarwin [
+      # For unknown reasons the order is important, e.g. if
+      # VideoToolbox is last, we get:
+      #     fatal error: 'VideoToolbox/VideoToolbox.h' file not found
+      VideoToolbox
+      AudioToolbox
+      AVFoundation
+      Cocoa
+      CoreMedia
+      CoreVideo
+      Foundation
+      MediaToolbox
+    ];
 
   mesonFlags = [
     "-Dexamples=disabled" # requires many dependencies and probably not useful for our users
@@ -295,49 +196,45 @@ stdenv.mkDerivation rec {
     "-Dmicrodns=${if microdnsSupport then "enabled" else "disabled"}"
     "-Dbluez=${if bluezSupport then "enabled" else "disabled"}"
     (lib.mesonEnable "doc" enableDocumentation)
-  ]
-  ++ lib.optionals (!stdenv.isLinux) [
+  ] ++ lib.optionals (!stdenv.isLinux) [
     "-Ddoc=disabled" # needs gstcuda to be enabled which is Linux-only
     "-Dnvcodec=disabled" # Linux-only
     "-Dva=disabled" # see comment on `libva` in `buildInputs`
-  ] ++ lib.optionals (!stdenv.isLinux || !guiSupport) [
-    "-Ddirectfb=disabled"
-  ]
-  ++ lib.optionals stdenv.isDarwin [
-    "-Dchromaprint=disabled"
-    "-Dflite=disabled"
-    "-Dkms=disabled" # renders to libdrm output
-    "-Dlv2=disabled"
-    "-Dsbc=disabled"
-    "-Dspandsp=disabled"
-    "-Ddvb=disabled"
-    "-Dfbdev=disabled"
-    "-Duvch264=disabled" # requires gudev
-    "-Dv4l2codecs=disabled" # requires gudev
-    "-Dladspa=disabled" # requires lrdf
-    "-Dwildmidi=disabled" # see dependencies above
-  ] ++ lib.optionals (!stdenv.isLinux || !stdenv.isx86_64) [
-    "-Dqsv=disabled" # Linux (and Windows) x86 only
-  ] ++ lib.optionals (!gst-plugins-base.glEnabled) [
-    "-Dgl=disabled"
-  ] ++ lib.optionals (!gst-plugins-base.waylandEnabled) [
-    "-Dgtk3=disabled" # Wayland-based GTK sink
-    "-Dwayland=disabled"
-  ] ++ lib.optionals (!gst-plugins-base.glEnabled) [
-    # `applemedia/videotexturecache.h` requires `gst/gl/gl.h`,
-    # but its meson build system does not declare the dependency.
-    "-Dapplemedia=disabled"
-  ] ++ (if enableGplPlugins then [
-    "-Dgpl=enabled"
-  ] else [
-    "-Ddts=disabled"
-    "-Dfaad=disabled"
-    "-Diqa=disabled"
-    "-Dmpeg2enc=disabled"
-    "-Dmplex=disabled"
-    "-Dresindvd=disabled"
-    "-Dx265=disabled"
-  ]);
+  ] ++ lib.optionals (!stdenv.isLinux || !guiSupport) [ "-Ddirectfb=disabled" ]
+    ++ lib.optionals stdenv.isDarwin [
+      "-Dchromaprint=disabled"
+      "-Dflite=disabled"
+      "-Dkms=disabled" # renders to libdrm output
+      "-Dlv2=disabled"
+      "-Dsbc=disabled"
+      "-Dspandsp=disabled"
+      "-Ddvb=disabled"
+      "-Dfbdev=disabled"
+      "-Duvch264=disabled" # requires gudev
+      "-Dv4l2codecs=disabled" # requires gudev
+      "-Dladspa=disabled" # requires lrdf
+      "-Dwildmidi=disabled" # see dependencies above
+    ] ++ lib.optionals (!stdenv.isLinux || !stdenv.isx86_64) [
+      "-Dqsv=disabled" # Linux (and Windows) x86 only
+    ] ++ lib.optionals (!gst-plugins-base.glEnabled) [ "-Dgl=disabled" ]
+    ++ lib.optionals (!gst-plugins-base.waylandEnabled) [
+      "-Dgtk3=disabled" # Wayland-based GTK sink
+      "-Dwayland=disabled"
+    ] ++ lib.optionals (!gst-plugins-base.glEnabled) [
+      # `applemedia/videotexturecache.h` requires `gst/gl/gl.h`,
+      # but its meson build system does not declare the dependency.
+      "-Dapplemedia=disabled"
+    ] ++ (if enableGplPlugins then
+      [ "-Dgpl=enabled" ]
+    else [
+      "-Ddts=disabled"
+      "-Dfaad=disabled"
+      "-Diqa=disabled"
+      "-Dmpeg2enc=disabled"
+      "-Dmplex=disabled"
+      "-Dresindvd=disabled"
+      "-Dx265=disabled"
+    ]);
 
   # Argument list too long
   strictDeps = true;
@@ -362,7 +259,8 @@ stdenv.mkDerivation rec {
       something - be it a good code review, some documentation, a set of tests,
       a real live maintainer, or some actual wide use.
     '';
-    license = if enableGplPlugins then licenses.gpl2Plus else licenses.lgpl2Plus;
+    license =
+      if enableGplPlugins then licenses.gpl2Plus else licenses.lgpl2Plus;
     platforms = platforms.linux ++ platforms.darwin;
     maintainers = with maintainers; [ matthewbauer lilyinstarlight ];
   };

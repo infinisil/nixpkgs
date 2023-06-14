@@ -1,7 +1,4 @@
-{ buildNpmPackage
-, src
-, version
-}:
+{ buildNpmPackage, src, version }:
 
 buildNpmPackage {
   pname = "frigate-web";

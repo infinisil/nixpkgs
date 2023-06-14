@@ -1,15 +1,12 @@
-{ lib
-, stdenv
-, fetchurl
-, libopcodes
-}:
+{ lib, stdenv, fetchurl, libopcodes }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "lightning";
   version = "2.2.2";
 
   src = fetchurl {
-    url = "mirror://gnu/lightning/${finalAttrs.pname}-${finalAttrs.version}.tar.gz";
+    url =
+      "mirror://gnu/lightning/${finalAttrs.pname}-${finalAttrs.version}.tar.gz";
     hash = "sha256-CsqCQt6tF9YhF7z8sHjmqeqFbMgXQoE8noOUvM5zs+I=";
   };
 

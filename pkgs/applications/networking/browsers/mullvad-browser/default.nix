@@ -1,93 +1,63 @@
-{ lib
-, stdenv
-, fetchurl
-, makeDesktopItem
-, copyDesktopItems
-, makeWrapper
-, writeText
-, wrapGAppsHook
-, callPackage
+{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper
+, writeText, wrapGAppsHook, callPackage
 
 # Common run-time dependencies
 , zlib
 
 # libxul run-time dependencies
-, atk
-, cairo
-, dbus
-, dbus-glib
-, fontconfig
-, freetype
-, gdk-pixbuf
-, glib
-, gtk3
-, libxcb
-, libX11
-, libXext
-, libXrender
-, libXt
-, libXtst
-, mesa
-, pango
-, pciutils
+, atk, cairo, dbus, dbus-glib, fontconfig, freetype, gdk-pixbuf, glib, gtk3
+, libxcb, libX11, libXext, libXrender, libXt, libXtst, mesa, pango, pciutils
 
-, libnotifySupport ? stdenv.isLinux
-, libnotify
+, libnotifySupport ? stdenv.isLinux, libnotify
 
-, audioSupport ? mediaSupport
-, pulseaudioSupport ? mediaSupport
-, libpulseaudio
-, apulse
-, alsa-lib
+, audioSupport ? mediaSupport, pulseaudioSupport ? mediaSupport, libpulseaudio
+, apulse, alsa-lib
 
 # Media support (implies audio support)
-, mediaSupport ? true
-, ffmpeg
+, mediaSupport ? true, ffmpeg
 
 # Extra preferences
-, extraPrefs ? ""
-}:
+, extraPrefs ? "" }:
 
 let
-  libPath = lib.makeLibraryPath (
-    [
-      alsa-lib
-      atk
-      cairo
-      dbus
-      dbus-glib
-      fontconfig
-      freetype
-      gdk-pixbuf
-      glib
-      gtk3
-      libxcb
-      libX11
-      libXext
-      libXrender
-      libXt
-      libXtst
-      mesa # for libgbm
-      pango
-      pciutils
-      stdenv.cc.cc
-      stdenv.cc.libc
-      zlib
-    ] ++ lib.optionals libnotifySupport [ libnotify ]
-      ++ lib.optionals pulseaudioSupport [ libpulseaudio ]
-      ++ lib.optionals mediaSupport [ ffmpeg ]
-  );
+  libPath = lib.makeLibraryPath ([
+    alsa-lib
+    atk
+    cairo
+    dbus
+    dbus-glib
+    fontconfig
+    freetype
+    gdk-pixbuf
+    glib
+    gtk3
+    libxcb
+    libX11
+    libXext
+    libXrender
+    libXt
+    libXtst
+    mesa # for libgbm
+    pango
+    pciutils
+    stdenv.cc.cc
+    stdenv.cc.libc
+    zlib
+  ] ++ lib.optionals libnotifySupport [ libnotify ]
+    ++ lib.optionals pulseaudioSupport [ libpulseaudio ]
+    ++ lib.optionals mediaSupport [ ffmpeg ]);
 
   version = "12.0.7";
 
   sources = {
     x86_64-linux = fetchurl {
-      url = "https://cdn.mullvad.net/browser/${version}/mullvad-browser-linux64-${version}_ALL.tar.xz";
+      url =
+        "https://cdn.mullvad.net/browser/${version}/mullvad-browser-linux64-${version}_ALL.tar.xz";
       hash = "sha256-8TcC39A9VFyhFb+pfefzvwJqXq1yF7C2YDcbCyEa0yo=";
     };
   };
 
-  distributionIni = writeText "distribution.ini" (lib.generators.toINI {} {
+  distributionIni = writeText "distribution.ini" (lib.generators.toINI { } {
     # Some light branding indicating this build uses our distro preferences
     Global = {
       id = "nixos";
@@ -96,30 +66,31 @@ let
     };
   });
 
-  policiesJson = writeText "policies.json" (builtins.toJSON {
-    policies.DisableAppUpdate = true;
-  });
-in
-stdenv.mkDerivation rec {
+  policiesJson = writeText "policies.json"
+    (builtins.toJSON { policies.DisableAppUpdate = true; });
+in stdenv.mkDerivation rec {
   pname = "mullvad-browser";
   inherit version;
 
-  src = sources.${stdenv.hostPlatform.system} or (throw "unsupported system: ${stdenv.hostPlatform.system}");
+  src = sources.${stdenv.hostPlatform.system} or (throw
+    "unsupported system: ${stdenv.hostPlatform.system}");
 
   nativeBuildInputs = [ copyDesktopItems makeWrapper wrapGAppsHook ];
 
   preferLocalBuild = true;
   allowSubstitutes = false;
 
-  desktopItems = [(makeDesktopItem {
-    name = "mullvadbrowser";
-    exec = "mullvad-browser %U";
-    icon = "mullvad-browser";
-    desktopName = "Mullvad Browser";
-    genericName = "Web Browser";
-    comment = meta.description;
-    categories = [ "Network" "WebBrowser" "Security" ];
-  })];
+  desktopItems = [
+    (makeDesktopItem {
+      name = "mullvadbrowser";
+      exec = "mullvad-browser %U";
+      icon = "mullvad-browser";
+      desktopName = "Mullvad Browser";
+      genericName = "Web Browser";
+      comment = meta.description;
+      categories = [ "Network" "WebBrowser" "Security" ];
+    })
+  ];
 
   buildPhase = ''
     runHook preBuild
@@ -230,7 +201,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "Privacy-focused browser made in a collaboration between The Tor Project and Mullvad";
+    description =
+      "Privacy-focused browser made in a collaboration between The Tor Project and Mullvad";
     homepage = "https://mullvad.net/en/browser";
     platforms = attrNames sources;
     maintainers = with maintainers; [ felschr panicgh ];

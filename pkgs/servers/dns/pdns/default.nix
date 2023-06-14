@@ -1,32 +1,14 @@
-{ lib
-, stdenv
-, fetchurl
-, pkg-config
-, nixosTests
-, boost
-, yaml-cpp
-, libsodium
-, sqlite
-, protobuf
-, openssl
-, systemd
-, mariadb-connector-c
-, postgresql
-, lua
-, openldap
-, geoip
-, curl
-, unixODBC
-, lmdb
-, tinycdb
-}:
+{ lib, stdenv, fetchurl, pkg-config, nixosTests, boost, yaml-cpp, libsodium
+, sqlite, protobuf, openssl, systemd, mariadb-connector-c, postgresql, lua
+, openldap, geoip, curl, unixODBC, lmdb, tinycdb }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pdns";
   version = "4.8.0";
 
   src = fetchurl {
-    url = "https://downloads.powerdns.com/releases/pdns-${finalAttrs.version}.tar.bz2";
+    url =
+      "https://downloads.powerdns.com/releases/pdns-${finalAttrs.version}.tar.bz2";
     hash = "sha256-YalruviwykmpIloiVLlEPE/44FDTN0N9ha9N6InhASc=";
   };
   # redact configure flags from version output to reduce closure size
@@ -82,9 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
   enableParallelBuilding = true;
   doCheck = true;
 
-  passthru.tests = {
-    nixos = nixosTests.powerdns;
-  };
+  passthru.tests = { nixos = nixosTests.powerdns; };
 
   meta = with lib; {
     description = "Authoritative DNS server";

@@ -1,4 +1,5 @@
-{ lib, buildGoModule, fetchFromGitHub, installShellFiles, makeWrapper, gnupg, bzip2, xz, graphviz, testers, aptly }:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles, makeWrapper, gnupg
+, bzip2, xz, graphviz, testers, aptly }:
 
 buildGoModule rec {
   pname = "aptly";
@@ -36,7 +37,6 @@ buildGoModule rec {
     description = "Debian repository management tool";
     license = licenses.mit;
     maintainers = with maintainers; [ montag451 ] ++ teams.bitnomial.members;
-    changelog =
-      "https://github.com/aptly-dev/aptly/releases/tag/v${version}";
+    changelog = "https://github.com/aptly-dev/aptly/releases/tag/v${version}";
   };
 }

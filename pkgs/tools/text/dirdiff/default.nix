@@ -34,10 +34,8 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin $out/lib
   '';
 
-  installFlags = [
-    "BINDIR=${placeholder "out"}/bin"
-    "LIBDIR=${placeholder "out"}/lib"
-  ];
+  installFlags =
+    [ "BINDIR=${placeholder "out"}/bin" "LIBDIR=${placeholder "out"}/lib" ];
 
   desktopItems = [
     (makeDesktopItem {

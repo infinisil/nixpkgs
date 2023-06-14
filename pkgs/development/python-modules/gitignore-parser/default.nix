@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, unittestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, unittestCheckHook }:
 
 buildPythonPackage rec {
   pname = "gitignore-parser";
@@ -19,18 +14,15 @@ buildPythonPackage rec {
     hash = "sha256-AWLiwF+8CfiD4uT6uV5drCLtnQT+r5VTPo53T7w0SiM=";
   };
 
-  nativeCheckInputs = [
-    unittestCheckHook
-  ];
+  nativeCheckInputs = [ unittestCheckHook ];
 
-  pythonImportsCheck = [
-    "gitignore_parser"
-  ];
+  pythonImportsCheck = [ "gitignore_parser" ];
 
   meta = with lib; {
     description = "A spec-compliant gitignore parser";
     homepage = "https://github.com/mherrmann/gitignore_parser";
-    changelog = "https://github.com/mherrmann/gitignore_parser/releases/tag/v${version}";
+    changelog =
+      "https://github.com/mherrmann/gitignore_parser/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ fab ];
   };

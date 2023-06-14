@@ -1,9 +1,4 @@
-{ lib
-, fetchFromGitHub
-, buildPythonPackage
-, wrapt
-, pytestCheckHook
-, sphinxHook
+{ lib, fetchFromGitHub, buildPythonPackage, wrapt, pytestCheckHook, sphinxHook
 }:
 
 buildPythonPackage rec {
@@ -18,23 +13,18 @@ buildPythonPackage rec {
     hash = "sha256-rCDUY/TVmJqhrxDah62lEhqpr05JNZSyiFNTlHvSnmw=";
   };
 
-  nativeBuildInputs = [
-    sphinxHook
-  ];
+  nativeBuildInputs = [ sphinxHook ];
 
-  propagatedBuildInputs = [
-    wrapt
-  ];
+  propagatedBuildInputs = [ wrapt ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   pythonImportsCheck = [ "deprecated" ];
 
   meta = with lib; {
     homepage = "https://github.com/tantale/deprecated";
-    description = "Python @deprecated decorator to deprecate old python classes, functions or methods";
+    description =
+      "Python @deprecated decorator to deprecate old python classes, functions or methods";
     license = licenses.mit;
     maintainers = with maintainers; [ tilpner ];
   };

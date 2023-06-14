@@ -1,17 +1,5 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, cmake
-, pkg-config
-, fypp
-, gfortran
-, blas
-, lapack
-, python3
-, libxsmm
-, mpi
-, openssh
-}:
+{ stdenv, lib, fetchFromGitHub, cmake, pkg-config, fypp, gfortran, blas, lapack
+, python3, libxsmm, mpi, openssh }:
 
 stdenv.mkDerivation rec {
   pname = "dbcsr";
@@ -37,13 +25,7 @@ stdenv.mkDerivation rec {
       --replace 'COMMAND ''${Python_EXECUTABLE} ''${FYPP_EXECUTABLE}' 'COMMAND ''${FYPP_EXECUTABLE}'
   '';
 
-  nativeBuildInputs = [
-    gfortran
-    python3
-    cmake
-    pkg-config
-    fypp
-  ];
+  nativeBuildInputs = [ gfortran python3 cmake pkg-config fypp ];
 
   buildInputs = [ blas lapack libxsmm ];
 

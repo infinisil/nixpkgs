@@ -1,24 +1,7 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, poetry-core
-, mkdocs-exclude
-, markdown-it-py
-, mdit-py-plugins
-, linkify-it-py
-, importlib-metadata
-, rich
-, typing-extensions
-, aiohttp
-, click
-, jinja2
-, msgpack
-, pytest-aiohttp
-, pytestCheckHook
-, pythonOlder
-, syrupy
-, time-machine
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, poetry-core, mkdocs-exclude
+, markdown-it-py, mdit-py-plugins, linkify-it-py, importlib-metadata, rich
+, typing-extensions, aiohttp, click, jinja2, msgpack, pytest-aiohttp
+, pytestCheckHook, pythonOlder, syrupy, time-machine }:
 
 buildPythonPackage rec {
   pname = "textual";
@@ -34,9 +17,7 @@ buildPythonPackage rec {
     hash = "sha256-ag+sJFprYW3IpH+BiMR5eSRUFMBeVuOnF6GTTuXGBHw=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
   propagatedBuildInputs = [
     rich
@@ -48,33 +29,25 @@ buildPythonPackage rec {
     click
     msgpack
     mkdocs-exclude
-  ] ++ lib.optionals (pythonOlder "3.11") [
-    typing-extensions
-  ];
+  ] ++ lib.optionals (pythonOlder "3.11") [ typing-extensions ];
 
-  nativeCheckInputs = [
-    jinja2
-    pytest-aiohttp
-    pytestCheckHook
-    syrupy
-    time-machine
-  ];
+  nativeCheckInputs =
+    [ jinja2 pytest-aiohttp pytestCheckHook syrupy time-machine ];
 
   disabledTestPaths = [
     # snapshot tests require syrupy<4
     "tests/snapshot_tests/test_snapshots.py"
   ];
 
-  pythonImportsCheck = [
-    "textual"
-  ];
+  pythonImportsCheck = [ "textual" ];
 
   __darwinAllowLocalNetworking = true;
 
   meta = with lib; {
     description = "TUI framework for Python inspired by modern web development";
     homepage = "https://github.com/Textualize/textual";
-    changelog = "https://github.com/Textualize/textual/releases/tag/v${version}";
+    changelog =
+      "https://github.com/Textualize/textual/releases/tag/v${version}";
     license = licenses.mit;
     maintainers = with maintainers; [ joelkoen ];
   };

@@ -1,36 +1,19 @@
-{ lib
-, stdenv
-, fetchurl
-, autoreconfHook
-, gdbm
-, gmp
-, libffi
-, pkg-config
-, readline
-, texinfo
-}:
+{ lib, stdenv, fetchurl, autoreconfHook, gdbm, gmp, libffi, pkg-config, readline
+, texinfo }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "librep";
   version = "0.92.7";
 
   src = fetchurl {
-    url = "https://download.tuxfamily.org/librep/librep_${finalAttrs.version}.tar.xz";
+    url =
+      "https://download.tuxfamily.org/librep/librep_${finalAttrs.version}.tar.xz";
     hash = "sha256-SKGWeax8BTCollfeGP/knFdZpf9w/IRJKLDl0AOVrK4=";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-    pkg-config
-    texinfo
-  ];
+  nativeBuildInputs = [ autoreconfHook pkg-config texinfo ];
 
-  buildInputs = [
-    gdbm
-    gmp
-    libffi
-    readline
-  ];
+  buildInputs = [ gdbm gmp libffi readline ];
 
   strictDeps = true;
 

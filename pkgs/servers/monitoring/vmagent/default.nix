@@ -10,14 +10,19 @@ buildGoModule rec {
     sha256 = "sha256-+xc3XhHHHe8JdHhEcAEGf6hkzlhSLYjG4C9znONPYzw=";
   };
 
-  ldflags = [ "-s" "-w" "-X github.com/VictoriaMetrics/VictoriaMetrics/lib/buildinfo.Version=${version}" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X github.com/VictoriaMetrics/VictoriaMetrics/lib/buildinfo.Version=${version}"
+  ];
 
   vendorHash = null;
 
   subPackages = [ "app/vmagent" ];
 
   meta = with lib; {
-    homepage = "https://github.com/VictoriaMetrics/VictoriaMetrics/tree/master/app/vmagent";
+    homepage =
+      "https://github.com/VictoriaMetrics/VictoriaMetrics/tree/master/app/vmagent";
     description = "VictoriaMetrics metrics scraper";
     license = licenses.asl20;
     platforms = platforms.linux;

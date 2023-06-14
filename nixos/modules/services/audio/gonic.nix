@@ -8,8 +8,7 @@ let
     mkKeyValue = lib.generators.mkKeyValueDefault { } " ";
     listsAsDuplicateKeys = true;
   };
-in
-{
+in {
   options = {
     services.gonic = {
 
@@ -42,12 +41,14 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart =
-          let
-            # these values are null by default but should not appear in the final config
-            filteredSettings = filterAttrs (n: v: !((n == "tls-cert" || n == "tls-key") && v == null)) cfg.settings;
-          in
-          "${pkgs.gonic}/bin/gonic -config-path ${settingsFormat.generate "gonic" filteredSettings}";
+        ExecStart = let
+          # these values are null by default but should not appear in the final config
+          filteredSettings = filterAttrs
+            (n: v: !((n == "tls-cert" || n == "tls-key") && v == null))
+            cfg.settings;
+        in "${pkgs.gonic}/bin/gonic -config-path ${
+          settingsFormat.generate "gonic" filteredSettings
+        }";
         DynamicUser = true;
         StateDirectory = "gonic";
         CacheDirectory = "gonic";
@@ -61,8 +62,8 @@ in
           builtins.storeDir
           cfg.settings.podcast-path
         ] ++ cfg.settings.music-path
-        ++ lib.optional (cfg.settings.tls-cert != null) cfg.settings.tls-cert
-        ++ lib.optional (cfg.settings.tls-key != null) cfg.settings.tls-key;
+          ++ lib.optional (cfg.settings.tls-cert != null) cfg.settings.tls-cert
+          ++ lib.optional (cfg.settings.tls-key != null) cfg.settings.tls-key;
         CapabilityBoundingSet = "";
         RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
         RestrictNamespaces = true;

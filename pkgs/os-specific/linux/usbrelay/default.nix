@@ -10,13 +10,9 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-oJyHzbXOBKxLmPFZMS2jLF80frkiKjPJ89UwkenjIzs=";
   };
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
-  buildInputs = [
-    hidapi
-  ];
+  buildInputs = [ hidapi ];
 
   makeFlags = [
     "DIR_VERSION=${finalAttrs.version}"

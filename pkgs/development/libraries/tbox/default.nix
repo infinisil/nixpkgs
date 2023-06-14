@@ -1,7 +1,4 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-}:
+{ lib, stdenv, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   pname = "tbox";
@@ -14,12 +11,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-6SqMvwxKSiJO7Z33xx7cJoECu5AJ1gWF8ZsiERWx8DU=";
   };
 
-  configureFlags = [
-    "--hash=y"
-    "--charset=y"
-    "--float=y"
-    "--demo=n"
-  ];
+  configureFlags = [ "--hash=y" "--charset=y" "--float=y" "--demo=n" ];
 
   postInstall = ''
     mkdir -p $out/lib/pkgconfig

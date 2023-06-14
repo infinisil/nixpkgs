@@ -1,11 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, fetchPypi
-, mercantile
-, pytestCheckHook
-, requests
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, fetchPypi, mercantile
+, pytestCheckHook, requests }:
 
 buildPythonPackage rec {
   pname = "xyzservices";
@@ -22,18 +16,13 @@ buildPythonPackage rec {
     "test_free_providers"
   ];
 
-  pythonImportsCheck = [
-    "xyzservices.providers"
-  ];
+  pythonImportsCheck = [ "xyzservices.providers" ];
 
-  nativeCheckInputs = [
-    mercantile
-    pytestCheckHook
-    requests
-  ];
+  nativeCheckInputs = [ mercantile pytestCheckHook requests ];
 
   meta = with lib; {
-    changelog = "https://github.com/geopandas/xyzservices/releases/tag/${version}";
+    changelog =
+      "https://github.com/geopandas/xyzservices/releases/tag/${version}";
     description = "Source of XYZ tiles providers";
     homepage = "https://github.com/geopandas/xyzservices";
     license = licenses.bsd3;

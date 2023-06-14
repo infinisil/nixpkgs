@@ -1,23 +1,6 @@
-{ lib
-, stdenv
-, fetchurl
-, substituteAll
-, pkg-config
-, glib
-, shadow
-, gobject-introspection
-, polkit
-, systemd
-, coreutils
-, meson
-, mesonEmulatorHook
-, dbus
-, ninja
-, python3
-, vala
-, gettext
-, libxcrypt
-}:
+{ lib, stdenv, fetchurl, substituteAll, pkg-config, glib, shadow
+, gobject-introspection, polkit, systemd, coreutils, meson, mesonEmulatorHook
+, dbus, ninja, python3, vala, gettext, libxcrypt }:
 
 stdenv.mkDerivation rec {
   pname = "accountsservice";
@@ -26,7 +9,8 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" ];
 
   src = fetchurl {
-    url = "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz";
+    url =
+      "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz";
     sha256 = "rdpM3q4k+gmS598///nv+nCQvjrCM6Pt/fadWpybkk8=";
   };
 
@@ -52,27 +36,14 @@ stdenv.mkDerivation rec {
     ./get-dm-type-from-config.patch
   ];
 
-  nativeBuildInputs = [
-    gettext
-    gobject-introspection
-    meson
-    ninja
-    pkg-config
-    python3
-    vala
-  ] ++ lib.optionals (!stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
-    #  meson.build:88:2: ERROR: Can not run test applications in this cross environment.
-    mesonEmulatorHook
-  ];
+  nativeBuildInputs =
+    [ gettext gobject-introspection meson ninja pkg-config python3 vala ]
+    ++ lib.optionals (!stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
+      #  meson.build:88:2: ERROR: Can not run test applications in this cross environment.
+      mesonEmulatorHook
+    ];
 
-  buildInputs = [
-    dbus
-    gettext
-    glib
-    polkit
-    systemd
-    libxcrypt
-  ];
+  buildInputs = [ dbus gettext glib polkit systemd libxcrypt ];
 
   mesonFlags = [
     "-Dadmin_group=wheel"

@@ -1,14 +1,5 @@
-{ lib
-, aiosmtpd
-, buildPythonPackage
-, fetchFromGitHub
-, hypothesis
-, poetry-core
-, pytest-asyncio
-, pytestCheckHook
-, pythonOlder
-, trustme
-}:
+{ lib, aiosmtpd, buildPythonPackage, fetchFromGitHub, hypothesis, poetry-core
+, pytest-asyncio, pytestCheckHook, pythonOlder, trustme }:
 
 buildPythonPackage rec {
   pname = "aiosmtplib";
@@ -24,21 +15,12 @@ buildPythonPackage rec {
     hash = "sha256-Wo9WH3fwGN1upLAyj6aThxpQE7hortISjaCATTPee40=";
   };
 
-  nativeBuildInputs = [
-    poetry-core
-  ];
+  nativeBuildInputs = [ poetry-core ];
 
-  nativeCheckInputs = [
-    aiosmtpd
-    hypothesis
-    pytest-asyncio
-    pytestCheckHook
-    trustme
-  ];
+  nativeCheckInputs =
+    [ aiosmtpd hypothesis pytest-asyncio pytestCheckHook trustme ];
 
-  pythonImportsCheck = [
-    "aiosmtplib"
-  ];
+  pythonImportsCheck = [ "aiosmtplib" ];
 
   meta = with lib; {
     description = "Module which provides a SMTP client";

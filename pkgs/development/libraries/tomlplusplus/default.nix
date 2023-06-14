@@ -1,10 +1,4 @@
-{ lib
-, stdenv
-, meson
-, cmake
-, ninja
-, fetchFromGitHub
-}:
+{ lib, stdenv, meson, cmake, ninja, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   pname = "tomlplusplus";
@@ -19,9 +13,10 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ meson cmake ninja ];
 
-  meta = with lib;{
+  meta = with lib; {
     homepage = "https://github.com/marzer/tomlplusplus";
-    description = "Header-only TOML config file parser and serializer for C++17";
+    description =
+      "Header-only TOML config file parser and serializer for C++17";
     license = licenses.mit;
     maintainers = with maintainers; [ Scrumplex ];
     platforms = with platforms; unix;

@@ -1,15 +1,5 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, pytestCheckHook
-, pytest-lazy-fixture
-, numpy
-, networkx
-, pydicom
-, colorama
-, typeguard
-, versioneer
+{ lib, buildPythonPackage, fetchFromGitHub, pythonOlder, pytestCheckHook
+, pytest-lazy-fixture, numpy, networkx, pydicom, colorama, typeguard, versioneer
 }:
 
 buildPythonPackage rec {
@@ -28,12 +18,7 @@ buildPythonPackage rec {
 
   nativeBuildInputs = [ versioneer ];
 
-  propagatedBuildInputs = [
-    numpy
-    networkx
-    colorama
-    typeguard
-  ];
+  propagatedBuildInputs = [ numpy networkx colorama typeguard ];
 
   nativeCheckInputs = [ pytestCheckHook pytest-lazy-fixture ];
   disabledTests = [
@@ -49,7 +34,8 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Framework and tools to design, develop and verify AI applications in healthcare imaging";
+    description =
+      "Framework and tools to design, develop and verify AI applications in healthcare imaging";
     homepage = "https://monai.io/deploy.html";
     license = licenses.asl20;
     maintainers = [ maintainers.bcdarwin ];

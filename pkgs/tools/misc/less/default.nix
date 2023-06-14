@@ -1,9 +1,4 @@
-{ lib
-, stdenv
-, fetchurl
-, ncurses
-, pcre2
-}:
+{ lib, stdenv, fetchurl, ncurses, pcre2 }:
 
 stdenv.mkDerivation rec {
   pname = "less";
@@ -22,10 +17,7 @@ stdenv.mkDerivation rec {
     "--with-regex=pcre2"
   ];
 
-  buildInputs = [
-    ncurses
-    pcre2
-  ];
+  buildInputs = [ ncurses pcre2 ];
 
   meta = with lib; {
     homepage = "https://www.greenwoodsoftware.com/less/";

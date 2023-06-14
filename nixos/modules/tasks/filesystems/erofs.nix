@@ -2,12 +2,11 @@
 
 let
 
-  inInitrd = lib.any (fs: fs == "erofs") config.boot.initrd.supportedFilesystems;
+  inInitrd =
+    lib.any (fs: fs == "erofs") config.boot.initrd.supportedFilesystems;
   inSystem = lib.any (fs: fs == "erofs") config.boot.supportedFilesystems;
 
-in
-
-{
+in {
   config = lib.mkIf (inInitrd || inSystem) {
 
     system.fsPackages = [ pkgs.erofs-utils ];

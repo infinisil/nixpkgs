@@ -1,17 +1,5 @@
-{ stdenv
-, fetchurl
-, lib
-, makeWrapper
-, unzip
-, glib
-, gtk2
-, gtk3
-, jre
-, libXtst
-, zulu
-, preferGtk3 ? true
-, preferZulu ? true
-}:
+{ stdenv, fetchurl, lib, makeWrapper, unzip, glib, gtk2, gtk3, jre, libXtst
+, zulu, preferGtk3 ? true, preferZulu ? true }:
 
 let
   rev = 3423;
@@ -20,13 +8,14 @@ let
 
   inherit (lib) makeLibraryPath versions;
 
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   pname = "davmail";
   version = "6.1.0";
 
   src = fetchurl {
-    url = "mirror://sourceforge/${pname}/${version}/${pname}-${version}-${toString rev}.zip";
+    url = "mirror://sourceforge/${pname}/${version}/${pname}-${version}-${
+        toString rev
+      }.zip";
     sha256 = "sha256-/JsJFtGalNuOz21eeCPR/LvLueMtQAR7VSKN8SpnPvA=";
   };
 
@@ -44,7 +33,9 @@ stdenv.mkDerivation rec {
     mkdir -p $out/share/davmail
     cp -vR ./* $out/share/davmail
     makeWrapper $out/share/davmail/davmail $out/bin/davmail \
-      --set-default JAVA_OPTS "-Xmx512M -Dsun.net.inetaddr.ttl=60 -Djdk.gtk.version=${lib.versions.major gtk'.version}" \
+      --set-default JAVA_OPTS "-Xmx512M -Dsun.net.inetaddr.ttl=60 -Djdk.gtk.version=${
+        lib.versions.major gtk'.version
+      }" \
       --prefix PATH : ${jre'}/bin \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ glib gtk' libXtst ]}
 
@@ -52,7 +43,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "A Java application which presents a Microsoft Exchange server as local CALDAV, IMAP and SMTP servers";
+    description =
+      "A Java application which presents a Microsoft Exchange server as local CALDAV, IMAP and SMTP servers";
     homepage = "https://davmail.sourceforge.net/";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ peterhoeg ];

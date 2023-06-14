@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   version = "5.8.1";
 
   src = fetchzip {
-    url = "https://twilio-cli-prod.s3.amazonaws.com/twilio-v${finalAttrs.version}/twilio-v${finalAttrs.version}.tar.gz";
+    url =
+      "https://twilio-cli-prod.s3.amazonaws.com/twilio-v${finalAttrs.version}/twilio-v${finalAttrs.version}.tar.gz";
     sha256 = "sha256-RFYuqizx4l5rjCsyat8zDSP9wUmbiDimcJQi93LltCI=";
   };
 
@@ -21,14 +22,14 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  passthru.tests.version = testers.testVersion {
-    package = finalAttrs.finalPackage;
-  };
+  passthru.tests.version =
+    testers.testVersion { package = finalAttrs.finalPackage; };
 
   meta = with lib; {
     description = "Unleash the power of Twilio from your command prompt";
     homepage = "https://github.com/twilio/twilio-cli";
-    changelog = "https://github.com/twilio/twilio-cli/blob/${finalAttrs.version}/CHANGES.md";
+    changelog =
+      "https://github.com/twilio/twilio-cli/blob/${finalAttrs.version}/CHANGES.md";
     license = licenses.mit;
     maintainers = with maintainers; [ marsam ];
     platforms = nodejs.meta.platforms;

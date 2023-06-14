@@ -1,26 +1,14 @@
-{ lib
-, stdenv
-, fetchurl
-, pkg-config
-, gettext
-, gtk3
-, dbus-glib
-, libXScrnSaver
-, libnotify
-, libxml2
-, pam
-, systemd
-, mate
-, wrapGAppsHook
-, mateUpdateScript
-}:
+{ lib, stdenv, fetchurl, pkg-config, gettext, gtk3, dbus-glib, libXScrnSaver
+, libnotify, libxml2, pam, systemd, mate, wrapGAppsHook, mateUpdateScript }:
 
 stdenv.mkDerivation rec {
   pname = "mate-screensaver";
   version = "1.26.2";
 
   src = fetchurl {
-    url = "https://pub.mate-desktop.org/releases/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+    url = "https://pub.mate-desktop.org/releases/${
+        lib.versions.majorMinor version
+      }/${pname}-${version}.tar.xz";
     sha256 = "2pcAziQUW9VdJJJ+7P5tMdClLq6G5WOyxlBUs1al/34=";
   };
 

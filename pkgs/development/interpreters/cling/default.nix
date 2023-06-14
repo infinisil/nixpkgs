@@ -1,22 +1,11 @@
-{ lib
-, stdenv
-, python3
-, libffi
-, git
-, cmake
-, zlib
-, fetchgit
-, fetchFromGitHub
-, makeWrapper
-, runCommand
-, llvmPackages_9
-, glibc
-, ncurses
-}:
+{ lib, stdenv, python3, libffi, git, cmake, zlib, fetchgit, fetchFromGitHub
+, makeWrapper, runCommand, llvmPackages_9, glibc, ncurses }:
 
 let
   # The LLVM 9 headers have a couple bugs we need to patch
-  fixedLlvmDev = runCommand "llvm-dev-${llvmPackages_9.llvm.version}" { buildInputs = [git]; } ''
+  fixedLlvmDev = runCommand "llvm-dev-${llvmPackages_9.llvm.version}" {
+    buildInputs = [ git ];
+  } ''
     mkdir $out
     cp -r ${llvmPackages_9.llvm.dev}/include $out
     cd $out
@@ -109,25 +98,26 @@ let
   flags = [
     "-nostdinc"
     "-nostdinc++"
-    "-isystem" "${lib.getDev stdenv.cc.libc}/include"
-    "-I" "${lib.getDev unwrapped}/include"
-    "-I" "${lib.getLib unwrapped}/lib/clang/9.0.1/include"
+    "-isystem"
+    "${lib.getDev stdenv.cc.libc}/include"
+    "-I"
+    "${lib.getDev unwrapped}/include"
+    "-I"
+    "${lib.getLib unwrapped}/lib/clang/9.0.1/include"
   ];
 
   # Autodetect the include paths for the compiler used to build Cling, in the same way Cling does at
   # https://github.com/root-project/cling/blob/v0.7/lib/Interpreter/CIFactory.cpp#L107:L111
   # Note: it would be nice to just put the compiler in Cling's PATH and let it do this by itself, but
   # unfortunately passing -nostdinc/-nostdinc++ disables Cling's autodetection logic.
-  compilerIncludeFlags = runCommand "compiler-include-flags.txt" {} ''
+  compilerIncludeFlags = runCommand "compiler-include-flags.txt" { } ''
     export LC_ALL=C
     ${stdenv.cc}/bin/c++ -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,''${' -e '/^ \/.*++/p' -e '}' > tmp
     sed -e 's/^/-isystem /' -i tmp
     tr '\n' ' ' < tmp > $out
   '';
 
-in
-
-runCommand "cling-${unwrapped.version}" {
+in runCommand "cling-${unwrapped.version}" {
   nativeBuildInputs = [ makeWrapper ];
   inherit unwrapped flags compilerIncludeFlags;
   inherit (unwrapped) meta;

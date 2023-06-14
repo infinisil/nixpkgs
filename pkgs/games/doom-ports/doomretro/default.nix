@@ -1,13 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, pkg-config
-, SDL2
-, SDL2_image
-, SDL2_mixer
-, Cocoa
-}:
+{ lib, stdenv, fetchFromGitHub, cmake, pkg-config, SDL2, SDL2_image, SDL2_mixer
+, Cocoa }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "doomretro";
@@ -20,18 +12,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-thH18+Og5kSiMdzgPdGyUwBchpjpd9xfFfUlUQMAl1A=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-  ];
+  nativeBuildInputs = [ cmake pkg-config ];
 
-  buildInputs = [
-    SDL2
-    SDL2_image
-    SDL2_mixer
-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
-    Cocoa
-  ];
+  buildInputs = [ SDL2 SDL2_image SDL2_mixer ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [ Cocoa ];
 
   meta = {
     homepage = "https://www.doomretro.com/";
@@ -66,7 +50,8 @@ stdenv.mkDerivation (finalAttrs: {
       to no support is provided, DOOM Retro's source code may also be compiled
       and run under Linux and macOS.
     '';
-    changelog = "https://github.com/bradharding/doomretro/releases/tag/${finalAttrs.src.rev}";
+    changelog =
+      "https://github.com/bradharding/doomretro/releases/tag/${finalAttrs.src.rev}";
     license = lib.licenses.gpl3Plus;
     maintainers = with lib.maintainers; [ AndersonTorres ];
     platforms = lib.platforms.unix;

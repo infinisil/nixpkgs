@@ -1,23 +1,6 @@
-{ lib
-, mkDerivation
-, fetchFromGitHub
-, fetchpatch
-, cmake
-, pkg-config
-, doxygen
-, wrapQtAppsHook
-, pcre
-, poco
-, qtbase
-, qtsvg
-, qwt6_1
-, nlohmann_json
-, soapysdr-with-plugins
-, portaudio
-, alsa-lib
-, muparserx
-, python3
-}:
+{ lib, mkDerivation, fetchFromGitHub, fetchpatch, cmake, pkg-config, doxygen
+, wrapQtAppsHook, pcre, poco, qtbase, qtsvg, qwt6_1, nlohmann_json
+, soapysdr-with-plugins, portaudio, alsa-lib, muparserx, python3 }:
 
 mkDerivation rec {
   pname = "pothos";
@@ -37,7 +20,8 @@ mkDerivation rec {
     # Poco had some breaking API changes in 1.12
     (fetchpatch {
       name = "poco-1.12-compat.patch";
-      url = "https://github.com/pothosware/PothosCore/commit/092d1209b0fd0aa8a1733706c994fa95e66fd017.patch";
+      url =
+        "https://github.com/pothosware/PothosCore/commit/092d1209b0fd0aa8a1733706c994fa95e66fd017.patch";
       hash = "sha256-bZXG8kD4+1LgDV8viZrJ/DMjg8UvW7b5keJQDXurfkA=";
     })
   ];
@@ -45,8 +29,17 @@ mkDerivation rec {
   nativeBuildInputs = [ cmake pkg-config doxygen wrapQtAppsHook ];
 
   buildInputs = [
-    pcre poco qtbase qtsvg qwt6_1 nlohmann_json
-    soapysdr-with-plugins portaudio alsa-lib muparserx python3
+    pcre
+    poco
+    qtbase
+    qtsvg
+    qwt6_1
+    nlohmann_json
+    soapysdr-with-plugins
+    portaudio
+    alsa-lib
+    muparserx
+    python3
   ];
 
   postInstall = ''

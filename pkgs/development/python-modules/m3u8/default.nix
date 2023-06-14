@@ -1,10 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, iso8601
-, bottle
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, fetchFromGitHub, iso8601, bottle, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "m3u8";
@@ -17,14 +11,9 @@ buildPythonPackage rec {
     hash = "sha256-9Xmbc1aL7SI24FFn0/5KJtAM3+Xyvd3bwUh8DU1wGKE=";
   };
 
-  propagatedBuildInputs = [
-    iso8601
-  ];
+  propagatedBuildInputs = [ iso8601 ];
 
-  nativeCheckInputs = [
-    bottle
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ bottle pytestCheckHook ];
 
   disabledTests = [
     # Tests require network access
@@ -33,9 +22,7 @@ buildPythonPackage rec {
     "test_load_should_remember_redirect"
   ];
 
-  pythonImportsCheck = [
-    "m3u8"
-  ];
+  pythonImportsCheck = [ "m3u8" ];
 
   meta = with lib; {
     homepage = "https://github.com/globocom/m3u8";

@@ -1,8 +1,5 @@
-{ lib, buildDunePackage, fetchFromGitLab
-, ocamlgraph, parmap, re, stdlib-shims
-, base64, extlib, cudf
-, ocaml, ounit
-}:
+{ lib, buildDunePackage, fetchFromGitLab, ocamlgraph, parmap, re, stdlib-shims
+, base64, extlib, cudf, ocaml, ounit }:
 
 buildDunePackage rec {
   pname = "dose3";
@@ -17,22 +14,11 @@ buildDunePackage rec {
 
   minimalOCamlVersion = "4.07";
 
-  buildInputs = [
-    parmap
-  ];
+  buildInputs = [ parmap ];
 
-  propagatedBuildInputs = [
-    base64
-    cudf
-    extlib
-    ocamlgraph
-    re
-    stdlib-shims
-  ];
+  propagatedBuildInputs = [ base64 cudf extlib ocamlgraph re stdlib-shims ];
 
-  checkInputs = [
-    ounit
-  ];
+  checkInputs = [ ounit ];
   doCheck = lib.versionAtLeast ocaml.version "4.08";
 
   meta = with lib; {

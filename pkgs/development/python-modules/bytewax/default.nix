@@ -1,19 +1,6 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchFromGitHub
-, rustPlatform
-, setuptools-rust
-, openssl
-, pkg-config
-, cyrus_sasl
-, protobuf
-, cmake
-, gcc
-, confluent-kafka
-, pytestCheckHook
-, pythonAtLeast
-}:
+{ lib, stdenv, buildPythonPackage, fetchFromGitHub, rustPlatform
+, setuptools-rust, openssl, pkg-config, cyrus_sasl, protobuf, cmake, gcc
+, confluent-kafka, pytestCheckHook, pythonAtLeast }:
 
 buildPythonPackage rec {
   pname = "bytewax";
@@ -47,20 +34,13 @@ buildPythonPackage rec {
 
   dontUseCmakeConfigure = true;
 
-  buildInputs = [
-    openssl
-    cyrus_sasl
-    protobuf
-  ];
+  buildInputs = [ openssl cyrus_sasl protobuf ];
 
   preCheck = ''
     export PY_IGNORE_IMPORTMISMATCH=1
   '';
 
-  checkInputs = [
-    pytestCheckHook
-    confluent-kafka
-  ];
+  checkInputs = [ pytestCheckHook confluent-kafka ];
 
   meta = with lib; {
     description = "Python Stream Processing";

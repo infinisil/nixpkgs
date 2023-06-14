@@ -1,20 +1,5 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, flex
-, bison
-, qtbase
-, qttools
-, qtsvg
-, qtwayland
-, wrapQtAppsHook
-, libX11
-, cmake
-, gperf
-, adms
-, ngspice
-, kernels ? [ ngspice ]
-}:
+{ stdenv, lib, fetchFromGitHub, flex, bison, qtbase, qttools, qtsvg, qtwayland
+, wrapQtAppsHook, libX11, cmake, gperf, adms, ngspice, kernels ? [ ngspice ] }:
 
 stdenv.mkDerivation rec {
   pname = "qucs-s";

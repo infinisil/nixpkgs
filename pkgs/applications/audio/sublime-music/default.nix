@@ -1,19 +1,7 @@
-{ lib
-, fetchFromGitHub
-, python3
-, gobject-introspection
-, gtk3
-, pango
-, wrapGAppsHook
-, xvfb-run
-, chromecastSupport ? false
-, serverSupport ? false
-, keyringSupport ? true
-, notifySupport ? true
-, libnotify
-, networkSupport ? true
-, networkmanager
-}:
+{ lib, fetchFromGitHub, python3, gobject-introspection, gtk3, pango
+, wrapGAppsHook, xvfb-run, chromecastSupport ? false, serverSupport ? false
+, keyringSupport ? true, notifySupport ? true, libnotify, networkSupport ? true
+, networkmanager }:
 
 let
   python = python3.override {
@@ -29,8 +17,7 @@ let
       });
     };
   };
-in
-python.pkgs.buildPythonApplication rec {
+in python.pkgs.buildPythonApplication rec {
   pname = "sublime-music";
   version = "0.12.0";
   format = "flit";
@@ -42,53 +29,40 @@ python.pkgs.buildPythonApplication rec {
     hash = "sha256-FPzeFqDOcaiariz7qJwz6P3Wd+ZDxNP57uj+ptMtEyM=";
   };
 
-  nativeBuildInputs = [
-    gobject-introspection
-    wrapGAppsHook
-  ];
+  nativeBuildInputs = [ gobject-introspection wrapGAppsHook ];
 
   postPatch = ''
     sed -i "/--cov/d" setup.cfg
     sed -i "/--no-cov-on-fail/d" setup.cfg
   '';
 
-  buildInputs = [
-    gtk3
-    pango
-  ]
-  ++ lib.optional notifySupport libnotify
-  ++ lib.optional networkSupport networkmanager
-  ;
+  buildInputs = [ gtk3 pango ] ++ lib.optional notifySupport libnotify
+    ++ lib.optional networkSupport networkmanager;
 
-  propagatedBuildInputs = with python.pkgs; [
-    bleach
-    bottle
-    dataclasses-json
-    deepdiff
-    levenshtein
-    mpv
-    peewee
-    pychromecast
-    pygobject3
-    python-dateutil
-    requests
-    semver
-    thefuzz
-  ]
-  ++ lib.optional keyringSupport keyring
-  ;
+  propagatedBuildInputs = with python.pkgs;
+    [
+      bleach
+      bottle
+      dataclasses-json
+      deepdiff
+      levenshtein
+      mpv
+      peewee
+      pychromecast
+      pygobject3
+      python-dateutil
+      requests
+      semver
+      thefuzz
+    ] ++ lib.optional keyringSupport keyring;
 
-  nativeCheckInputs = with python.pkgs; [
-    pytest
-  ];
+  nativeCheckInputs = with python.pkgs; [ pytest ];
 
   checkPhase = ''
     ${xvfb-run}/bin/xvfb-run pytest
   '';
 
-  pythonImportsCheck = [
-    "sublime_music"
-  ];
+  pythonImportsCheck = [ "sublime_music" ];
 
   postInstall = ''
     install -Dm444 sublime-music.desktop      -t $out/share/applications
@@ -103,7 +77,8 @@ python.pkgs.buildPythonApplication rec {
   meta = with lib; {
     description = "GTK3 Subsonic/Airsonic client";
     homepage = "https://sublimemusic.app/";
-    changelog = "https://github.com/sublime-music/sublime-music/blob/v${version}/CHANGELOG.rst";
+    changelog =
+      "https://github.com/sublime-music/sublime-music/blob/v${version}/CHANGELOG.rst";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ albakham sumnerevans ];
   };

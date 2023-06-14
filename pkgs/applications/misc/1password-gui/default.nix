@@ -1,8 +1,4 @@
-{ stdenv
-, callPackage
-, channel ? "stable"
-, fetchurl
-, lib
+{ stdenv, callPackage, channel ? "stable", fetchurl, lib
 # This is only relevant for Linux, so we need to pass it through
 , polkitPolicyOwners ? [ ] }:
 
@@ -14,55 +10,67 @@ let
   sources = {
     stable = {
       x86_64-linux = {
-        url = "https://downloads.1password.com/linux/tar/stable/x86_64/1password-${version}.x64.tar.gz";
+        url =
+          "https://downloads.1password.com/linux/tar/stable/x86_64/1password-${version}.x64.tar.gz";
         sha256 = "sha256-5KMAzstoPmNgFejp21R8PcdrmUtkX3qxHYX3rV5JqyE=";
       };
       aarch64-linux = {
-        url = "https://downloads.1password.com/linux/tar/stable/aarch64/1password-${version}.arm64.tar.gz";
+        url =
+          "https://downloads.1password.com/linux/tar/stable/aarch64/1password-${version}.arm64.tar.gz";
         sha256 = "sha256-Tmof+ma1SJMQRSV1T5flLeXfe6W1a2U2mYzi+MrxvJM=";
       };
       x86_64-darwin = {
-        url = "https://downloads.1password.com/mac/1Password-${version}-x86_64.zip";
+        url =
+          "https://downloads.1password.com/mac/1Password-${version}-x86_64.zip";
         sha256 = "sha256-jtqgJJy1ZhyaEUEafT1ywD529aKGDqc0J3mgYSGVTWU=";
       };
       aarch64-darwin = {
-        url = "https://downloads.1password.com/mac/1Password-${version}-aarch64.zip";
+        url =
+          "https://downloads.1password.com/mac/1Password-${version}-aarch64.zip";
         sha256 = "sha256-qLqK6CZcqDfIGX0FzEnAZP3Rkxw8CNtT6sFy8u0IqwM=";
       };
     };
     beta = {
       x86_64-linux = {
-        url = "https://downloads.1password.com/linux/tar/beta/x86_64/1password-${version}.x64.tar.gz";
+        url =
+          "https://downloads.1password.com/linux/tar/beta/x86_64/1password-${version}.x64.tar.gz";
         sha256 = "sha256-ngxNVYTVA5KyD1kh5oxClWxj9Kox8Yp4L+ryqxQHh3I=";
       };
       aarch64-linux = {
-        url = "https://downloads.1password.com/linux/tar/beta/aarch64/1password-${version}.arm64.tar.gz";
+        url =
+          "https://downloads.1password.com/linux/tar/beta/aarch64/1password-${version}.arm64.tar.gz";
         sha256 = "sha256-5f0GXROQ+NCE25nbrY4MsE76AETNleiVBxpSlvVes5k=";
       };
       x86_64-darwin = {
-        url = "https://downloads.1password.com/mac/1Password-${version}-x86_64.zip";
+        url =
+          "https://downloads.1password.com/mac/1Password-${version}-x86_64.zip";
         sha256 = "sha256-JrTs8wCnCqNtKfKNTjEDadVbwZ5Lolz7ggYR7sIpFEU=";
       };
       aarch64-darwin = {
-        url = "https://downloads.1password.com/mac/1Password-${version}-aarch64.zip";
+        url =
+          "https://downloads.1password.com/mac/1Password-${version}-aarch64.zip";
         sha256 = "sha256-RTnaxYt9rEbGcr827cYNiF1g+a485TThpSADW9tTcPE=";
       };
     };
   };
 
-  src = fetchurl {
-    inherit (sources.${channel}.${stdenv.system}) url sha256;
-  };
+  src = fetchurl { inherit (sources.${channel}.${stdenv.system}) url sha256; };
 
   meta = with lib; {
     description = "Multi-platform password manager";
     homepage = "https://1password.com/";
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;
-    maintainers = with maintainers; [ timstott savannidgerinel maxeaubrey sebtm ];
+    maintainers = with maintainers; [
+      timstott
+      savannidgerinel
+      maxeaubrey
+      sebtm
+    ];
     platforms = builtins.attrNames sources.${channel};
   };
 
-in if stdenv.isDarwin
-then callPackage ./darwin.nix { inherit pname version src meta; }
-else callPackage ./linux.nix { inherit pname version src meta polkitPolicyOwners; }
+in if stdenv.isDarwin then
+  callPackage ./darwin.nix { inherit pname version src meta; }
+else
+  callPackage ./linux.nix { inherit pname version src meta polkitPolicyOwners; }

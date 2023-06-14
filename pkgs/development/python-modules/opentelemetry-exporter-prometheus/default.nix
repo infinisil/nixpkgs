@@ -1,14 +1,6 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, hatchling
-, opentelemetry-api
-, opentelemetry-sdk
-, opentelemetry-test-utils
-, prometheus-client
-, pytestCheckHook
-}:
+{ lib, buildPythonPackage, pythonOlder, fetchFromGitHub, hatchling
+, opentelemetry-api, opentelemetry-sdk, opentelemetry-test-utils
+, prometheus-client, pytestCheckHook }:
 
 buildPythonPackage rec {
   pname = "opentelemetry-exporter-prometheus";
@@ -25,25 +17,18 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = [
-    hatchling
-  ];
+  nativeBuildInputs = [ hatchling ];
 
-  propagatedBuildInputs = [
-    opentelemetry-api
-    opentelemetry-sdk
-    prometheus-client
-  ];
+  propagatedBuildInputs =
+    [ opentelemetry-api opentelemetry-sdk prometheus-client ];
 
-  nativeCheckInputs = [
-    opentelemetry-test-utils
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ opentelemetry-test-utils pytestCheckHook ];
 
   pythonImportsCheck = [ "opentelemetry.exporter.prometheus" ];
 
   meta = with lib; {
-    homepage = "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-prometheus";
+    homepage =
+      "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-prometheus";
     description = "Prometheus Metric Exporter for OpenTelemetry";
     license = licenses.asl20;
     maintainers = teams.deshaw.members;

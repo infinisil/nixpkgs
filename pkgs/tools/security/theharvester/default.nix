@@ -1,7 +1,4 @@
-{ lib
-, fetchFromGitHub
-, python3
-}:
+{ lib, fetchFromGitHub, python3 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "theharvester";
@@ -41,10 +38,7 @@ python3.pkgs.buildPythonApplication rec {
     uvloop
   ];
 
-  nativeCheckInputs = with  python3.pkgs; [
-    pytest
-    pytest-asyncio
-  ];
+  nativeCheckInputs = with python3.pkgs; [ pytest pytest-asyncio ];
 
   # We don't run other tests (discovery modules) because they require network access
   checkPhase = ''
@@ -54,7 +48,8 @@ python3.pkgs.buildPythonApplication rec {
   '';
 
   meta = with lib; {
-    description = "Gather E-mails, subdomains and names from different public sources";
+    description =
+      "Gather E-mails, subdomains and names from different public sources";
     longDescription = ''
       theHarvester is a very simple, yet effective tool designed to be used in the early
       stages of a penetration test. Use it for open source intelligence gathering and
@@ -62,7 +57,8 @@ python3.pkgs.buildPythonApplication rec {
       gathers emails, names, subdomains, IPs, and URLs using multiple public data sources.
     '';
     homepage = "https://github.com/laramies/theHarvester";
-    changelog = "https://github.com/laramies/theHarvester/releases/tag/${version}";
+    changelog =
+      "https://github.com/laramies/theHarvester/releases/tag/${version}";
     maintainers = with maintainers; [ c0bw3b treemo ];
     license = licenses.gpl2Only;
   };

@@ -1,11 +1,5 @@
-{ lib
-, aiohttp
-, buildPythonPackage
-, fetchFromGitHub
-, pythonOlder
-, setuptools
-, wheel
-}:
+{ lib, aiohttp, buildPythonPackage, fetchFromGitHub, pythonOlder, setuptools
+, wheel }:
 
 buildPythonPackage rec {
   pname = "aioairzone-cloud";
@@ -21,18 +15,11 @@ buildPythonPackage rec {
     hash = "sha256-VuUvutotxkC0Xur7kBBTwjzE+F1I3JSydcHkjrpbeUg=";
   };
 
-  nativeBuildInputs = [
-    setuptools
-    wheel
-  ];
+  nativeBuildInputs = [ setuptools wheel ];
 
-  propagatedBuildInputs = [
-    aiohttp
-  ];
+  propagatedBuildInputs = [ aiohttp ];
 
-  pythonImportsCheck = [
-    "aioairzone_cloud"
-  ];
+  pythonImportsCheck = [ "aioairzone_cloud" ];
 
   # Module has no tests
   doCheck = false;
@@ -40,7 +27,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Library to control Airzone via Cloud API";
     homepage = "https://github.com/Noltari/aioairzone-cloud";
-    changelog = "https://github.com/Noltari/aioairzone-cloud/releases/tag/${version}";
+    changelog =
+      "https://github.com/Noltari/aioairzone-cloud/releases/tag/${version}";
     license = licenses.asl20;
     maintainers = with maintainers; [ fab ];
   };

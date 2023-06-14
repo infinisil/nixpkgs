@@ -1,32 +1,16 @@
-{ pkgs, lib, stdenv, fetchFromGitHub, fetchpatch
-, autoreconfHook269, util-linux, nukeReferences, coreutils
-, perl, nixosTests
-, configFile ? "all"
+{ pkgs, lib, stdenv, fetchFromGitHub, fetchpatch, autoreconfHook269, util-linux
+, nukeReferences, coreutils, perl, nixosTests, configFile ? "all"
 
-# Userspace dependencies
-, zlib, libuuid, python3, attr, openssl
-, libtirpc
-, nfs-utils, samba
-, gawk, gnugrep, gnused, systemd
-, smartmontools, enableMail ? false
-, sysstat, pkg-config
-, curl
-, pam
+  # Userspace dependencies
+, zlib, libuuid, python3, attr, openssl, libtirpc, nfs-utils, samba, gawk
+, gnugrep, gnused, systemd, smartmontools, enableMail ? false, sysstat
+, pkg-config, curl, pam
 
 # Kernel dependencies
-, kernel ? null
-, enablePython ? true
-, ...
-}:
+, kernel ? null, enablePython ? true, ... }:
 
-{ version
-, sha256
-, extraPatches ? []
-, rev ? "zfs-${version}"
-, isUnstable ? false
-, latestCompatibleLinuxPackages
-, kernelCompatible ? null
-}:
+{ version, sha256, extraPatches ? [ ], rev ? "zfs-${version}"
+, isUnstable ? false, latestCompatibleLinuxPackages, kernelCompatible ? null }:
 
 let
   inherit (lib) any optionalString optionals optional makeBinPath;
@@ -43,10 +27,11 @@ let
   # If you don't do this your ZFS builds will fail on any non-standard (e.g.
   # clang-built) kernels.
   stdenv' = if kernel == null then stdenv else kernel.stdenv;
-in
 
-stdenv'.mkDerivation {
-  name = "zfs-${configFile}-${version}${optionalString buildKernel "-${kernel.version}"}";
+in stdenv'.mkDerivation {
+  name = "zfs-${configFile}-${version}${
+      optionalString buildKernel "-${kernel.version}"
+    }";
 
   src = fetchFromGitHub {
     owner = "openzfs";
@@ -57,7 +42,8 @@ stdenv'.mkDerivation {
   patches = [
     (fetchpatch {
       name = "musl.patch";
-      url = "https://github.com/openzfs/zfs/commit/1f19826c9ac85835cbde61a7439d9d1fefe43a4a.patch";
+      url =
+        "https://github.com/openzfs/zfs/commit/1f19826c9ac85835cbde61a7439d9d1fefe43a4a.patch";
       sha256 = "XEaK227ubfOwlB2s851UvZ6xp/QOtYUWYsKTkEHzmo0=";
     })
   ] ++ extraPatches;
@@ -71,10 +57,11 @@ stdenv'.mkDerivation {
       --replace '"/usr/bin/env", "mount"'  '"${util-linux}/bin/mount", "-n"'
   '' + optionalString buildUser ''
     substituteInPlace ./lib/libshare/os/linux/nfs.c --replace "/usr/sbin/exportfs" "${
-      # We don't *need* python support, but we set it like this to minimize closure size:
-      # If it's disabled by default, no need to enable it, even if we have python enabled
-      # And if it's enabled by default, only change that if we explicitly disable python to remove python from the closure
-      nfs-utils.override (old: { enablePython = old.enablePython or true && enablePython; })
+    # We don't *need* python support, but we set it like this to minimize closure size:
+    # If it's disabled by default, no need to enable it, even if we have python enabled
+    # And if it's enabled by default, only change that if we explicitly disable python to remove python from the closure
+      nfs-utils.override
+      (old: { enablePython = old.enablePython or true && enablePython; })
     }/bin/exportfs"
     substituteInPlace ./lib/libshare/smb.h        --replace "/usr/bin/net"            "${samba}/bin/net"
     # Disable dynamic loading of libcurl
@@ -113,8 +100,7 @@ stdenv'.mkDerivation {
     ++ optionals buildKernel (kernel.moduleBuildDependencies ++ [ perl ])
     ++ optional buildUser pkg-config;
   buildInputs = optionals buildUser [ zlib libuuid attr libtirpc pam ]
-    ++ optional buildUser openssl
-    ++ optional buildUser curl
+    ++ optional buildUser openssl ++ optional buildUser curl
     ++ optional (buildUser && enablePython) python3;
 
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
@@ -157,7 +143,7 @@ stdenv'.mkDerivation {
   # Since zfs compress kernel modules on installation, our strip hooks skip stripping them.
   # Hence we strip modules prior to compression.
   postBuild = optionalString buildKernel ''
-     find . -name "*.ko" -print0 | xargs -0 -P$NIX_BUILD_CORES ${stdenv.cc.targetPrefix}strip --strip-debug
+    find . -name "*.ko" -print0 | xargs -0 -P$NIX_BUILD_CORES ${stdenv.cc.targetPrefix}strip --strip-debug
   '';
 
   postInstall = optionalString buildKernel ''
@@ -183,7 +169,17 @@ stdenv'.mkDerivation {
   '';
 
   postFixup = let
-    path = "PATH=${makeBinPath [ coreutils gawk gnused gnugrep util-linux smartmon sysstat ]}:$PATH";
+    path = "PATH=${
+        makeBinPath [
+          coreutils
+          gawk
+          gnused
+          gnugrep
+          util-linux
+          smartmon
+          sysstat
+        ]
+      }:$PATH";
   in ''
     for i in $out/libexec/zfs/zpool.d/*; do
       sed -i '2i${path}' $i
@@ -195,13 +191,12 @@ stdenv'.mkDerivation {
   passthru = {
     inherit enableMail latestCompatibleLinuxPackages;
 
-    tests =
-      if isUnstable then [
-        nixosTests.zfs.unstable
-      ] else [
-        nixosTests.zfs.installer
-        nixosTests.zfs.stable
-      ];
+    tests = if isUnstable then
+      [ nixosTests.zfs.unstable ]
+    else [
+      nixosTests.zfs.installer
+      nixosTests.zfs.stable
+    ];
   };
 
   meta = {
@@ -221,11 +216,15 @@ stdenv'.mkDerivation {
     # does not build is the only way to produce a NixOS installer on such
     # platforms.
     # https://github.com/openzfs/zfs/blob/6a6bd493988c75331deab06e5352a9bed035a87d/config/always-arch.m4#L16
-    platforms =
-      with lib.systems.inspect.patterns;
+    platforms = with lib.systems.inspect.patterns;
       map (p: p // isLinux) [ isx86_32 isx86_64 isPower isAarch64 isSparc ];
 
-    maintainers = with lib.maintainers; [ jcumming jonringer globin raitobezarius ];
+    maintainers = with lib.maintainers; [
+      jcumming
+      jonringer
+      globin
+      raitobezarius
+    ];
     mainProgram = "zfs";
     # If your Linux kernel version is not yet supported by zfs, try zfsUnstable.
     # On NixOS set the option boot.zfs.enableUnstable.

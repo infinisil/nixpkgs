@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   name = "gotosocial";
   meta.maintainers = with lib.maintainers; [ misuzu ];
 

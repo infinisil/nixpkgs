@@ -1,86 +1,20 @@
-{ lib
-, stdenv
-, python
-, buildPythonPackage
-, fetchFromGitHub
-, alembic
-, argcomplete
-, asgiref
-, attrs
-, blinker
-, cached-property
-, cattrs
-, clickclick
-, colorlog
-, configupdater
-, connexion
-, cron-descriptor
-, croniter
-, cryptography
-, deprecated
-, dill
-, flask
-, flask-login
-, flask-appbuilder
-, flask-caching
-, flask-session
-, flask-wtf
-, gitpython
-, graphviz
-, gunicorn
-, httpx
-, iso8601
-, importlib-resources
-, importlib-metadata
-, inflection
-, itsdangerous
-, jinja2
-, jsonschema
-, lazy-object-proxy
-, linkify-it-py
-, lockfile
-, markdown
-, markupsafe
-, marshmallow-oneofschema
-, mdit-py-plugins
-, numpy
-, openapi-spec-validator
-, pandas
-, pathspec
-, pendulum
-, psutil
-, pydantic
-, pygments
-, pyjwt
-, python-daemon
-, python-dateutil
-, python-nvd3
-, python-slugify
-, python3-openid
-, pythonOlder
-, pyyaml
-, rich
-, rich-argparse
-, setproctitle
-, sqlalchemy
-, sqlalchemy-jsonfield
-, swagger-ui-bundle
-, tabulate
-, tenacity
-, termcolor
-, typing-extensions
-, unicodecsv
-, werkzeug
-, freezegun
-, pytest-asyncio
-, pytestCheckHook
-, time-machine
-, mkYarnPackage
-, writeScript
+{ lib, stdenv, python, buildPythonPackage, fetchFromGitHub, alembic, argcomplete
+, asgiref, attrs, blinker, cached-property, cattrs, clickclick, colorlog
+, configupdater, connexion, cron-descriptor, croniter, cryptography, deprecated
+, dill, flask, flask-login, flask-appbuilder, flask-caching, flask-session
+, flask-wtf, gitpython, graphviz, gunicorn, httpx, iso8601, importlib-resources
+, importlib-metadata, inflection, itsdangerous, jinja2, jsonschema
+, lazy-object-proxy, linkify-it-py, lockfile, markdown, markupsafe
+, marshmallow-oneofschema, mdit-py-plugins, numpy, openapi-spec-validator
+, pandas, pathspec, pendulum, psutil, pydantic, pygments, pyjwt, python-daemon
+, python-dateutil, python-nvd3, python-slugify, python3-openid, pythonOlder
+, pyyaml, rich, rich-argparse, setproctitle, sqlalchemy, sqlalchemy-jsonfield
+, swagger-ui-bundle, tabulate, tenacity, termcolor, typing-extensions
+, unicodecsv, werkzeug, freezegun, pytest-asyncio, pytestCheckHook, time-machine
+, mkYarnPackage, writeScript
 
 # Extra airflow providers to enable
-, enabledProviders ? []
-}:
+, enabledProviders ? [ ] }:
 let
   version = "2.6.0";
 
@@ -131,12 +65,12 @@ let
   # Import generated file with metadata for provider dependencies and imports.
   # Enable additional providers using enabledProviders above.
   providers = import ./providers.nix;
-  getProviderDeps = provider: map (dep: python.pkgs.${dep}) providers.${provider}.deps;
+  getProviderDeps = provider:
+    map (dep: python.pkgs.${dep}) providers.${provider}.deps;
   getProviderImports = provider: providers.${provider}.imports;
   providerDependencies = lib.concatMap getProviderDeps enabledProviders;
   providerImports = lib.concatMap getProviderImports enabledProviders;
-in
-buildPythonPackage rec {
+in buildPythonPackage rec {
   pname = "apache-airflow";
   inherit version;
   src = airflow-src;
@@ -210,20 +144,12 @@ buildPythonPackage rec {
     typing-extensions
     unicodecsv
     werkzeug
-  ] ++ lib.optionals (pythonOlder "3.9") [
-    importlib-metadata
-  ] ++ providerDependencies;
+  ] ++ lib.optionals (pythonOlder "3.9") [ importlib-metadata ]
+    ++ providerDependencies;
 
-  buildInputs = [
-    airflow-frontend
-  ];
+  buildInputs = [ airflow-frontend ];
 
-  nativeCheckInputs = [
-    freezegun
-    pytest-asyncio
-    pytestCheckHook
-    time-machine
-  ];
+  nativeCheckInputs = [ freezegun pytest-asyncio pytestCheckHook time-machine ];
 
   # By default, source code of providers is included but unusable due to missing
   # transitive dependencies. To enable a provider, add it to extraProviders
@@ -242,9 +168,7 @@ buildPythonPackage rec {
   '';
 
   # allow for gunicorn processes to have access to Python packages
-  makeWrapperArgs = [
-    "--prefix PYTHONPATH : $PYTHONPATH"
-  ];
+  makeWrapperArgs = [ "--prefix PYTHONPATH : $PYTHONPATH" ];
 
   postInstall = ''
     cp -rv ${airflow-frontend}/static/dist $out/lib/${python.libPrefix}/site-packages/airflow/www/static
@@ -252,9 +176,7 @@ buildPythonPackage rec {
     export HOME=$(mktemp -d)
   '';
 
-  pythonImportsCheck = [
-    "airflow"
-  ] ++ providerImports;
+  pythonImportsCheck = [ "airflow" ] ++ providerImports;
 
   preCheck = ''
     export AIRFLOW_HOME=$HOME
@@ -267,9 +189,7 @@ buildPythonPackage rec {
     airflow db reset -y
   '';
 
-  pytestFlagsArray = [
-    "tests/core/test_core.py"
-  ];
+  pytestFlagsArray = [ "tests/core/test_core.py" ];
 
   disabledTests = lib.optionals stdenv.isDarwin [
     "bash_operator_kill" # psutil.AccessDenied
@@ -310,7 +230,8 @@ buildPythonPackage rec {
   # see if they report success.
 
   meta = with lib; {
-    description = "Programmatically author, schedule and monitor data pipelines";
+    description =
+      "Programmatically author, schedule and monitor data pipelines";
     homepage = "https://airflow.apache.org/";
     license = licenses.asl20;
     maintainers = with maintainers; [ bhipple gbpdt ingenieroariel ];

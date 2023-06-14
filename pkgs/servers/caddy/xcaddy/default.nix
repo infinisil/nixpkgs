@@ -13,10 +13,7 @@ buildGoModule rec {
     hash = "sha256-CJzh1/rX9JjIiSyBReCt/lxUBQnXxY8NjRnSSqna9p4=";
   };
 
-  patches = [
-    ./inject_version_info.diff
-    ./use_tmpdir_on_darwin.diff
-  ];
+  patches = [ ./inject_version_info.diff ./use_tmpdir_on_darwin.diff ];
 
   ldflags = [
     "-s"

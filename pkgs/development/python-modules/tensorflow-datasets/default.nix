@@ -1,47 +1,9 @@
-{ apache-beam
-, attrs
-, beautifulsoup4
-, buildPythonPackage
-, click
-, datasets
-, dill
-, dm-tree
-, fetchFromGitHub
-, ffmpeg
-, future
-, imagemagick
-, importlib-resources
-, jax
-, jaxlib
-, jinja2
-, langdetect
-, lib
-, lxml
-, matplotlib
-, mwparserfromhell
-, networkx
-, nltk
-, numpy
-, opencv4
-, pandas
-, pillow
-, promise
-, protobuf
-, psutil
-, pycocotools
-, pydub
-, pytest-xdist
-, pytestCheckHook
-, requests
-, scikit-image
-, scipy
-, six
-, tensorflow
-, tensorflow-metadata
-, termcolor
-, tifffile
-, tqdm
-, zarr
+{ apache-beam, attrs, beautifulsoup4, buildPythonPackage, click, datasets, dill
+, dm-tree, fetchFromGitHub, ffmpeg, future, imagemagick, importlib-resources
+, jax, jaxlib, jinja2, langdetect, lib, lxml, matplotlib, mwparserfromhell
+, networkx, nltk, numpy, opencv4, pandas, pillow, promise, protobuf, psutil
+, pycocotools, pydub, pytest-xdist, pytestCheckHook, requests, scikit-image
+, scipy, six, tensorflow, tensorflow-metadata, termcolor, tifffile, tqdm, zarr
 }:
 
 buildPythonPackage rec {
@@ -77,9 +39,7 @@ buildPythonPackage rec {
     tqdm
   ];
 
-  pythonImportsCheck = [
-    "tensorflow_datasets"
-  ];
+  pythonImportsCheck = [ "tensorflow_datasets" ];
 
   nativeCheckInputs = [
     apache-beam

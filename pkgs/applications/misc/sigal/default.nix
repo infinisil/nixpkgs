@@ -1,9 +1,4 @@
-{ stdenv
-, lib
-, python3
-, fetchPypi
-, ffmpeg
-}:
+{ stdenv, lib, python3, fetchPypi, ffmpeg }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "sigal";
@@ -35,19 +30,11 @@ python3.pkgs.buildPythonApplication rec {
     setuptools # needs pkg_resources
   ];
 
-  nativeCheckInputs = [
-    ffmpeg
-  ] ++ (with python3.pkgs; [
-    pytestCheckHook
-  ]);
+  nativeCheckInputs = [ ffmpeg ] ++ (with python3.pkgs; [ pytestCheckHook ]);
 
-  disabledTests = lib.optionals stdenv.isDarwin [
-    "test_nonmedia_files"
-  ];
+  disabledTests = lib.optionals stdenv.isDarwin [ "test_nonmedia_files" ];
 
-  makeWrapperArgs = [
-    "--prefix PATH : ${lib.makeBinPath [ ffmpeg ]}"
-  ];
+  makeWrapperArgs = [ "--prefix PATH : ${lib.makeBinPath [ ffmpeg ]}" ];
 
   meta = with lib; {
     description = "Yet another simple static gallery generator";

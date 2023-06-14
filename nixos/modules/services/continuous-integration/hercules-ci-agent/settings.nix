@@ -1,11 +1,7 @@
 # Not a module
 { pkgs, lib }:
 let
-  inherit (lib)
-    types
-    literalExpression
-    mkOption
-    ;
+  inherit (lib) types literalExpression mkOption;
 
   format = pkgs.formats.toml { };
 
@@ -105,7 +101,8 @@ let
         '';
         type = types.path;
         default = config.staticSecretsDirectory + "/cluster-join-token.key";
-        defaultText = literalExpression ''staticSecretsDirectory + "/cluster-join-token.key"'';
+        defaultText = literalExpression
+          ''staticSecretsDirectory + "/cluster-join-token.key"'';
       };
       binaryCachesPath = mkOption {
         description = lib.mdDoc ''
@@ -119,7 +116,8 @@ let
         '';
         type = types.path;
         default = config.staticSecretsDirectory + "/binary-caches.json";
-        defaultText = literalExpression ''staticSecretsDirectory + "/binary-caches.json"'';
+        defaultText =
+          literalExpression ''staticSecretsDirectory + "/binary-caches.json"'';
       };
       secretsJsonPath = mkOption {
         description = lib.mdDoc ''
@@ -133,21 +131,20 @@ let
         '';
         type = types.path;
         default = config.staticSecretsDirectory + "/secrets.json";
-        defaultText = literalExpression ''staticSecretsDirectory + "/secrets.json"'';
+        defaultText =
+          literalExpression ''staticSecretsDirectory + "/secrets.json"'';
       };
     };
     config = {
       labels = {
-        agent.source =
-          if packageOption.highestPrio == (lib.modules.mkOptionDefault { }).priority
-          then "nixpkgs"
-          else lib.mkOptionDefault "override";
+        agent.source = if packageOption.highestPrio
+        == (lib.modules.mkOptionDefault { }).priority then
+          "nixpkgs"
+        else
+          lib.mkOptionDefault "override";
         pkgs.version = pkgs.lib.version;
         lib.version = lib.version;
       };
     };
   };
-in
-{
-  inherit format settingsModule;
-}
+in { inherit format settingsModule; }

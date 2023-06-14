@@ -1,9 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, tkinter
-, pythonOlder
-}:
+{ lib, buildPythonPackage, fetchPypi, tkinter, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "pysimplegui";
@@ -18,13 +13,9 @@ buildPythonPackage rec {
     hash = "sha256-MQFNHMXu8Tc9fpNWT/JgRmJkXMd0qTmx8BqiU+f514s=";
   };
 
-  propagatedBuildInputs = [
-    tkinter
-  ];
+  propagatedBuildInputs = [ tkinter ];
 
-  pythonImportsCheck = [
-    "PySimpleGUI"
-  ];
+  pythonImportsCheck = [ "PySimpleGUI" ];
 
   meta = with lib; {
     description = "Python GUIs for Humans";

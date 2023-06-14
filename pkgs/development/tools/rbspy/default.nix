@@ -1,11 +1,4 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, ruby
-, which
-, nix-update-script
-}:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, ruby, which, nix-update-script }:
 
 rustPlatform.buildRustPackage rec {
   pname = "rbspy";

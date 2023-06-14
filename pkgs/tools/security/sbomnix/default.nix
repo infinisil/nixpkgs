@@ -1,22 +1,7 @@
-{ lib
-, fetchFromGitHub
-, coreutils
-, curl
-, gnugrep
-, gnused
-, gzip
-, nix
-, python
-  # python libs
-, colorlog
-, graphviz
-, numpy
-, packageurl-python
-, pandas
-, requests
-, reuse
-, tabulate
-}:
+{ lib, fetchFromGitHub, coreutils, curl, gnugrep, gnused, gzip, nix, python
+# python libs
+, colorlog, graphviz, numpy, packageurl-python, pandas, requests, reuse
+, tabulate }:
 
 python.pkgs.buildPythonApplication rec {
   pname = "sbomnix";
@@ -30,7 +15,9 @@ python.pkgs.buildPythonApplication rec {
   };
 
   makeWrapperArgs = [
-    "--prefix PATH : ${lib.makeBinPath [ coreutils curl gnugrep gnused gzip graphviz nix ]}"
+    "--prefix PATH : ${
+      lib.makeBinPath [ coreutils curl gnugrep gnused gzip graphviz nix ]
+    }"
   ];
 
   propagatedBuildInputs = [

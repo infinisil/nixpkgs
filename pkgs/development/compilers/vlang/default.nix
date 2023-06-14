@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, glfw, freetype, openssl, makeWrapper, upx, boehmgc, xorg, binaryen, darwin }:
+{ lib, stdenv, fetchFromGitHub, glfw, freetype, openssl, makeWrapper, upx
+, boehmgc, xorg, binaryen, darwin }:
 
 let
   version = "weekly.2023.19";
@@ -33,11 +34,8 @@ let
     rev = "6e970bd0a7459ad7798588f1ace4aa46c5e789a2";
     hash = "sha256-hFf7c8ZNMU1j7fgmDakuO7tBVr12Wq0dgQddJnkMajE=";
   };
-  boehmgcStatic = boehmgc.override {
-    enableStatic = true;
-  };
-in
-stdenv.mkDerivation {
+  boehmgcStatic = boehmgc.override { enableStatic = true; };
+in stdenv.mkDerivation {
   pname = "vlang";
   inherit version;
 
@@ -53,20 +51,16 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ makeWrapper ];
 
-  buildInputs = [
-    binaryen
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Cocoa
-  ] ++ lib.optionals stdenv.isLinux [
-    xorg.libX11
-    xorg.libXau
-    xorg.libXdmcp
-    xorg.xorgproto
-  ];
+  buildInputs = [ binaryen ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Cocoa ]
+    ++ lib.optionals stdenv.isLinux [
+      xorg.libX11
+      xorg.libXau
+      xorg.libXdmcp
+      xorg.xorgproto
+    ];
 
-  makeFlags = [
-    "local=1"
-  ];
+  makeFlags = [ "local=1" ];
 
   env.VC = vc;
 
@@ -108,7 +102,8 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     homepage = "https://vlang.io/";
-    description = "Simple, fast, safe, compiled language for developing maintainable software";
+    description =
+      "Simple, fast, safe, compiled language for developing maintainable software";
     license = licenses.mit;
     maintainers = with maintainers; [ Madouura ];
     mainProgram = "v";

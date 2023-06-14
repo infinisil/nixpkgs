@@ -1,11 +1,5 @@
-{ lib
-, aiohttp
-, buildPythonPackage
-, fetchFromGitHub
-, pytest-asyncio
-, pytestCheckHook
-, pythonOlder
-}:
+{ lib, aiohttp, buildPythonPackage, fetchFromGitHub, pytest-asyncio
+, pytestCheckHook, pythonOlder }:
 
 buildPythonPackage rec {
   pname = "pysqueezebox";
@@ -21,18 +15,11 @@ buildPythonPackage rec {
     hash = "sha256-nNCxptQDabNPKtKFy19kBl5rIhlHlgvvKkz/JWj3k8A=";
   };
 
-  propagatedBuildInputs = [
-    aiohttp
-  ];
+  propagatedBuildInputs = [ aiohttp ];
 
-  nativeCheckInputs = [
-    pytest-asyncio
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytest-asyncio pytestCheckHook ];
 
-  pythonImportsCheck = [
-    "pysqueezebox"
-  ];
+  pythonImportsCheck = [ "pysqueezebox" ];
 
   disabledTestPaths = [
     # Tests require network access

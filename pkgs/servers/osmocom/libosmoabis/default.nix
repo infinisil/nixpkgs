@@ -1,12 +1,5 @@
-{ lib
-, stdenv
-, autoreconfHook
-, fetchFromGitHub
-, pkg-config
-, libosmocore
-, ortp
-, bctoolbox
-}:
+{ lib, stdenv, autoreconfHook, fetchFromGitHub, pkg-config, libosmocore, ortp
+, bctoolbox }:
 
 stdenv.mkDerivation rec {
   pname = "libosmoabis";
@@ -25,16 +18,9 @@ stdenv.mkDerivation rec {
     echo "${version}" > .tarball-version
   '';
 
-  nativeBuildInputs = [
-    autoreconfHook
-    pkg-config
-  ];
+  nativeBuildInputs = [ autoreconfHook pkg-config ];
 
-  buildInputs = [
-    libosmocore
-    ortp
-    bctoolbox
-  ];
+  buildInputs = [ libosmocore ortp bctoolbox ];
 
   enableParallelBuilding = true;
 
@@ -43,9 +29,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/osmocom/libosmo-abis";
     license = licenses.gpl3Only;
     platforms = platforms.linux;
-    maintainers = with maintainers; [
-      janik
-      markuskowa
-    ];
+    maintainers = with maintainers; [ janik markuskowa ];
   };
 }

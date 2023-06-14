@@ -17,13 +17,11 @@ rustPlatform.buildRustPackage rec {
 
   cargoSha256 = "hGhYzynNvsaSQO2lSEh/OGWkeE8bEinwb0QxX87TQU0=";
 
-  nativeBuildInputs = [
-    pkg-config protobuf python3 rustPlatform.bindgenHook wayland-scanner
-  ];
+  nativeBuildInputs =
+    [ pkg-config protobuf python3 rustPlatform.bindgenHook wayland-scanner ];
 
-  buildInputs = [
-    libcap libdrm libepoxy minijail virglrenderer wayland wayland-protocols
-  ];
+  buildInputs =
+    [ libcap libdrm libepoxy minijail virglrenderer wayland wayland-protocols ];
 
   preConfigure = ''
     patchShebangs third_party/minijail/tools/*.py

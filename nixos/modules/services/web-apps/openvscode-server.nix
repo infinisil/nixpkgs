@@ -4,8 +4,7 @@ let
   cfg = config.services.openvscode-server;
   defaultUser = "openvscode-server";
   defaultGroup = defaultUser;
-in
-{
+in {
   options = {
     services.openvscode-server = {
       enable = lib.mkEnableOption (lib.mdDoc "openvscode-server");
@@ -132,7 +131,8 @@ in
         description = lib.mdDoc ''
           Sets the initial telemetry level. Valid levels are: 'off', 'crash', 'error' and 'all'.
         '';
-        type = lib.types.nullOr (lib.types.enum [ "off" "crash" "error" "all" ]);
+        type =
+          lib.types.nullOr (lib.types.enum [ "off" "crash" "error" "all" ]);
       };
 
       connectionToken = lib.mkOption {

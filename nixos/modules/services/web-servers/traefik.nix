@@ -49,10 +49,10 @@ let
   else
     cfg.staticConfigFile;
 
-  finalStaticConfigFile =
-    if cfg.environmentFiles == []
-    then staticConfigFile
-    else "/run/traefik/config.toml";
+  finalStaticConfigFile = if cfg.environmentFiles == [ ] then
+    staticConfigFile
+  else
+    "/run/traefik/config.toml";
 in {
   options.services.traefik = {
     enable = mkEnableOption (lib.mdDoc "Traefik web server");
@@ -134,7 +134,7 @@ in {
     };
 
     environmentFiles = mkOption {
-      default = [];
+      default = [ ];
       type = types.listOf types.path;
       example = [ "/run/secrets/traefik.env" ];
       description = lib.mdDoc ''
@@ -155,12 +155,13 @@ in {
       startLimitBurst = 5;
       serviceConfig = {
         EnvironmentFile = cfg.environmentFiles;
-        ExecStartPre = lib.optional (cfg.environmentFiles != [])
+        ExecStartPre = lib.optional (cfg.environmentFiles != [ ])
           (pkgs.writeShellScript "pre-start" ''
             umask 077
             ${pkgs.envsubst}/bin/envsubst -i "${staticConfigFile}" > "${finalStaticConfigFile}"
           '');
-        ExecStart = "${cfg.package}/bin/traefik --configfile=${finalStaticConfigFile}";
+        ExecStart =
+          "${cfg.package}/bin/traefik --configfile=${finalStaticConfigFile}";
         Type = "simple";
         User = "traefik";
         Group = cfg.group;

@@ -1,25 +1,22 @@
 let
   makeNode = couchpkg: user: passwd:
-    { pkgs, ... } :
+    { pkgs, ... }:
 
-      { environment.systemPackages = [ pkgs.jq ];
-        services.couchdb.enable = true;
-        services.couchdb.package = couchpkg;
-        services.couchdb.adminUser = user;
-        services.couchdb.adminPass = passwd;
-      };
+    {
+      environment.systemPackages = [ pkgs.jq ];
+      services.couchdb.enable = true;
+      services.couchdb.package = couchpkg;
+      services.couchdb.adminUser = user;
+      services.couchdb.adminPass = passwd;
+    };
   testuser = "testadmin";
   testpass = "cowabunga";
   testlogin = "${testuser}:${testpass}@";
-in
-import ./make-test-python.nix ({ pkgs, lib, ...}:
-{
+in import ./make-test-python.nix ({ pkgs, lib, ... }: {
   name = "couchdb";
   meta.maintainers = [ ];
 
-  nodes = {
-    couchdb3 = makeNode pkgs.couchdb3 testuser testpass;
-  };
+  nodes = { couchdb3 = makeNode pkgs.couchdb3 testuser testpass; };
 
   testScript = let
     curlJqCheck = login: action: path: jqexpr: result:
@@ -51,7 +48,10 @@ import ./make-test-python.nix ({ pkgs, lib, ...}:
         "${curlJqCheck testlogin "GET" "_all_dbs" ". | length" "0"}"
     )
     couchdb3.succeed(
-        "${curlJqCheck testlogin "GET" "_node/couchdb@127.0.0.1" ".couchdb" "Welcome"}"
+        "${
+          curlJqCheck testlogin "GET" "_node/couchdb@127.0.0.1" ".couchdb"
+          "Welcome"
+        }"
     )
   '';
 })

@@ -1,7 +1,4 @@
-{ lib
-, python3
-, fetchPypi
-}:
+{ lib, python3, fetchPypi }:
 
 with python3.pkgs;
 
@@ -32,14 +29,12 @@ buildPythonApplication rec {
 
   pythonImportsCheck = [ "bkyml" ];
 
-  propagatedBuildInputs = [
-    ruamel-yaml
-    setuptools
-  ];
+  propagatedBuildInputs = [ ruamel-yaml setuptools ];
 
   meta = with lib; {
     homepage = "https://github.com/joscha/bkyml";
-    description = "A CLI tool to generate a pipeline.yaml file for Buildkite on the fly.";
+    description =
+      "A CLI tool to generate a pipeline.yaml file for Buildkite on the fly.";
     license = licenses.mit;
     maintainers = with maintainers; [ olebedev ];
   };

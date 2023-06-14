@@ -1,44 +1,16 @@
-{ stdenv, lib, fetchurl, makeWrapper, nixosTests
-, buildPerlPackage
-, coreutils
-, curl
-, git
-, gnumake
-, highlight
-, libgit2
-, libxcrypt
-, man
-, openssl
-, pkg-config
-, sqlite
-, xapian
-, AnyURIEscape
-, DBDSQLite
-, DBI
-, EmailAddressXS
-, EmailMIME
+{ stdenv, lib, fetchurl, makeWrapper, nixosTests, buildPerlPackage, coreutils
+, curl, git, gnumake, highlight, libgit2, libxcrypt, man, openssl, pkg-config
+, sqlite, xapian, AnyURIEscape, DBDSQLite, DBI, EmailAddressXS, EmailMIME
 , IOSocketSSL
 # FIXME: to be packaged
 #, IOSocketSocks
-, IPCRun
-, Inline
-, InlineC
-, LinuxInotify2
-, MailIMAPClient
+, IPCRun, Inline, InlineC, LinuxInotify2, MailIMAPClient
 # FIXME: to be packaged
 #, NetNetrc
 # FIXME: to be packaged
 #, NetNNTP
-, ParseRecDescent
-, Plack
-, PlackMiddlewareReverseProxy
-, PlackTestExternalServer
-, SearchXapian
-, TestSimple13
-, TimeDate
-, URI
-, XMLTreePP
-}:
+, ParseRecDescent, Plack, PlackMiddlewareReverseProxy, PlackTestExternalServer
+, SearchXapian, TestSimple13, TimeDate, URI, XMLTreePP }:
 
 let
 
@@ -78,14 +50,13 @@ let
   testConditions = with lib;
     concatMapStringsSep " " (n: "! -name ${escapeShellArg n}.t") skippedTests;
 
-in
-
-buildPerlPackage rec {
+in buildPerlPackage rec {
   pname = "public-inbox";
   version = "1.9.0";
 
   src = fetchurl {
-    url = "https://public-inbox.org/public-inbox.git/snapshot/public-inbox-${version}.tar.gz";
+    url =
+      "https://public-inbox.org/public-inbox.git/snapshot/public-inbox-${version}.tar.gz";
     sha256 = "sha256-ENnT2YK7rpODII9TqiEYSCp5mpWOnxskeSuAf8Ilqro=";
   };
 
@@ -136,9 +107,7 @@ buildPerlPackage rec {
     PlackTestExternalServer
     TestSimple13
     XMLTreePP
-  ] ++ lib.optionals stdenv.isLinux [
-    LinuxInotify2
-  ];
+  ] ++ lib.optionals stdenv.isLinux [ LinuxInotify2 ];
   preCheck = ''
     perl certs/create-certs.perl
     export TEST_LEI_ERR_LOUD=1
@@ -150,21 +119,23 @@ buildPerlPackage rec {
   postInstall = ''
     for prog in $out/bin/*; do
         wrapProgram $prog \
-            --set NIX_CFLAGS_COMPILE_${stdenv.cc.suffixSalt} -I${lib.getDev libxcrypt}/include \
-            --prefix PATH : ${lib.makeBinPath [
-              git
-              /* for InlineC */
-              gnumake
-              stdenv.cc
-            ]}
+            --set NIX_CFLAGS_COMPILE_${stdenv.cc.suffixSalt} -I${
+              lib.getDev libxcrypt
+            }/include \
+            --prefix PATH : ${
+              lib.makeBinPath [
+                git
+                # for InlineC
+                gnumake
+                stdenv.cc
+              ]
+            }
     done
 
     mv sa_config $sa_config
   '';
 
-  passthru.tests = {
-    nixos-public-inbox = nixosTests.public-inbox;
-  };
+  passthru.tests = { nixos-public-inbox = nixosTests.public-inbox; };
 
   meta = with lib; {
     homepage = "https://public-inbox.org/";

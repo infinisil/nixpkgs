@@ -1,15 +1,5 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, openssl
-, rocksdb
-, testers
-, surrealdb
-, SystemConfiguration
-, protobuf
-}:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, pkg-config, openssl, rocksdb
+, testers, surrealdb, SystemConfiguration, protobuf }:
 
 rustPlatform.buildRustPackage rec {
   pname = "surrealdb";
@@ -35,10 +25,7 @@ rustPlatform.buildRustPackage rec {
   ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
   ROCKSDB_LIB_DIR = "${rocksdb}/lib";
 
-  nativeBuildInputs = [
-    pkg-config
-    rustPlatform.bindgenHook
-  ];
+  nativeBuildInputs = [ pkg-config rustPlatform.bindgenHook ];
 
   buildInputs = [ openssl ]
     ++ lib.optionals stdenv.isDarwin [ SystemConfiguration ];
@@ -49,7 +36,8 @@ rustPlatform.buildRustPackage rec {
   };
 
   meta = with lib; {
-    description = "A scalable, distributed, collaborative, document-graph database, for the realtime web";
+    description =
+      "A scalable, distributed, collaborative, document-graph database, for the realtime web";
     homepage = "https://surrealdb.com/";
     mainProgram = "surreal";
     license = licenses.bsl11;

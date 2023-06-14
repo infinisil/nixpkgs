@@ -1,8 +1,4 @@
-{ python3
-, fetchPypi
-, recurseIntoAttrs
-, callPackage
-}:
+{ python3, fetchPypi, recurseIntoAttrs, callPackage }:
 let
   python = python3.override {
     packageOverrides = self: super: {
@@ -21,23 +17,22 @@ let
     };
   };
 
-  buildbot-pkg = python.pkgs.callPackage ./pkg.nix {
-    inherit buildbot;
-  };
-  buildbot-worker = python3.pkgs.callPackage ./worker.nix {
-    inherit buildbot;
-  };
+  buildbot-pkg = python.pkgs.callPackage ./pkg.nix { inherit buildbot; };
+  buildbot-worker = python3.pkgs.callPackage ./worker.nix { inherit buildbot; };
   buildbot = python.pkgs.callPackage ./master.nix {
     inherit buildbot-pkg buildbot-worker buildbot-plugins;
   };
-  buildbot-plugins = recurseIntoAttrs (callPackage ./plugins.nix {
-    inherit buildbot-pkg;
-  });
-in
-{
+  buildbot-plugins =
+    recurseIntoAttrs (callPackage ./plugins.nix { inherit buildbot-pkg; });
+in {
   inherit buildbot buildbot-plugins buildbot-worker;
   buildbot-ui = buildbot.withPlugins (with buildbot-plugins; [ www ]);
   buildbot-full = buildbot.withPlugins (with buildbot-plugins; [
-    www console-view waterfall-view grid-view wsgi-dashboards badges
+    www
+    console-view
+    waterfall-view
+    grid-view
+    wsgi-dashboards
+    badges
   ]);
 }

@@ -1,10 +1,5 @@
-{ buildPythonPackage
-, fetchFromGitHub
-, lib
-, pytestCheckHook
-, pythonOlder
-, requests
-}:
+{ buildPythonPackage, fetchFromGitHub, lib, pytestCheckHook, pythonOlder
+, requests }:
 
 buildPythonPackage {
   pname = "python-tado";
@@ -21,13 +16,9 @@ buildPythonPackage {
     hash = "sha256-gduqQVw/a64aDzTHFmgZu7OVB53jZb7L5vofzL3Ho6s=";
   };
 
-  propagatedBuildInputs = [
-    requests
-  ];
+  propagatedBuildInputs = [ requests ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   meta = with lib; {
     description =

@@ -1,12 +1,5 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, installShellFiles
-, pandoc
-, makeWrapper
-, testers
-, ov
-}:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles, pandoc, makeWrapper
+, testers, ov }:
 
 buildGoModule rec {
   pname = "ov";
@@ -21,20 +14,12 @@ buildGoModule rec {
 
   vendorHash = "sha256-bQREazHu0SQrMKyNPtUvzeKR/zb0FJOLpHBwHml43Hs=";
 
-  ldflags = [
-    "-s"
-    "-w"
-    "-X=main.Version=v${version}"
-    "-X=main.Revision=${src.rev}"
-  ];
+  ldflags =
+    [ "-s" "-w" "-X=main.Version=v${version}" "-X=main.Revision=${src.rev}" ];
 
   subPackages = [ "." ];
 
-  nativeBuildInputs = [
-    installShellFiles
-    pandoc
-    makeWrapper
-  ];
+  nativeBuildInputs = [ installShellFiles pandoc makeWrapper ];
 
   outputs = [ "out" "doc" ];
 

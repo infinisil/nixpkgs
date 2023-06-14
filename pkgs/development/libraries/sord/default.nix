@@ -1,14 +1,5 @@
-{ lib
-, stdenv
-, doxygen
-, fetchFromGitHub
-, meson
-, ninja
-, pcre
-, pkg-config
-, python3
-, serd
-}:
+{ lib, stdenv, doxygen, fetchFromGitHub, meson, ninja, pcre, pkg-config, python3
+, serd }:
 
 stdenv.mkDerivation rec {
   pname = "sord";
@@ -23,13 +14,7 @@ stdenv.mkDerivation rec {
 
   outputs = [ "out" "dev" "doc" "man" ];
 
-  nativeBuildInputs = [
-    doxygen
-    meson
-    ninja
-    pkg-config
-    python3
-  ];
+  nativeBuildInputs = [ doxygen meson ninja pkg-config python3 ];
   buildInputs = [ pcre ];
   propagatedBuildInputs = [ serd ];
 

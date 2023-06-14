@@ -1,4 +1,4 @@
-{ pkgs ? import ../../.. {} }:
+{ pkgs ? import ../../.. { } }:
 let
   inherit (pkgs) lib;
   manpageURLs = lib.importJSON (pkgs.path + "/doc/manpage-urls.json");
@@ -8,8 +8,9 @@ in pkgs.writeText "link-manpages.lua" ''
   ]]
 
   local manpage_urls = {
-  ${lib.concatStringsSep "\n" (lib.mapAttrsToList (man: url:
-    "  [${builtins.toJSON man}] = ${builtins.toJSON url},") manpageURLs)}
+  ${lib.concatStringsSep "\n" (lib.mapAttrsToList
+    (man: url: "  [${builtins.toJSON man}] = ${builtins.toJSON url},")
+    manpageURLs)}
   }
 
   traverse = 'topdown'

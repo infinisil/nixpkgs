@@ -1,19 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, gettext
-, help2man
-, meson
-, ninja
-, pkg-config
-, vala
-, gtk3
-, json-glib
-, libgee
-, util-linux
-, vte
-, xapp
-}:
+{ lib, stdenv, fetchFromGitHub, gettext, help2man, meson, ninja, pkg-config
+, vala, gtk3, json-glib, libgee, util-linux, vte, xapp }:
 
 stdenv.mkDerivation rec {
   pname = "timeshift";
@@ -26,9 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "epj0oaV+4lebRxcj6MQ2+lJ3juv9JZ+2UPLRc6UisX4=";
   };
 
-  patches = [
-    ./timeshift-launcher.patch
-  ];
+  patches = [ ./timeshift-launcher.patch ];
 
   postPatch = ''
     substituteInPlace ./files/meson.build \
@@ -44,22 +28,9 @@ stdenv.mkDerivation rec {
       --replace "file_copy(app_conf_path_default, app_conf_path);" "if (!dir_exists(file_parent(app_conf_path))){dir_create(file_parent(app_conf_path));};file_copy(app_conf_path_default, app_conf_path);"
   '';
 
-  nativeBuildInputs = [
-    gettext
-    help2man
-    meson
-    ninja
-    pkg-config
-    vala
-  ];
+  nativeBuildInputs = [ gettext help2man meson ninja pkg-config vala ];
 
-  buildInputs = [
-    gtk3
-    json-glib
-    libgee
-    vte
-    xapp
-  ];
+  buildInputs = [ gtk3 json-glib libgee vte xapp ];
 
   meta = with lib; {
     description = "A system restore tool for Linux";

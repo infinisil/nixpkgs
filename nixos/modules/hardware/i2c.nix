@@ -2,11 +2,9 @@
 
 with lib;
 
-let
-  cfg = config.hardware.i2c;
-in
+let cfg = config.hardware.i2c;
 
-{
+in {
   options.hardware.i2c = {
     enable = mkEnableOption (lib.mdDoc ''
       i2c devices support. By default access is granted to users in the "i2c"
@@ -27,18 +25,16 @@ in
 
     boot.kernelModules = [ "i2c-dev" ];
 
-    users.groups = mkIf (cfg.group == "i2c") {
-      i2c = { };
-    };
+    users.groups = mkIf (cfg.group == "i2c") { i2c = { }; };
 
-    services.udev.packages = lib.singleton (pkgs.writeTextFile
-      { name = "i2c-udev-rules";
-        text = ''
-          # allow group ${cfg.group} and users with a seat use of i2c devices
-          ACTION=="add", KERNEL=="i2c-[0-9]*", TAG+="uaccess", GROUP="${cfg.group}", MODE="660"
-        '';
-        destination = "/etc/udev/rules.d/70-i2c.rules";
-      });
+    services.udev.packages = lib.singleton (pkgs.writeTextFile {
+      name = "i2c-udev-rules";
+      text = ''
+        # allow group ${cfg.group} and users with a seat use of i2c devices
+        ACTION=="add", KERNEL=="i2c-[0-9]*", TAG+="uaccess", GROUP="${cfg.group}", MODE="660"
+      '';
+      destination = "/etc/udev/rules.d/70-i2c.rules";
+    });
 
   };
 

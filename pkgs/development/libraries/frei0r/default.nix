@@ -1,15 +1,5 @@
-{ lib
-, config
-, stdenv
-, fetchurl
-, cairo
-, cmake
-, opencv
-, pcre
-, pkg-config
-, cudaSupport ? config.cudaSupport or false
-, cudaPackages
-}:
+{ lib, config, stdenv, fetchurl, cairo, cmake, opencv, pcre, pkg-config
+, cudaSupport ? config.cudaSupport or false, cudaPackages }:
 
 stdenv.mkDerivation rec {
   pname = "frei0r-plugins";
@@ -21,11 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake pkg-config ];
-  buildInputs = [
-    cairo
-    opencv
-    pcre
-  ] ++ lib.optionals cudaSupport [
+  buildInputs = [ cairo opencv pcre ] ++ lib.optionals cudaSupport [
     cudaPackages.cuda_cudart
     cudaPackages.cuda_nvcc
   ];
