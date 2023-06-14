@@ -16,8 +16,8 @@ substituteAll {
   passthru = {
     tests = {
       inherit (nixosTests)
-        containers-imperative containers-ip containers-tmpfs
-        containers-ephemeral containers-unified-hierarchy;
+          containers-imperative containers-ip containers-tmpfs
+          containers-ephemeral containers-unified-hierarchy;
     };
   };
 

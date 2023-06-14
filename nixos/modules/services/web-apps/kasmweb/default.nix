@@ -148,9 +148,9 @@ in {
             postgresUser = cfg.postgres.user;
             postgresPassword = cfg.postgres.password;
             inherit (cfg)
-              datastorePath sslCertificate sslCertificateKey redisPassword
-              defaultUserPassword defaultAdminPassword defaultManagerToken
-              defaultRegistrationToken defaultGuacToken;
+                datastorePath sslCertificate sslCertificateKey redisPassword
+                defaultUserPassword defaultAdminPassword defaultManagerToken
+                defaultRegistrationToken defaultGuacToken;
           };
         };
       };

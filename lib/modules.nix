@@ -2,13 +2,13 @@
 
 let
   inherit (lib)
-    all any attrByPath attrNames catAttrs concatLists concatMap concatStringsSep
-    elem filter foldl' getAttrFromPath head id imap1 isAttrs isBool isFunction
-    isList isPath isString length mapAttrs mapAttrsToList mapAttrsRecursiveCond
-    min optional optionalAttrs optionalString recursiveUpdate reverseList sort
-    setAttrByPath types warnIf zipAttrsWith;
+      all any attrByPath attrNames catAttrs concatLists concatMap
+      concatStringsSep elem filter foldl' getAttrFromPath head id imap1 isAttrs
+      isBool isFunction isList isPath isString length mapAttrs mapAttrsToList
+      mapAttrsRecursiveCond min optional optionalAttrs optionalString
+      recursiveUpdate reverseList sort setAttrByPath types warnIf zipAttrsWith;
   inherit (lib.options)
-    isOption mkOption showDefs showFiles showOption unknownModule;
+      isOption mkOption showDefs showFiles showOption unknownModule;
   inherit (lib.strings) isConvertibleWithToString;
 
   showDeclPrefix = loc: decl: prefix:

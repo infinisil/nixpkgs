@@ -142,9 +142,9 @@ let
 
       # Utility flags to test the type of platform.
       inherit (hostPlatform)
-        isDarwin isLinux isSunOS isCygwin isBSD isFreeBSD isOpenBSD isi686
-        isx86_32 isx86_64 is32bit is64bit isAarch32 isAarch64 isMips
-        isBigEndian;
+          isDarwin isLinux isSunOS isCygwin isBSD isFreeBSD isOpenBSD isi686
+          isx86_32 isx86_64 is32bit is64bit isAarch32 isAarch64 isMips
+          isBigEndian;
 
       # Override `system` so that packages can get the system of the host
       # platform through `stdenv.system`. `system` is originally set to the

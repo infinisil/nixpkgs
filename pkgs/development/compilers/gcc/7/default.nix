@@ -166,8 +166,8 @@ in stdenv.mkDerivation ({
   inherit noSysDirs staticCompiler crossStageStatic libcCross crossMingw;
 
   inherit (callFile ../common/dependencies.nix { })
-    depsBuildBuild nativeBuildInputs depsBuildTarget buildInputs
-    depsTargetTarget;
+      depsBuildBuild nativeBuildInputs depsBuildTarget buildInputs
+      depsTargetTarget;
 
   env.NIX_CFLAGS_COMPILE = lib.optionalString (stdenv.cc.isClang && langFortran)
     "-Wno-unused-command-line-argument";
@@ -191,7 +191,7 @@ in stdenv.mkDerivation ({
     (if profiledCompiler then "profiledbootstrap" else "bootstrap");
 
   inherit (callFile ../common/strip-attributes.nix { })
-    stripDebugList stripDebugListTarget preFixup;
+      stripDebugList stripDebugListTarget preFixup;
 
   doCheck =
     false; # requires a lot of tools, causes a dependency cycle for stdenv
@@ -217,7 +217,7 @@ in stdenv.mkDerivation ({
     (makeLibraryPath (optional (zlib != null) zlib));
 
   inherit (callFile ../common/extra-target-flags.nix { })
-    EXTRA_FLAGS_FOR_TARGET EXTRA_LDFLAGS_FOR_TARGET;
+      EXTRA_FLAGS_FOR_TARGET EXTRA_LDFLAGS_FOR_TARGET;
 
   passthru = {
     inherit langC langCC langObjC langObjCpp langFortran langGo version;
@@ -230,7 +230,7 @@ in stdenv.mkDerivation ({
 
   meta = {
     inherit (callFile ../common/meta.nix { })
-      homepage license description longDescription platforms maintainers;
+        homepage license description longDescription platforms maintainers;
     badPlatforms = [ "aarch64-darwin" ];
   };
 }

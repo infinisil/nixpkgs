@@ -2,7 +2,7 @@
 , openssh, runc, stdenv, testers, }:
 let
   inherit (haskell.lib.compose)
-    overrideCabal addBuildTools justStaticExecutables;
+      overrideCabal addBuildTools justStaticExecutables;
   inherit (lib) makeBinPath;
   bundledBins = [ gnutar gzip git openssh ] ++ lib.optional stdenv.isLinux runc;
 

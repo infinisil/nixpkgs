@@ -28,7 +28,7 @@
   */
 
   inherit (import ./formats/java-properties/default.nix { inherit lib pkgs; })
-    javaProperties;
+      javaProperties;
 
   json = { }: {
 

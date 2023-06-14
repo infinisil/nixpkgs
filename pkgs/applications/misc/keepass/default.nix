@@ -3,7 +3,8 @@
 , plugins ? [ ] }:
 let
   inherit (builtins)
-    add length readFile replaceStrings unsafeDiscardStringContext toString map;
+      add length readFile replaceStrings unsafeDiscardStringContext toString
+      map;
 in buildDotnetPackage rec {
   pname = "keepass";
   version = "2.53.1";

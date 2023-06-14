@@ -160,8 +160,8 @@ stdenv.mkDerivation ({
     crossMingw;
 
   inherit (callFile ../common/dependencies.nix { })
-    depsBuildBuild nativeBuildInputs depsBuildTarget buildInputs
-    depsTargetTarget;
+      depsBuildBuild nativeBuildInputs depsBuildTarget buildInputs
+      depsTargetTarget;
 
   preConfigure = callFile ../common/pre-configure.nix { };
 
@@ -179,7 +179,7 @@ stdenv.mkDerivation ({
     (if profiledCompiler then "profiledbootstrap" else "bootstrap");
 
   inherit (callFile ../common/strip-attributes.nix { })
-    stripDebugList stripDebugListTarget preFixup;
+      stripDebugList stripDebugListTarget preFixup;
 
   doCheck =
     false; # requires a lot of tools, causes a dependency cycle for stdenv
@@ -212,7 +212,7 @@ stdenv.mkDerivation ({
       ++ optionals javaAwtGtk xlibs ++ optionals javaAwtGtk [ gmp mpfr ]));
 
   inherit (callFile ../common/extra-target-flags.nix { })
-    EXTRA_FLAGS_FOR_TARGET EXTRA_LDFLAGS_FOR_TARGET;
+      EXTRA_FLAGS_FOR_TARGET EXTRA_LDFLAGS_FOR_TARGET;
 
   passthru = {
     inherit langC langCC langObjC langObjCpp langFortran langGo version;
@@ -225,7 +225,7 @@ stdenv.mkDerivation ({
 
   meta = {
     inherit (callFile ../common/meta.nix { })
-      homepage license description longDescription platforms maintainers;
+        homepage license description longDescription platforms maintainers;
     badPlatforms = lib.platforms.darwin;
   };
 }

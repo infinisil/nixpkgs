@@ -79,6 +79,6 @@ stdenv.mkDerivation (finalAttrs: {
     pkgConfigModules = [ "gl" "egl" "glesv1_cm" "glesv2" ];
   } // {
     inherit (if stdenv.hostPlatform.isDarwin then mesa.meta else libglvnd.meta)
-      homepage license platforms;
+        homepage license platforms;
   };
 })

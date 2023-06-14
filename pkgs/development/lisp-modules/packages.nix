@@ -3,8 +3,8 @@
 let
 
   inherit (pkgs.lib)
-    head makeLibraryPath makeSearchPath setAttr hasAttr optionals hasSuffix
-    splitString remove;
+      head makeLibraryPath makeSearchPath setAttr hasAttr optionals hasSuffix
+      splitString remove;
 
   # Used by builds that would otherwise attempt to write into storeDir.
   #
@@ -67,7 +67,7 @@ let
 
     cffi-libffi = build-asdf-system {
       inherit (super.cffi-libffi)
-        pname version asds lispLibs nativeLibs nativeBuildInputs;
+          pname version asds lispLibs nativeLibs nativeBuildInputs;
       src = pkgs.fetchzip {
         url =
           "https://github.com/cffi/cffi/archive/3f842b92ef808900bf20dae92c2d74232c2f6d3a.tar.gz";

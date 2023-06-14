@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib)
-    concatLists concatMap concatMapStringsSep concatStringsSep filterAttrs
-    isAttrs literalExpression mapAttrs' mapAttrsToList mkIf mkOption
-    optionalString sort types;
+      concatLists concatMap concatMapStringsSep concatStringsSep filterAttrs
+      isAttrs literalExpression mapAttrs' mapAttrsToList mkIf mkOption
+      optionalString sort types;
 
   # The priority of an option or section.
   # The configurations format are order-sensitive. Pairs are added as children of

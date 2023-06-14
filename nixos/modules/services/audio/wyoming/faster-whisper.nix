@@ -4,7 +4,7 @@ let
   cfg = config.services.wyoming.faster-whisper;
 
   inherit (lib)
-    escapeShellArgs mkOption mdDoc mkEnableOption mkPackageOptionMD types;
+      escapeShellArgs mkOption mdDoc mkEnableOption mkPackageOptionMD types;
 
   inherit (builtins) toString;
 

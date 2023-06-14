@@ -33,7 +33,7 @@ let
   };
 
   inherit (npmHooks.override { inherit nodejs; })
-    npmConfigHook npmBuildHook npmInstallHook;
+      npmConfigHook npmBuildHook npmInstallHook;
 in stdenv.mkDerivation (args // {
   inherit npmDeps npmBuildScript;
 

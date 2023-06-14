@@ -9,8 +9,8 @@ let
   systemd = config.systemd.package;
 
   inherit (systemdUtils.lib)
-    makeUnit generateUnits targetToUnit serviceToUnit sliceToUnit socketToUnit
-    timerToUnit pathToUnit;
+      makeUnit generateUnits targetToUnit serviceToUnit sliceToUnit socketToUnit
+      timerToUnit pathToUnit;
 
   upstreamUserUnits = [
     "app.slice"

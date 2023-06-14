@@ -3,7 +3,7 @@
 
 let
   inherit (python3Packages)
-    buildPythonApplication isPy3k dbus-python pygobject3 mpd2 setuptools;
+      buildPythonApplication isPy3k dbus-python pygobject3 mpd2 setuptools;
 in buildPythonApplication rec {
   pname = "sonata";
   version = "1.7.0";

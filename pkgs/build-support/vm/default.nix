@@ -15,8 +15,8 @@
 
 let
   inherit (pkgs)
-    bash bashInteractive busybox cpio coreutils e2fsprogs fetchurl kmod rpm
-    stdenv util-linux buildPackages writeScript writeText runCommand;
+      bash bashInteractive busybox cpio coreutils e2fsprogs fetchurl kmod rpm
+      stdenv util-linux buildPackages writeScript writeText runCommand;
 in rec {
   qemu-common = import ../../../nixos/lib/qemu-common.nix { inherit lib pkgs; };
 

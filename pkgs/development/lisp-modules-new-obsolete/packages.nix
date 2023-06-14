@@ -3,8 +3,8 @@
 let
 
   inherit (pkgs.lib)
-    head makeLibraryPath makeSearchPath setAttr hasAttr optionals hasSuffix
-    splitString remove optionalString stringLength;
+      head makeLibraryPath makeSearchPath setAttr hasAttr optionals hasSuffix
+      splitString remove optionalString stringLength;
 
   # Used by builds that would otherwise attempt to write into storeDir.
   #

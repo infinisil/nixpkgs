@@ -7,7 +7,7 @@ let
   };
 
   inherit (python.pkgs)
-    buildPythonApplication iowait psutil pyzmq tornado mock six;
+      buildPythonApplication iowait psutil pyzmq tornado mock six;
 
 in buildPythonApplication rec {
   pname = "circus";

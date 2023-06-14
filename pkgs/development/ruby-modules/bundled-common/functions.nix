@@ -2,7 +2,7 @@
 
 let
   inherit (lib)
-    attrValues concatMap converge filterAttrs getAttrs intersectLists;
+      attrValues concatMap converge filterAttrs getAttrs intersectLists;
 
 in rec {
   bundlerFiles =

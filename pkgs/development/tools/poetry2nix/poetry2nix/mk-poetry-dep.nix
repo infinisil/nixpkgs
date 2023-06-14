@@ -8,11 +8,11 @@ pythonPackages.callPackage ({ preferWheel ? preferWheels, ... }@args:
   let
     inherit (python) stdenv;
     inherit (poetryLib)
-      isCompatible getManyLinuxDeps fetchFromLegacy fetchFromPypi
-      normalizePackageName;
+        isCompatible getManyLinuxDeps fetchFromLegacy fetchFromPypi
+        normalizePackageName;
 
     inherit (import ./pep425.nix { inherit lib poetryLib python stdenv; })
-      selectWheel;
+        selectWheel;
     fileCandidates = let
       supportedRegex =
         ("^.*(" + builtins.concatStringsSep "|" supportedExtensions + ")");

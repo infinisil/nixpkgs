@@ -34,7 +34,7 @@ let
     inherit pubGetScript vendorHash pubspecLockFile;
   };
   inherit (dartHooks.override { inherit dart; })
-    dartConfigHook dartBuildHook dartInstallHook;
+      dartConfigHook dartBuildHook dartInstallHook;
 in assert !(builtins.isString dartOutputType && dartOutputType != "")
   -> throw "dartOutputType must be a non-empty string";
 stdenv.mkDerivation (args // {

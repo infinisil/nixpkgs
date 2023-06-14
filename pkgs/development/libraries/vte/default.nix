@@ -83,8 +83,8 @@ stdenv.mkDerivation rec {
     };
     tests = {
       inherit (nixosTests.terminal-emulators)
-        gnome-terminal lxterminal mlterm roxterm sakura stupidterm terminator
-        termite xfce4-terminal;
+          gnome-terminal lxterminal mlterm roxterm sakura stupidterm terminator
+          termite xfce4-terminal;
     };
   };
 

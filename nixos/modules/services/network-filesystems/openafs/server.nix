@@ -5,8 +5,8 @@ with import ./lib.nix { inherit config lib pkgs; };
 
 let
   inherit (lib)
-    concatStringsSep literalExpression mkIf mkOption mkEnableOption
-    optionalString types;
+      concatStringsSep literalExpression mkIf mkOption mkEnableOption
+      optionalString types;
 
   bosConfig = pkgs.writeText "BosConfig" (''
     restrictmode 1

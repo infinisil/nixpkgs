@@ -4,9 +4,9 @@
 let
   latex = lib.optionalAttrs buildDocs texlive.combine {
     inherit (texlive)
-      scheme-small changepage latexmk varwidth multirow hanging adjustbox
-      collectbox stackengine enumitem alphalph wasysym sectsty tocloft
-      newunicodechar etoc helvetic wasy courier;
+        scheme-small changepage latexmk varwidth multirow hanging adjustbox
+        collectbox stackengine enumitem alphalph wasysym sectsty tocloft
+        newunicodechar etoc helvetic wasy courier;
   };
 in stdenv.mkDerivation (finalAttrs: {
   pname = "rocdbgapi";

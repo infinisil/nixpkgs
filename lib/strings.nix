@@ -11,9 +11,9 @@ let
 in rec {
 
   inherit (builtins)
-    compareVersions elem elemAt filter fromJSON head isInt isList isAttrs isPath
-    isString match parseDrvName readFile replaceStrings split storeDir
-    stringLength substring tail toJSON typeOf unsafeDiscardStringContext;
+      compareVersions elem elemAt filter fromJSON head isInt isList isAttrs
+      isPath isString match parseDrvName readFile replaceStrings split storeDir
+      stringLength substring tail toJSON typeOf unsafeDiscardStringContext;
 
   /* Concatenate a list of strings.
 

@@ -2,7 +2,7 @@
 
 let
   inherit (lib)
-    literalExpression mdDoc mkEnableOption mkOption mkPackageOptionMD types;
+      literalExpression mdDoc mkEnableOption mkOption mkPackageOptionMD types;
 
   cfg = config.services.go2rtc;
   opt = options.services.go2rtc;

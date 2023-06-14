@@ -2,8 +2,8 @@ testModuleArgs@{ config, lib, hostPkgs, nodes, ... }:
 
 let
   inherit (lib)
-    literalExpression literalMD mapAttrs mdDoc mkDefault mkIf mkOption mkForce
-    optional optionalAttrs types;
+      literalExpression literalMD mapAttrs mdDoc mkDefault mkIf mkOption mkForce
+      optional optionalAttrs types;
 
   baseOS = import ../eval-config.nix {
     system = null; # use modularly defined system

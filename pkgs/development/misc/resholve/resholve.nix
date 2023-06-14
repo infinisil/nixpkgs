@@ -28,7 +28,7 @@ python27.pkgs.buildPythonApplication {
 
   passthru = {
     inherit (resholve-utils)
-      mkDerivation phraseSolution writeScript writeScriptBin;
+        mkDerivation phraseSolution writeScript writeScriptBin;
     tests = callPackage ./test.nix { inherit rSrc binlore python27 resholve; };
   };
 

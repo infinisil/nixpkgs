@@ -70,7 +70,7 @@ lib.makeScope
       tinycc-mes = lib.recurseIntoAttrs (callPackage ./tinycc/mes.nix { });
 
       inherit (callPackage ./utils.nix { })
-        derivationWithMeta writeTextFile writeText;
+          derivationWithMeta writeTextFile writeText;
 
       test = kaem.runCommand "minimal-bootstrap-test" { } ''
         echo ${bash_2_05.tests.get-version}

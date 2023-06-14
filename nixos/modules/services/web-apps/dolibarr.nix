@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib)
-    any boolToString concatStringsSep isBool isString mapAttrsToList mkDefault
-    mkEnableOption mkIf mkMerge mkOption optionalAttrs types;
+      any boolToString concatStringsSep isBool isString mapAttrsToList mkDefault
+      mkEnableOption mkIf mkMerge mkOption optionalAttrs types;
 
   package = pkgs.dolibarr.override { inherit (cfg) stateDir; };
 

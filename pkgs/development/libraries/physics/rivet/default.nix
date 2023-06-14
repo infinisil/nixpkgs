@@ -12,9 +12,9 @@ stdenv.mkDerivation rec {
 
   latex = texlive.combine {
     inherit (texlive)
-      scheme-basic collection-pstricks collection-fontsrecommended l3kernel
-      l3packages mathastext pgf relsize sansmath sfmath siunitx xcolor xkeyval
-      xstring;
+        scheme-basic collection-pstricks collection-fontsrecommended l3kernel
+        l3packages mathastext pgf relsize sansmath sfmath siunitx xcolor xkeyval
+        xstring;
   };
 
   nativeBuildInputs = [ rsync makeWrapper ];

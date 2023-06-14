@@ -4,7 +4,7 @@ let
   cfg = config.services.acme-dns;
   format = pkgs.formats.toml { };
   inherit (lib)
-    literalExpression mdDoc mkEnableOption mkOption mkPackageOptionMD types;
+      literalExpression mdDoc mkEnableOption mkOption mkPackageOptionMD types;
   domain = "acme-dns.example.com";
 in {
   options.services.acme-dns = {

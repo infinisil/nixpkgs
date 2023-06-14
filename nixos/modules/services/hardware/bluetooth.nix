@@ -4,9 +4,9 @@ let
   package = cfg.package;
 
   inherit (lib)
-    mkDefault mkEnableOption mkIf mkOption mkRenamedOptionModule
-    mkRemovedOptionModule concatStringsSep escapeShellArgs literalExpression
-    optional optionals optionalAttrs recursiveUpdate types;
+      mkDefault mkEnableOption mkIf mkOption mkRenamedOptionModule
+      mkRemovedOptionModule concatStringsSep escapeShellArgs literalExpression
+      optional optionals optionalAttrs recursiveUpdate types;
 
   cfgFmt = pkgs.formats.ini { };
 

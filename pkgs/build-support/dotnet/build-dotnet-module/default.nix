@@ -83,8 +83,8 @@ let
     else
       dotnetCorePackages.systemToDotnetRid stdenvNoCC.targetPlatform.system;
   })
-    dotnetConfigureHook dotnetBuildHook dotnetCheckHook dotnetInstallHook
-    dotnetFixupHook;
+      dotnetConfigureHook dotnetBuildHook dotnetCheckHook dotnetInstallHook
+      dotnetFixupHook;
 
   localDeps = if (projectReferences != [ ]) then
     linkFarmFromDrvs "${name}-project-references" projectReferences

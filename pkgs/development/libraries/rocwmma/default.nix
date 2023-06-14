@@ -8,8 +8,8 @@
 let
   latex = lib.optionalAttrs buildDocs texlive.combine {
     inherit (texlive)
-      scheme-small latexmk tex-gyre fncychap wrapfig capt-of framed needspace
-      tabulary varwidth titlesec;
+        scheme-small latexmk tex-gyre fncychap wrapfig capt-of framed needspace
+        tabulary varwidth titlesec;
   };
 in stdenv.mkDerivation (finalAttrs: {
   pname = "rocwmma";

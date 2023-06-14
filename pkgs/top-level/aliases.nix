@@ -739,7 +739,7 @@ in mapAliases ({
   epsxe = throw
     "epsxe has been removed from nixpkgs, as it was unmaintained."; # added 2021-12-15
   inherit (beam.interpreters)
-    erlangR26 erlangR25 erlangR24 erlangR23; # added 2023-03-21
+      erlangR26 erlangR25 erlangR24 erlangR23; # added 2023-03-21
   erlang_21 = throw
     "erlangR21 has been removed in favor of newer versions."; # added 2023-03-21
   erlangR21 = erlang_21;
@@ -3011,29 +3011,30 @@ in mapAliases ({
   */
 
   inherit (plasma5Packages)
-    akonadi akregator ark bluedevil bomber bovo breeze-grub breeze-gtk
-    breeze-icons breeze-plymouth breeze-qt5 colord-kde discover dolphin dragon
-    elisa falkon ffmpegthumbs filelight granatier gwenview k3b kactivitymanagerd
-    kaddressbook kalendar kalzium kapman kapptemplate kate katomic kblackbox
-    kblocks kbounce kcachegrind kcalc kcharselect kcolorchooser kde-cli-tools
-    kde-gtk-config kdenlive kdeplasma-addons kdevelop-pg-qt kdevelop-unwrapped
-    kdev-php kdev-python kdevelop kdf kdialog kdiamond keditbookmarks kfind
-    kfloppy kgamma5 kget kgpg khelpcenter kig kigo killbots kinfocenter
-    kitinerary kleopatra klettres klines kmag kmail kmenuedit kmines kmix kmplot
-    knavalbattle knetwalk knights kollision kolourpaint kompare konsole kontact
-    konversation korganizer kpkpass krdc kreversi krfb kscreen kscreenlocker
-    kshisen ksquares ksshaskpass ksystemlog kteatime ktimer ktorrent ktouch
-    kturtle kwallet-pam kwalletmanager kwave kwayland-integration kwin kwrited
-    marble milou minuet okular oxygen oxygen-icons5 picmi
-    plasma-browser-integration plasma-desktop plasma-integration plasma-nano
-    plasma-nm plasma-pa plasma-mobile plasma-systemmonitor plasma-thunderbolt
-    plasma-vault plasma-workspace plasma-workspace-wallpapers polkit-kde-agent
-    powerdevil qqc2-breeze-style sddm-kcm skanlite skanpage spectacle
-    systemsettings xdg-desktop-portal-kde yakuake zanshin;
+      akonadi akregator ark bluedevil bomber bovo breeze-grub breeze-gtk
+      breeze-icons breeze-plymouth breeze-qt5 colord-kde discover dolphin dragon
+      elisa falkon ffmpegthumbs filelight granatier gwenview k3b
+      kactivitymanagerd kaddressbook kalendar kalzium kapman kapptemplate kate
+      katomic kblackbox kblocks kbounce kcachegrind kcalc kcharselect
+      kcolorchooser kde-cli-tools kde-gtk-config kdenlive kdeplasma-addons
+      kdevelop-pg-qt kdevelop-unwrapped kdev-php kdev-python kdevelop kdf
+      kdialog kdiamond keditbookmarks kfind kfloppy kgamma5 kget kgpg
+      khelpcenter kig kigo killbots kinfocenter kitinerary kleopatra klettres
+      klines kmag kmail kmenuedit kmines kmix kmplot knavalbattle knetwalk
+      knights kollision kolourpaint kompare konsole kontact konversation
+      korganizer kpkpass krdc kreversi krfb kscreen kscreenlocker kshisen
+      ksquares ksshaskpass ksystemlog kteatime ktimer ktorrent ktouch kturtle
+      kwallet-pam kwalletmanager kwave kwayland-integration kwin kwrited marble
+      milou minuet okular oxygen oxygen-icons5 picmi plasma-browser-integration
+      plasma-desktop plasma-integration plasma-nano plasma-nm plasma-pa
+      plasma-mobile plasma-systemmonitor plasma-thunderbolt plasma-vault
+      plasma-workspace plasma-workspace-wallpapers polkit-kde-agent powerdevil
+      qqc2-breeze-style sddm-kcm skanlite skanpage spectacle systemsettings
+      xdg-desktop-portal-kde yakuake zanshin;
 
   inherit (plasma5Packages.thirdParty)
-    krohnkite krunner-ssh krunner-symbols kwin-dynamic-workspaces kwin-tiling
-    plasma-applet-caffeine-plus plasma-applet-virtual-desktop-bar;
+      krohnkite krunner-ssh krunner-symbols kwin-dynamic-workspaces kwin-tiling
+      plasma-applet-caffeine-plus plasma-applet-virtual-desktop-bar;
 
   inherit (libsForQt5) sddm;
 

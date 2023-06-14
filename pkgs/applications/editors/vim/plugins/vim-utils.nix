@@ -387,7 +387,7 @@ in rec {
   inherit (import ./build-vim-plugin.nix {
     inherit lib stdenv rtpPath toVimPlugin;
   })
-    buildVimPlugin buildVimPluginFrom2Nix;
+      buildVimPlugin buildVimPluginFrom2Nix;
 
   # used to figure out which python dependencies etc. neovim needs
   requiredPlugins = { packages ? { }, plug ? null, ... }:

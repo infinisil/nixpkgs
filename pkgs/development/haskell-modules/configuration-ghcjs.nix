@@ -15,7 +15,7 @@ self: super:
 ## GENERAL SETUP BASE PACKAGES
 {
   inherit (self.ghc.bootPkgs)
-    jailbreak-cabal alex happy gtk2hs-buildtools rehoo hoogle;
+      jailbreak-cabal alex happy gtk2hs-buildtools rehoo hoogle;
 
   # Test suite fails; https://github.com/ghcjs/ghcjs-base/issues/133
   ghcjs-base = dontCheck (self.callPackage ../compilers/ghcjs/ghcjs-base.nix {

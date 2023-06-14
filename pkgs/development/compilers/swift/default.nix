@@ -32,8 +32,8 @@ let
     darwin = pkgs.darwin.overrideScope (_: prev: {
       inherit apple_sdk;
       inherit (apple_sdk)
-        Libsystem LibsystemCross libcharset libunwind objc4 configd IOKit
-        Security;
+          Libsystem LibsystemCross libcharset libunwind objc4 configd IOKit
+          Security;
       CF = apple_sdk.CoreFoundation;
     });
     xcodebuild = pkgs.xcbuild.override {

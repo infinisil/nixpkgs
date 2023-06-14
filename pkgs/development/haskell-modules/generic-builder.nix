@@ -4,7 +4,7 @@
 let
   isCross = stdenv.buildPlatform != stdenv.hostPlatform;
   inherit (buildPackages)
-    fetchurl removeReferencesTo pkg-config coreutils gnugrep glibcLocales;
+      fetchurl removeReferencesTo pkg-config coreutils gnugrep glibcLocales;
 
 in { pname
 # Note that ghc.isGhcjs != stdenv.hostPlatform.isGhcjs.
@@ -91,8 +91,8 @@ assert stdenv.hostPlatform.isWasm -> enableStaticLibraries == false;
 let
 
   inherit (lib)
-    optional optionals optionalString versionOlder versionAtLeast
-    concatStringsSep enableFeature optionalAttrs;
+      optional optionals optionalString versionOlder versionAtLeast
+      concatStringsSep enableFeature optionalAttrs;
 
   isGhcjs = ghc.isGhcjs or false;
   isHaLVM = ghc.isHaLVM or false;

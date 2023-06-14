@@ -2,8 +2,8 @@
 
 let
   inherit (lib)
-    literalExpression mkEnableOption mdDoc mkIf mkOption mkPackageOptionMD
-    optionalAttrs optional types;
+      literalExpression mkEnableOption mdDoc mkIf mkOption mkPackageOptionMD
+      optionalAttrs optional types;
 
   cfg = config.services.legit;
 

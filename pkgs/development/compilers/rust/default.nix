@@ -14,7 +14,7 @@ in {
 
   # Backwards compat before `lib` was factored out.
   inherit (lib')
-    toTargetArch toTargetOs toRustTarget toRustTargetSpec IsNoStdTarget;
+      toTargetArch toTargetOs toRustTarget toRustTargetSpec IsNoStdTarget;
 
   # This just contains tools for now. But it would conceivably contain
   # libraries too, say if we picked some default/recommended versions to build

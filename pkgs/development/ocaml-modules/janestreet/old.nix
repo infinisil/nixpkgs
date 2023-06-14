@@ -2,8 +2,8 @@
 
 let
   inherit (super)
-    janePackage ocaml ocamlbuild cryptokit ctypes magic-mime
-    ocaml-migrate-parsetree octavius ounit ppx_deriving re zarith num;
+      janePackage ocaml ocamlbuild cryptokit ctypes magic-mime
+      ocaml-migrate-parsetree octavius ounit ppx_deriving re zarith num;
 
 in with self;
 

@@ -105,13 +105,13 @@ let
 
   splicedPackages = splicePackages {
     inherit (pkgs)
-      pkgsBuildBuild pkgsBuildHost pkgsBuildTarget pkgsHostHost pkgsHostTarget
-      pkgsTargetTarget;
+        pkgsBuildBuild pkgsBuildHost pkgsBuildTarget pkgsHostHost pkgsHostTarget
+        pkgsTargetTarget;
   } // {
     # These should never be spliced under any circumstances
     inherit (pkgs)
-      pkgsBuildBuild pkgsBuildHost pkgsBuildTarget pkgsHostHost pkgsHostTarget
-      pkgsTargetTarget buildPackages pkgs targetPackages;
+        pkgsBuildBuild pkgsBuildHost pkgsBuildTarget pkgsHostHost pkgsHostTarget
+        pkgsTargetTarget buildPackages pkgs targetPackages;
     inherit (pkgs.stdenv) buildPlatform targetPlatform hostPlatform;
   };
 

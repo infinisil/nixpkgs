@@ -3,7 +3,7 @@
 
 let
   inherit (import ./common.nix { inherit pkgs lib; })
-    mkTestName mariadbPackages;
+      mkTestName mariadbPackages;
 
   makeTest = import ./../make-test-python.nix;
 

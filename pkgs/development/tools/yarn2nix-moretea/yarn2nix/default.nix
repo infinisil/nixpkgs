@@ -392,7 +392,7 @@ in rec {
         path: type:
         let
           inherit (pkgs.lib)
-            any flip elem hasSuffix hasPrefix elemAt splitString;
+              any flip elem hasSuffix hasPrefix elemAt splitString;
 
           subpath = elemAt (splitString "${toString root}/" path) 1;
           spdir = elemAt (splitString "/" subpath) 0;

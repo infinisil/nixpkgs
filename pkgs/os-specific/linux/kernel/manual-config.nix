@@ -53,8 +53,8 @@ in lib.makeOverridable ({
 
   in let
     inherit (lib)
-      hasAttr getAttr optional optionals optionalString optionalAttrs
-      maintainers platforms;
+        hasAttr getAttr optional optionals optionalString optionalAttrs
+        maintainers platforms;
 
     # Dependencies that are required to build kernel modules
     moduleBuildDependencies = [

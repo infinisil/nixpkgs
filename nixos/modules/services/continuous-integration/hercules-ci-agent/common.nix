@@ -6,8 +6,8 @@
 { config, lib, options, pkgs, ... }:
 let
   inherit (lib)
-    filterAttrs literalExpression mkIf mkOption mkRemovedOptionModule
-    mkRenamedOptionModule types
+      filterAttrs literalExpression mkIf mkOption mkRemovedOptionModule
+      mkRenamedOptionModule types
 
   ;
 

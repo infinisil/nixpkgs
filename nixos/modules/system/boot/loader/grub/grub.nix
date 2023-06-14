@@ -65,11 +65,11 @@ let
       inherit (args) devices;
       inherit (efi) canTouchEfiVariables;
       inherit (cfg)
-        extraConfig extraPerEntryConfig extraEntries forceInstall useOSProber
-        extraGrubInstallArgs extraEntriesBeforeNixOS extraPrepareConfig
-        configurationLimit copyKernels default fsIdentifier efiSupport
-        efiInstallAsRemovable gfxmodeEfi gfxmodeBios gfxpayloadEfi
-        gfxpayloadBios users;
+          extraConfig extraPerEntryConfig extraEntries forceInstall useOSProber
+          extraGrubInstallArgs extraEntriesBeforeNixOS extraPrepareConfig
+          configurationLimit copyKernels default fsIdentifier efiSupport
+          efiInstallAsRemovable gfxmodeEfi gfxmodeBios gfxpayloadEfi
+          gfxpayloadBios users;
       path = with pkgs;
         makeBinPath ([
           coreutils

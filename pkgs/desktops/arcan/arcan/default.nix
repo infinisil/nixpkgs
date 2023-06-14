@@ -76,7 +76,7 @@ in stdenv.mkDerivation (finalAttrs: {
   # Emulate external/git/clone.sh
   postUnpack = let
     inherit (import ./clone-sources.nix { inherit fetchFromGitHub fetchgit; })
-      letoram-openal-src freetype-src libuvc-src luajit-src;
+        letoram-openal-src freetype-src libuvc-src luajit-src;
   in ''
     pushd $sourceRoot/external/git/
   '' + (lib.optionalString useStaticOpenAL ''

@@ -60,7 +60,7 @@ stdenv.mkDerivation {
   passthru.tests = {
     smoke-test = nixosTests.bcachefs;
     inherit (nixosTests.installer)
-      bcachefsSimple bcachefsEncrypted bcachefsMulti;
+        bcachefsSimple bcachefsEncrypted bcachefsMulti;
   };
 
   enableParallelBuilding = true;

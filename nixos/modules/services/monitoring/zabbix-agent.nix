@@ -5,7 +5,7 @@ let
 
   inherit (lib) mkDefault mkEnableOption mkIf mkMerge mkOption;
   inherit (lib)
-    attrValues concatMapStringsSep literalExpression optionalString types;
+      attrValues concatMapStringsSep literalExpression optionalString types;
   inherit (lib.generators) toKeyValue;
 
   user = "zabbix-agent";

@@ -313,7 +313,7 @@ in rec {
       inherit version;
       tests = {
         inherit (nixosTests)
-          ceph-multi-node ceph-single-node ceph-single-node-bluestore;
+            ceph-multi-node ceph-single-node ceph-single-node-bluestore;
       };
     };
   };

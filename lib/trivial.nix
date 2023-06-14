@@ -154,8 +154,8 @@ rec {
 
   # Pull in some builtins not included elsewhere.
   inherit (builtins)
-    pathExists readFile isBool isInt isFloat add sub lessThan seq deepSeq
-    genericClosure;
+      pathExists readFile isBool isInt isFloat add sub lessThan seq deepSeq
+      genericClosure;
 
   ## nixpkgs version strings
 

@@ -140,8 +140,8 @@ let
 in stdenv.mkDerivation {
   inherit pname;
   inherit (shared)
-    version src nativeBuildInputs buildInputs disallowedReferences
-    stripDebugList doCheck dontWrapPythonPrograms dontWrapQtApps meta;
+      version src nativeBuildInputs buildInputs disallowedReferences
+      stripDebugList doCheck dontWrapPythonPrograms dontWrapQtApps meta;
   patches = [
     # Not accepted upstream, see https://github.com/gnuradio/gnuradio/pull/5227
     ./modtool-newmod-permissions.3_8.patch

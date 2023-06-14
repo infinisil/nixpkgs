@@ -49,9 +49,9 @@ in rec {
 
   tests = {
     inherit (nixosTests)
-      docker-tools docker-tools-overlay
-      # requires remote builder
-      # docker-tools-cross
+        docker-tools docker-tools-overlay
+        # requires remote builder
+        # docker-tools-cross
     ;
   };
 

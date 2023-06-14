@@ -75,8 +75,8 @@ in {
 
   config = let
     inherit (lib)
-      mkIf mapAttrs' nameValuePair optionalString concatMapStringsSep
-      escapeShellArgs;
+        mkIf mapAttrs' nameValuePair optionalString concatMapStringsSep
+        escapeShellArgs;
   in mkIf (cfg.servers != { }) {
     systemd.services = mapAttrs' (server: options:
       nameValuePair "tts-${server}" {

@@ -848,7 +848,7 @@ with self; {
 
   audiotools = callPackage ../development/python-modules/audiotools {
     inherit (pkgs.darwin.apple_sdk.frameworks)
-      AudioToolbox AudioUnit CoreServices;
+        AudioToolbox AudioUnit CoreServices;
   };
 
   augeas =
@@ -1460,7 +1460,7 @@ with self; {
 
   beautifulsoup4 = callPackage ../development/python-modules/beautifulsoup4 {
     inherit (python.pythonForBuild.pkgs)
-      sphinxHook; # hook splicing broken since #194205
+        sphinxHook; # hook splicing broken since #194205
   };
 
   beautifultable = callPackage ../development/python-modules/beautifultable { };
@@ -6742,7 +6742,7 @@ with self; {
   mayavi = pkgs.libsForQt5.callPackage ../development/python-modules/mayavi {
     inherit buildPythonPackage pythonOlder;
     inherit (self)
-      pyface pygments numpy packaging vtk traitsui envisage apptools pyqt5;
+        pyface pygments numpy packaging vtk traitsui envisage apptools pyqt5;
   };
 
   mbddns = callPackage ../development/python-modules/mbddns { };
@@ -10788,7 +10788,7 @@ with self; {
 
   python-mapnik = callPackage ../development/python-modules/python-mapnik rec {
     inherit (pkgs)
-      pkg-config cairo icu libjpeg libpng libtiff libwebp proj zlib;
+        pkg-config cairo icu libjpeg libpng libtiff libwebp proj zlib;
     boost182 = pkgs.boost182.override {
       enablePython = true;
       inherit python;
@@ -13241,7 +13241,7 @@ with self; {
 
   thinc = callPackage ../development/python-modules/thinc {
     inherit (pkgs.darwin.apple_sdk.frameworks)
-      Accelerate CoreFoundation CoreGraphics CoreVideo;
+        Accelerate CoreFoundation CoreGraphics CoreVideo;
   };
 
   threadloop = callPackage ../development/python-modules/threadloop { };
@@ -13731,7 +13731,7 @@ with self; {
 
   uamqp = callPackage ../development/python-modules/uamqp {
     inherit (pkgs.darwin.apple_sdk.frameworks)
-      CFNetwork CoreFoundation Security;
+        CFNetwork CoreFoundation Security;
   };
 
   ua-parser = callPackage ../development/python-modules/ua-parser { };
@@ -14125,8 +14125,8 @@ with self; {
   wasmerPackages = pkgs.recurseIntoAttrs
     (callPackage ../development/python-modules/wasmer { });
   inherit (self.wasmerPackages)
-    wasmer wasmer-compiler-cranelift wasmer-compiler-llvm
-    wasmer-compiler-singlepass;
+      wasmer wasmer-compiler-cranelift wasmer-compiler-llvm
+      wasmer-compiler-singlepass;
 
   watchdog = callPackage ../development/python-modules/watchdog {
     inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices;

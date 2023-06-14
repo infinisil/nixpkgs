@@ -3,7 +3,7 @@
 }:
 let
   inherit (import ./update-utils.nix { inherit (pkgs) lib; })
-    getLatestStableVersion getSha256;
+      getLatestStableVersion getSha256;
 in pkgs.mkShell rec {
   buildInputs = [ pkgs.common-updater-scripts ];
   newVersion = getLatestStableVersion;

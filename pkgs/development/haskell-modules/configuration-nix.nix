@@ -111,52 +111,53 @@ builtins.intersectAttrs super {
         export HOME=$TMPDIR/home
       '' + (drv.preCheck or "");
     })) super)
-    hls-brittany-plugin hls-floskell-plugin hls-fourmolu-plugin
-    hls-cabal-plugin;
+      hls-brittany-plugin hls-floskell-plugin hls-fourmolu-plugin
+      hls-cabal-plugin;
 
   # PLUGINS WITH DISABLED TESTS
   # 2023-04-01: TODO: We should reenable all these tests to figure if they are still broken.
   inherit (pkgs.lib.mapAttrs (_: dontCheck) super)
   # Tests have file permissions expections that don’t work with the nix store.
-    hls-gadt-plugin
+      hls-gadt-plugin
 
-    # https://github.com/haskell/haskell-language-server/pull/3431
-    hls-cabal-fmt-plugin hls-code-range-plugin hls-explicit-record-fields-plugin
+      # https://github.com/haskell/haskell-language-server/pull/3431
+      hls-cabal-fmt-plugin hls-code-range-plugin
+      hls-explicit-record-fields-plugin
 
-    # Flaky tests
-    hls-explicit-fixity-plugin hls-hlint-plugin hls-pragmas-plugin
-    hls-class-plugin hls-rename-plugin hls-alternate-number-format-plugin
-    hls-qualify-imported-names-plugin hls-haddock-comments-plugin
-    hls-tactics-plugin hls-call-hierarchy-plugin hls-selection-range-plugin
-    hls-ormolu-plugin
+      # Flaky tests
+      hls-explicit-fixity-plugin hls-hlint-plugin hls-pragmas-plugin
+      hls-class-plugin hls-rename-plugin hls-alternate-number-format-plugin
+      hls-qualify-imported-names-plugin hls-haddock-comments-plugin
+      hls-tactics-plugin hls-call-hierarchy-plugin hls-selection-range-plugin
+      hls-ormolu-plugin
 
-    # 2021-05-08: Tests fail: https://github.com/haskell/haskell-language-server/issues/1809
-    hls-eval-plugin
+      # 2021-05-08: Tests fail: https://github.com/haskell/haskell-language-server/issues/1809
+      hls-eval-plugin
 
-    # 2021-06-20: Tests fail: https://github.com/haskell/haskell-language-server/issues/1949
-    hls-refine-imports-plugin
+      # 2021-06-20: Tests fail: https://github.com/haskell/haskell-language-server/issues/1949
+      hls-refine-imports-plugin
 
-    # 2021-11-20: https://github.com/haskell/haskell-language-server/pull/2373
-    hls-explicit-imports-plugin
+      # 2021-11-20: https://github.com/haskell/haskell-language-server/pull/2373
+      hls-explicit-imports-plugin
 
-    # 2021-11-20: https://github.com/haskell/haskell-language-server/pull/2374
-    hls-module-name-plugin
+      # 2021-11-20: https://github.com/haskell/haskell-language-server/pull/2374
+      hls-module-name-plugin
 
-    # 2022-09-19: https://github.com/haskell/haskell-language-server/issues/3200
-    hls-refactor-plugin
+      # 2022-09-19: https://github.com/haskell/haskell-language-server/issues/3200
+      hls-refactor-plugin
 
-    # 2021-09-14: Tests are flaky.
-    hls-splice-plugin
+      # 2021-09-14: Tests are flaky.
+      hls-splice-plugin
 
-    # 2021-09-18: https://github.com/haskell/haskell-language-server/issues/2205
-    hls-stylish-haskell-plugin
+      # 2021-09-18: https://github.com/haskell/haskell-language-server/issues/2205
+      hls-stylish-haskell-plugin
 
-    # Necesssary .txt files are not included in sdist.
-    # https://github.com/haskell/haskell-language-server/pull/2887
-    hls-change-type-signature-plugin
+      # Necesssary .txt files are not included in sdist.
+      # https://github.com/haskell/haskell-language-server/pull/2887
+      hls-change-type-signature-plugin
 
-    # 2023-04-03: https://github.com/haskell/haskell-language-server/issues/3549
-    hls-retrie-plugin;
+      # 2023-04-03: https://github.com/haskell/haskell-language-server/issues/3549
+      hls-retrie-plugin;
 
   ###########################################
   ### END HASKELL-LANGUAGE-SERVER SECTION ###

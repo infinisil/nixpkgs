@@ -14,8 +14,8 @@ in stdenv.mkDerivation {
   pname = "vim";
 
   inherit (common)
-    version src postPatch hardeningDisable enableParallelBuilding
-    enableParallelInstalling meta;
+      version src postPatch hardeningDisable enableParallelBuilding
+      enableParallelInstalling meta;
 
   nativeBuildInputs = [ gettext pkg-config ];
   buildInputs = [ ncurses bash gawk ]

@@ -1,7 +1,7 @@
 import ../make-test-python.nix ({ pkgs, ... }:
   let
     inherit (import ./../ssh-keys.nix pkgs)
-      snakeOilPrivateKey snakeOilPublicKey;
+        snakeOilPrivateKey snakeOilPublicKey;
 
     # don't check host keys or known hosts, use the snakeoil ssh key
     ssh-config = builtins.toFile "ssh.conf" ''

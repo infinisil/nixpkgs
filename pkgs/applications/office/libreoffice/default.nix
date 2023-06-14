@@ -48,8 +48,8 @@ assert builtins.elem variant [ "fresh" "still" ];
 
 let
   inherit (lib)
-    flatten flip concatMapStrings concatStringsSep getDev getLib optionals
-    optionalString;
+      flatten flip concatMapStrings concatStringsSep getDev getLib optionals
+      optionalString;
 
   jre' = jre17_minimal.override {
     modules = [ "java.base" "java.desktop" "java.logging" "java.sql" ];

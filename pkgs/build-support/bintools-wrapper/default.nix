@@ -357,8 +357,8 @@ in stdenv.mkDerivation {
     ###
     + optionalString stdenv.targetPlatform.isDarwin (let
       inherit (stdenv.targetPlatform)
-        darwinPlatform darwinSdkVersion darwinMinVersion
-        darwinMinVersionVariable;
+          darwinPlatform darwinSdkVersion darwinMinVersion
+          darwinMinVersionVariable;
     in ''
       export darwinPlatform=${darwinPlatform}
       export darwinMinVersion=${darwinMinVersion}

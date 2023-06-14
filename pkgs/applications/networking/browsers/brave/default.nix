@@ -22,8 +22,8 @@
 
 let
   inherit (lib)
-    optional optionals makeLibraryPath makeSearchPathOutput makeBinPath
-    optionalString strings escapeShellArg;
+      optional optionals makeLibraryPath makeSearchPathOutput makeBinPath
+      optionalString strings escapeShellArg;
 
   deps = [
     alsa-lib

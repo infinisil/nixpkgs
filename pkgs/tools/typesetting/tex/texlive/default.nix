@@ -281,7 +281,7 @@ in tl // {
           if final then "-final" else ".${year}${month}${day}";
       })) {
         inherit (tl)
-          scheme-basic scheme-context scheme-full scheme-gust scheme-infraonly
-          scheme-medium scheme-minimal scheme-small scheme-tetex;
+            scheme-basic scheme-context scheme-full scheme-gust scheme-infraonly
+            scheme-medium scheme-minimal scheme-small scheme-tetex;
       });
 }

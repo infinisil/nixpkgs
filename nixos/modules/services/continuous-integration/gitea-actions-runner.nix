@@ -2,9 +2,9 @@
 
 let
   inherit (lib)
-    any attrValues concatStringsSep escapeShellArg hasInfix hasSuffix
-    optionalAttrs optionals literalExpression mapAttrs' mkEnableOption mkOption
-    mkPackageOptionMD mkIf nameValuePair types;
+      any attrValues concatStringsSep escapeShellArg hasInfix hasSuffix
+      optionalAttrs optionals literalExpression mapAttrs' mkEnableOption
+      mkOption mkPackageOptionMD mkIf nameValuePair types;
 
   inherit (utils) escapeSystemdPath;
 

@@ -36,7 +36,7 @@ let
     detectvirt = "${config.systemd.package}/bin/systemd-detect-virt";
     btrfs = "${pkgs.btrfs-progs}/bin/btrfs";
     inherit (config.system.nixos-generate-config)
-      configuration desktopConfiguration;
+        configuration desktopConfiguration;
     xserverEnabled = config.services.xserver.enable;
   };
 

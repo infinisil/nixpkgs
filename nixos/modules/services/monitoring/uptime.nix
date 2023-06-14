@@ -1,7 +1,7 @@
 { config, options, pkgs, lib, ... }:
 let
   inherit (lib)
-    literalExpression mkOption mkEnableOption mkIf mkMerge types optional;
+      literalExpression mkOption mkEnableOption mkIf mkMerge types optional;
 
   cfg = config.services.uptime;
   opt = options.services.uptime;

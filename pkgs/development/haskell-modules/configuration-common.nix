@@ -92,7 +92,7 @@ self: super:
           (self.generateOptparseApplicativeCompletions [ "guardian" ])
         ];
   })
-    cabal-install cabal-install-solver guardian;
+      cabal-install cabal-install-solver guardian;
 
   #######################################
   ### HASKELL-LANGUAGE-SERVER SECTION ###
@@ -2538,7 +2538,7 @@ self: super:
 
     purenix = super.purenix.overrideScope purescriptOverlay;
   })
-    purescript purenix;
+      purescript purenix;
 
   # 2022-11-05: https://github.com/ysangkok/haskell-tzdata/issues/3
   tzdata = dontCheck super.tzdata;

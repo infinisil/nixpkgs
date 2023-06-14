@@ -231,7 +231,7 @@ in [
       inherit config;
       initialPath = [ prevStage.bootstrapTools ];
       inherit (prevStage.stdenv)
-        buildPlatform hostPlatform targetPlatform shell;
+          buildPlatform hostPlatform targetPlatform shell;
       fetchurlBoot = prevStage.fetchurl;
       cc = null;
     };
@@ -244,8 +244,8 @@ in [
       inherit config;
 
       inherit (prevStage.stdenv)
-        buildPlatform hostPlatform targetPlatform initialPath shell
-        fetchurlBoot;
+          buildPlatform hostPlatform targetPlatform initialPath shell
+          fetchurlBoot;
 
       cc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
         inherit lib;

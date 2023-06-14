@@ -265,7 +265,7 @@ in buildFHSEnv {
 
   meta = {
     inherit (lutris-unwrapped.meta)
-      homepage description platforms license maintainers broken;
+        homepage description platforms license maintainers broken;
 
     mainProgram = "lutris";
   };

@@ -88,7 +88,7 @@ in stdenv.mkDerivation ({
   meta = with lib;
     ({
       inherit (graalvm-ce.meta)
-        homepage license sourceProvenance maintainers platforms;
+          homepage license sourceProvenance maintainers platforms;
       description = "High-Performance Polyglot VM (Product: ${product})";
     } // meta);
 } // extraArgs)

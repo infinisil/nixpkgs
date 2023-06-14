@@ -67,7 +67,7 @@ let
     [ "${lib.getLib stdenv.cc.cc.libgcc}/lib" ];
 
   inherit (if variant == "macport" then llvmPackages_6.stdenv else stdenv)
-    mkDerivation;
+      mkDerivation;
 in mkDerivation (finalAttrs:
   (lib.optionalAttrs withNativeCompilation {
     env = {

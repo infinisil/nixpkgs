@@ -4,8 +4,8 @@
 let
   inherit (import ../lib/testing-python.nix { inherit system pkgs; }) makeTest;
   inherit (pkgs.lib)
-    concatStringsSep maintainers mapAttrs mkMerge removeSuffix replaceStrings
-    singleton splitString;
+      concatStringsSep maintainers mapAttrs mkMerge removeSuffix replaceStrings
+      singleton splitString;
 
   # The attrset `exporterTests` contains one attribute
   # for each exporter test. Each of these attributes

@@ -4,8 +4,8 @@ let
   cfg = config.services.earlyoom;
 
   inherit (lib)
-    mkDefault mkEnableOption mkIf mkOption types mkRemovedOptionModule
-    literalExpression escapeShellArg concatStringsSep optional optionalString;
+      mkDefault mkEnableOption mkIf mkOption types mkRemovedOptionModule
+      literalExpression escapeShellArg concatStringsSep optional optionalString;
 
 in {
   options.services.earlyoom = {

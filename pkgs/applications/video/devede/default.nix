@@ -3,7 +3,7 @@
 
 let
   inherit (python3Packages)
-    dbus-python buildPythonApplication pygobject3 urllib3 setuptools;
+      dbus-python buildPythonApplication pygobject3 urllib3 setuptools;
 in buildPythonApplication rec {
   pname = "devede";
   version = "4.16.0";

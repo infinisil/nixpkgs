@@ -4,8 +4,8 @@ let
 
   inherit (builtins) toFile;
   inherit (lib)
-    concatMapStringsSep concatStringsSep mapAttrsToList mkIf mkEnableOption
-    mkOption types literalExpression optionalString;
+      concatMapStringsSep concatStringsSep mapAttrsToList mkIf mkEnableOption
+      mkOption types literalExpression optionalString;
 
   cfg = config.services.strongswan;
 

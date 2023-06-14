@@ -8,7 +8,7 @@
         };
       }];
     })
-      type;
+        type;
     default = { };
   };
 

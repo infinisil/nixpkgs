@@ -29,7 +29,8 @@ let
         inherit (srcs.qtbase) src version;
         inherit developerBuild;
         inherit (darwin.apple_sdk_11_0.frameworks)
-          AGL AVFoundation AppKit Contacts CoreBluetooth EventKit GSS MetalKit;
+            AGL AVFoundation AppKit Contacts CoreBluetooth EventKit GSS
+            MetalKit;
         patches = [
           ./patches/0001-qtbase-qmake-always-use-libname-instead-of-absolute-.patch
           ./patches/0002-qtbase-qmake-fix-mkspecs-for-darwin.patch
@@ -97,7 +98,7 @@ let
       qtlottie = callPackage ./modules/qtlottie.nix { };
       qtmultimedia = callPackage ./modules/qtmultimedia.nix {
         inherit (gst_all_1)
-          gstreamer gst-plugins-base gst-plugins-good gst-libav gst-vaapi;
+            gstreamer gst-plugins-base gst-plugins-good gst-libav gst-vaapi;
         inherit (darwin.apple_sdk_11_0.frameworks) VideoToolbox;
       };
       qtmqtt = callPackage ./modules/qtmqtt.nix { };
@@ -127,10 +128,10 @@ let
         inherit (darwin.apple_sdk_11_0) libpm libunwind;
         inherit (darwin.apple_sdk_11_0.libs) sandbox;
         inherit (darwin.apple_sdk_11_0.frameworks)
-          AGL AVFoundation Accelerate Cocoa CoreLocation CoreML ForceFeedback
-          GameController ImageCaptureCore LocalAuthentication MediaAccessibility
-          MediaPlayer MetalKit Network OpenDirectory Quartz ReplayKit
-          SecurityInterface Vision;
+            AGL AVFoundation Accelerate Cocoa CoreLocation CoreML ForceFeedback
+            GameController ImageCaptureCore LocalAuthentication
+            MediaAccessibility MediaPlayer MetalKit Network OpenDirectory Quartz
+            ReplayKit SecurityInterface Vision;
         xcbuild =
           buildPackages.xcbuild.override { productBuildVer = "20A2408"; };
       };

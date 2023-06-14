@@ -3,7 +3,7 @@
 let
   inherit (lib) mkDefault mkEnableOption mkForce mkIf mkMerge mkOption types;
   inherit (lib)
-    concatStringsSep literalExpression mapAttrsToList optional optionalString;
+      concatStringsSep literalExpression mapAttrsToList optional optionalString;
 
   cfg = config.services.moodle;
   fpm = config.services.phpfpm.pools.moodle;

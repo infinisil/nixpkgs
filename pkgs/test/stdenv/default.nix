@@ -163,7 +163,7 @@ in {
       };
       passAsFile = [ "dep2" ];
     })
-      inputDerivation;
+        inputDerivation;
   in runCommand "test-inputDerivation" {
     exportReferencesGraph = [ "graph" inputDerivation ];
   } ''

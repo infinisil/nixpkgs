@@ -2,8 +2,8 @@
 
 let
   inherit (lib)
-    concatMapStrings literalExpression mdDoc mkDefault mkEnableOption mkIf
-    mkOption types;
+      concatMapStrings literalExpression mdDoc mkDefault mkEnableOption mkIf
+      mkOption types;
 
   cfg = config.services.xserver.desktopManager.budgie;
 

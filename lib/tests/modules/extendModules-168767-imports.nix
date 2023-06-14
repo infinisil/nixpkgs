@@ -13,7 +13,7 @@ with lib; {
             inherit (extendModules {
               modules = [{ specialisation = mkOverride 0 { }; }];
             })
-              type;
+                type;
           };
         });
       };

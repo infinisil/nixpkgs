@@ -57,7 +57,7 @@ let
     runTest = arg: let r = doRunTest arg; in findTests r;
     runTestOn = systems: arg: if elem system systems then runTest arg else { };
   })
-    runTest runTestOn;
+      runTest runTestOn;
 
   # Using a single instance of nixpkgs makes test evaluation faster.
   # To make sure we don't accidentally depend on a modified pkgs, we make the

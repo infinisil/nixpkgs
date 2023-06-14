@@ -87,7 +87,7 @@ let
       modules = [ ../../pkgs/top-level/config.nix ];
       class = "nixpkgsConfig";
     })
-      options;
+        options;
     documentType = "none";
     transformOptions = opt:
       opt // {

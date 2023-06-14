@@ -10,7 +10,7 @@ let
     withHyperkitty = cfg.hyperkitty.enable;
     withLDAP = cfg.ldap.enable;
   })
-    mailmanEnv webEnv;
+      mailmanEnv webEnv;
 
   withPostgresql = config.services.postgresql.enable;
 

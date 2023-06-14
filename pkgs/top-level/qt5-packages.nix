@@ -137,7 +137,7 @@
       libopenshot-audio =
         callPackage ../applications/video/openshot-qt/libopenshot-audio.nix {
           inherit (pkgs.darwin.apple_sdk.frameworks)
-            Accelerate AGL Cocoa Foundation;
+              Accelerate AGL Cocoa Foundation;
         };
 
       libqglviewer = callPackage ../development/libraries/libqglviewer {

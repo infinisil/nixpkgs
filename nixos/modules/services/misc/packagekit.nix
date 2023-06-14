@@ -4,8 +4,8 @@ let
   cfg = config.services.packagekit;
 
   inherit (lib)
-    mkEnableOption mkOption mkIf mkRemovedOptionModule types listToAttrs
-    recursiveUpdate;
+      mkEnableOption mkOption mkIf mkRemovedOptionModule types listToAttrs
+      recursiveUpdate;
 
   iniFmt = pkgs.formats.ini { };
 

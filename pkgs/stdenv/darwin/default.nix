@@ -432,7 +432,7 @@ in rec {
             });
             libraries = super."${finalLlvmPackages}".libraries.extend (_: _: {
               inherit (pkgs."${finalLlvmPackages}")
-                compiler-rt libcxx libcxxabi;
+                  compiler-rt libcxx libcxxabi;
             });
           in { inherit tools libraries; } // tools // libraries);
 
@@ -505,9 +505,9 @@ in rec {
 
           darwin = super.darwin.overrideScope (_: _: {
             inherit (darwin)
-              binutils dyld Libsystem xnu configd ICU libdispatch libclosure
-              launchd CF objc4 darwin-stubs sigtool postLinkSignHook
-              signingUtils;
+                binutils dyld Libsystem xnu configd ICU libdispatch libclosure
+                launchd CF objc4 darwin-stubs sigtool postLinkSignHook
+                signingUtils;
           });
         };
     in with prevStage;
@@ -571,8 +571,8 @@ in rec {
 
           darwin = super.darwin.overrideScope (_: _: {
             inherit (darwin)
-              dyld Libsystem xnu configd libdispatch libclosure launchd libiconv
-              locale darwin-stubs sigtool;
+                dyld Libsystem xnu configd libdispatch libclosure launchd
+                libiconv locale darwin-stubs sigtool;
           });
         };
     in with prevStage;
@@ -653,7 +653,7 @@ in rec {
             libraries = super."${finalLlvmPackages}".libraries.extend
               (llvmSelf: _: {
                 inherit (pkgs."${finalLlvmPackages}")
-                  libcxx libcxxabi compiler-rt;
+                    libcxx libcxxabi compiler-rt;
               });
           in { inherit tools libraries; } // tools // libraries);
 
@@ -711,7 +711,7 @@ in rec {
             });
             libraries = super."${finalLlvmPackages}".libraries.extend (_: _: {
               inherit (pkgs."${finalLlvmPackages}")
-                compiler-rt libcxx libcxxabi;
+                  compiler-rt libcxx libcxxabi;
             });
           in { inherit tools libraries; } // tools // libraries);
 

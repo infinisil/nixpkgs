@@ -137,7 +137,7 @@ in rec {
           gcc = args.gcc or { };
           rustc = args.rustc or { };
         } // platforms.select final)
-          linux-kernel gcc rustc;
+            linux-kernel gcc rustc;
 
         linuxArch = if final.isAarch32 then
           "arm"

@@ -304,5 +304,5 @@ in lib.makeScope pkgs.newScope (self:
       });
 
       inherit (nodePkgs)
-        elm-live elm-upgrade elm-xref elm-analyse elm-git-install;
+          elm-live elm-upgrade elm-xref elm-analyse elm-git-install;
     }))

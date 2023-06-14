@@ -317,8 +317,8 @@ let
     inherit (config.system.build) earlyMountScript;
 
     inherit (config.boot.initrd)
-      checkJournalingFS verbose preLVMCommands preDeviceCommands
-      postDeviceCommands postMountCommands preFailCommands kernelModules;
+        checkJournalingFS verbose preLVMCommands preDeviceCommands
+        postDeviceCommands postMountCommands preFailCommands kernelModules;
 
     resumeDevices = map
       (sd: if sd ? device then sd.device else "/dev/disk/by-label/${sd.label}")

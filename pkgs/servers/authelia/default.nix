@@ -3,7 +3,7 @@
 
 let
   inherit (import ./sources.nix { inherit fetchFromGitHub; })
-    pname version src vendorHash;
+      pname version src vendorHash;
   web = callPackage ./web.nix { };
 in buildGoModule rec {
   inherit pname version src vendorHash;

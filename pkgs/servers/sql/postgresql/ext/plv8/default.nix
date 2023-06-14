@@ -85,7 +85,7 @@ stdenv.mkDerivation (finalAttrs: {
       regression = stdenv.mkDerivation {
         name = "plv8-regression";
         inherit (finalAttrs)
-          src patches nativeBuildInputs buildInputs dontConfigure;
+            src patches nativeBuildInputs buildInputs dontConfigure;
 
         buildPhase = ''
           runHook preBuild

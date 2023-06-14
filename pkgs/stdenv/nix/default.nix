@@ -38,8 +38,8 @@ bootStages ++ [
         inherit cc;
         inherit (cc) binutils;
         inherit (prevStage)
-          gzip bzip2 xz bash coreutils diffutils findutils gawk gnumake gnused
-          gnutar gnugrep gnupatch perl;
+            gzip bzip2 xz bash coreutils diffutils findutils gawk gnumake gnused
+            gnutar gnugrep gnupatch perl;
       };
     };
   })

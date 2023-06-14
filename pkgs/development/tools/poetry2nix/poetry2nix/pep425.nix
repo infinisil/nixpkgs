@@ -1,8 +1,8 @@
 { lib, stdenv, poetryLib, python, isLinux ? stdenv.isLinux }:
 let
   inherit (lib.strings)
-    escapeRegex hasPrefix hasSuffix hasInfix splitString removePrefix
-    removeSuffix;
+      escapeRegex hasPrefix hasSuffix hasInfix splitString removePrefix
+      removeSuffix;
   targetMachine = poetryLib.getTargetMachine stdenv;
 
   pythonVer = let

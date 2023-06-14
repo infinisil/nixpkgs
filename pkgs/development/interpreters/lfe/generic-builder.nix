@@ -10,8 +10,8 @@
 
 let
   inherit (lib)
-    assertMsg makeBinPath optionalString getVersion versionAtLeast versionOlder
-    versions;
+      assertMsg makeBinPath optionalString getVersion versionAtLeast
+      versionOlder versions;
 
   mainVersion = versions.major (getVersion erlang);
 

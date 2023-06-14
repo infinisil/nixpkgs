@@ -7,7 +7,7 @@ let
   version = "1.41.0";
 
   inherit (poetryLib)
-    isCompatible readTOML normalizePackageName normalizePackageSet;
+      isCompatible readTOML normalizePackageName normalizePackageSet;
 
   # Map SPDX identifiers to license names
   spdxLicenses = lib.listToAttrs (lib.filter (pair: pair.name != null)

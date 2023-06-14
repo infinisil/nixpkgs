@@ -15,8 +15,8 @@ lib.makeScope pkgs.newScope (self:
 
       inherit (pkgs.darwin) sigtool;
       inherit (pkgs.darwin.apple_sdk.frameworks)
-        AppKit Carbon Cocoa GSS ImageCaptureCore ImageIO IOKit OSAKit Quartz
-        QuartzCore WebKit;
+          AppKit Carbon Cocoa GSS ImageCaptureCore ImageIO IOKit OSAKit Quartz
+          QuartzCore WebKit;
     };
 
     emacs28-gtk2 = self.emacs28.override { withGTK2 = true; };
@@ -30,8 +30,8 @@ lib.makeScope pkgs.newScope (self:
 
       inherit (pkgs.darwin) sigtool;
       inherit (pkgs.darwin.apple_sdk.frameworks)
-        AppKit Carbon Cocoa GSS ImageCaptureCore ImageIO IOKit OSAKit Quartz
-        QuartzCore WebKit;
+          AppKit Carbon Cocoa GSS ImageCaptureCore ImageIO IOKit OSAKit Quartz
+          QuartzCore WebKit;
     };
 
     emacs29-gtk3 = self.emacs29.override { withGTK3 = true; };
@@ -45,7 +45,7 @@ lib.makeScope pkgs.newScope (self:
 
       inherit (pkgs.darwin) sigtool;
       inherit (pkgs.darwin.apple_sdk.frameworks)
-        AppKit Carbon Cocoa GSS ImageCaptureCore ImageIO IOKit OSAKit Quartz
-        QuartzCore WebKit;
+          AppKit Carbon Cocoa GSS ImageCaptureCore ImageIO IOKit OSAKit Quartz
+          QuartzCore WebKit;
     };
   })

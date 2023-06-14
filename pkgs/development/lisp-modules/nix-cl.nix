@@ -15,11 +15,11 @@
 let
 
   inherit (lib)
-    length filter foldl unique id concat concatMap mutuallyExclusive findFirst
-    remove setAttr getAttr hasAttr attrNames attrValues filterAttrs mapAttrs
-    splitString concatStringsSep concatMapStringsSep replaceStrings removeSuffix
-    hasInfix optionalString makeBinPath makeLibraryPath makeSearchPath
-    recurseIntoAttrs;
+      length filter foldl unique id concat concatMap mutuallyExclusive findFirst
+      remove setAttr getAttr hasAttr attrNames attrValues filterAttrs mapAttrs
+      splitString concatStringsSep concatMapStringsSep replaceStrings
+      removeSuffix hasInfix optionalString makeBinPath makeLibraryPath
+      makeSearchPath recurseIntoAttrs;
 
   inherit (builtins) head tail elem split storeDir;
 

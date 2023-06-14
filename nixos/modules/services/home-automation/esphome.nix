@@ -2,7 +2,7 @@
 
 let
   inherit (lib)
-    literalExpression maintainers mkEnableOption mkIf mkOption mdDoc types;
+      literalExpression maintainers mkEnableOption mkIf mkOption mdDoc types;
 
   cfg = config.services.esphome;
 

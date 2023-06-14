@@ -252,9 +252,9 @@ let
         inherit dconf gtk3;
         inherit developerBuild decryptSslTraffic;
         inherit (darwin.apple_sdk_11_0.frameworks)
-          AGL AppKit ApplicationServices AVFoundation Carbon Cocoa CoreAudio
-          CoreBluetooth CoreLocation CoreServices DiskArbitration Foundation
-          OpenGL MetalKit IOKit;
+            AGL AppKit ApplicationServices AVFoundation Carbon Cocoa CoreAudio
+            CoreBluetooth CoreLocation CoreServices DiskArbitration Foundation
+            OpenGL MetalKit IOKit;
         libobjc = darwin.apple_sdk_11_0.objc4;
         xcbuild = darwin.apple_sdk_11_0.xcodebuild;
       };
@@ -309,11 +309,11 @@ let
         inherit (darwin.apple_sdk_11_0) libpm libunwind;
         inherit (darwin.apple_sdk_11_0.libs) sandbox;
         inherit (darwin.apple_sdk_11_0.frameworks)
-          ApplicationServices AVFoundation Foundation ForceFeedback
-          GameController AppKit ImageCaptureCore CoreBluetooth IOBluetooth
-          CoreWLAN Quartz Cocoa LocalAuthentication MediaPlayer
-          MediaAccessibility SecurityInterface Vision CoreML OpenDirectory
-          Accelerate;
+            ApplicationServices AVFoundation Foundation ForceFeedback
+            GameController AppKit ImageCaptureCore CoreBluetooth IOBluetooth
+            CoreWLAN Quartz Cocoa LocalAuthentication MediaPlayer
+            MediaAccessibility SecurityInterface Vision CoreML OpenDirectory
+            Accelerate;
         libobjc = darwin.apple_sdk_11_0.objc4;
       };
       qtwebglplugin = callPackage ../modules/qtwebglplugin.nix { };

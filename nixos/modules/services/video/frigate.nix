@@ -2,7 +2,7 @@
 
 let
   inherit (lib)
-    literalExpression mkDefault mdDoc mkEnableOption mkIf mkOption types;
+      literalExpression mkDefault mdDoc mkEnableOption mkIf mkOption types;
 
   cfg = config.services.frigate;
 

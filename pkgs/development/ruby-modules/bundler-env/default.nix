@@ -11,7 +11,7 @@ let
   inherit (import ../bundled-common/functions.nix {
     inherit lib ruby gemConfig groups;
   })
-    genStubsScript;
+      genStubsScript;
 
   basicEnv = (callPackage ../bundled-common { inherit bundler; }) (args // {
     inherit pname name;

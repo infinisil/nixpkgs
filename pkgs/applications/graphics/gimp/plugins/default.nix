@@ -6,7 +6,7 @@
 
 let
   inherit (pkgs)
-    stdenv fetchurl fetchpatch pkg-config intltool glib fetchFromGitHub;
+      stdenv fetchurl fetchpatch pkg-config intltool glib fetchFromGitHub;
 
 in lib.makeScope pkgs.newScope (self:
 
