@@ -97,8 +97,7 @@ rec {
     (f { } arg).result;
 
   textClosureMap =
-    f: predefined: names:
-    concatStringsSep "\n" (map f (textClosureList predefined names));
+    f: predefined: names: concatStringsSep "\n" (map f (textClosureList predefined names));
 
   noDepEntry = text: {
     inherit text;

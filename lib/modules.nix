@@ -1469,9 +1469,7 @@ let
     This show a warning if a.b.c is set, and set the value of x.y.z to the
     result of the change function
   */
-  mkChangedOptionModule =
-    from: to: changeFn:
-    mkMergedOptionModule [ from ] to changeFn;
+  mkChangedOptionModule = from: to: changeFn: mkMergedOptionModule [ from ] to changeFn;
 
   # Like ‘mkRenamedOptionModule’, but doesn't show a warning.
   mkAliasOptionModule =

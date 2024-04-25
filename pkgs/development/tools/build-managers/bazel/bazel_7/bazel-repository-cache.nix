@@ -82,11 +82,7 @@ let
       withToplevelValue = acc: insert acc (attrs.integrity or attrs.sha256) (attrs.urls or [ attrs.url ]);
       # for http_file patches
       withRemotePatches =
-        acc:
-        lib.foldlAttrs (
-          acc: url: hash:
-          insert acc hash [ url ]
-        ) acc (attrs.remote_patches or { });
+        acc: lib.foldlAttrs (acc: url: hash: insert acc hash [ url ]) acc (attrs.remote_patches or { });
       # for _distdir_tar
       withArchives =
         acc:

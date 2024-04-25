@@ -13,9 +13,7 @@ let
 
   bool = b: if b != null && b then "1" else "0";
   optionalSetting = s: setting: optionalString (s != null) "${setting} ${s}";
-  lookup =
-    attrs: key: default:
-    if attrs ? key then attrs."${key}" else default;
+  lookup = attrs: key: default: if attrs ? key then attrs."${key}" else default;
 
   inactivePenaltyOptions = {
     "spectator" = "1";

@@ -122,11 +122,7 @@ let
     map setIntrospection (collect isOption eval.options);
 
   overrideConfig =
-    thrower:
-    recursiveUpdateUntil (
-      path: old: new:
-      path == thrower.path
-    ) eval.config thrower.config;
+    thrower: recursiveUpdateUntil (path: old: new: path == thrower.path) eval.config thrower.config;
 
   graph = map (thrower: {
     option = thrower.name;

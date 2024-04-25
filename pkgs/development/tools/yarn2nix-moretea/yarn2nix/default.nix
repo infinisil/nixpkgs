@@ -15,9 +15,7 @@ let
     runCommandLocal
     ;
 
-  compose =
-    f: g: x:
-    f (g x);
+  compose = f: g: x: f (g x);
   id = x: x;
   composeAll = builtins.foldl' compose id;
 

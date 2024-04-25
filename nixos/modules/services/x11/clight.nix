@@ -102,9 +102,7 @@ in
   config = mkIf cfg.enable {
     assertions =
       let
-        inRange =
-          v: l: r:
-          v >= l && v <= r;
+        inRange = v: l: r: v >= l && v <= r;
       in
       [
         {

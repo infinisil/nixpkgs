@@ -1055,8 +1055,7 @@ rec {
       => "--disable-shared"
   */
   enableFeatureAs =
-    flag: feature: value:
-    enableFeature flag feature + optionalString flag "=${value}";
+    flag: feature: value: enableFeature flag feature + optionalString flag "=${value}";
 
   /*
     Create an --{with,without}-<feature> string that can be passed to
@@ -1083,9 +1082,7 @@ rec {
       withFeatureAs false "shared" (throw "ignored")
       => "--without-shared"
   */
-  withFeatureAs =
-    flag: feature: value:
-    withFeature flag feature + optionalString flag "=${value}";
+  withFeatureAs = flag: feature: value: withFeature flag feature + optionalString flag "=${value}";
 
   /*
     Create a fixed width string with additional prefix to match

@@ -1484,19 +1484,12 @@ rec {
     addition to the default packages.
   */
   diskImageFuns =
-    (lib.mapAttrs (
-      name: as: as2:
-      makeImageFromRPMDist (as // as2)
-    ) rpmDistros)
-    // (lib.mapAttrs (
-      name: as: as2:
-      makeImageFromDebDist (as // as2)
-    ) debDistros);
+    (lib.mapAttrs (name: as: as2: makeImageFromRPMDist (as // as2)) rpmDistros)
+    // (lib.mapAttrs (name: as: as2: makeImageFromDebDist (as // as2)) debDistros);
 
   # Shorthand for `diskImageFuns.<attr> { extraPackages = ... }'.
   diskImageExtraFuns = lib.mapAttrs (
-    name: f: extraPackages:
-    f { inherit extraPackages; }
+    name: f: extraPackages: f { inherit extraPackages; }
   ) diskImageFuns;
 
   /*

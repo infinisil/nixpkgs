@@ -8,9 +8,7 @@
 let
   # Probably a bug in some FreeDict release files, but easier to trivially
   # work around than report. Not that it can cause any other problems..
-  makeDictdDBFreedict =
-    src: name: locale:
-    makeDictdDB src name "{.,bin}" locale;
+  makeDictdDBFreedict = src: name: locale: makeDictdDB src name "{.,bin}" locale;
 
   makeDictdDB =
     src: _name: _subdir: _locale:

@@ -136,9 +136,7 @@ in
       ];
     environment.etc =
       let
-        optionalFile =
-          p: f: v:
-          lib.optionalAttrs (v != { }) { "xdg/fcitx5/${p}".text = f v; };
+        optionalFile = p: f: v: lib.optionalAttrs (v != { }) { "xdg/fcitx5/${p}".text = f v; };
       in
       lib.attrsets.mergeAttrsList [
         (optionalFile "config" (lib.generators.toINI { }) cfg.settings.globalOptions)

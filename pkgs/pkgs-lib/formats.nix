@@ -477,9 +477,7 @@ rec {
       toConf =
         values:
         let
-          keyConfig =
-            rootKey: key: value:
-            "config ${rootKey}, ${key}, ${toElixir value}";
+          keyConfig = rootKey: key: value: "config ${rootKey}, ${key}, ${toElixir value}";
           keyConfigs = rootKey: values: mapAttrsToList (keyConfig rootKey) values;
           rootConfigs = flatten (mapAttrsToList keyConfigs values);
         in

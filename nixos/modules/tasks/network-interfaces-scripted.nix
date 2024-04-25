@@ -60,8 +60,7 @@ let
       oneBondWarnings =
         bondName: bond: mapAttrsToList (bondText bondName) (bondDeprecation.filterDeprecated bond);
       bondText =
-        bondName: optName: _:
-        "${bondName}.${optName} is deprecated, use ${bondName}.driverOptions";
+        bondName: optName: _: "${bondName}.${optName} is deprecated, use ${bondName}.driverOptions";
     in
     {
       warnings = flatten (mapAttrsToList oneBondWarnings cfg.bonds);

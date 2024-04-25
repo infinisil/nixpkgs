@@ -11,9 +11,7 @@ let
 
   yesOrNo = v: if v then "yes" else "no";
 
-  toOption =
-    indent: n: v:
-    "${indent}${toString n}: ${v}";
+  toOption = indent: n: v: "${indent}${toString n}: ${v}";
 
   toConf =
     indent: n: v:

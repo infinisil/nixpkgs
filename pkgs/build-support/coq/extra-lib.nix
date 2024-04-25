@@ -133,12 +133,8 @@ recursiveUpdate lib (rec {
 
   pred = {
     # Predicate intersection, union, and complement
-    inter =
-      p: q: x:
-      p x && q x;
-    union =
-      p: q: x:
-      p x || q x;
+    inter = p: q: x: p x && q x;
+    union = p: q: x: p x || q x;
     compl = p: x: !p x;
     true = p: true;
     false = p: false;

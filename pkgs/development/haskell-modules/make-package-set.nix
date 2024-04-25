@@ -291,9 +291,7 @@ package-set { inherit pkgs lib callPackage; } self
     in
     overrideCabal (orig: { inherit src; }) (callPackageKeepDeriver expr args);
 
-  callCabal2nix =
-    name: src: args:
-    self.callCabal2nixWithOptions name src "" args;
+  callCabal2nix = name: src: args: self.callCabal2nixWithOptions name src "" args;
 
   # : { root : Path
   #   , name : Defaulted String

@@ -983,9 +983,7 @@ rec {
 
     :::
   */
-  groupBy' =
-    op: nul: pred: lst:
-    mapAttrs (name: foldl op nul) (groupBy pred lst);
+  groupBy' = op: nul: pred: lst: mapAttrs (name: foldl op nul) (groupBy pred lst);
 
   groupBy =
     builtins.groupBy or (
@@ -1036,8 +1034,7 @@ rec {
     :::
   */
   zipListsWith =
-    f: fst: snd:
-    genList (n: f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd));
+    f: fst: snd: genList (n: f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd));
 
   /**
     Merges two lists of the same size together. If the sizes aren't the same

@@ -128,8 +128,7 @@ let
     {
       mkValueString ? mkValueStringDefault { },
     }:
-    sep: k: v:
-    "${escape [ sep ] k}${sep}${mkValueString v}";
+    sep: k: v: "${escape [ sep ] k}${sep}${mkValueString v}";
 
   ## -- FILE FORMAT GENERATORS --
 
@@ -193,9 +192,7 @@ let
     attrsOfAttrs:
     let
       # map function to string for each key val
-      mapAttrsToStringsSep =
-        sep: mapFn: attrs:
-        concatStringsSep sep (mapAttrsToList mapFn attrs);
+      mapAttrsToStringsSep = sep: mapFn: attrs: concatStringsSep sep (mapAttrsToList mapFn attrs);
       mkSection =
         sectName: sectValues:
         ''

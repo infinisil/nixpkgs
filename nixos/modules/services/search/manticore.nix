@@ -20,9 +20,7 @@ let
     attrsOfAttrs:
     let
       # map function to string for each key val
-      mapAttrsToStringsSep =
-        sep: mapFn: attrs:
-        concatStringsSep sep (mapAttrsToList mapFn attrs);
+      mapAttrsToStringsSep = sep: mapFn: attrs: concatStringsSep sep (mapAttrsToList mapFn attrs);
       mkSection =
         sectName: sectValues:
         ''

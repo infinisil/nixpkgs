@@ -46,9 +46,7 @@ rec {
       ] "unexpected type: ${builtins.typeOf val}";
 
   # Build fake/fix/keep directives from Nix types
-  phraseDirectives =
-    solution: env: val:
-    lib.mapAttrsToList (phraseDirective solution env) val;
+  phraseDirectives = solution: env: val: lib.mapAttrsToList (phraseDirective solution env) val;
 
   # Custom ~search-path routine to handle relative path strings
   relSafeBinPath =
@@ -78,14 +76,10 @@ rec {
       ] "unexpected type: ${builtins.typeOf val}";
 
   # Shell-format each env value
-  shellEnv =
-    solution: env: value:
-    lib.escapeShellArg (phraseEnvVal solution env value);
+  shellEnv = solution: env: value: lib.escapeShellArg (phraseEnvVal solution env value);
 
   # Build a single ENV=val pair
-  phraseEnv =
-    solution: env: value:
-    "RESHOLVE_${lib.toUpper env}=${shellEnv solution env value}";
+  phraseEnv = solution: env: value: "RESHOLVE_${lib.toUpper env}=${shellEnv solution env value}";
 
   /*
     Discard attrs:

@@ -73,9 +73,7 @@ let
   maybeAttrNullable = maybeAttr;
 
   # shortcut for attrByPath ["name"] default attrs
-  maybeAttr =
-    name: default: attrs:
-    attrs.${name} or default;
+  maybeAttr = name: default: attrs: attrs.${name} or default;
 
   # Return the second argument if the first one is true or the empty version
   # of the second argument.
@@ -217,8 +215,7 @@ let
     work startSet [ ] [ ];
 
   innerModifySumArgs =
-    f: x: a: b:
-    if b == null then (f a b) // x else innerModifySumArgs f x (a // b);
+    f: x: a: b: if b == null then (f a b) // x else innerModifySumArgs f x (a // b);
   modifySumArgs = f: x: innerModifySumArgs f x { };
 
   innerClosePropagation =
@@ -288,16 +285,12 @@ let
   # attribute set containing one attribute
   nvs = name: value: listToAttrs [ (nameValuePair name value) ];
   # adds / replaces an attribute of an attribute set
-  setAttr =
-    set: name: v:
-    set // (nvs name v);
+  setAttr = set: name: v: set // (nvs name v);
 
   # setAttrMerge (similar to mergeAttrsWithFunc but only merges the values of a particular name)
   # setAttrMerge "a" [] { a = [2];} (x: x ++ [3]) -> { a = [2 3]; }
   # setAttrMerge "a" [] {         } (x: x ++ [3]) -> { a = [  3]; }
-  setAttrMerge =
-    name: default: attrs: f:
-    setAttr attrs name (f (maybeAttr name default attrs));
+  setAttrMerge = name: default: attrs: f: setAttr attrs name (f (maybeAttr name default attrs));
 
   # Using f = a: b = b the result is similar to //
   # merge attributes with custom function handling the case that the attribute

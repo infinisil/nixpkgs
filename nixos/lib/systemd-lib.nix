@@ -199,8 +199,7 @@ rec {
     ) "Systemd ${group} field `${name}' cannot have value `${toString attr.${name}}'.";
 
   assertHasField =
-    name: group: attr:
-    optional (!(attr ? ${name})) "Systemd ${group} field `${name}' must exist.";
+    name: group: attr: optional (!(attr ? ${name})) "Systemd ${group} field `${name}' must exist.";
 
   assertRange =
     name: min: max: group: attr:

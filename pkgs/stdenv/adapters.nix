@@ -32,18 +32,11 @@ let
   # Wrap the original `mkDerivation` providing extra args to it.
   extendMkDerivationArgs =
     old: f:
-    withOldMkDerivation old (
-      _: mkDerivationSuper: args:
-      (mkDerivationSuper args).overrideAttrs f
-    );
+    withOldMkDerivation old (_: mkDerivationSuper: args: (mkDerivationSuper args).overrideAttrs f);
 
   # Wrap the original `mkDerivation` transforming the result.
   overrideMkDerivationResult =
-    old: f:
-    withOldMkDerivation old (
-      _: mkDerivationSuper: args:
-      f (mkDerivationSuper args)
-    );
+    old: f: withOldMkDerivation old (_: mkDerivationSuper: args: f (mkDerivationSuper args));
 in
 
 rec {

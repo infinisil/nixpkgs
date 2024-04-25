@@ -11,8 +11,7 @@ let
   ) lib.systems.examples;
 
   getExecutable =
-    pkgs: pkgFun: exec:
-    "${pkgFun pkgs}${exec}${pkgs.stdenv.hostPlatform.extensions.executable}";
+    pkgs: pkgFun: exec: "${pkgFun pkgs}${exec}${pkgs.stdenv.hostPlatform.extensions.executable}";
 
   compareTest =
     {

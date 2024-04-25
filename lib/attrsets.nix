@@ -786,9 +786,7 @@ rec {
 
     :::
   */
-  foldlAttrs =
-    f: init: set:
-    foldl' (acc: name: f acc name set.${name}) init (attrNames set);
+  foldlAttrs = f: init: set: foldl' (acc: name: f acc name set.${name}) init (attrNames set);
 
   /**
     Apply fold functions to values grouped by key.
@@ -1588,11 +1586,7 @@ rec {
     :::
   */
   recursiveUpdate =
-    lhs: rhs:
-    recursiveUpdateUntil (
-      path: lhs: rhs:
-      !(isAttrs lhs && isAttrs rhs)
-    ) lhs rhs;
+    lhs: rhs: recursiveUpdateUntil (path: lhs: rhs: !(isAttrs lhs && isAttrs rhs)) lhs rhs;
 
   /**
     Recurse into every attribute set of the first argument and check that:

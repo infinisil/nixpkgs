@@ -103,9 +103,7 @@ let
     escapeSystemdPath =
       s:
       let
-        replacePrefix =
-          p: r: s:
-          (if (hasPrefix p s) then r + (removePrefix p s) else s);
+        replacePrefix = p: r: s: (if (hasPrefix p s) then r + (removePrefix p s) else s);
         trim = s: removeSuffix "/" (removePrefix "/" s);
         normalizedPath = normalizePath s;
       in

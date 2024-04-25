@@ -160,9 +160,7 @@ in
       testEqualOne =
         path: system:
         let
-          f =
-            path: crossSystem: system:
-            toString (getAttrFromPath path (pkgsForCross crossSystem system));
+          f = path: crossSystem: system: toString (getAttrFromPath path (pkgsForCross crossSystem system));
         in
         assertTrue (f path null system == f ([ "buildPackages" ] ++ path) crossSystem system);
 

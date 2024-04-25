@@ -299,9 +299,7 @@ in
 
     :::
   */
-  flip =
-    f: a: b:
-    f b a;
+  flip = f: a: b: f b a;
 
   /**
     Apply function if the supplied argument is non-null.

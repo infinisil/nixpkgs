@@ -43,8 +43,7 @@ let
     in
     lib.concatStringsSep " " (
       lib.attrsets.foldlAttrs (
-        acc: k: v:
-        acc ++ lib.optional (v != null) "--${k}=${bevalue v}"
+        acc: k: v: acc ++ lib.optional (v != null) "--${k}=${bevalue v}"
       ) [ ] cfg.podConfig
     );
 

@@ -239,8 +239,7 @@ rec {
   # filterSource derivatives
 
   gitignoreFilterSourcePure =
-    predicate: patterns: root:
-    filterSource (gitignoreFilterPure predicate patterns root) root;
+    predicate: patterns: root: filterSource (gitignoreFilterPure predicate patterns root) root;
 
   gitignoreFilterSource =
     predicate: patterns: root:

@@ -24,8 +24,7 @@ let
     {
       mkValueString ? mkValueStringDefault { },
     }:
-    sep: k: v:
-    if null == v then "" else "${lib.strings.escape [ sep ] k}${sep}${mkValueString v}";
+    sep: k: v: if null == v then "" else "${lib.strings.escape [ sep ] k}${sep}${mkValueString v}";
 
   settingsFormat = (
     pkgs.formats.keyValue {

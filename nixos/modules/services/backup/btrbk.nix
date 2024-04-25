@@ -53,9 +53,7 @@ let
       sortedPairs = sortOn prioOf pairs;
     in
     concatMap genPair sortedPairs;
-  genSection =
-    sec: secName: value:
-    [ "${sec} ${secName}" ] ++ map (x: " " + x) (genConfig value);
+  genSection = sec: secName: value: [ "${sec} ${secName}" ] ++ map (x: " " + x) (genConfig value);
   genPair =
     { name, value }:
     if !isAttrs value then
