@@ -20,14 +20,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-nYkXL3SIjG3REE+w2vIlB04FWs7e0d4iu0hRjAPz7aU=";
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
   buildInputs =
-    [
-      oniguruma
-    ]
+    [ oniguruma ]
     ++ lib.optionals stdenv.isDarwin [
       darwin.apple_sdk.frameworks.Security
       darwin.apple_sdk.frameworks.SystemConfiguration
@@ -41,7 +37,7 @@ rustPlatform.buildRustPackage rec {
     description = "A simple API client (postman like) in your terminal";
     homepage = "https://github.com/Julien-cpsn/ATAC";
     license = licenses.mit;
-    maintainers = with maintainers; [vinnymeller];
+    maintainers = with maintainers; [ vinnymeller ];
     mainProgram = "atac";
   };
 }

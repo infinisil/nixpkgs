@@ -1,11 +1,12 @@
-{ lib
-, stdenv
-, fetchurl
-, dpkg
-, makeWrapper
-, electron
-, desktop-file-utils
-, callPackage
+{
+  lib,
+  stdenv,
+  fetchurl,
+  dpkg,
+  makeWrapper,
+  electron,
+  desktop-file-utils,
+  callPackage,
 }:
 
 let
@@ -13,7 +14,6 @@ let
   srcjson = builtins.fromJSON (builtins.readFile ./src.json);
 
   throwSystem = throw "Unsupported system: ${stdenv.hostPlatform.system}";
-
 in
 
 stdenv.mkDerivation rec {
@@ -28,7 +28,11 @@ stdenv.mkDerivation rec {
 
   dontBuild = true;
 
-  nativeBuildInputs = [ makeWrapper dpkg desktop-file-utils ];
+  nativeBuildInputs = [
+    makeWrapper
+    dpkg
+    desktop-file-utils
+  ];
 
   unpackPhase = "dpkg-deb --fsys-tarfile $src | tar -x --no-same-permissions --no-same-owner";
 
@@ -48,7 +52,7 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  passthru.updateScript = callPackage ./update.nix {};
+  passthru.updateScript = callPackage ./update.nix { };
 
   meta = with lib; {
     description = "A simple and private notes app";
@@ -58,7 +62,11 @@ stdenv.mkDerivation rec {
     '';
     homepage = "https://standardnotes.org";
     license = licenses.agpl3Only;
-    maintainers = with maintainers; [ mgregoire chuangzhu squalus ];
+    maintainers = with maintainers; [
+      mgregoire
+      chuangzhu
+      squalus
+    ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
     platforms = builtins.attrNames srcjson.deb;
     mainProgram = "standardnotes";

@@ -1,29 +1,34 @@
-{ lib
-, _experimental-update-script-combinators
-, curl
-, darwin
-, duktape
-, fetchFromGitHub
-, fetchpatch
-, gi-docgen
-, gitUpdater
-, glib
-, gobject-introspection
-, gsettings-desktop-schemas
-, makeHardcodeGsettingsPatch
-, meson
-, ninja
-, pkg-config
-, stdenv
-, substituteAll
-, vala
+{
+  lib,
+  _experimental-update-script-combinators,
+  curl,
+  darwin,
+  duktape,
+  fetchFromGitHub,
+  fetchpatch,
+  gi-docgen,
+  gitUpdater,
+  glib,
+  gobject-introspection,
+  gsettings-desktop-schemas,
+  makeHardcodeGsettingsPatch,
+  meson,
+  ninja,
+  pkg-config,
+  stdenv,
+  substituteAll,
+  vala,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "libproxy";
   version = "0.5.3";
 
-  outputs = [ "out" "dev" "devdoc" ];
+  outputs = [
+    "out"
+    "dev"
+    "devdoc"
+  ];
 
   src = fetchFromGitHub {
     owner = "libproxy";
@@ -32,28 +37,27 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-qdYB6HJkgboS8kkTvTqLy6Z3JYY5SOJsRl6nZM0iuvw=";
   };
 
-  patches = [
-    # Minor refactoring. Allows the following patches to apply without rebasing.
-    (fetchpatch {
-      url = "https://github.com/libproxy/libproxy/commit/397f4dc72607cc1bb3b584ffd3de49f8ba80491a.patch";
-      hash = "sha256-iUMBMpcVOLG+NxEj8Nd7JtKZFmoGXn0t6A2r2ayiteg=";
-      includes = [
-        "src/backend/plugins/config-gnome/config-gnome.c"
-      ];
-    })
-  ]
-  ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [
-    # Disable schema presence detection, it would fail because it cannot be autopatched,
-    # and it will be hardcoded by the next patch anyway.
-    ./skip-gsettings-detection.patch
+  patches =
+    [
+      # Minor refactoring. Allows the following patches to apply without rebasing.
+      (fetchpatch {
+        url = "https://github.com/libproxy/libproxy/commit/397f4dc72607cc1bb3b584ffd3de49f8ba80491a.patch";
+        hash = "sha256-iUMBMpcVOLG+NxEj8Nd7JtKZFmoGXn0t6A2r2ayiteg=";
+        includes = [ "src/backend/plugins/config-gnome/config-gnome.c" ];
+      })
+    ]
+    ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [
+      # Disable schema presence detection, it would fail because it cannot be autopatched,
+      # and it will be hardcoded by the next patch anyway.
+      ./skip-gsettings-detection.patch
 
-    # Hardcode path to Settings schemas for GNOME & related desktops.
-    # Otherwise every app using libproxy would need to be wrapped individually.
-    (substituteAll {
-      src = ./hardcode-gsettings.patch;
-      gds = glib.getSchemaPath gsettings-desktop-schemas;
-    })
-  ];
+      # Hardcode path to Settings schemas for GNOME & related desktops.
+      # Otherwise every app using libproxy would need to be wrapped individually.
+      (substituteAll {
+        src = ./hardcode-gsettings.patch;
+        gds = glib.getSchemaPath gsettings-desktop-schemas;
+      })
+    ];
 
   postPatch = ''
     # Fix running script that will try to install git hooks.
@@ -77,19 +81,22 @@ stdenv.mkDerivation (finalAttrs: {
     vala
   ];
 
-  buildInputs = [
-    curl
-    duktape
-  ] ++ (if stdenv.hostPlatform.isDarwin then (with darwin.apple_sdk.frameworks; [
-    Foundation
-  ]) else [
-    glib
-    gsettings-desktop-schemas
-  ]);
+  buildInputs =
+    [
+      curl
+      duktape
+    ]
+    ++ (
+      if stdenv.hostPlatform.isDarwin then
+        (with darwin.apple_sdk.frameworks; [ Foundation ])
+      else
+        [
+          glib
+          gsettings-desktop-schemas
+        ]
+    );
 
-  mesonFlags = lib.optionals stdenv.hostPlatform.isDarwin [
-    "-Dconfig-gnome=false"
-  ];
+  mesonFlags = lib.optionals stdenv.hostPlatform.isDarwin [ "-Dconfig-gnome=false" ];
 
   doCheck = !stdenv.hostPlatform.isDarwin;
 

@@ -1,13 +1,17 @@
-{ lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule rec {
   pname = "kubevpn";
   version = "2.2.6";
 
   src = fetchFromGitHub {
-    owner  = "KubeNetworks";
-    repo   = "kubevpn";
-    rev    = "v${version}";
+    owner = "KubeNetworks";
+    repo = "kubevpn";
+    rev = "v${version}";
     hash = "sha256-Z+IXSmN1V0xRnhE/PpWv9dQIwfTztJRYaftY9KCIucc=";
   };
 

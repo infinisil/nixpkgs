@@ -1,4 +1,9 @@
-{ appimageTools, lib, fetchurl, libsecret }:
+{
+  appimageTools,
+  lib,
+  fetchurl,
+  libsecret,
+}:
 
 let
   pname = "electron-mail";
@@ -10,7 +15,8 @@ let
   };
 
   appimageContents = appimageTools.extract { inherit pname version src; };
-in appimageTools.wrapType2 {
+in
+appimageTools.wrapType2 {
   inherit pname version src;
 
   extraInstallCommands = ''
@@ -20,10 +26,11 @@ in appimageTools.wrapType2 {
     cp -r ${appimageContents}/usr/share/icons $out/share
   '';
 
-  extraPkgs = pkgs: with pkgs; [
-    libsecret
-    libappindicator-gtk3
-  ];
+  extraPkgs =
+    pkgs: with pkgs; [
+      libsecret
+      libappindicator-gtk3
+    ];
 
   meta = with lib; {
     description = "ElectronMail is an Electron-based unofficial desktop client for ProtonMail";

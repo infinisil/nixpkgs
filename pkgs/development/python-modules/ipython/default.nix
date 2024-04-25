@@ -1,39 +1,40 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
+{
+  lib,
+  stdenv,
+  buildPythonPackage,
+  fetchPypi,
+  pythonOlder,
 
-# Build dependencies
-, setuptools
+  # Build dependencies
+  setuptools,
 
-# Runtime dependencies
-, decorator
-, exceptiongroup
-, jedi
-, matplotlib-inline
-, pexpect
-, prompt-toolkit
-, pygments
-, stack-data
-, traitlets
-, typing-extensions
+  # Runtime dependencies
+  decorator,
+  exceptiongroup,
+  jedi,
+  matplotlib-inline,
+  pexpect,
+  prompt-toolkit,
+  pygments,
+  stack-data,
+  traitlets,
+  typing-extensions,
 
-# Optional dependencies
-, ipykernel
-, ipyparallel
-, ipywidgets
-, matplotlib
-, nbconvert
-, nbformat
-, notebook
-, qtconsole
+  # Optional dependencies
+  ipykernel,
+  ipyparallel,
+  ipywidgets,
+  matplotlib,
+  nbconvert,
+  nbformat,
+  notebook,
+  qtconsole,
 
-# Test dependencies
-, pickleshare
-, pytest-asyncio
-, pytest7CheckHook
-, testpath
+  # Test dependencies
+  pickleshare,
+  pytest-asyncio,
+  pytest7CheckHook,
+  testpath,
 }:
 
 buildPythonPackage rec {
@@ -47,24 +48,21 @@ buildPythonPackage rec {
     hash = "sha256-dGjtr09t4+G5EuV/ZsJB5v08cJny7CE24jnhQugAJ00=";
   };
 
-  build-system = [
-    setuptools
-  ];
+  build-system = [ setuptools ];
 
-  dependencies = [
-    decorator
-    jedi
-    matplotlib-inline
-    pexpect
-    prompt-toolkit
-    pygments
-    stack-data
-    traitlets
-  ] ++ lib.optionals (pythonOlder "3.11") [
-    exceptiongroup
-  ] ++ lib.optionals (pythonOlder "3.12") [
-    typing-extensions
-  ];
+  dependencies =
+    [
+      decorator
+      jedi
+      matplotlib-inline
+      pexpect
+      prompt-toolkit
+      pygments
+      stack-data
+      traitlets
+    ]
+    ++ lib.optionals (pythonOlder "3.11") [ exceptiongroup ]
+    ++ lib.optionals (pythonOlder "3.12") [ typing-extensions ];
 
   optional-dependencies = {
     kernel = [ ipykernel ];
@@ -79,9 +77,7 @@ buildPythonPackage rec {
     matplotlib = [ matplotlib ];
   };
 
-  pythonImportsCheck = [
-    "IPython"
-  ];
+  pythonImportsCheck = [ "IPython" ];
 
   preCheck = ''
     export HOME=$TMPDIR
@@ -98,13 +94,15 @@ buildPythonPackage rec {
     testpath
   ];
 
-  disabledTests = [
-    # UnboundLocalError: local variable 'child' referenced before assignment
-    "test_system_interrupt"
-  ] ++ lib.optionals (stdenv.isDarwin) [
-    # FileNotFoundError: [Errno 2] No such file or directory: 'pbpaste'
-    "test_clipboard_get"
-  ];
+  disabledTests =
+    [
+      # UnboundLocalError: local variable 'child' referenced before assignment
+      "test_system_interrupt"
+    ]
+    ++ lib.optionals (stdenv.isDarwin) [
+      # FileNotFoundError: [Errno 2] No such file or directory: 'pbpaste'
+      "test_clipboard_get"
+    ];
 
   meta = with lib; {
     description = "IPython: Productive Interactive Computing";
@@ -112,6 +110,9 @@ buildPythonPackage rec {
     homepage = "https://ipython.org/";
     changelog = "https://github.com/ipython/ipython/blob/${version}/docs/source/whatsnew/version${lib.versions.major version}.rst";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ bjornfor fridh ];
+    maintainers = with maintainers; [
+      bjornfor
+      fridh
+    ];
   };
 }

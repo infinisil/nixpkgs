@@ -1,21 +1,22 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, numpy
-, scipy
-, matplotlib
-, pyparsing
-, tables
-, cython_0
-, python
-, sympy
-, meshio
-, mpi4py
-, psutil
-, openssh
-, pyvista
-, pytest
-, pythonOlder
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  numpy,
+  scipy,
+  matplotlib,
+  pyparsing,
+  tables,
+  cython_0,
+  python,
+  sympy,
+  meshio,
+  mpi4py,
+  psutil,
+  openssh,
+  pyvista,
+  pytest,
+  pythonOlder,
 }:
 
 buildPythonPackage rec {
@@ -58,9 +59,7 @@ buildPythonPackage rec {
     rm sfepy/tests/test_quadratures.py
   '';
 
-  nativeCheckInputs = [
-    pytest
-  ];
+  nativeCheckInputs = [ pytest ];
 
   checkPhase = ''
     export OMPI_MCA_plm_rsh_agent=${openssh}/bin/ssh

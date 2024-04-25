@@ -1,8 +1,9 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, telegram-desktop
-, nix-update-script
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  telegram-desktop,
+  nix-update-script,
 }:
 
 telegram-desktop.overrideAttrs (old: rec {
@@ -18,7 +19,7 @@ telegram-desktop.overrideAttrs (old: rec {
     hash = "sha256-9QCh7/eNPWqsOF+cjO61EnqqhAdy6+4UxZhWjfJc5gQ=";
   };
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "An unofficial Telegram Desktop providing Windows 64bit build and extra features";

@@ -1,20 +1,21 @@
-{ lib
-, buildPythonPackage
-, pythonOlder
-, fetchFromGitHub
-, azure-common
-, azure-core
-, azure-storage-blob
-, boto3
-, google-cloud-storage
-, requests
-, moto
-, paramiko
-, pytestCheckHook
-, responses
-, setuptools
-, wrapt
-, zstandard
+{
+  lib,
+  buildPythonPackage,
+  pythonOlder,
+  fetchFromGitHub,
+  azure-common,
+  azure-core,
+  azure-storage-blob,
+  boto3,
+  google-cloud-storage,
+  requests,
+  moto,
+  paramiko,
+  pytestCheckHook,
+  responses,
+  setuptools,
+  wrapt,
+  zstandard,
 }:
 
 buildPythonPackage rec {
@@ -31,43 +32,25 @@ buildPythonPackage rec {
     hash = "sha256-4HOTaF6AKXGlVCvSGKnnaH73aa4IO0aRxz03XQ4gSd8=";
   };
 
-  build-system = [
-    setuptools
-  ];
+  build-system = [ setuptools ];
 
-  dependencies = [
-    wrapt
-  ];
+  dependencies = [ wrapt ];
 
   optional-dependencies = {
-    s3 = [
-      boto3
-    ];
-    gcs = [
-      google-cloud-storage
-    ];
+    s3 = [ boto3 ];
+    gcs = [ google-cloud-storage ];
     azure = [
       azure-storage-blob
       azure-common
       azure-core
     ];
-    http = [
-      requests
-    ];
-    webhdfs = [
-      requests
-    ];
-    ssh = [
-      paramiko
-    ];
-    zst = [
-      zstandard
-    ];
+    http = [ requests ];
+    webhdfs = [ requests ];
+    ssh = [ paramiko ];
+    zst = [ zstandard ];
   };
 
-  pythonImportsCheck = [
-    "smart_open"
-  ];
+  pythonImportsCheck = [ "smart_open" ];
 
   nativeCheckInputs = [
     moto
@@ -75,9 +58,7 @@ buildPythonPackage rec {
     responses
   ] ++ lib.flatten (builtins.attrValues optional-dependencies);
 
-  pytestFlagsArray = [
-    "smart_open"
-  ];
+  pytestFlagsArray = [ "smart_open" ];
 
   disabledTests = [
     # https://github.com/RaRe-Technologies/smart_open/issues/784
@@ -88,7 +69,7 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    changelog =  "https://github.com/piskvorky/smart_open/releases/tag/v${version}";
+    changelog = "https://github.com/piskvorky/smart_open/releases/tag/v${version}";
     description = "Library for efficient streaming of very large file";
     homepage = "https://github.com/RaRe-Technologies/smart_open";
     license = licenses.mit;

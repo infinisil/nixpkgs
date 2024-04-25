@@ -1,14 +1,15 @@
-{ lib
-, stdenv
-, buildGoModule
-, fetchFromGitHub
-, makeWrapper
-, getent
-, iproute2
-, iptables
-, shadow
-, procps
-, nixosTests
+{
+  lib,
+  stdenv,
+  buildGoModule,
+  fetchFromGitHub,
+  makeWrapper,
+  getent,
+  iproute2,
+  iptables,
+  shadow,
+  procps,
+  nixosTests,
 }:
 
 let
@@ -39,22 +40,29 @@ buildGoModule {
     "-X tailscale.com/version.shortStamp=${version}"
   ];
 
-  tags = [
-    "ts_include_cli"
-  ];
+  tags = [ "ts_include_cli" ];
 
   doCheck = false;
 
-  postInstall = ''
-    ln -s $out/bin/tailscaled $out/bin/tailscale
-  '' + lib.optionalString stdenv.isLinux ''
-    wrapProgram $out/bin/tailscaled \
-      --prefix PATH : ${lib.makeBinPath [ iproute2 iptables getent shadow ]} \
-      --suffix PATH : ${lib.makeBinPath [ procps ]}
+  postInstall =
+    ''
+      ln -s $out/bin/tailscaled $out/bin/tailscale
+    ''
+    + lib.optionalString stdenv.isLinux ''
+      wrapProgram $out/bin/tailscaled \
+        --prefix PATH : ${
+          lib.makeBinPath [
+            iproute2
+            iptables
+            getent
+            shadow
+          ]
+        } \
+        --suffix PATH : ${lib.makeBinPath [ procps ]}
 
-    sed -i -e "s#/usr/sbin#$out/bin#" -e "/^EnvironmentFile/d" ./cmd/tailscaled/tailscaled.service
-    install -D -m0444 -t $out/lib/systemd/system ./cmd/tailscaled/tailscaled.service
-  '';
+      sed -i -e "s#/usr/sbin#$out/bin#" -e "/^EnvironmentFile/d" ./cmd/tailscaled/tailscaled.service
+      install -D -m0444 -t $out/lib/systemd/system ./cmd/tailscaled/tailscaled.service
+    '';
 
   passthru.tests = {
     inherit (nixosTests) headscale;
@@ -65,6 +73,12 @@ buildGoModule {
     description = "The node agent for Tailscale, a mesh VPN built on WireGuard";
     license = licenses.bsd3;
     mainProgram = "tailscale";
-    maintainers = with maintainers; [ danderson mbaillie twitchyliquid64 jk mfrw ];
+    maintainers = with maintainers; [
+      danderson
+      mbaillie
+      twitchyliquid64
+      jk
+      mfrw
+    ];
   };
 }

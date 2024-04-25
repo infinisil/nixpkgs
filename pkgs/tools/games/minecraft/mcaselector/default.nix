@@ -1,9 +1,10 @@
-{ lib
-, stdenvNoCC
-, fetchurl
-, makeWrapper
-, wrapGAppsHook
-, jre
+{
+  lib,
+  stdenvNoCC,
+  fetchurl,
+  makeWrapper,
+  wrapGAppsHook,
+  jre,
 }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
@@ -18,7 +19,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   dontUnpack = true;
   dontBuild = true;
 
-  nativeBuildInputs = [ jre makeWrapper wrapGAppsHook ];
+  nativeBuildInputs = [
+    jre
+    makeWrapper
+    wrapGAppsHook
+  ];
 
   dontWrapGApps = true;
 

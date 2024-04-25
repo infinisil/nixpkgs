@@ -1,9 +1,10 @@
-{ lib
-, fetchFromGitHub
-, buildNpmPackage
-, php83
-, nixosTests
-, dataDir ? "/var/lib/firefly-iii"
+{
+  lib,
+  fetchFromGitHub,
+  buildNpmPackage,
+  php83,
+  nixosTests,
+  dataDir ? "/var/lib/firefly-iii",
 }:
 
 let

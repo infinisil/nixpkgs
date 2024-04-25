@@ -1,19 +1,20 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, rustPlatform
-, rustc
-, wasm-pack
-, wasm-bindgen-cli
-, binaryen
+{
+  lib,
+  stdenv,
+  fetchFromGitLab,
+  rustPlatform,
+  rustc,
+  wasm-pack,
+  wasm-bindgen-cli,
+  binaryen,
 
-, fetchYarnDeps
-, yarn
-, fixup_yarn_lock
-, nodejs
-, asar
+  fetchYarnDeps,
+  yarn,
+  fixup_yarn_lock,
+  nodejs,
+  asar,
 
-, tetrio-src
+  tetrio-src,
 }:
 
 let
@@ -75,7 +76,10 @@ let
       description = "A self contained toolkit for creating, editing, and previewing TPSE files";
       homepage = "https://gitlab.com/UniQMG/tpsecore";
       license = lib.licenses.mit;
-      maintainers = with lib.maintainers; [ huantian wackbyte ];
+      maintainers = with lib.maintainers; [
+        huantian
+        wackbyte
+      ];
       platforms = lib.platforms.linux;
     };
   };
@@ -84,7 +88,6 @@ let
     yarnLock = ./yarn.lock;
     hash = "sha256-VYUh9y6PRc1OTLELkqCxP89Xbesv3Nu+eUq6fkuoQHE=";
   };
-
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tetrio-plus";
@@ -154,7 +157,10 @@ stdenv.mkDerivation (finalAttrs: {
       # is a modified version of tetrio-desktop, which is unfree.
       lib.licenses.unfree
     ];
-    maintainers = with lib.maintainers; [ huantian wackbyte ];
+    maintainers = with lib.maintainers; [
+      huantian
+      wackbyte
+    ];
     platforms = lib.platforms.linux;
   };
 })

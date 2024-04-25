@@ -1,65 +1,69 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, pkg-config
-, installShellFiles
-, buildGoModule
-, gpgme
-, lvm2
-, btrfs-progs
-, libapparmor
-, libseccomp
-, libselinux
-, systemd
-, go-md2man
-, nixosTests
-, python3
-, makeWrapper
-, runtimeShell
-, symlinkJoin
-, substituteAll
-, extraPackages ? [ ]
-, runc
-, crun
-, gvisor
-, youki
-, conmon
-, slirp4netns
-, fuse-overlayfs
-, util-linux
-, iptables
-, iproute2
-, catatonit
-, gvproxy
-, aardvark-dns
-, netavark
-, passt
-, testers
-, podman
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  pkg-config,
+  installShellFiles,
+  buildGoModule,
+  gpgme,
+  lvm2,
+  btrfs-progs,
+  libapparmor,
+  libseccomp,
+  libselinux,
+  systemd,
+  go-md2man,
+  nixosTests,
+  python3,
+  makeWrapper,
+  runtimeShell,
+  symlinkJoin,
+  substituteAll,
+  extraPackages ? [ ],
+  runc,
+  crun,
+  gvisor,
+  youki,
+  conmon,
+  slirp4netns,
+  fuse-overlayfs,
+  util-linux,
+  iptables,
+  iproute2,
+  catatonit,
+  gvproxy,
+  aardvark-dns,
+  netavark,
+  passt,
+  testers,
+  podman,
 }:
 let
   # do not add qemu to this wrapper, store paths get written to the podman vm config and break when GCed
 
-  binPath = lib.makeBinPath (lib.optionals stdenv.isLinux [
-    fuse-overlayfs
-    util-linux
-    iptables
-    iproute2
-  ] ++ extraPackages);
+  binPath = lib.makeBinPath (
+    lib.optionals stdenv.isLinux [
+      fuse-overlayfs
+      util-linux
+      iptables
+      iproute2
+    ]
+    ++ extraPackages
+  );
 
   helpersBin = symlinkJoin {
     name = "podman-helper-binary-wrapper";
 
     # this only works for some binaries, others may need to be be added to `binPath` or in the modules
-    paths = [
-      gvproxy
-    ] ++ lib.optionals stdenv.isLinux [
-      aardvark-dns
-      catatonit # added here for the pause image and also set in `containersConf` for `init_path`
-      netavark
-      slirp4netns
-      passt
-    ];
+    paths =
+      [ gvproxy ]
+      ++ lib.optionals stdenv.isLinux [
+        aardvark-dns
+        catatonit # added here for the pause image and also set in `containersConf` for `init_path`
+        netavark
+        slirp4netns
+        passt
+      ];
   };
 in
 buildGoModule rec {
@@ -73,23 +77,40 @@ buildGoModule rec {
     hash = "sha256-8Swqwyzu/WI9mG21bLF81Kk4kS2Ltg0GV9G3EcG/FnU=";
   };
 
-  patches = [
-    # we intentionally don't build and install the helper so we shouldn't display messages to users about it
-    ./rm-podman-mac-helper-msg.patch
-  ] ++ lib.optionals stdenv.isLinux [
-    (substituteAll {
-      src = ./hardcode-paths.patch;
-      inherit crun runc gvisor youki conmon;
-    })
-  ];
+  patches =
+    [
+      # we intentionally don't build and install the helper so we shouldn't display messages to users about it
+      ./rm-podman-mac-helper-msg.patch
+    ]
+    ++ lib.optionals stdenv.isLinux [
+      (substituteAll {
+        src = ./hardcode-paths.patch;
+        inherit
+          crun
+          runc
+          gvisor
+          youki
+          conmon
+          ;
+      })
+    ];
 
   vendorHash = null;
 
   doCheck = false;
 
-  outputs = [ "out" "man" ];
+  outputs = [
+    "out"
+    "man"
+  ];
 
-  nativeBuildInputs = [ pkg-config go-md2man installShellFiles makeWrapper python3 ];
+  nativeBuildInputs = [
+    pkg-config
+    go-md2man
+    installShellFiles
+    makeWrapper
+    python3
+  ];
 
   buildInputs = lib.optionals stdenv.isLinux [
     btrfs-progs
@@ -108,22 +129,32 @@ buildGoModule rec {
     runHook preBuild
     patchShebangs .
     substituteInPlace Makefile --replace "/bin/bash" "${runtimeShell}"
-    ${if stdenv.isDarwin then ''
-      make podman-remote # podman-mac-helper uses FHS paths
-    '' else ''
-      make bin/podman bin/rootlessport bin/quadlet
-    ''}
+    ${
+      if stdenv.isDarwin then
+        ''
+          make podman-remote # podman-mac-helper uses FHS paths
+        ''
+      else
+        ''
+          make bin/podman bin/rootlessport bin/quadlet
+        ''
+    }
     make docs
     runHook postBuild
   '';
 
   installPhase = ''
     runHook preInstall
-    ${if stdenv.isDarwin then ''
-      install bin/darwin/podman -Dt $out/bin
-    '' else ''
-      make install.bin install.systemd
-    ''}
+    ${
+      if stdenv.isDarwin then
+        ''
+          install bin/darwin/podman -Dt $out/bin
+        ''
+      else
+        ''
+          make install.bin install.systemd
+        ''
+    }
     make install.completions install.man
     mkdir -p ${HELPER_BINARIES_DIR}
     ln -s ${helpersBin}/bin/* ${HELPER_BINARIES_DIR}
@@ -137,19 +168,19 @@ buildGoModule rec {
     patchelf --set-rpath "${lib.makeLibraryPath [ systemd ]}":$RPATH $out/bin/.podman-wrapped
   '';
 
-  passthru.tests = {
-    version = testers.testVersion {
-      package = podman;
-      command = "HOME=$TMPDIR podman --version";
+  passthru.tests =
+    {
+      version = testers.testVersion {
+        package = podman;
+        command = "HOME=$TMPDIR podman --version";
+      };
+    }
+    // lib.optionalAttrs stdenv.isLinux {
+      inherit (nixosTests) podman;
+      # related modules
+      inherit (nixosTests) podman-tls-ghostunnel;
+      oci-containers-podman = nixosTests.oci-containers.podman;
     };
-  } // lib.optionalAttrs stdenv.isLinux {
-    inherit (nixosTests) podman;
-    # related modules
-    inherit (nixosTests)
-      podman-tls-ghostunnel
-      ;
-    oci-containers-podman = nixosTests.oci-containers.podman;
-  };
 
   meta = with lib; {
     homepage = "https://podman.io/";

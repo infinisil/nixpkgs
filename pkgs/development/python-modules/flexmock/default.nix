@@ -1,11 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytestCheckHook
-, pythonOlder
-, poetry-core
-, teamcity-messages
-, testtools
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pytestCheckHook,
+  pythonOlder,
+  poetry-core,
+  teamcity-messages,
+  testtools,
 }:
 
 buildPythonPackage rec {
@@ -20,9 +21,7 @@ buildPythonPackage rec {
     hash = "sha256-YdBvPRRCuBW3qoWh9HvoONBW9fXRTO/teuv7A0c9FKs=";
   };
 
-  build-system = [
-    poetry-core
-  ];
+  build-system = [ poetry-core ];
 
   nativeCheckInputs = [
     pytestCheckHook
@@ -30,9 +29,7 @@ buildPythonPackage rec {
     testtools
   ];
 
-  pythonImportsCheck = [
-    "flexmock"
-  ];
+  pythonImportsCheck = [ "flexmock" ];
 
   meta = with lib; {
     description = "Testing library that makes it easy to create mocks,stubs and fakes";

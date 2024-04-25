@@ -1,9 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, setuptools
-, marshmallow
-, pytest7CheckHook
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools,
+  marshmallow,
+  pytest7CheckHook,
 }:
 
 buildPythonPackage rec {
@@ -22,17 +23,11 @@ buildPythonPackage rec {
     sed -i '/addopts/d' tox.ini
   '';
 
-  build-system = [
-    setuptools
-  ];
+  build-system = [ setuptools ];
 
-  dependencies = [
-    marshmallow
-  ];
+  dependencies = [ marshmallow ];
 
-  nativeCheckInputs = [
-    pytest7CheckHook
-  ];
+  nativeCheckInputs = [ pytest7CheckHook ];
 
   meta = with lib; {
     description = "Enum field for Marshmallow";

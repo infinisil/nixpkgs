@@ -1,10 +1,11 @@
-{ lib
-, buildHomeAssistantComponent
-, fetchFromGitHub
-, hap-python
-, micloud
-, pyqrcode
-, python-miio
+{
+  lib,
+  buildHomeAssistantComponent,
+  fetchFromGitHub,
+  hap-python,
+  micloud,
+  pyqrcode,
+  python-miio,
 }:
 
 buildHomeAssistantComponent rec {

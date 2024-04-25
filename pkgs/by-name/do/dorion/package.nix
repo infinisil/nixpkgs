@@ -1,14 +1,15 @@
-{ lib
-, stdenv
-, fetchurl
-, autoPatchelfHook
-, dpkg
-, glib-networking
-, gst_all_1
-, libappindicator
-, libayatana-appindicator
-, webkitgtk
-, wrapGAppsHook
+{
+  lib,
+  stdenv,
+  fetchurl,
+  autoPatchelfHook,
+  dpkg,
+  glib-networking,
+  gst_all_1,
+  libappindicator,
+  libayatana-appindicator,
+  webkitgtk,
+  wrapGAppsHook,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -16,7 +17,7 @@ stdenv.mkDerivation (finalAttrs: {
   version = "4.2.0";
 
   src = fetchurl {
-    url = "https://github.com/SpikeHD/Dorion/releases/download/v${finalAttrs.version }/Dorion_${finalAttrs.version}_amd64.deb";
+    url = "https://github.com/SpikeHD/Dorion/releases/download/v${finalAttrs.version}/Dorion_${finalAttrs.version}_amd64.deb";
     hash = "sha256-QqjRxAx2hDd8atpXuof8AVWtK3o8K77Se2b2CyOBMOw=";
   };
 

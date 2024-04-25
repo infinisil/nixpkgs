@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 with python3.pkgs;
@@ -21,13 +22,9 @@ buildPythonPackage rec {
     "typer"
   ];
 
-  build-system = [
-    poetry-core
-  ];
+  build-system = [ poetry-core ];
 
-  nativeBuildInputs = [
-    pythonRelaxDepsHook
-  ];
+  nativeBuildInputs = [ pythonRelaxDepsHook ];
 
   dependencies = [
     colorama
@@ -41,9 +38,7 @@ buildPythonPackage rec {
   # No tests available
   doCheck = false;
 
-  pythonImportsCheck = [
-    "shell_genie"
-  ];
+  pythonImportsCheck = [ "shell_genie" ];
 
   meta = with lib; {
     description = "Describe your shell commands in natural language";

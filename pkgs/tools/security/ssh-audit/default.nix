@@ -1,7 +1,8 @@
-{ lib
-, fetchFromGitHub
-, nixosTests
-, python3Packages
+{
+  lib,
+  fetchFromGitHub,
+  nixosTests,
+  python3Packages,
 }:
 
 python3Packages.buildPythonApplication rec {
@@ -16,9 +17,7 @@ python3Packages.buildPythonApplication rec {
     sha256 = "sha256-g5h0A1BJqzOZaSVUxyi7IsCcrbto4+7+HpiVjFZy50Y=";
   };
 
-  nativeCheckInputs = with python3Packages; [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = with python3Packages; [ pytestCheckHook ];
 
   passthru.tests = {
     inherit (nixosTests) ssh-audit;
@@ -31,6 +30,9 @@ python3Packages.buildPythonApplication rec {
     changelog = "https://github.com/jtesta/ssh-audit/releases/tag/v${version}";
     license = licenses.mit;
     platforms = platforms.all;
-    maintainers = with maintainers; [ tv SuperSandro2000 ];
+    maintainers = with maintainers; [
+      tv
+      SuperSandro2000
+    ];
   };
 }

@@ -1,4 +1,13 @@
-{ lib, stdenv, appimageTools, autoPatchelfHook, zlib, fetchurl, undmg, libgcc }:
+{
+  lib,
+  stdenv,
+  appimageTools,
+  autoPatchelfHook,
+  zlib,
+  fetchurl,
+  undmg,
+  libgcc,
+}:
 
 let
   pname = "radicle-upstream";
@@ -14,7 +23,8 @@ let
       sha256 = "sha256-EuWGbn6qggi8/9Rci8iaXfuVKE+QXb1BHEYDvotR/q4=";
     };
   };
-  src = srcs.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
+  src =
+    srcs.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
 
   contents = appimageTools.extract { inherit pname version src; };
 
@@ -24,7 +34,10 @@ let
     src = contents;
 
     nativeBuildInputs = [ autoPatchelfHook ];
-    buildInputs = [ libgcc zlib ];
+    buildInputs = [
+      libgcc
+      zlib
+    ];
 
     installPhase = ''
       mkdir -p $out/bin/
@@ -36,7 +49,12 @@ let
   # v0.1.0) uses unstable rust features, making a from source build impossible at
   # this time. See this PR for discussion: https://github.com/NixOS/nixpkgs/pull/105674
   linux = appimageTools.wrapType2 {
-    inherit pname version src meta;
+    inherit
+      pname
+      version
+      src
+      meta
+      ;
 
     extraInstallCommands = ''
       # this automatically adds the git-remote-rad binary to the users `PATH` so
@@ -55,7 +73,12 @@ let
   };
 
   darwin = stdenv.mkDerivation {
-    inherit pname version src meta;
+    inherit
+      pname
+      version
+      src
+      meta
+      ;
 
     nativeBuildInputs = [ undmg ];
 
@@ -72,11 +95,12 @@ let
     homepage = "https://radicle.xyz/";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ d-xo ];
-    platforms = [ "x86_64-linux" "x86_64-darwin" ];
+    platforms = [
+      "x86_64-linux"
+      "x86_64-darwin"
+    ];
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     broken = stdenv.isLinux; # last successful build 2023-04-11
   };
 in
-if stdenv.isDarwin
-then darwin
-else linux
+if stdenv.isDarwin then darwin else linux

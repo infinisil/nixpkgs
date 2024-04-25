@@ -7,29 +7,34 @@
   nvidia-driver,
   runtimeShell,
   writeScriptBin,
-}: let
-  mkMount = {hostPath, containerPath, mountOptions}: {
-    inherit hostPath containerPath;
-    options = mountOptions;
-  };
+}:
+let
+  mkMount =
+    {
+      hostPath,
+      containerPath,
+      mountOptions,
+    }:
+    {
+      inherit hostPath containerPath;
+      options = mountOptions;
+    };
   jqAddMountExpression = ".containerEdits.mounts[.containerEdits.mounts | length] |= . +";
-  allJqMounts = lib.concatMap
-    (mount:
-      ["${lib.getExe jq} '${jqAddMountExpression} ${builtins.toJSON (mkMount mount)}'"])
-    mounts;
+  allJqMounts = lib.concatMap (mount: [
+    "${lib.getExe jq} '${jqAddMountExpression} ${builtins.toJSON (mkMount mount)}'"
+  ]) mounts;
 in
-writeScriptBin "nvidia-cdi-generator"
-''
-#! ${runtimeShell}
+writeScriptBin "nvidia-cdi-generator" ''
+  #! ${runtimeShell}
 
-function cdiGenerate {
-  ${lib.getExe' nvidia-container-toolkit "nvidia-ctk"} cdi generate \
-    --format json \
-    --ldconfig-path ${lib.getExe' glibc "ldconfig"} \
-    --library-search-path ${lib.getLib nvidia-driver}/lib \
-    --nvidia-ctk-path ${lib.getExe' nvidia-container-toolkit "nvidia-ctk"}
-}
+  function cdiGenerate {
+    ${lib.getExe' nvidia-container-toolkit "nvidia-ctk"} cdi generate \
+      --format json \
+      --ldconfig-path ${lib.getExe' glibc "ldconfig"} \
+      --library-search-path ${lib.getLib nvidia-driver}/lib \
+      --nvidia-ctk-path ${lib.getExe' nvidia-container-toolkit "nvidia-ctk"}
+  }
 
-cdiGenerate | \
-  ${lib.concatStringsSep " | " allJqMounts} > $RUNTIME_DIRECTORY/nvidia-container-toolkit.json
+  cdiGenerate | \
+    ${lib.concatStringsSep " | " allJqMounts} > $RUNTIME_DIRECTORY/nvidia-container-toolkit.json
 ''

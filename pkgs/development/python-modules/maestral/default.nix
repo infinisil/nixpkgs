@@ -1,29 +1,30 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, makePythonPath
-, pythonOlder
-, python
-, click
-, dbus-python
-, desktop-notifier
-, dropbox
-, fasteners
-, importlib-metadata
-, keyring
-, keyrings-alt
-, packaging
-, pathspec
-, pyro5
-, requests
-, rich
-, setuptools
-, survey
-, typing-extensions
-, watchdog
-, xattr
-, pytestCheckHook
-, nixosTests
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  makePythonPath,
+  pythonOlder,
+  python,
+  click,
+  dbus-python,
+  desktop-notifier,
+  dropbox,
+  fasteners,
+  importlib-metadata,
+  keyring,
+  keyrings-alt,
+  packaging,
+  pathspec,
+  pyro5,
+  requests,
+  rich,
+  setuptools,
+  survey,
+  typing-extensions,
+  watchdog,
+  xattr,
+  pytestCheckHook,
+  nixosTests,
 }:
 
 buildPythonPackage rec {
@@ -67,9 +68,7 @@ buildPythonPackage rec {
     "--prefix PYTHONPATH : $out/${python.sitePackages}"
   ];
 
-  nativeCheckInputs = [
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   preCheck = ''
     export HOME=$(mktemp -d)
@@ -92,9 +91,7 @@ buildPythonPackage rec {
     "test_move_preserves_xattrs"
   ];
 
-  pythonImportsCheck = [
-    "maestral"
-  ];
+  pythonImportsCheck = [ "maestral" ];
 
   passthru.tests.maestral = nixosTests.maestral;
 
@@ -104,7 +101,10 @@ buildPythonPackage rec {
     homepage = "https://maestral.app";
     changelog = "https://github.com/samschott/maestral/releases/tag/v${version}";
     license = licenses.mit;
-    maintainers = with maintainers; [ peterhoeg sfrijters ];
+    maintainers = with maintainers; [
+      peterhoeg
+      sfrijters
+    ];
     platforms = platforms.unix;
   };
 }

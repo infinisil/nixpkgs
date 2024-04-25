@@ -1,8 +1,9 @@
-{ lib
-, buildHomeAssistantComponent
-, fetchFromGitHub
-, aiofiles
-, broadlink
+{
+  lib,
+  buildHomeAssistantComponent,
+  fetchFromGitHub,
+  aiofiles,
+  broadlink,
 }:
 
 buildHomeAssistantComponent rec {

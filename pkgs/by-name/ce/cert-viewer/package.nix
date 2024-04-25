@@ -1,7 +1,8 @@
-{ buildGoModule
-, fetchFromGitHub
-, lib
-, installShellFiles
+{
+  buildGoModule,
+  fetchFromGitHub,
+  lib,
+  installShellFiles,
 }:
 
 buildGoModule rec {
@@ -17,9 +18,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-jNT04bYH5L/Zcfvel673zr2UJLayCO443tvBGZjrBZk=";
 
-  nativeBuildInputs = [
-    installShellFiles
-  ];
+  nativeBuildInputs = [ installShellFiles ];
 
   postInstall = ''
     $out/bin/cert-viewer --help-man > cert-viewer.1

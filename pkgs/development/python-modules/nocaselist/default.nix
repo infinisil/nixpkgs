@@ -1,9 +1,10 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytest7CheckHook
-, pythonOlder
-, six
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pytest7CheckHook,
+  pythonOlder,
+  six,
 }:
 
 buildPythonPackage rec {
@@ -18,17 +19,11 @@ buildPythonPackage rec {
     hash = "sha256-RWqgAMZ3fF0hsCnFLlMvlDKNT7TxWtKk3T3WLbMLOJI=";
   };
 
-  propagatedBuildInputs = [
-    six
-  ];
+  propagatedBuildInputs = [ six ];
 
-  nativeCheckInputs = [
-    pytest7CheckHook
-  ];
+  nativeCheckInputs = [ pytest7CheckHook ];
 
-  pythonImportsCheck = [
-    "nocaselist"
-  ];
+  pythonImportsCheck = [ "nocaselist" ];
 
   meta = with lib; {
     description = "A case-insensitive list for Python";

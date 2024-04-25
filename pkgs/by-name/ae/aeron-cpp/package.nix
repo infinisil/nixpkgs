@@ -11,7 +11,7 @@
   makeWrapper,
   patchelf,
   stdenv,
-  zlib
+  zlib,
 }:
 
 let
@@ -25,7 +25,6 @@ let
   };
 
   sbeAll = sbeAll_1_31_1;
-
 in
 
 stdenv.mkDerivation {
@@ -125,4 +124,3 @@ stdenv.mkDerivation {
     ];
   };
 }
-

@@ -1,11 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pythonOlder
-, hatchling
-, hatch-jupyter-builder
-, anywidget
-, pytestCheckHook
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pythonOlder,
+  hatchling,
+  hatch-jupyter-builder,
+  anywidget,
+  pytestCheckHook,
 }:
 
 buildPythonPackage rec {

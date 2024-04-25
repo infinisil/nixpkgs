@@ -14,15 +14,15 @@
   installShellFiles,
 }:
 stdenv.mkDerivation rec {
-    pname = "taskwarrior";
-    version = "3.0.0-unstable-2024-04-07";
-    src = fetchFromGitHub {
-      owner = "GothenburgBitFactory";
-      repo = "taskwarrior";
-      rev = "fd306712b85dda3ea89de4e617aebeb98b2ede80";
-      fetchSubmodules = true;
-      sha256 = "sha256-vzfHq/LHfnTx6CVGFCuO6W5aSqj1jVqldMdmyciSDDk=";
-    };
+  pname = "taskwarrior";
+  version = "3.0.0-unstable-2024-04-07";
+  src = fetchFromGitHub {
+    owner = "GothenburgBitFactory";
+    repo = "taskwarrior";
+    rev = "fd306712b85dda3ea89de4e617aebeb98b2ede80";
+    fetchSubmodules = true;
+    sha256 = "sha256-vzfHq/LHfnTx6CVGFCuO6W5aSqj1jVqldMdmyciSDDk=";
+  };
 
   postPatch = ''
     substituteInPlace src/commands/CmdNews.cpp \
@@ -76,7 +76,11 @@ stdenv.mkDerivation rec {
     description = "Highly flexible command-line tool to manage TODO lists";
     homepage = "https://taskwarrior.org";
     license = licenses.mit;
-    maintainers = with maintainers; [marcweber oxalica mlaradji];
+    maintainers = with maintainers; [
+      marcweber
+      oxalica
+      mlaradji
+    ];
     mainProgram = "task";
     platforms = platforms.unix;
   };

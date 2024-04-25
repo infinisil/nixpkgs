@@ -1,4 +1,4 @@
-{ lib, version, }:
+{ lib, version }:
 
 let
   inherit (lib)
@@ -24,5 +24,4 @@ in
 
   platforms = platforms.unix;
   maintainers = if versionOlder version "5" then [ maintainers.veprbl ] else teams.gcc.members;
-
 }

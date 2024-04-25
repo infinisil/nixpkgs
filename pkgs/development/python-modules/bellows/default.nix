@@ -1,19 +1,20 @@
-{ lib
-, async-timeout
-, buildPythonPackage
-, click
-, click-log
-, fetchFromGitHub
-, fetchpatch2
-, pure-pcapy3
-, pyserial-asyncio
-, pytest-asyncio
-, pytest-timeout
-, pytestCheckHook
-, pythonOlder
-, setuptools
-, voluptuous
-, zigpy
+{
+  lib,
+  async-timeout,
+  buildPythonPackage,
+  click,
+  click-log,
+  fetchFromGitHub,
+  fetchpatch2,
+  pure-pcapy3,
+  pyserial-asyncio,
+  pytest-asyncio,
+  pytest-timeout,
+  pytestCheckHook,
+  pythonOlder,
+  setuptools,
+  voluptuous,
+  zigpy,
 }:
 
 buildPythonPackage rec {
@@ -43,9 +44,7 @@ buildPythonPackage rec {
       --replace-fail 'dynamic = ["version"]' 'version = "${version}"'
   '';
 
-  build-system = [
-    setuptools
-  ];
+  build-system = [ setuptools ];
 
   dependencies = [
     click
@@ -54,9 +53,7 @@ buildPythonPackage rec {
     pyserial-asyncio
     voluptuous
     zigpy
-  ] ++ lib.optionals (pythonOlder "3.11") [
-    async-timeout
-  ];
+  ] ++ lib.optionals (pythonOlder "3.11") [ async-timeout ];
 
   nativeCheckInputs = [
     pytestCheckHook
@@ -64,9 +61,7 @@ buildPythonPackage rec {
     pytest-timeout
   ];
 
-  pythonImportsCheck = [
-    "bellows"
-  ];
+  pythonImportsCheck = [ "bellows" ];
 
   meta = with lib; {
     description = "Python module to implement EZSP for EmberZNet devices";

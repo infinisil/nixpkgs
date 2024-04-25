@@ -1,13 +1,14 @@
-{ lib
-, rustPlatform
-, fetchFromGitLab
-, pkg-config
-, sqlite
-, stdenv
-, darwin
-, nixosTests
-, rocksdb_8_3
-, rust-jemalloc-sys
+{
+  lib,
+  rustPlatform,
+  fetchFromGitLab,
+  pkg-config,
+  sqlite,
+  stdenv,
+  darwin,
+  nixosTests,
+  rocksdb_8_3,
+  rust-jemalloc-sys,
 }:
 
 let
@@ -49,9 +50,7 @@ rustPlatform.buildRustPackage rec {
   buildInputs = [
     sqlite
     rust-jemalloc-sys
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-  ];
+  ] ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   env = {
     ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
@@ -69,7 +68,11 @@ rustPlatform.buildRustPackage rec {
     description = "A Matrix homeserver written in Rust";
     homepage = "https://conduit.rs/";
     license = licenses.asl20;
-    maintainers = with maintainers; [ pstn piegames pimeys ];
+    maintainers = with maintainers; [
+      pstn
+      piegames
+      pimeys
+    ];
     mainProgram = "conduit";
   };
 }

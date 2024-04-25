@@ -1,13 +1,14 @@
-{ lib
-, stdenv
-, fetchgit
-, ant
-, jdk
-, stripJavaArchivesHook
-, makeWrapper
-, jre
-, coreutils
-, which
+{
+  lib,
+  stdenv,
+  fetchgit,
+  ant,
+  jdk,
+  stripJavaArchivesHook,
+  makeWrapper,
+  jre,
+  coreutils,
+  which,
 }:
 
 stdenv.mkDerivation {
@@ -51,7 +52,13 @@ stdenv.mkDerivation {
         --replace-fail "/usr/share/projectlibre" "$out/share/projectlibre"
 
     wrapProgram $out/bin/projectlibre \
-        --prefix PATH : ${lib.makeBinPath [ jre coreutils which ]}
+        --prefix PATH : ${
+          lib.makeBinPath [
+            jre
+            coreutils
+            which
+          ]
+        }
 
     runHook postInstall
   '';
@@ -61,8 +68,10 @@ stdenv.mkDerivation {
     homepage = "https://www.projectlibre.com/";
     license = lib.licenses.cpal10;
     mainProgram = "projectlibre";
-    maintainers = with lib.maintainers; [ Mogria tomasajt ];
+    maintainers = with lib.maintainers; [
+      Mogria
+      tomasajt
+    ];
     platforms = jre.meta.platforms;
   };
 }
-

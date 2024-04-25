@@ -1,8 +1,9 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pytest7CheckHook
-, six
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pytest7CheckHook,
+  six,
 }:
 
 buildPythonPackage rec {
@@ -15,17 +16,11 @@ buildPythonPackage rec {
     hash = "sha256-lgy2mfEgnagKw546tQqnNC/oyp9wYGwjRHpRBVBDXlA=";
   };
 
-  propagatedBuildInputs = [
-    six
-  ];
+  propagatedBuildInputs = [ six ];
 
-  nativeCheckInputs = [
-    pytest7CheckHook
-  ];
+  nativeCheckInputs = [ pytest7CheckHook ];
 
-  pythonImportsCheck = [
-    "nocasedict"
-  ];
+  pythonImportsCheck = [ "nocasedict" ];
 
   meta = with lib; {
     description = "A case-insensitive ordered dictionary for Python";

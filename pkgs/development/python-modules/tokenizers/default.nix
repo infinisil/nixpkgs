@@ -1,22 +1,23 @@
-{ lib
-, stdenv
-, linkFarm
-, buildPythonPackage
-, cargo
-, datasets
-, fetchFromGitHub
-, fetchurl
-, libiconv
-, numpy
-, openssl
-, pkg-config
-, pytestCheckHook
-, pythonOlder
-, requests
-, rustPlatform
-, rustc
-, Security
-, setuptools-rust
+{
+  lib,
+  stdenv,
+  linkFarm,
+  buildPythonPackage,
+  cargo,
+  datasets,
+  fetchFromGitHub,
+  fetchurl,
+  libiconv,
+  numpy,
+  openssl,
+  pkg-config,
+  pytestCheckHook,
+  pythonOlder,
+  requests,
+  rustPlatform,
+  rustc,
+  Security,
+  setuptools-rust,
 }:
 
 let
@@ -75,9 +76,7 @@ buildPythonPackage rec {
     hash = "sha256-sKEAt46cdme821tzz9WSKnQb3hPmFJ4zvHgBNRxjEuk=";
   };
 
-  cargoDeps = rustPlatform.importCargoLock {
-    lockFile = ./Cargo.lock;
-  };
+  cargoDeps = rustPlatform.importCargoLock { lockFile = ./Cargo.lock; };
 
   sourceRoot = "${src.name}/bindings/python";
 
@@ -90,12 +89,12 @@ buildPythonPackage rec {
     rustc
   ];
 
-  buildInputs = [
-    openssl
-  ] ++ lib.optionals stdenv.isDarwin [
-    libiconv
-    Security
-  ];
+  buildInputs =
+    [ openssl ]
+    ++ lib.optionals stdenv.isDarwin [
+      libiconv
+      Security
+    ];
 
   # Cargo.lock is outdated
   # TODO: remove at next release
@@ -103,9 +102,7 @@ buildPythonPackage rec {
     cargo update --offline
   '';
 
-  dependencies = [
-    numpy
-  ];
+  dependencies = [ numpy ];
 
   nativeCheckInputs = [
     datasets
@@ -123,9 +120,7 @@ buildPythonPackage rec {
     export HOME=$(mktemp -d);
   '';
 
-  pythonImportsCheck = [
-    "tokenizers"
-  ];
+  pythonImportsCheck = [ "tokenizers" ];
 
   disabledTests = [
     # Downloads data using the datasets module

@@ -1,8 +1,20 @@
-{ lib, stdenv, fetchurl, fetchzip, autoPatchelfHook, installShellFiles, cpio, xar, _1password, testers }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  fetchzip,
+  autoPatchelfHook,
+  installShellFiles,
+  cpio,
+  xar,
+  _1password,
+  testers,
+}:
 
 let
   inherit (stdenv.hostPlatform) system;
-  fetch = srcPlatform: hash: extension:
+  fetch =
+    srcPlatform: hash: extension:
     let
       args = {
         url = "https://cache.agilebits.com/dist/1P/op2/pkg/v${version}/op_${srcPlatform}_v${version}.${extension}";
@@ -17,7 +29,9 @@ let
     aarch64-linux = fetch "linux_arm64" "sha256-yutS8xSTRABt12+mEyU99R4eCHvuAwWdO40SZlUrtdc=" "zip";
     i686-linux = fetch "linux_386" "sha256-juP//g9quhd7GRq5TNm3qAq+rOegGJ9u9F+fmGbfmbw=" "zip";
     x86_64-linux = fetch "linux_amd64" "sha256-cFQ3lsHBV9fDoNK5ujTummIXA4591meP43KbiyWcbQk=" "zip";
-    aarch64-darwin = fetch "apple_universal" "sha256-fUwiEJxn4JdsViBQU2Odrw+Focp0ngH/RmfmW2Uu0Bo=" "pkg";
+    aarch64-darwin =
+      fetch "apple_universal" "sha256-fUwiEJxn4JdsViBQU2Odrw+Focp0ngH/RmfmW2Uu0Bo="
+        "pkg";
     x86_64-darwin = aarch64-darwin;
   };
   platforms = builtins.attrNames sources;
@@ -34,7 +48,10 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ installShellFiles ] ++ lib.optional stdenv.isLinux autoPatchelfHook;
 
-  buildInputs = lib.optionals stdenv.isDarwin [ xar cpio ];
+  buildInputs = lib.optionals stdenv.isDarwin [
+    xar
+    cpio
+  ];
 
   unpackPhase = lib.optionalString stdenv.isDarwin ''
     xar -xf $src
@@ -65,15 +82,16 @@ stdenv.mkDerivation {
 
   passthru.updateScript = ./update.sh;
 
-  passthru.tests.version = testers.testVersion {
-    package = _1password;
-  };
+  passthru.tests.version = testers.testVersion { package = _1password; };
 
   meta = with lib; {
     description = "1Password command-line tool";
     homepage = "https://developer.1password.com/docs/cli/";
     downloadPage = "https://app-updates.agilebits.com/product_history/CLI2";
-    maintainers = with maintainers; [ joelburget marsam ];
+    maintainers = with maintainers; [
+      joelburget
+      marsam
+    ];
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;
     inherit mainProgram platforms;

@@ -1,14 +1,15 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, protobuf
-, stdenv
-, pkg-config
-, openssl
-, rust-jemalloc-sys
-, nix-update-script
-, Security
-, SystemConfiguration
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  protobuf,
+  stdenv,
+  pkg-config,
+  openssl,
+  rust-jemalloc-sys,
+  nix-update-script,
+  Security,
+  SystemConfiguration,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -22,9 +23,7 @@ rustPlatform.buildRustPackage rec {
     sha256 = "sha256-BgsLmE50mGmB5fcUjov8wcAHRTKMYaoyoXjSUyIddlc=";
   };
 
-  patches = [
-    ./1.7.4-CVE-2024-3078.patch
-  ];
+  patches = [ ./1.7.4-CVE-2024-3078.patch ];
 
   cargoLock = {
     lockFile = ./Cargo.lock;
@@ -35,22 +34,26 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  buildInputs = [
-    openssl
-    rust-jemalloc-sys
-  ] ++ lib.optionals stdenv.isDarwin [
-    Security
-    SystemConfiguration
-  ];
+  buildInputs =
+    [
+      openssl
+      rust-jemalloc-sys
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      Security
+      SystemConfiguration
+    ];
 
-  nativeBuildInputs = [ protobuf rustPlatform.bindgenHook pkg-config ];
+  nativeBuildInputs = [
+    protobuf
+    rustPlatform.bindgenHook
+    pkg-config
+  ];
 
   env = {
     # Needed to get openssl-sys to use pkg-config.
     OPENSSL_NO_VENDOR = 1;
-  } // lib.optionalAttrs stdenv.cc.isClang {
-    NIX_CFLAGS_COMPILE = "-faligned-allocation";
-  };
+  } // lib.optionalAttrs stdenv.cc.isClang { NIX_CFLAGS_COMPILE = "-faligned-allocation"; };
 
   passthru = {
     updateScript = nix-update-script { };

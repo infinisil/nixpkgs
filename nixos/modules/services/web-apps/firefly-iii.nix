@@ -1,11 +1,51 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 let
-  inherit (lib) optionalString mkDefault mkIf mkOption mkEnableOption literalExpression;
-  inherit (lib.types) nullOr attrsOf oneOf str int bool path package enum submodule;
-  inherit (lib.strings) concatMapStringsSep removePrefix toShellVars removeSuffix hasSuffix;
-  inherit (lib.attrsets) attrValues genAttrs filterAttrs mapAttrs' nameValuePair;
-  inherit (builtins) isInt isString toString typeOf;
+  inherit (lib)
+    optionalString
+    mkDefault
+    mkIf
+    mkOption
+    mkEnableOption
+    literalExpression
+    ;
+  inherit (lib.types)
+    nullOr
+    attrsOf
+    oneOf
+    str
+    int
+    bool
+    path
+    package
+    enum
+    submodule
+    ;
+  inherit (lib.strings)
+    concatMapStringsSep
+    removePrefix
+    toShellVars
+    removeSuffix
+    hasSuffix
+    ;
+  inherit (lib.attrsets)
+    attrValues
+    genAttrs
+    filterAttrs
+    mapAttrs'
+    nameValuePair
+    ;
+  inherit (builtins)
+    isInt
+    isString
+    toString
+    typeOf
+    ;
 
   cfg = config.services.firefly-iii;
 
@@ -17,9 +57,10 @@ let
 
   artisan = "${cfg.package}/artisan";
 
-  env-file-values = mapAttrs' (n: v: nameValuePair (removeSuffix "_FILE" n) v)
-    (filterAttrs (n: v: hasSuffix "_FILE" n) cfg.settings);
-  env-nonfile-values = filterAttrs (n: v: ! hasSuffix "_FILE" n) cfg.settings;
+  env-file-values = mapAttrs' (n: v: nameValuePair (removeSuffix "_FILE" n) v) (
+    filterAttrs (n: v: hasSuffix "_FILE" n) cfg.settings
+  );
+  env-nonfile-values = filterAttrs (n: v: !hasSuffix "_FILE" n) cfg.settings;
 
   envfile = pkgs.writeText "firefly-iii-env" ''
     ${toShellVars env-file-values}
@@ -28,9 +69,9 @@ let
 
   fileenv-func = ''
     cp --no-preserve=mode ${envfile} /tmp/firefly-iii-env
-    ${concatMapStringsSep "\n"
-      (n: "${pkgs.replace-secret}/bin/replace-secret ${n} ${n} /tmp/firefly-iii-env")
-      (attrValues env-file-values)}
+    ${concatMapStringsSep "\n" (
+      n: "${pkgs.replace-secret}/bin/replace-secret ${n} ${n} /tmp/firefly-iii-env"
+    ) (attrValues env-file-values)}
     set -a
     . /tmp/firefly-iii-env
     set +a
@@ -39,8 +80,9 @@ let
   firefly-iii-maintenance = pkgs.writeShellScript "firefly-iii-maintenance.sh" ''
     ${fileenv-func}
 
-    ${optionalString (cfg.settings.DB_CONNECTION == "sqlite")
-      "touch ${cfg.dataDir}/storage/database/database.sqlite"}
+    ${optionalString (
+      cfg.settings.DB_CONNECTION == "sqlite"
+    ) "touch ${cfg.dataDir}/storage/database/database.sqlite"}
     ${artisan} migrate --seed --no-interaction --force
     ${artisan} firefly-iii:decrypt-all
     ${artisan} firefly-iii:upgrade-database
@@ -87,8 +129,8 @@ let
     LockPersonality = true;
     PrivateUsers = true;
   };
-
-in {
+in
+{
 
   options.services.firefly-iii = {
 
@@ -128,9 +170,11 @@ in {
         may also be used to set the package to a different version, say a
         development version.
       '';
-      apply = firefly-iii : firefly-iii.override (prev: {
-        dataDir = cfg.dataDir;
-      });
+      apply =
+        firefly-iii:
+        firefly-iii.override (prev: {
+          dataDir = cfg.dataDir;
+        });
     };
 
     enableNginx = mkOption {
@@ -154,7 +198,11 @@ in {
     };
 
     poolConfig = mkOption {
-      type = attrsOf (oneOf [ str int bool ]);
+      type = attrsOf (oneOf [
+        str
+        int
+        bool
+      ]);
       default = {
         "pm" = "dynamic";
         "pm.max_children" = 32;
@@ -192,12 +240,20 @@ in {
           DB_PASSWORD_FILE = "/var/secrets/firefly-iii-mysql-password.txt;
         }
       '';
-      default = {};
+      default = { };
       type = submodule {
-        freeformType = attrsOf (oneOf [str int bool]);
+        freeformType = attrsOf (oneOf [
+          str
+          int
+          bool
+        ]);
         options = {
           DB_CONNECTION = mkOption {
-            type = enum [ "sqlite" "pgsql" "mysql" ];
+            type = enum [
+              "sqlite"
+              "pgsql"
+              "mysql"
+            ];
             default = "sqlite";
             example = "pgsql";
             description = ''
@@ -206,7 +262,11 @@ in {
             '';
           };
           APP_ENV = mkOption {
-            type = enum [ "local" "production" "testing" ];
+            type = enum [
+              "local"
+              "production"
+              "testing"
+            ];
             default = "local";
             example = "production";
             description = ''
@@ -216,9 +276,13 @@ in {
           };
           DB_PORT = mkOption {
             type = nullOr int;
-            default = if cfg.settings.DB_CONNECTION == "sqlite" then null
-                      else if cfg.settings.DB_CONNECTION == "mysql" then 3306
-                      else 5432;
+            default =
+              if cfg.settings.DB_CONNECTION == "sqlite" then
+                null
+              else if cfg.settings.DB_CONNECTION == "mysql" then
+                3306
+              else
+                5432;
             defaultText = ''
               `null` if DB_CONNECTION is "sqlite", `3306` if "mysql", `5432` if "pgsql"
             '';
@@ -324,31 +388,35 @@ in {
       };
     };
 
-    systemd.tmpfiles.settings."10-firefly-iii" = genAttrs [
-      "${cfg.dataDir}/storage"
-      "${cfg.dataDir}/storage/app"
-      "${cfg.dataDir}/storage/database"
-      "${cfg.dataDir}/storage/export"
-      "${cfg.dataDir}/storage/framework"
-      "${cfg.dataDir}/storage/framework/cache"
-      "${cfg.dataDir}/storage/framework/sessions"
-      "${cfg.dataDir}/storage/framework/views"
-      "${cfg.dataDir}/storage/logs"
-      "${cfg.dataDir}/storage/upload"
-      "${cfg.dataDir}/cache"
-    ] (n: {
-      d = {
-        group = group;
-        mode = "0700";
-        user = user;
+    systemd.tmpfiles.settings."10-firefly-iii" =
+      genAttrs
+        [
+          "${cfg.dataDir}/storage"
+          "${cfg.dataDir}/storage/app"
+          "${cfg.dataDir}/storage/database"
+          "${cfg.dataDir}/storage/export"
+          "${cfg.dataDir}/storage/framework"
+          "${cfg.dataDir}/storage/framework/cache"
+          "${cfg.dataDir}/storage/framework/sessions"
+          "${cfg.dataDir}/storage/framework/views"
+          "${cfg.dataDir}/storage/logs"
+          "${cfg.dataDir}/storage/upload"
+          "${cfg.dataDir}/cache"
+        ]
+        (n: {
+          d = {
+            group = group;
+            mode = "0700";
+            user = user;
+          };
+        })
+      // {
+        "${cfg.dataDir}".d = {
+          group = group;
+          mode = "0710";
+          user = user;
+        };
       };
-    }) // {
-      "${cfg.dataDir}".d = {
-        group = group;
-        mode = "0710";
-        user = user;
-      };
-    };
 
     users = {
       users = mkIf (user == defaultUser) {
@@ -359,9 +427,7 @@ in {
           home = cfg.dataDir;
         };
       };
-      groups = mkIf (group == defaultGroup) {
-        ${defaultGroup} = {};
-      };
+      groups = mkIf (group == defaultGroup) { ${defaultGroup} = { }; };
     };
   };
 }

@@ -1,7 +1,8 @@
-{ lib
-, buildHomeAssistantComponent
-, fetchFromGitHub
-, zigpy
+{
+  lib,
+  buildHomeAssistantComponent,
+  fetchFromGitHub,
+  zigpy,
 }:
 
 buildHomeAssistantComponent rec {
@@ -16,9 +17,7 @@ buildHomeAssistantComponent rec {
     hash = "sha256-YGaVQaz3A0yM8AIC02CvMKWMJ3tW3OADYgKY8ViIt5U=";
   };
 
-  propagatedBuildInputs = [
-    zigpy
-  ];
+  propagatedBuildInputs = [ zigpy ];
 
   dontBuild = true;
 

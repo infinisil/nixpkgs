@@ -1,4 +1,8 @@
-{ lib, fetchurl, appimageTools}:
+{
+  lib,
+  fetchurl,
+  appimageTools,
+}:
 
 appimageTools.wrapAppImage rec {
   pname = "lbry-desktop";
@@ -15,9 +19,7 @@ appimageTools.wrapAppImage rec {
   };
 
   # At runtime, Lbry likes to have access to Ffmpeg
-  extraPkgs = pkgs: with pkgs; [
-    ffmpeg
-  ];
+  extraPkgs = pkgs: with pkgs; [ ffmpeg ];
 
   # General fixup
   extraInstallCommands = ''

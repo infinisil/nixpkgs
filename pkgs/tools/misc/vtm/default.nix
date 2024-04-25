@@ -1,7 +1,8 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -15,9 +16,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-sYRBx60G/3ErBDeUJWPEaWD51B23nBseB2wDE4Tn2NA=";
   };
 
-  nativeBuildInputs = [
-    cmake
-  ];
+  nativeBuildInputs = [ cmake ];
 
   meta = {
     description = "Terminal multiplexer with window manager and session sharing";
