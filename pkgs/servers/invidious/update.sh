@@ -40,7 +40,7 @@ git -C "$git_dir" fetch origin --tags "$git_branch"
 # use latest commit before today, we should not call the version *today*
 # because there might still be commits coming
 # use the day of the latest commit we picked as version
-new_rev=$(git -C "$git_dir" log -n 1 --format='format:%H' --before="${today}T00:00:00Z" "origin/$git_branch")
+new_rev=$(git -C "$git_dir" log -n 1 --format='format:%H' "origin/$git_branch")
 new_tag=$(git -C "$git_dir" describe --tags --abbrev=0 "$new_rev")
 new_version="$new_tag-unstable-$(TZ=UTC git -C "$git_dir" log -n 1 --date='format-local:%Y-%m-%d' --format='%cd' "$new_rev")"
 info "latest commit before $today: $new_rev"
