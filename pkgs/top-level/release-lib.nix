@@ -34,7 +34,7 @@ let
     systems
     ;
 
-  pkgs = packageSet (recursiveUpdate { inherit system; config.allowUnsupportedSystem = true; } nixpkgsArgs);
+  pkgs = packageSet (recursiveUpdate { system = "x86_64-linux"; config.allowUnsupportedSystem = true; } nixpkgsArgs);
 
   hydraJob' = if scrubJobs then hydraJob else id;
 
