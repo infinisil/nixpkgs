@@ -52,6 +52,7 @@
 , blackmagic-desktop-video
 , libdatachannel
 , libvpl
+, vpl-gpu-rt
 , qrcodegencpp
 , nix-update-script
 }:
@@ -167,6 +168,7 @@ stdenv.mkDerivation (finalAttrs: {
       xorg.libX11
       libvlc
       libGL
+      vpl-gpu-rt
     ] ++ optionals decklinkSupport [
       blackmagic-desktop-video
     ];
