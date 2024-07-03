@@ -1029,7 +1029,9 @@ rec {
         merge = loc: defs:
           let
             coerceVal = val:
-              if coercedType.check val then coerceFunc val
+              if coercedType.check val then
+                lib.warn "Passing a ${coercedType.description} for ${showOption loc} is deprecated, use ${finalType.description} instead"
+                (coerceFunc val)
               else val;
           in finalType.merge loc (map (def: def // { value = coerceVal def.value; }) defs);
         emptyValue = finalType.emptyValue;
