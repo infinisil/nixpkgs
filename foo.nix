@@ -1,5 +1,5 @@
 let
-  requiredVersion = import ./lib/minver.nix;
+  requiredVersion = import  ./lib/minver.nix;
 in
 
 if !builtins ? nixVersion || builtins.compareVersions requiredVersion builtins.nixVersion == 1 then
