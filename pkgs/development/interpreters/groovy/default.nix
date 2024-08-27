@@ -1,4 +1,12 @@
-{ lib, stdenv, fetchurl, unzip, which, makeWrapper, jdk }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  unzip,
+  which,
+  makeWrapper,
+  jdk,
+}:
 
 # at runtime, need jdk
 
@@ -11,7 +19,10 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-Xvh49w24tkLSBOmkEMUZwRMaPnqd20tpENIUkJyy6Yo=";
   };
 
-  nativeBuildInputs = [ makeWrapper unzip ];
+  nativeBuildInputs = [
+    makeWrapper
+    unzip
+  ];
 
   installPhase = ''
     mkdir -p $out

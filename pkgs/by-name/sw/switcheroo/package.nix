@@ -1,19 +1,20 @@
-{ lib
-, blueprint-compiler
-, cargo
-, darwin
-, desktop-file-utils
-, fetchFromGitLab
-, glib
-, gtk4
-, libadwaita
-, meson
-, ninja
-, pkg-config
-, rustPlatform
-, rustc
-, stdenv
-, wrapGAppsHook4
+{
+  lib,
+  blueprint-compiler,
+  cargo,
+  darwin,
+  desktop-file-utils,
+  fetchFromGitLab,
+  glib,
+  gtk4,
+  libadwaita,
+  meson,
+  ninja,
+  pkg-config,
+  rustPlatform,
+  rustc,
+  stdenv,
+  wrapGAppsHook4,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -45,22 +46,21 @@ stdenv.mkDerivation (finalAttrs: {
     wrapGAppsHook4
   ];
 
-  buildInputs = [
-    glib
-    gtk4
-    libadwaita
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Foundation
-  ];
+  buildInputs =
+    [
+      glib
+      gtk4
+      libadwaita
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      darwin.apple_sdk.frameworks.Foundation
+    ];
 
   # Workaround for the gettext-sys issue
   # https://github.com/Koka/gettext-rs/issues/114
-  env.NIX_CFLAGS_COMPILE = lib.optionalString
-    (
-      stdenv.cc.isClang &&
-      lib.versionAtLeast stdenv.cc.version "16"
-    )
-    "-Wno-error=incompatible-function-pointer-types";
+  env.NIX_CFLAGS_COMPILE = lib.optionalString (
+    stdenv.cc.isClang && lib.versionAtLeast stdenv.cc.version "16"
+  ) "-Wno-error=incompatible-function-pointer-types";
 
   meta = with lib; {
     changelog = "https://gitlab.com/adhami3310/Switcheroo/-/releases/v${finalAttrs.version}";

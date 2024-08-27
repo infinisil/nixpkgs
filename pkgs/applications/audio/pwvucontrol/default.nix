@@ -1,23 +1,24 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchFromGitLab
-, cargo
-, desktop-file-utils
-, meson
-, ninja
-, pkg-config
-, rustPlatform
-, rustc
-, wrapGAppsHook4
-, cairo
-, gdk-pixbuf
-, glib
-, gtk4
-, libadwaita
-, pango
-, pipewire
-, wireplumber
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  fetchFromGitLab,
+  cargo,
+  desktop-file-utils,
+  meson,
+  ninja,
+  pkg-config,
+  rustPlatform,
+  rustc,
+  wrapGAppsHook4,
+  cairo,
+  gdk-pixbuf,
+  glib,
+  gtk4,
+  libadwaita,
+  pango,
+  pipewire,
+  wireplumber,
 }:
 
 let
@@ -77,7 +78,10 @@ stdenv.mkDerivation rec {
     description = "Pipewire Volume Control";
     homepage = "https://github.com/saivert/pwvucontrol";
     license = licenses.gpl3Plus;
-    maintainers = with maintainers; [ figsoda Guanran928 ];
+    maintainers = with maintainers; [
+      figsoda
+      Guanran928
+    ];
     mainProgram = "pwvucontrol";
     platforms = platforms.linux;
   };

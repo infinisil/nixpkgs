@@ -1,16 +1,17 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, gitUpdater
-, makeWrapper
-, pkg-config
-, file
-, scdoc
-, openssl
-, zlib
-, busybox
-, apk-tools
-, perl
+{
+  lib,
+  stdenv,
+  fetchFromGitLab,
+  gitUpdater,
+  makeWrapper,
+  pkg-config,
+  file,
+  scdoc,
+  openssl,
+  zlib,
+  busybox,
+  apk-tools,
+  perl,
 }:
 
 stdenv.mkDerivation rec {
@@ -30,13 +31,15 @@ stdenv.mkDerivation rec {
     zlib
     busybox
     # for $out/bin/apkbuild-cpan and $out/bin/apkbuild-pypi
-    (perl.withPackages (ps: with ps; [
-      LWP
-      JSON
-      ModuleBuildTiny
-      LWPProtocolHttps
-      IPCSystemSimple
-    ]))
+    (perl.withPackages (
+      ps: with ps; [
+        LWP
+        JSON
+        ModuleBuildTiny
+        LWPProtocolHttps
+        IPCSystemSimple
+      ]
+    ))
   ];
 
   nativeBuildInputs = [

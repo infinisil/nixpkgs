@@ -14,7 +14,7 @@ buildPythonPackage rec {
 
   disabled = pythonOlder "3.8";
 
-   # no tests on pypi, no tags on github
+  # no tests on pypi, no tags on github
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-NyWPfdgLeXAxKPJOzB7j4aT+zjrURN59CGcv0Vt99y0=";

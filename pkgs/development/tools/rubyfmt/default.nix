@@ -1,21 +1,22 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, autoconf
-, automake
-, bison
-, ruby
-, zlib
-, readline
-, libiconv
-, libobjc
-, libunwind
-, libxcrypt
-, libyaml
-, rust-jemalloc-sys-unprefixed
-, Foundation
-, Security
+{
+  lib,
+  stdenv,
+  rustPlatform,
+  fetchFromGitHub,
+  autoconf,
+  automake,
+  bison,
+  ruby,
+  zlib,
+  readline,
+  libiconv,
+  libobjc,
+  libunwind,
+  libxcrypt,
+  libyaml,
+  rust-jemalloc-sys-unprefixed,
+  Foundation,
+  Security,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -37,19 +38,21 @@ rustPlatform.buildRustPackage rec {
     ruby
   ];
 
-  buildInputs = [
-    zlib
-    libxcrypt
-    libyaml
-    rust-jemalloc-sys-unprefixed
-  ] ++ lib.optionals stdenv.isDarwin [
-    readline
-    libiconv
-    libobjc
-    libunwind
-    Foundation
-    Security
-  ];
+  buildInputs =
+    [
+      zlib
+      libxcrypt
+      libyaml
+      rust-jemalloc-sys-unprefixed
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      readline
+      libiconv
+      libobjc
+      libunwind
+      Foundation
+      Security
+    ];
 
   preConfigure = ''
     pushd librubyfmt/ruby_checkout
@@ -77,7 +80,8 @@ rustPlatform.buildRustPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ bobvanderlinden ];
     # https://github.com/NixOS/nixpkgs/issues/320722
-    broken = true
+    broken =
+      true
       # = note: Undefined symbols for architecture x86_64:
       #       "_utimensat", referenced from:
       #           _utime_internal in librubyfmt-3c969812b3b27083.rlib(file.o)

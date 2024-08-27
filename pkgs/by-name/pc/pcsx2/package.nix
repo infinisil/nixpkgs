@@ -1,30 +1,31 @@
-{ cmake
-, fetchFromGitHub
-, lib
-, llvmPackages_17
-, callPackage
-, cubeb
-, curl
-, extra-cmake-modules
-, fetchpatch
-, ffmpeg
-, libaio
-, libbacktrace
-, libpcap
-, libwebp
-, libXrandr
-, lz4
-, makeWrapper
-, pkg-config
-, qt6
-, SDL2
-, soundtouch
-, strip-nondeterminism
-, vulkan-headers
-, vulkan-loader
-, wayland
-, zip
-, zstd
+{
+  cmake,
+  fetchFromGitHub,
+  lib,
+  llvmPackages_17,
+  callPackage,
+  cubeb,
+  curl,
+  extra-cmake-modules,
+  fetchpatch,
+  ffmpeg,
+  libaio,
+  libbacktrace,
+  libpcap,
+  libwebp,
+  libXrandr,
+  lz4,
+  makeWrapper,
+  pkg-config,
+  qt6,
+  SDL2,
+  soundtouch,
+  strip-nondeterminism,
+  vulkan-headers,
+  vulkan-loader,
+  wayland,
+  zip,
+  zstd,
 }:
 
 let
@@ -42,7 +43,7 @@ let
     qttools
     qtwayland
     wrapQtAppsHook
-  ;
+    ;
 in
 llvmPackages_17.stdenv.mkDerivation (finalAttrs: {
   pname = "pcsx2";
@@ -103,8 +104,7 @@ llvmPackages_17.stdenv.mkDerivation (finalAttrs: {
     vulkan-headers
     wayland
     zstd
-  ]
-  ++ cubeb.passthru.backendLibs;
+  ] ++ cubeb.passthru.backendLibs;
 
   installPhase = ''
     mkdir -p $out/bin
@@ -119,10 +119,14 @@ llvmPackages_17.stdenv.mkDerivation (finalAttrs: {
 
   qtWrapperArgs =
     let
-      libs = lib.makeLibraryPath ([
-        vulkan-loader
-      ] ++ cubeb.passthru.backendLibs);
-    in [
+      libs = lib.makeLibraryPath (
+        [
+          vulkan-loader
+        ]
+        ++ cubeb.passthru.backendLibs
+      );
+    in
+    [
       "--prefix LD_LIBRARY_PATH : ${libs}"
     ];
 
@@ -144,8 +148,14 @@ llvmPackages_17.stdenv.mkDerivation (finalAttrs: {
       PC, with many additional features and benefits.
     '';
     homepage = "https://pcsx2.net";
-    license = with licenses; [ gpl3Plus lgpl3Plus ];
-    maintainers = with maintainers; [ hrdinka govanify ];
+    license = with licenses; [
+      gpl3Plus
+      lgpl3Plus
+    ];
+    maintainers = with maintainers; [
+      hrdinka
+      govanify
+    ];
     mainProgram = "pcsx2-qt";
     platforms = [ "x86_64-linux" ];
   };

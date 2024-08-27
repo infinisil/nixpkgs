@@ -2,7 +2,7 @@
   lib,
   fetchFromGitHub,
   rustPlatform,
-  libxkbcommon
+  libxkbcommon,
 }:
 
 rustPlatform.buildRustPackage {

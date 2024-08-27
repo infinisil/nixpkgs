@@ -1,11 +1,11 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, kclvm_cli
-, kclvm
-, makeWrapper
-, installShellFiles
-,
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  kclvm_cli,
+  kclvm,
+  makeWrapper,
+  installShellFiles,
 }:
 buildGoModule rec {
   pname = "kcl";
@@ -25,16 +25,22 @@ buildGoModule rec {
     "-X=kcl-lang.io/cli/pkg/version.version=v${version}"
   ];
 
-  nativeBuildInputs = [ makeWrapper installShellFiles ];
-  buildInputs = [ kclvm kclvm_cli ];
+  nativeBuildInputs = [
+    makeWrapper
+    installShellFiles
+  ];
+  buildInputs = [
+    kclvm
+    kclvm_cli
+  ];
 
   subPackages = [ "cmd/kcl" ];
 
   # env vars https://github.com/kcl-lang/kcl-go/blob/main/pkg/env/env.go#L29
   postFixup = ''
      wrapProgram $out/bin/kcl \
-    --set PATH ${lib.makeBinPath [kclvm_cli]} \
-    --set KCL_LIB_HOME ${lib.makeLibraryPath [kclvm]} \
+    --set PATH ${lib.makeBinPath [ kclvm_cli ]} \
+    --set KCL_LIB_HOME ${lib.makeLibraryPath [ kclvm ]} \
     --set KCL_GO_DISABLE_INSTALL_ARTIFACT false \
   '';
 
@@ -50,7 +56,10 @@ buildGoModule rec {
     homepage = "https://github.com/kcl-lang/cli";
     license = licenses.asl20;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ selfuryon peefy ];
+    maintainers = with maintainers; [
+      selfuryon
+      peefy
+    ];
     mainProgram = "kcl";
   };
 }

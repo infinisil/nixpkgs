@@ -66,7 +66,7 @@ python3Packages.buildPythonApplication rec {
   dontWrapGApps = true; # prevent double wrapping
 
   preFixup = ''
-    makeWrapperArgs+=(''${gappsWrapperArgs[@]} --prefix PATH : ${ lib.makeBinPath runtimeDeps })
+    makeWrapperArgs+=(''${gappsWrapperArgs[@]} --prefix PATH : ${lib.makeBinPath runtimeDeps})
   '';
 
   meta = with lib; {

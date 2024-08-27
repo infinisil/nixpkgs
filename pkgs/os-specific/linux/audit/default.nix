@@ -1,17 +1,18 @@
-{ lib
-, stdenv
-, fetchurl
-, autoreconfHook
-, bash
-, buildPackages
-, linuxHeaders
-, python3
-, swig
+{
+  lib,
+  stdenv,
+  fetchurl,
+  autoreconfHook,
+  bash,
+  buildPackages,
+  linuxHeaders,
+  python3,
+  swig,
 
-# Enabling python support while cross compiling would be possible, but the
-# configure script tries executing python to gather info instead of relying on
-# python3-config exclusively
-, enablePython ? stdenv.hostPlatform == stdenv.buildPlatform,
+  # Enabling python support while cross compiling would be possible, but the
+  # configure script tries executing python to gather info instead of relying on
+  # python3-config exclusively
+  enablePython ? stdenv.hostPlatform == stdenv.buildPlatform,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -29,7 +30,12 @@ stdenv.mkDerivation (finalAttrs: {
                 "${linuxHeaders}/include/linux/audit.h"
   '';
 
-  outputs = [ "bin" "dev" "out" "man" ];
+  outputs = [
+    "bin"
+    "dev"
+    "out"
+    "man"
+  ];
 
   strictDeps = true;
 
@@ -37,13 +43,14 @@ stdenv.mkDerivation (finalAttrs: {
     buildPackages.stdenv.cc
   ];
 
-  nativeBuildInputs = [
-    autoreconfHook
-  ]
-  ++ lib.optionals enablePython [
-    python3
-    swig
-  ];
+  nativeBuildInputs =
+    [
+      autoreconfHook
+    ]
+    ++ lib.optionals enablePython [
+      python3
+      swig
+    ];
 
   buildInputs = [
     bash

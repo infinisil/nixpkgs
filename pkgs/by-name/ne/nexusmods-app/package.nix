@@ -1,17 +1,18 @@
-{ _7zz
-, buildDotnetModule
-, copyDesktopItems
-, desktop-file-utils
-, dotnetCorePackages
-, fetchFromGitHub
-, fontconfig
-, lib
-, libICE
-, libSM
-, libX11
-, nexusmods-app
-, runCommand
-, enableUnfree ? false # Set to true to support RAR format mods
+{
+  _7zz,
+  buildDotnetModule,
+  copyDesktopItems,
+  desktop-file-utils,
+  dotnetCorePackages,
+  fetchFromGitHub,
+  fontconfig,
+  lib,
+  libICE,
+  libSM,
+  libX11,
+  nexusmods-app,
+  runCommand,
+  enableUnfree ? false, # Set to true to support RAR format mods
 }:
 let
   _7zzWithOptionalUnfreeRarSupport = _7zz.override {
@@ -52,7 +53,7 @@ buildDotnetModule rec {
   '';
 
   makeWrapperArgs = [
-    "--prefix PATH : ${lib.makeBinPath [desktop-file-utils]}"
+    "--prefix PATH : ${lib.makeBinPath [ desktop-file-utils ]}"
     "--set APPIMAGE $out/bin/${meta.mainProgram}" # Make associating with nxm links work on Linux
   ];
 
@@ -73,15 +74,20 @@ buildDotnetModule rec {
     "--environment=USER=nobody"
     (lib.strings.concatStrings [
       "--filter="
-      (lib.strings.concatStrings (lib.strings.intersperse "&" ([
-        "Category!=Disabled"
-        "FlakeyTest!=True"
-        "RequiresNetworking!=True"
-        "FullyQualifiedName!=NexusMods.UI.Tests.ImageCacheTests.Test_LoadAndCache_RemoteImage"
-        "FullyQualifiedName!=NexusMods.UI.Tests.ImageCacheTests.Test_LoadAndCache_ImageStoredFile"
-      ] ++ lib.optionals (! enableUnfree) [
-        "FullyQualifiedName!=NexusMods.Games.FOMOD.Tests.FomodXmlInstallerTests.InstallsFilesSimple_UsingRar"
-       ])))
+      (lib.strings.concatStrings (
+        lib.strings.intersperse "&" (
+          [
+            "Category!=Disabled"
+            "FlakeyTest!=True"
+            "RequiresNetworking!=True"
+            "FullyQualifiedName!=NexusMods.UI.Tests.ImageCacheTests.Test_LoadAndCache_RemoteImage"
+            "FullyQualifiedName!=NexusMods.UI.Tests.ImageCacheTests.Test_LoadAndCache_ImageStoredFile"
+          ]
+          ++ lib.optionals (!enableUnfree) [
+            "FullyQualifiedName!=NexusMods.Games.FOMOD.Tests.FomodXmlInstallerTests.InstallsFilesSimple_UsingRar"
+          ]
+        )
+      ))
     ])
   ];
 

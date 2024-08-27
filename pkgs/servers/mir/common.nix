@@ -180,21 +180,23 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  passthru = {
-    tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
-    providedSessions = lib.optionals (lib.strings.versionOlder version "2.16.0") [
-      # More of an example than a fully functioning shell, some notes for the adventurous:
-      # - ~/.config/miral-shell.config is one possible user config location,
-      #   accepted options=value are according to `mir-shell --help`
-      # - default icon theme setting is DMZ-White, needs vanilla-dmz installed & on XCURSOR_PATH
-      #   or setting to be changed to an available theme
-      # - terminal emulator setting may need to be changed if miral-terminal script
-      #   does not know about preferred terminal
-      "mir-shell"
-    ];
-  } // lib.optionalAttrs (!pinned) {
-    updateScript = ./update.sh;
-  };
+  passthru =
+    {
+      tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
+      providedSessions = lib.optionals (lib.strings.versionOlder version "2.16.0") [
+        # More of an example than a fully functioning shell, some notes for the adventurous:
+        # - ~/.config/miral-shell.config is one possible user config location,
+        #   accepted options=value are according to `mir-shell --help`
+        # - default icon theme setting is DMZ-White, needs vanilla-dmz installed & on XCURSOR_PATH
+        #   or setting to be changed to an available theme
+        # - terminal emulator setting may need to be changed if miral-terminal script
+        #   does not know about preferred terminal
+        "mir-shell"
+      ];
+    }
+    // lib.optionalAttrs (!pinned) {
+      updateScript = ./update.sh;
+    };
 
   meta = with lib; {
     description = "Display server and Wayland compositor developed by Canonical";
@@ -206,22 +208,25 @@ stdenv.mkDerivation (finalAttrs: {
       OPNA2608
     ];
     platforms = platforms.linux;
-    pkgConfigModules = [
-      "miral"
-      "mircommon"
-      "mircore"
-      "miroil"
-      "mirplatform"
-      "mir-renderer-gl-dev"
-      "mirrenderer"
-      "mirserver"
-      "mirtest"
-      "mirwayland"
-    ] ++ lib.optionals (lib.strings.versionOlder version "2.17.0") [
-      "mircookie"
-    ] ++ lib.optionals (lib.strings.versionAtLeast version "2.17.0") [
-      "mircommon-internal"
-      "mirserver-internal"
-    ];
+    pkgConfigModules =
+      [
+        "miral"
+        "mircommon"
+        "mircore"
+        "miroil"
+        "mirplatform"
+        "mir-renderer-gl-dev"
+        "mirrenderer"
+        "mirserver"
+        "mirtest"
+        "mirwayland"
+      ]
+      ++ lib.optionals (lib.strings.versionOlder version "2.17.0") [
+        "mircookie"
+      ]
+      ++ lib.optionals (lib.strings.versionAtLeast version "2.17.0") [
+        "mircommon-internal"
+        "mirserver-internal"
+      ];
   };
 })

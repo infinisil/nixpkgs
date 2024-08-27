@@ -1,14 +1,43 @@
-lib: { rke2Version, rke2RepoSha256, rke2VendorHash, updateScript
+lib:
+{
+  rke2Version,
+  rke2RepoSha256,
+  rke2VendorHash,
+  updateScript,
 
-, rke2Commit, k8sImageTag, etcdVersion, pauseVersion, ccmVersion, dockerizedVersion, ... }:
+  rke2Commit,
+  k8sImageTag,
+  etcdVersion,
+  pauseVersion,
+  ccmVersion,
+  dockerizedVersion,
+  ...
+}:
 
-{ lib, stdenv, buildGoModule, go, fetchgit, makeWrapper
+{
+  lib,
+  stdenv,
+  buildGoModule,
+  go,
+  fetchgit,
+  makeWrapper,
 
-# Runtime dependencies
-, procps, coreutils, util-linux, ethtool, socat, iptables, bridge-utils, iproute2, kmod, lvm2
+  # Runtime dependencies
+  procps,
+  coreutils,
+  util-linux,
+  ethtool,
+  socat,
+  iptables,
+  bridge-utils,
+  iproute2,
+  kmod,
+  lvm2,
 
-# Testing dependencies
-, nixosTests, testers, rke2
+  # Testing dependencies
+  nixosTests,
+  testers,
+  rke2,
 }:
 
 buildGoModule rec {
@@ -78,21 +107,26 @@ buildGoModule rec {
 
   passthru.updateScript = updateScript;
 
-  passthru.tests = {
-    version = testers.testVersion {
-      package = rke2;
-      version = "v${version}";
+  passthru.tests =
+    {
+      version = testers.testVersion {
+        package = rke2;
+        version = "v${version}";
+      };
+    }
+    // lib.optionalAttrs stdenv.isLinux {
+      inherit (nixosTests) rke2;
     };
-  } // lib.optionalAttrs stdenv.isLinux {
-    inherit (nixosTests) rke2;
-  };
 
   meta = with lib; {
     homepage = "https://github.com/rancher/rke2";
     description = "RKE2, also known as RKE Government, is Rancher's next-generation Kubernetes distribution";
     changelog = "https://github.com/rancher/rke2/releases/tag/v${version}";
     license = licenses.asl20;
-    maintainers = with maintainers; [ zimbatm zygot ];
+    maintainers = with maintainers; [
+      zimbatm
+      zygot
+    ];
     mainProgram = "rke2";
     platforms = platforms.linux;
   };

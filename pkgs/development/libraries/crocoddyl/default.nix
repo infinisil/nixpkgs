@@ -1,11 +1,12 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, example-robot-data
-, pinocchio
-, pythonSupport ? false
-, python3Packages
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
+  example-robot-data,
+  pinocchio,
+  pythonSupport ? false,
+  python3Packages,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -25,13 +26,15 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
   ];
 
-  propagatedBuildInputs = lib.optionals (!pythonSupport) [
-    example-robot-data
-    pinocchio
-  ] ++ lib.optionals pythonSupport [
-    python3Packages.example-robot-data
-    python3Packages.pinocchio
-  ];
+  propagatedBuildInputs =
+    lib.optionals (!pythonSupport) [
+      example-robot-data
+      pinocchio
+    ]
+    ++ lib.optionals pythonSupport [
+      python3Packages.example-robot-data
+      python3Packages.pinocchio
+    ];
 
   cmakeFlags = lib.optionals (!pythonSupport) [
     "-DBUILD_EXAMPLES=OFF"
@@ -57,7 +60,10 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Crocoddyl optimal control library";
     homepage = "https://github.com/loco-3d/crocoddyl";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ nim65s wegank ];
+    maintainers = with maintainers; [
+      nim65s
+      wegank
+    ];
     platforms = platforms.unix;
   };
 })

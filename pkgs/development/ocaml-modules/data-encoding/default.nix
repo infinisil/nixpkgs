@@ -1,17 +1,18 @@
-{ lib
-, buildDunePackage
-, ppx_hash
-, bigstringaf
-, either
-, ezjsonm
-, zarith
-, zarith_stubs_js ? null
-, hex
-, json-data-encoding
-, json-data-encoding-bson
-, alcotest
-, crowbar
-, ppx_expect
+{
+  lib,
+  buildDunePackage,
+  ppx_hash,
+  bigstringaf,
+  either,
+  ezjsonm,
+  zarith,
+  zarith_stubs_js ? null,
+  hex,
+  json-data-encoding,
+  json-data-encoding-bson,
+  alcotest,
+  crowbar,
+  ppx_expect,
 }:
 
 buildDunePackage rec {

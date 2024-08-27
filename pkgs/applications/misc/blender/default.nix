@@ -177,7 +177,9 @@ stdenv.mkDerivation (finalAttrs: {
       "-DWITH_GHOST_WAYLAND_DYNLOAD=OFF"
       "-DWITH_GHOST_WAYLAND_LIBDECOR=ON"
     ]
-    ++ lib.optionals (stdenv.hostPlatform.isAarch64 && stdenv.hostPlatform.isLinux) [ "-DWITH_CYCLES_EMBREE=OFF" ]
+    ++ lib.optionals (stdenv.hostPlatform.isAarch64 && stdenv.hostPlatform.isLinux) [
+      "-DWITH_CYCLES_EMBREE=OFF"
+    ]
     ++ lib.optionals stdenv.isDarwin [
       "-DLIBDIR=/does-not-exist"
       "-DWITH_CYCLES_OSL=OFF" # causes segfault on aarch64-darwin
@@ -320,15 +322,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   # Set RUNPATH so that libcuda and libnvrtc in /run/opengl-driver(-32)/lib can be
   # found. See the explanation in libglvnd.
-  postFixup = lib.optionalString cudaSupport ''
-    for program in $out/bin/blender $out/bin/.blender-wrapped; do
-      isELF "$program" || continue
-      addOpenGLRunpath "$program"
-    done
-  ''
-  + lib.optionalString stdenv.isDarwin ''
-    makeWrapper $out/Applications/Blender.app/Contents/MacOS/Blender $out/bin/blender
-  '';
+  postFixup =
+    lib.optionalString cudaSupport ''
+      for program in $out/bin/blender $out/bin/.blender-wrapped; do
+        isELF "$program" || continue
+        addOpenGLRunpath "$program"
+      done
+    ''
+    + lib.optionalString stdenv.isDarwin ''
+      makeWrapper $out/Applications/Blender.app/Contents/MacOS/Blender $out/bin/blender
+    '';
 
   passthru = {
     python = python3;
@@ -396,7 +399,9 @@ stdenv.mkDerivation (finalAttrs: {
     # They comment two licenses: GPLv2 and Blender License, but they
     # say: "We've decided to cancel the BL offering for an indefinite period."
     # OptiX, enabled with cudaSupport, is non-free.
-    license = with lib.licenses; [ gpl2Plus ] ++ lib.optional cudaSupport (unfree // { shortName = "NVidia OptiX EULA"; });
+    license =
+      with lib.licenses;
+      [ gpl2Plus ] ++ lib.optional cudaSupport (unfree // { shortName = "NVidia OptiX EULA"; });
 
     platforms = [
       "aarch64-linux"

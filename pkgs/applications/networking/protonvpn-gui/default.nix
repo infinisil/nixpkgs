@@ -1,28 +1,29 @@
-{ lib
-, buildPythonApplication
-, fetchFromGitHub
-, gobject-introspection
-, setuptools
-, wrapGAppsHook3
-, dbus-python
-, packaging
-, proton-core
-, proton-keyring-linux
-, proton-keyring-linux-secretservice
-, proton-vpn-api-core
-, proton-vpn-connection
-, proton-vpn-killswitch
-, proton-vpn-killswitch-network-manager
-, proton-vpn-logger
-, proton-vpn-network-manager
-, proton-vpn-network-manager-openvpn
-, proton-vpn-session
-, pycairo
-, pygobject3
-, pytestCheckHook
-, withIndicator ? true
-, libappindicator-gtk3
-, libayatana-appindicator
+{
+  lib,
+  buildPythonApplication,
+  fetchFromGitHub,
+  gobject-introspection,
+  setuptools,
+  wrapGAppsHook3,
+  dbus-python,
+  packaging,
+  proton-core,
+  proton-keyring-linux,
+  proton-keyring-linux-secretservice,
+  proton-vpn-api-core,
+  proton-vpn-connection,
+  proton-vpn-killswitch,
+  proton-vpn-killswitch-network-manager,
+  proton-vpn-logger,
+  proton-vpn-network-manager,
+  proton-vpn-network-manager-openvpn,
+  proton-vpn-session,
+  pycairo,
+  pygobject3,
+  pytestCheckHook,
+  withIndicator ? true,
+  libappindicator-gtk3,
+  libayatana-appindicator,
 }:
 
 buildPythonApplication rec {

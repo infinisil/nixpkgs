@@ -1,6 +1,11 @@
 # Tumbler
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
@@ -13,9 +18,11 @@ in
 {
 
   imports = [
-    (mkRemovedOptionModule
-      [ "services" "tumbler" "package" ]
-      "")
+    (mkRemovedOptionModule [
+      "services"
+      "tumbler"
+      "package"
+    ] "")
   ];
 
   meta = with lib; {
@@ -33,7 +40,6 @@ in
     };
 
   };
-
 
   ###### implementation
 

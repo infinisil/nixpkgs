@@ -1,6 +1,7 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -21,7 +22,10 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/apognu/tuigreet";
     changelog = "https://github.com/apognu/tuigreet/releases/tag/${version}";
     license = lib.licenses.gpl3Plus;
-    maintainers = with lib.maintainers; [ luc65r ivar ];
+    maintainers = with lib.maintainers; [
+      luc65r
+      ivar
+    ];
     platforms = lib.platforms.linux;
     mainProgram = "tuigreet";
   };

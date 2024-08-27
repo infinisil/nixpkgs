@@ -1,4 +1,11 @@
-{ lib, buildKodiAddon, fetchFromGitHub, addonUpdateScript, kodi, inputstreamhelper }:
+{
+  lib,
+  buildKodiAddon,
+  fetchFromGitHub,
+  addonUpdateScript,
+  kodi,
+  inputstreamhelper,
+}:
 
 buildKodiAddon rec {
   pname = "sendtokodi";
@@ -28,7 +35,12 @@ buildKodiAddon rec {
   passthru = {
     # Instead of the vendored libraries, we propagate youtube-dl and yt-dlp via
     # the Python path.
-    pythonPath = with kodi.pythonPackages; makePythonPath [ youtube-dl yt-dlp ];
+    pythonPath =
+      with kodi.pythonPackages;
+      makePythonPath [
+        youtube-dl
+        yt-dlp
+      ];
   };
 
   meta = with lib; {

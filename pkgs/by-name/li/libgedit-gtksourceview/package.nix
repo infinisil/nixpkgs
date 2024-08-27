@@ -1,24 +1,29 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, docbook-xsl-nons
-, gobject-introspection
-, gtk-doc
-, meson
-, ninja
-, pkg-config
-, libxml2
-, glib
-, gtk3
-, shared-mime-info
-, gitUpdater
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  docbook-xsl-nons,
+  gobject-introspection,
+  gtk-doc,
+  meson,
+  ninja,
+  pkg-config,
+  libxml2,
+  glib,
+  gtk3,
+  shared-mime-info,
+  gitUpdater,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "libgedit-gtksourceview";
   version = "299.2.1";
 
-  outputs = [ "out" "dev" "devdoc" ];
+  outputs = [
+    "out"
+    "dev"
+    "devdoc"
+  ];
 
   src = fetchFromGitHub {
     owner = "gedit-technology";

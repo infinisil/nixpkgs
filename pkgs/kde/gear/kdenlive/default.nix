@@ -17,13 +17,11 @@ mkKdeDerivation {
   pname = "kdenlive";
 
   patches = [
-    (
-      substituteAll {
-        src = ./dependency-paths.patch;
-        inherit mediainfo mlt;
-        ffmpeg = ffmpeg-full;
-      }
-    )
+    (substituteAll {
+      src = ./dependency-paths.patch;
+      inherit mediainfo mlt;
+      ffmpeg = ffmpeg-full;
+    })
 
     # Backport fix for crash after 5 minutes
     # FIXME: remove in next release

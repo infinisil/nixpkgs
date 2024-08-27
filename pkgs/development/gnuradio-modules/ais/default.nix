@@ -1,20 +1,21 @@
-{ lib
-, mkDerivation
-, fetchFromGitHub
-, cmake
-, pkg-config
-, python
-, boost
-, cppunit
-, logLib
-, osmosdr
-, gmp
-, mpir
-, fftwFloat
-, icu
-, gnuradio
-, thrift
-, gnuradioAtLeast
+{
+  lib,
+  mkDerivation,
+  fetchFromGitHub,
+  cmake,
+  pkg-config,
+  python,
+  boost,
+  cppunit,
+  logLib,
+  osmosdr,
+  gmp,
+  mpir,
+  fftwFloat,
+  icu,
+  gnuradio,
+  thrift,
+  gnuradioAtLeast,
 }:
 
 mkDerivation rec {

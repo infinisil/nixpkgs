@@ -1,5 +1,6 @@
-{ callPackage
-, fetchpatch
+{
+  callPackage,
+  fetchpatch,
 }:
 
 callPackage ./generic.nix {

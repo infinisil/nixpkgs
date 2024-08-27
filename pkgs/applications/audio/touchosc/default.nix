@@ -1,24 +1,25 @@
-{ lib
-, stdenv
-, fetchurl
-, makeWrapper
-, autoPatchelfHook
-, dpkg
-, alsa-lib
-, curl
-, avahi
-, jack2
-, libxcb
-, libX11
-, libXcursor
-, libXext
-, libXi
-, libXinerama
-, libXrandr
-, libXrender
-, libXxf86vm
-, libglvnd
-, gnome
+{
+  lib,
+  stdenv,
+  fetchurl,
+  makeWrapper,
+  autoPatchelfHook,
+  dpkg,
+  alsa-lib,
+  curl,
+  avahi,
+  jack2,
+  libxcb,
+  libX11,
+  libXcursor,
+  libXext,
+  libXi,
+  libXinerama,
+  libXrandr,
+  libXrender,
+  libXxf86vm,
+  libglvnd,
+  gnome,
 }:
 
 let
@@ -47,19 +48,23 @@ stdenv.mkDerivation rec {
   pname = "touchosc";
   version = "1.3.3.207";
 
-  suffix = {
-    aarch64-linux = "linux-arm64";
-    armv7l-linux  = "linux-armhf";
-    x86_64-linux  = "linux-x64";
-  }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+  suffix =
+    {
+      aarch64-linux = "linux-arm64";
+      armv7l-linux = "linux-armhf";
+      x86_64-linux = "linux-x64";
+    }
+    .${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
   src = fetchurl {
     url = "https://hexler.net/pub/${pname}/${pname}-${version}-${suffix}.deb";
-    hash = {
-      aarch64-linux = "sha256-peEO5haVHXvCT+F48UiKdgwuccqBuZACEXnepB4dcvY=";
-      armv7l-linux  = "sha256-uQNoEye/Jd3T6pLJY2sN7hkTQl3AAilG5Vr9G61vFRM=";
-      x86_64-linux  = "sha256-+/r9gRK8HyynlJ1syC2VQ6VboPEzsVNqEVrQfNLeEv0=";
-    }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+    hash =
+      {
+        aarch64-linux = "sha256-peEO5haVHXvCT+F48UiKdgwuccqBuZACEXnepB4dcvY=";
+        armv7l-linux = "sha256-uQNoEye/Jd3T6pLJY2sN7hkTQl3AAilG5Vr9G61vFRM=";
+        x86_64-linux = "sha256-+/r9gRK8HyynlJ1syC2VQ6VboPEzsVNqEVrQfNLeEv0=";
+      }
+      .${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
   };
 
   strictDeps = true;
@@ -102,7 +107,11 @@ stdenv.mkDerivation rec {
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;
     maintainers = with maintainers; [ lilyinstarlight ];
-    platforms = [ "aarch64-linux" "armv7l-linux" "x86_64-linux" ];
+    platforms = [
+      "aarch64-linux"
+      "armv7l-linux"
+      "x86_64-linux"
+    ];
     mainProgram = "TouchOSC";
   };
 }

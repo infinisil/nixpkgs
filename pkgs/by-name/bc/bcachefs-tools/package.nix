@@ -119,7 +119,7 @@ stdenv.mkDerivation (finalAttrs: {
       inherit (nixosTests.installer) bcachefsSimple bcachefsEncrypted bcachefsMulti;
     };
 
-    updateScript = nix-update-script {};
+    updateScript = nix-update-script { };
   };
 
   enableParallelBuilding = true;

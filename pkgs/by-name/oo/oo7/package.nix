@@ -1,11 +1,12 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, nix-update-script
-, oo7
-, openssl
-, pkg-config
-, testers
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  nix-update-script,
+  oo7,
+  openssl,
+  pkg-config,
+  testers,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -53,7 +54,10 @@ rustPlatform.buildRustPackage rec {
     description = "James Bond went on a new mission as a Secret Service provider";
     homepage = "https://github.com/bilelmoussaoui/oo7";
     license = licenses.mit;
-    maintainers = with maintainers; [ getchoo Scrumplex ];
+    maintainers = with maintainers; [
+      getchoo
+      Scrumplex
+    ];
     platforms = platforms.linux;
     mainProgram = "oo7-cli";
   };

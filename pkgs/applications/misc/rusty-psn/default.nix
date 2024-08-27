@@ -1,19 +1,20 @@
-{ lib
-, stdenv
-, rustPlatform
-, fetchFromGitHub
-, makeDesktopItem
-, copyDesktopItems
-, pkg-config
-, cmake
-, fontconfig
-, glib
-, gtk3
-, freetype
-, openssl
-, xorg
-, libGL
-, withGui ? false # build GUI version
+{
+  lib,
+  stdenv,
+  rustPlatform,
+  fetchFromGitHub,
+  makeDesktopItem,
+  copyDesktopItems,
+  pkg-config,
+  cmake,
+  fontconfig,
+  glib,
+  gtk3,
+  freetype,
+  openssl,
+  xorg,
+  libGL,
+  withGui ? false, # build GUI version
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -34,39 +35,45 @@ rustPlatform.buildRustPackage rec {
   # Tests require network access
   doCheck = false;
 
-  nativeBuildInputs = [
-    pkg-config
-  ] ++ lib.optionals withGui [
-    copyDesktopItems
-    cmake
-  ];
+  nativeBuildInputs =
+    [
+      pkg-config
+    ]
+    ++ lib.optionals withGui [
+      copyDesktopItems
+      cmake
+    ];
 
-  buildInputs = [
-    openssl
-  ] ++ lib.optionals withGui [
-    fontconfig
-    glib
-    gtk3
-    freetype
-    openssl
-    xorg.libxcb
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
-    xorg.libXi
-    xorg.libxcb
-    libGL
-    libGL.dev
-  ];
+  buildInputs =
+    [
+      openssl
+    ]
+    ++ lib.optionals withGui [
+      fontconfig
+      glib
+      gtk3
+      freetype
+      openssl
+      xorg.libxcb
+      xorg.libX11
+      xorg.libXcursor
+      xorg.libXrandr
+      xorg.libXi
+      xorg.libxcb
+      libGL
+      libGL.dev
+    ];
 
   buildNoDefaultFeatures = true;
   buildFeatures = [ (if withGui then "egui" else "cli") ];
 
-  postFixup = ''
-    patchelf --set-rpath "${lib.makeLibraryPath buildInputs}" $out/bin/rusty-psn
-  '' + lib.optionalString withGui ''
-    mv $out/bin/rusty-psn $out/bin/rusty-psn-gui
-  '';
+  postFixup =
+    ''
+      patchelf --set-rpath "${lib.makeLibraryPath buildInputs}" $out/bin/rusty-psn
+    ''
+    + lib.optionalString withGui ''
+      mv $out/bin/rusty-psn $out/bin/rusty-psn-gui
+    '';
 
   desktopItem = lib.optionalString withGui (makeDesktopItem {
     name = "rusty-psn";

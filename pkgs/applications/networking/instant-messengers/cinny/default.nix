@@ -1,16 +1,17 @@
-{ lib
-, buildNpmPackage
-, fetchFromGitHub
-, writeText
-, jq
-, python3
-, pkg-config
-, pixman
-, cairo
-, pango
-, stdenv
-, darwin
-, conf ? { }
+{
+  lib,
+  buildNpmPackage,
+  fetchFromGitHub,
+  writeText,
+  jq,
+  python3,
+  pkg-config,
+  pixman,
+  cairo,
+  pango,
+  stdenv,
+  darwin,
+  conf ? { },
 }:
 
 let
@@ -40,13 +41,15 @@ buildNpmPackage rec {
     pkg-config
   ];
 
-  buildInputs = [
-    pixman
-    cairo
-    pango
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.CoreText
-  ];
+  buildInputs =
+    [
+      pixman
+      cairo
+      pango
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      darwin.apple_sdk.frameworks.CoreText
+    ];
 
   installPhase = ''
     runHook preInstall
@@ -60,7 +63,10 @@ buildNpmPackage rec {
   meta = with lib; {
     description = "Yet another Matrix client for the web";
     homepage = "https://cinny.in/";
-    maintainers = with maintainers; [ abbe ashkitten ];
+    maintainers = with maintainers; [
+      abbe
+      ashkitten
+    ];
     license = licenses.agpl3Only;
     platforms = platforms.all;
   };

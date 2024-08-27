@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
@@ -71,7 +76,7 @@ in
     };
 
     users.groups = mkIf (cfg.group == "bazarr") {
-      bazarr = {};
+      bazarr = { };
     };
   };
 }

@@ -5,5 +5,5 @@
 mkKdeDerivation {
   pname = "francis";
 
-  extraBuildInputs = [qtsvg];
+  extraBuildInputs = [ qtsvg ];
 }

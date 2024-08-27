@@ -1,12 +1,13 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, cargo
-, rustPlatform
-, rustc
-, setuptools
-, wheel
-, tree-sitter
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  cargo,
+  rustPlatform,
+  rustc,
+  setuptools,
+  wheel,
+  tree-sitter,
 }:
 
 buildPythonPackage rec {

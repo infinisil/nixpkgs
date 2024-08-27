@@ -1,14 +1,15 @@
-{ lib
-, python3
-, fetchFromGitHub
-, desktop-file-utils
-, glib
-, gobject-introspection
-, gtk4
-, meson
-, ninja
-, wrapGAppsHook4
-, libadwaita
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  desktop-file-utils,
+  glib,
+  gobject-introspection,
+  gtk4,
+  meson,
+  ninja,
+  wrapGAppsHook4,
+  libadwaita,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -55,6 +56,9 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://mijorus.it/projects/smile/";
     license = lib.licenses.gpl3Plus;
     mainProgram = "smile";
-    maintainers = with lib.maintainers; [ koppor aleksana ];
+    maintainers = with lib.maintainers; [
+      koppor
+      aleksana
+    ];
   };
 }

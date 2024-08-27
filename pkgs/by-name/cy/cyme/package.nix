@@ -1,15 +1,15 @@
 {
-  lib
-, fetchFromGitHub
-, rustPlatform
-, pkg-config
-, stdenv
-, darwin
-, libusb1
-, udev
-, nix-update-script
-, testers
-, cyme
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+  pkg-config,
+  stdenv,
+  darwin,
+  libusb1,
+  udev,
+  nix-update-script,
+  testers,
+  cyme,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -30,17 +30,21 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  nativeBuildInputs = [
-    pkg-config
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.DarwinTools
-  ];
+  nativeBuildInputs =
+    [
+      pkg-config
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      darwin.DarwinTools
+    ];
 
-  buildInputs = [
-    libusb1
-  ] ++ lib.optionals stdenv.isLinux [
-    udev
-  ];
+  buildInputs =
+    [
+      libusb1
+    ]
+    ++ lib.optionals stdenv.isLinux [
+      udev
+    ];
 
   checkFlags = lib.optionals stdenv.isDarwin [
     # system_profiler is not available in the sandbox

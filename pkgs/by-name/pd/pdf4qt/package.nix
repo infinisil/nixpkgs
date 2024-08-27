@@ -1,13 +1,14 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, substituteAll
-, lcms
-, cmake
-, pkg-config
-, qt6
-, openjpeg
-, tbb_2021_11
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  substituteAll,
+  lcms,
+  cmake,
+  pkg-config,
+  qt6,
+  openjpeg,
+  tbb_2021_11,
 }:
 
 stdenv.mkDerivation (finalAttrs: {

@@ -1,13 +1,14 @@
-{ llvmPackages
-, lib
-, fetchFromGitHub
-, cmake
-, python3
-, curl
-, libxml2
-, libffi
-, xar
-, testers
+{
+  llvmPackages,
+  lib,
+  fetchFromGitHub,
+  cmake,
+  python3,
+  curl,
+  libxml2,
+  libffi,
+  xar,
+  testers,
 }:
 
 llvmPackages.stdenv.mkDerivation (finalAttrs: {
@@ -30,15 +31,17 @@ llvmPackages.stdenv.mkDerivation (finalAttrs: {
     cmake
   ];
 
-  buildInputs = [
-    llvmPackages.llvm
-    llvmPackages.lld
-    curl
-    libxml2
-    libffi
-  ] ++ lib.optionals llvmPackages.stdenv.isDarwin [
-    xar
-  ];
+  buildInputs =
+    [
+      llvmPackages.llvm
+      llvmPackages.lld
+      curl
+      libxml2
+      libffi
+    ]
+    ++ lib.optionals llvmPackages.stdenv.isDarwin [
+      xar
+    ];
 
   nativeCheckInputs = [ python3 ];
 

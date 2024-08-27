@@ -1,22 +1,23 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, cmake
-, extra-cmake-modules
-, pkg-config
-, wrapQtAppsHook
-, wayland-scanner
-, dtk6declarative
-, dtk6widget
-, dde-qt-dbus-factory
-, qt6Packages
-, qt6integration
-, qt6platform-plugins
-, kdePackages
-, wayland
-, wayland-protocols
-, yaml-cpp
-, xorg
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  cmake,
+  extra-cmake-modules,
+  pkg-config,
+  wrapQtAppsHook,
+  wayland-scanner,
+  dtk6declarative,
+  dtk6widget,
+  dde-qt-dbus-factory,
+  qt6Packages,
+  qt6integration,
+  qt6platform-plugins,
+  kdePackages,
+  wayland,
+  wayland-protocols,
+  yaml-cpp,
+  xorg,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -78,10 +79,10 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   qtWrapperArgs = [
-     # qt6integration must be placed before qtsvg in QT_PLUGIN_PATH
-     "--prefix QT_PLUGIN_PATH : ${qt6integration}/${qt6Packages.qtbase.qtPluginPrefix}"
-     "--suffix DDE_SHELL_PLUGIN_PATH : /run/current-system/sw/lib/dde-shell"
-     "--suffix DDE_SHELL_PACKAGE_PATH : /run/current-system/sw/share/dde-shell"
+    # qt6integration must be placed before qtsvg in QT_PLUGIN_PATH
+    "--prefix QT_PLUGIN_PATH : ${qt6integration}/${qt6Packages.qtbase.qtPluginPrefix}"
+    "--suffix DDE_SHELL_PLUGIN_PATH : /run/current-system/sw/lib/dde-shell"
+    "--suffix DDE_SHELL_PACKAGE_PATH : /run/current-system/sw/share/dde-shell"
   ];
 
   meta = {

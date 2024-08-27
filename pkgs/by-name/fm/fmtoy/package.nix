@@ -1,11 +1,12 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, unstableGitUpdater
-, alsa-lib
-, libjack2
-, pkg-config
-, zlib
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  unstableGitUpdater,
+  alsa-lib,
+  libjack2,
+  pkg-config,
+  zlib,
 }:
 
 stdenv.mkDerivation (finalAttrs: {

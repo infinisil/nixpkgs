@@ -1,17 +1,18 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchYarnDeps
-, buildGoModule
-, systemd
-, yarn
-, fixup-yarn-lock
-, nodejs
-, grafana-alloy
-, nixosTests
-, nix-update-script
-, installShellFiles
-, testers
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  fetchYarnDeps,
+  buildGoModule,
+  systemd,
+  yarn,
+  fixup-yarn-lock,
+  nodejs,
+  grafana-alloy,
+  nixosTests,
+  nix-update-script,
+  installShellFiles,
+  testers,
 }:
 
 buildGoModule rec {
@@ -28,7 +29,12 @@ buildGoModule rec {
   proxyVendor = true;
   vendorHash = "sha256-6Xc2siImM1Dl716uGhtAGcn+PO2OLuYLxanzg8Ho6SA=";
 
-  nativeBuildInputs = [ fixup-yarn-lock yarn nodejs installShellFiles ];
+  nativeBuildInputs = [
+    fixup-yarn-lock
+    yarn
+    nodejs
+    installShellFiles
+  ];
 
   ldflags =
     let
@@ -91,7 +97,9 @@ buildGoModule rec {
   # Add to RUNPATH so it can be found.
   postFixup = lib.optionalString stdenv.isLinux ''
     patchelf \
-      --set-rpath "${lib.makeLibraryPath [ (lib.getLib systemd) ]}:$(patchelf --print-rpath $out/bin/alloy)" \
+      --set-rpath "${
+        lib.makeLibraryPath [ (lib.getLib systemd) ]
+      }:$(patchelf --print-rpath $out/bin/alloy)" \
       $out/bin/alloy
   '';
 
@@ -121,7 +129,11 @@ buildGoModule rec {
     mainProgram = "alloy";
     license = licenses.asl20;
     homepage = "https://grafana.com/oss/alloy";
-    maintainers = with maintainers; [ flokli emilylange hbjydev ];
+    maintainers = with maintainers; [
+      flokli
+      emilylange
+      hbjydev
+    ];
     platforms = lib.platforms.unix;
   };
 }

@@ -1,15 +1,16 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchYarnDeps
-, yarn
-, fixup-yarn-lock
-, nodejs
-, makeWrapper
-, copyDesktopItems
-, desktopToDarwinBundle
-, electron
-, makeDesktopItem
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  fetchYarnDeps,
+  yarn,
+  fixup-yarn-lock,
+  nodejs,
+  makeWrapper,
+  copyDesktopItems,
+  desktopToDarwinBundle,
+  electron,
+  makeDesktopItem,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -44,16 +45,17 @@ stdenv.mkDerivation (finalAttrs: {
 
   ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
 
-  nativeBuildInputs = [
-    yarn
-    fixup-yarn-lock
-    nodejs
-    makeWrapper
-    copyDesktopItems
-  ]
-  ++ lib.optionals stdenv.isDarwin [
-    desktopToDarwinBundle
-  ];
+  nativeBuildInputs =
+    [
+      yarn
+      fixup-yarn-lock
+      nodejs
+      makeWrapper
+      copyDesktopItems
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      desktopToDarwinBundle
+    ];
 
   configurePhase = ''
     runHook preConfigure

@@ -1,22 +1,24 @@
-{ lib
-, stdenv
-, common-updater-scripts
-, coreutils
-, gnugrep
-, gnused
-, nix
-, writeScript
+{
+  lib,
+  stdenv,
+  common-updater-scripts,
+  coreutils,
+  gnugrep,
+  gnused,
+  nix,
+  writeScript,
 }:
 
-{ name ? null
-, pname ? null
-, version ? null
-, attrPath ? null
-, versionLister
-, ignoredVersions ? ""
-, rev-prefix ? ""
-, odd-unstable ? false
-, patchlevel-unstable ? false
+{
+  name ? null,
+  pname ? null,
+  version ? null,
+  attrPath ? null,
+  versionLister,
+  ignoredVersions ? "",
+  rev-prefix ? "",
+  odd-unstable ? false,
+  patchlevel-unstable ? false,
 }:
 
 let
@@ -125,9 +127,21 @@ let
     echo "" >> ${fileForGitCommands}
   '';
 
-in {
+in
+{
   name = "generic-update-script";
-  command = [ updateScript name pname version attrPath versionLister ignoredVersions rev-prefix odd-unstable patchlevel-unstable ];
+  command = [
+    updateScript
+    name
+    pname
+    version
+    attrPath
+    versionLister
+    ignoredVersions
+    rev-prefix
+    odd-unstable
+    patchlevel-unstable
+  ];
   supportedFeatures = [
     # Stdout must contain output according to the updateScript commit protocol when the update script finishes with a non-zero exit code.
     "commit"

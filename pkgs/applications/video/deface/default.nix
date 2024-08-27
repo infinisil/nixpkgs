@@ -1,9 +1,10 @@
-{ lib
-, stdenv
-, python3
-, fetchFromGitHub
-, makeWrapper
-, pkgs
+{
+  lib,
+  stdenv,
+  python3,
+  fetchFromGitHub,
+  makeWrapper,
+  pkgs,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -45,7 +46,11 @@ python3.pkgs.buildPythonApplication rec {
       --replace-fail "opencv-python" "opencv"
   '';
 
-  pythonImportsCheck = [ "deface" "onnx" "onnxruntime" ];
+  pythonImportsCheck = [
+    "deface"
+    "onnx"
+    "onnxruntime"
+  ];
 
   meta = {
     description = "Video anonymization by face detection";

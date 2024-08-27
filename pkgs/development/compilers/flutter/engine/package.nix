@@ -84,7 +84,9 @@ let
 
   outName = "host_${runtimeMode}${lib.optionalString (!isOptimized) "_unopt --unoptimized"}";
 
-  dartPath = "${if (lib.versionAtLeast flutterVersion "3.23") then "flutter/third_party" else "third_party"}/dart";
+  dartPath = "${
+    if (lib.versionAtLeast flutterVersion "3.23") then "flutter/third_party" else "third_party"
+  }/dart";
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "flutter-engine-${runtimeMode}${lib.optionalString (!isOptimized) "-unopt"}";
@@ -96,7 +98,8 @@ stdenv.mkDerivation (finalAttrs: {
     dartSdkVersion
     src
     outName
-    swiftshader;
+    swiftshader
+    ;
 
   toolchain = symlinkJoin {
     name = "flutter-engine-toolchain-${version}";
@@ -148,7 +151,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   NIX_CFLAGS_COMPILE = "-I${finalAttrs.toolchain}/include";
 
-  nativeCheckInputs = lib.optionals stdenv.isLinux [ xorg.xorgserver openbox ];
+  nativeCheckInputs = lib.optionals stdenv.isLinux [
+    xorg.xorgserver
+    openbox
+  ];
 
   nativeBuildInputs =
     [

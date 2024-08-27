@@ -1,12 +1,13 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, setuptools
-, wheel
-, cython
-, tree-sitter0_21
-, pytestCheckHook
-, python
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools,
+  wheel,
+  cython,
+  tree-sitter0_21,
+  pytestCheckHook,
+  python,
 }:
 
 buildPythonPackage rec {

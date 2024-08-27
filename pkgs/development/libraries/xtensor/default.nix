@@ -1,14 +1,15 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchpatch
-, cmake
-, doctest
-, enableAssertions ? false
-, enableBoundChecks ? false # Broadcasts don't pass bound checks
-, nlohmann_json
-, xtl
-, xsimd
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  fetchpatch,
+  cmake,
+  doctest,
+  enableAssertions ? false,
+  enableBoundChecks ? false, # Broadcasts don't pass bound checks
+  nlohmann_json,
+  xtl,
+  xsimd,
 }:
 
 stdenv.mkDerivation (finalAttrs: {

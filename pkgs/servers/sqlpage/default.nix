@@ -1,12 +1,13 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, sqlite
-, zstd
-, stdenv
-, darwin
-, fetchurl
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  sqlite,
+  zstd,
+  stdenv,
+  darwin,
+  fetchurl,
 }:
 
 let
@@ -73,7 +74,7 @@ rustPlatform.buildRustPackage rec {
     substituteInPlace sqlpage/tomselect.js \
       --replace-fail '/* !include https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.popular.min.js */' \
       "$(cat ${tomselect})"
-    '';
+  '';
 
   cargoHash = "sha256-/k9nNxZxyV12pyRep6cTsUoEQobb9sWKnXxQmXmVAl0=";
 

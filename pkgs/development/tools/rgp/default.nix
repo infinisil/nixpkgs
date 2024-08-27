@@ -1,23 +1,24 @@
-{ lib
-, stdenv
-, makeWrapper
-, fetchurl
-, autoPatchelfHook
-, dbus
-, fontconfig
-, freetype
-, glib
-, libGLU
-, libglvnd
-, libICE
-, libkrb5
-, libSM
-, libX11
-, libxcb
-, libXi
-, libxkbcommon
-, ncurses
-, zlib
+{
+  lib,
+  stdenv,
+  makeWrapper,
+  fetchurl,
+  autoPatchelfHook,
+  dbus,
+  fontconfig,
+  freetype,
+  glib,
+  libGLU,
+  libglvnd,
+  libICE,
+  libkrb5,
+  libSM,
+  libX11,
+  libxcb,
+  libXi,
+  libxkbcommon,
+  ncurses,
+  zlib,
 }:
 
 let
@@ -32,7 +33,10 @@ stdenv.mkDerivation {
     hash = "sha256-gGkINq0tmOCkZJMxtoURHikqEGXGuRAP6Y6PEOLqmI0=";
   };
 
-  nativeBuildInputs = [ makeWrapper autoPatchelfHook ];
+  nativeBuildInputs = [
+    makeWrapper
+    autoPatchelfHook
+  ];
 
   buildInputs = [
     dbus

@@ -1,20 +1,21 @@
-{ lib
-, fetchFromGitHub
-, buildDotnetModule
-, dotnetCorePackages
-, libX11
-, libICE
-, libSM
-, fontconfig
-, libsecret
-, git
-, git-credential-manager
-, gnupg
-, pass
-, testers
-, withGuiSupport ? true
-, withLibsecretSupport ? true
-, withGpgSupport ? true
+{
+  lib,
+  fetchFromGitHub,
+  buildDotnetModule,
+  dotnetCorePackages,
+  libX11,
+  libICE,
+  libSM,
+  fontconfig,
+  libsecret,
+  git,
+  git-credential-manager,
+  gnupg,
+  pass,
+  testers,
+  withGuiSupport ? true,
+  withLibsecretSupport ? true,
+  withGpgSupport ? true,
 }:
 
 assert withLibsecretSupport -> withGuiSupport;
@@ -33,14 +34,30 @@ buildDotnetModule rec {
   nugetDeps = ./deps.nix;
   dotnet-sdk = dotnetCorePackages.sdk_7_0;
   dotnet-runtime = dotnetCorePackages.runtime_7_0;
-  dotnetInstallFlags = [ "--framework" "net7.0" ];
+  dotnetInstallFlags = [
+    "--framework"
+    "net7.0"
+  ];
   executables = [ "git-credential-manager" ];
 
-  runtimeDeps = [ fontconfig ]
-    ++ lib.optionals withGuiSupport [ libX11 libICE libSM ]
+  runtimeDeps =
+    [ fontconfig ]
+    ++ lib.optionals withGuiSupport [
+      libX11
+      libICE
+      libSM
+    ]
     ++ lib.optional withLibsecretSupport libsecret;
   makeWrapperArgs = [
-    "--prefix PATH : ${lib.makeBinPath ([ git ] ++ lib.optionals withGpgSupport [ gnupg pass ])}"
+    "--prefix PATH : ${
+      lib.makeBinPath (
+        [ git ]
+        ++ lib.optionals withGpgSupport [
+          gnupg
+          pass
+        ]
+      )
+    }"
   ];
 
   passthru = {

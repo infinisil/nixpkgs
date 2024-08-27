@@ -1,38 +1,39 @@
-{ lib
-, stdenv
-, fetchurl
-, autoPatchelfHook
-, dpkg
-, makeWrapper
-, alsa-lib
-, at-spi2-atk
-, at-spi2-core
-, atk
-, cairo
-, cups
-, dbus
-, expat
-, ffmpeg
-, fontconfig
-, freetype
-, gdk-pixbuf
-, glib
-, gtk3
-, libappindicator-gtk3
-, libdbusmenu
-, libdrm
-, libnotify
-, libpulseaudio
-, libsecret
-, libuuid
-, libxkbcommon
-, mesa
-, nss
-, pango
-, systemd
-, xdg-utils
-, xorg
-, libGL
+{
+  lib,
+  stdenv,
+  fetchurl,
+  autoPatchelfHook,
+  dpkg,
+  makeWrapper,
+  alsa-lib,
+  at-spi2-atk,
+  at-spi2-core,
+  atk,
+  cairo,
+  cups,
+  dbus,
+  expat,
+  ffmpeg,
+  fontconfig,
+  freetype,
+  gdk-pixbuf,
+  glib,
+  gtk3,
+  libappindicator-gtk3,
+  libdbusmenu,
+  libdrm,
+  libnotify,
+  libpulseaudio,
+  libsecret,
+  libuuid,
+  libxkbcommon,
+  mesa,
+  nss,
+  pango,
+  systemd,
+  xdg-utils,
+  xorg,
+  libGL,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -44,7 +45,11 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-TnvVm0qjm41if90+f9YtO8wR6NYg6oUZbZd0RiUU33M=";
   };
 
-  nativeBuildInputs = [ autoPatchelfHook dpkg makeWrapper ];
+  nativeBuildInputs = [
+    autoPatchelfHook
+    dpkg
+    makeWrapper
+  ];
 
   buildInputs = [
     alsa-lib
@@ -88,8 +93,12 @@ stdenv.mkDerivation (finalAttrs: {
     libGL
   ];
 
-  runtimeDependencies =
-    [ (lib.getLib systemd) libnotify libdbusmenu xdg-utils ];
+  runtimeDependencies = [
+    (lib.getLib systemd)
+    libnotify
+    libdbusmenu
+    xdg-utils
+  ];
 
   unpackPhase = "dpkg-deb -x $src .";
 
@@ -118,7 +127,10 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Web version of Tidal running in electron with hifi support thanks to widevine";
     homepage = "https://github.com/Mastermindzh/tidal-hifi";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ qbit spikespaz ];
+    maintainers = with lib.maintainers; [
+      qbit
+      spikespaz
+    ];
     platforms = lib.platforms.linux;
     mainProgram = "tidal-hifi";
   };

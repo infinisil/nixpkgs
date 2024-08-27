@@ -1,16 +1,17 @@
-{ lib
-, callPackage
-, rustPlatform
-, fetchFromGitHub
-, fetchNpmDeps
-, npmHooks
-, binaryen
-, gzip
-, nodejs
-, rustc
-, stdenv
-, wasm-bindgen-cli
-, wasm-pack
+{
+  lib,
+  callPackage,
+  rustPlatform,
+  fetchFromGitHub,
+  fetchNpmDeps,
+  npmHooks,
+  binaryen,
+  gzip,
+  nodejs,
+  rustc,
+  stdenv,
+  wasm-bindgen-cli,
+  wasm-pack,
 }:
 
 let
@@ -122,8 +123,13 @@ rustPlatform.buildRustPackage rec {
     maintainers = with maintainers; [ pbsds ];
     platforms = platforms.unix;
     # See comment about wasm32-unknown-unknown in rustc.nix.
-    broken = lib.any (a: lib.hasAttr a stdenv.hostPlatform.gcc) [ "cpu" "float-abi" "fpu" ] ||
-      !stdenv.hostPlatform.gcc.thumb or true;
+    broken =
+      lib.any (a: lib.hasAttr a stdenv.hostPlatform.gcc) [
+        "cpu"
+        "float-abi"
+        "fpu"
+      ]
+      || !stdenv.hostPlatform.gcc.thumb or true;
     mainProgram = "pagefind";
   };
 }

@@ -1,14 +1,15 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, setuptools-generate
-, setuptools-scm
-, colorama
-, jinja2
-, jsonschema
-, pygls
-, tree-sitter0_21
-, pytestCheckHook
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools-generate,
+  setuptools-scm,
+  colorama,
+  jinja2,
+  jsonschema,
+  pygls,
+  tree-sitter0_21,
+  pytestCheckHook,
 }:
 
 buildPythonPackage rec {

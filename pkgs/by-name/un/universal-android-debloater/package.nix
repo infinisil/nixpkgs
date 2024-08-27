@@ -1,18 +1,19 @@
-{ android-tools
-, clang
-, expat
-, fetchFromGitHub
-, fontconfig
-, freetype
-, lib
-, libglvnd
-, libxkbcommon
-, wayland
-, makeWrapper
-, mold
-, pkg-config
-, rustPlatform
-, xorg
+{
+  android-tools,
+  clang,
+  expat,
+  fetchFromGitHub,
+  fontconfig,
+  freetype,
+  lib,
+  libglvnd,
+  libxkbcommon,
+  wayland,
+  makeWrapper,
+  mold,
+  pkg-config,
+  rustPlatform,
+  xorg,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "universal-android-debloater";
@@ -49,7 +50,19 @@ rustPlatform.buildRustPackage rec {
 
   postInstall = ''
     wrapProgram $out/bin/uad-ng \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ fontconfig freetype libglvnd libxkbcommon wayland xorg.libX11 xorg.libXcursor xorg.libXi xorg.libXrandr ]} \
+      --prefix LD_LIBRARY_PATH : ${
+        lib.makeLibraryPath [
+          fontconfig
+          freetype
+          libglvnd
+          libxkbcommon
+          wayland
+          xorg.libX11
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXrandr
+        ]
+      } \
       --suffix PATH : ${lib.makeBinPath [ android-tools ]}
   '';
 

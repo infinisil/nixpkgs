@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 
 let
@@ -10,7 +15,10 @@ in
   options.services.greetd = {
     enable = mkEnableOption "greetd, a minimal and flexible login manager daemon";
 
-    package = mkPackageOption pkgs [ "greetd" "greetd" ] { };
+    package = mkPackageOption pkgs [
+      "greetd"
+      "greetd"
+    ] { };
 
     settings = mkOption {
       type = settingsFormat.type;
@@ -81,12 +89,14 @@ in
         Wants = [
           "systemd-user-sessions.service"
         ];
-        After = [
-          "systemd-user-sessions.service"
-          "getty@${tty}.service"
-        ] ++ lib.optionals (!cfg.greeterManagesPlymouth) [
-          "plymouth-quit-wait.service"
-        ];
+        After =
+          [
+            "systemd-user-sessions.service"
+            "getty@${tty}.service"
+          ]
+          ++ lib.optionals (!cfg.greeterManagesPlymouth) [
+            "plymouth-quit-wait.service"
+          ];
         Conflicts = [
           "getty@${tty}.service"
         ];

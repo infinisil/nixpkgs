@@ -1,9 +1,10 @@
-{ buildGoModule
-, config
-, fetchFromGitHub
-, lib
-, nixosTests
-, olm
+{
+  buildGoModule,
+  config,
+  fetchFromGitHub,
+  lib,
+  nixosTests,
+  olm,
 }:
 
 buildGoModule rec {

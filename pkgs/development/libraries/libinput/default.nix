@@ -1,27 +1,28 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, gitUpdater
-, pkg-config
-, meson
-, ninja
-, libevdev
-, mtdev
-, udev
-, libwacom
-, documentationSupport ? false
-, doxygen
-, graphviz
-, runCommand
-, eventGUISupport ? false
-, cairo
-, glib
-, gtk3
-, testsSupport ? false
-, check
-, valgrind
-, python3
-, nixosTests
+{
+  lib,
+  stdenv,
+  fetchFromGitLab,
+  gitUpdater,
+  pkg-config,
+  meson,
+  ninja,
+  libevdev,
+  mtdev,
+  udev,
+  libwacom,
+  documentationSupport ? false,
+  doxygen,
+  graphviz,
+  runCommand,
+  eventGUISupport ? false,
+  cairo,
+  glib,
+  gtk3,
+  testsSupport ? false,
+  check,
+  valgrind,
+  python3,
+  nixosTests,
 }:
 
 let
@@ -29,11 +30,13 @@ let
 
   sphinx-build =
     let
-      env = python3.withPackages (pp: with pp; [
-        sphinx
-        recommonmark
-        sphinx-rtd-theme
-      ]);
+      env = python3.withPackages (
+        pp: with pp; [
+          sphinx
+          recommonmark
+          sphinx-rtd-theme
+        ]
+      );
     in
     # Expose only the sphinx-build binary to avoid contaminating
     # everything with Sphinx’s Python environment.
@@ -47,7 +50,11 @@ stdenv.mkDerivation rec {
   pname = "libinput";
   version = "1.25.0";
 
-  outputs = [ "bin" "out" "dev" ];
+  outputs = [
+    "bin"
+    "out"
+    "dev"
+  ];
 
   src = fetchFromGitLab {
     domain = "gitlab.freedesktop.org";
@@ -61,32 +68,38 @@ stdenv.mkDerivation rec {
     ./udev-absolute-path.patch
   ];
 
-  nativeBuildInputs = [
-    pkg-config
-    meson
-    ninja
-  ] ++ lib.optionals documentationSupport [
-    doxygen
-    graphviz
-    sphinx-build
-  ];
+  nativeBuildInputs =
+    [
+      pkg-config
+      meson
+      ninja
+    ]
+    ++ lib.optionals documentationSupport [
+      doxygen
+      graphviz
+      sphinx-build
+    ];
 
-  buildInputs = [
-    libevdev
-    mtdev
-    libwacom
-    (python3.withPackages (pp: with pp; [
-      pp.libevdev # already in scope
-      pyudev
-      pyyaml
-      setuptools
-    ]))
-  ] ++ lib.optionals eventGUISupport [
-    # GUI event viewer
-    cairo
-    glib
-    gtk3
-  ];
+  buildInputs =
+    [
+      libevdev
+      mtdev
+      libwacom
+      (python3.withPackages (
+        pp: with pp; [
+          pp.libevdev # already in scope
+          pyudev
+          pyyaml
+          setuptools
+        ]
+      ))
+    ]
+    ++ lib.optionals eventGUISupport [
+      # GUI event viewer
+      cairo
+      glib
+      gtk3
+    ];
 
   propagatedBuildInputs = [
     udev

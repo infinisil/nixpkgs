@@ -1,11 +1,14 @@
-{ lib
-, stdenv
-, buildGoModule
-, fetchFromGitHub
+{
+  lib,
+  stdenv,
+  buildGoModule,
+  fetchFromGitHub,
 }:
 
-let version = "0.41.1";
-in buildGoModule {
+let
+  version = "0.41.1";
+in
+buildGoModule {
   pname = "geesefs";
   inherit version;
 

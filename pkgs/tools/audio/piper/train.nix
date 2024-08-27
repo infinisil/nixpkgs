@@ -1,11 +1,14 @@
-{ piper-tts
-, python3
+{
+  piper-tts,
+  python3,
 }:
 
 let
   python = python3.override {
-    packageOverrides = self: super: {
-    };
+    packageOverrides =
+      self: super:
+      {
+      };
   };
 in
 

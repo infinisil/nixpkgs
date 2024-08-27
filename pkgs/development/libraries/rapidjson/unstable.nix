@@ -1,27 +1,31 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, doxygen
-, graphviz
-, gtest
-, valgrind
-, buildDocs ? true
-, buildTests ? !stdenv.hostPlatform.isStatic && !stdenv.isDarwin
-, buildExamples ? true
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
+  doxygen,
+  graphviz,
+  gtest,
+  valgrind,
+  buildDocs ? true,
+  buildTests ? !stdenv.hostPlatform.isStatic && !stdenv.isDarwin,
+  buildExamples ? true,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "rapidjson";
   version = "unstable-2023-09-28";
 
-  outputs = [
-    "out"
-  ] ++ lib.optionals buildDocs [
-    "doc"
-  ] ++ lib.optionals buildExamples [
-    "example"
-  ];
+  outputs =
+    [
+      "out"
+    ]
+    ++ lib.optionals buildDocs [
+      "doc"
+    ]
+    ++ lib.optionals buildExamples [
+      "example"
+    ];
 
   src = fetchFromGitHub {
     owner = "Tencent";
@@ -36,23 +40,27 @@ stdenv.mkDerivation (finalAttrs: {
     ./0001-unstable-valgrind-suppress-failures.patch
   ];
 
-  nativeBuildInputs = [
-    cmake
-  ] ++ lib.optionals buildDocs [
-    doxygen
-    graphviz
-  ];
+  nativeBuildInputs =
+    [
+      cmake
+    ]
+    ++ lib.optionals buildDocs [
+      doxygen
+      graphviz
+    ];
 
-  cmakeFlags = [
-    (lib.cmakeBool "RAPIDJSON_BUILD_DOC" buildDocs)
-    (lib.cmakeBool "RAPIDJSON_BUILD_TESTS" buildTests)
-    (lib.cmakeBool "RAPIDJSON_BUILD_EXAMPLES" buildExamples)
-    # gtest 1.13+ requires C++14 or later.
-    (lib.cmakeBool "RAPIDJSON_BUILD_CXX11" false)
-    (lib.cmakeBool "RAPIDJSON_BUILD_CXX17" true)
-  ] ++ lib.optionals buildTests [
-    (lib.cmakeFeature "GTEST_INCLUDE_DIR" "${lib.getDev gtest}")
-  ];
+  cmakeFlags =
+    [
+      (lib.cmakeBool "RAPIDJSON_BUILD_DOC" buildDocs)
+      (lib.cmakeBool "RAPIDJSON_BUILD_TESTS" buildTests)
+      (lib.cmakeBool "RAPIDJSON_BUILD_EXAMPLES" buildExamples)
+      # gtest 1.13+ requires C++14 or later.
+      (lib.cmakeBool "RAPIDJSON_BUILD_CXX11" false)
+      (lib.cmakeBool "RAPIDJSON_BUILD_CXX17" true)
+    ]
+    ++ lib.optionals buildTests [
+      (lib.cmakeFeature "GTEST_INCLUDE_DIR" "${lib.getDev gtest}")
+    ];
 
   doCheck = buildTests;
 

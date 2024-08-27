@@ -1,7 +1,8 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, kclvm
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  kclvm,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "kclvm_cli";
@@ -25,7 +26,10 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/kcl-lang/kcl";
     license = licenses.asl20;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ selfuryon peefy ];
+    maintainers = with maintainers; [
+      selfuryon
+      peefy
+    ];
     mainProgram = "kclvm_cli";
   };
 }

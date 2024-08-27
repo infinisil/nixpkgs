@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -68,11 +73,13 @@ in
     };
   };
 
-  config = let
-    builderArgs = "-g ${toString cfg.configurationLimit} -t ${timeoutStr}"
-      + lib.optionalString (dtCfg.name != null) " -n ${dtCfg.name}"
-      + lib.optionalString (!cfg.useGenerationDeviceTree) " -r";
-  in
+  config =
+    let
+      builderArgs =
+        "-g ${toString cfg.configurationLimit} -t ${timeoutStr}"
+        + lib.optionalString (dtCfg.name != null) " -n ${dtCfg.name}"
+        + lib.optionalString (!cfg.useGenerationDeviceTree) " -r";
+    in
     mkIf cfg.enable {
       system.build.installBootLoader = "${builder} ${builderArgs} -c";
       system.boot.loader.id = "generic-extlinux-compatible";

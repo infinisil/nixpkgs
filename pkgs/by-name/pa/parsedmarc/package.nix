@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchFromGitHub
+{
+  lib,
+  python3,
+  fetchFromGitHub,
 }:
 
 let
@@ -38,4 +39,6 @@ let
       });
     };
   };
-in with python.pkgs; toPythonApplication parsedmarc
+in
+with python.pkgs;
+toPythonApplication parsedmarc

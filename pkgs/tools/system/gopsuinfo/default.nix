@@ -1,6 +1,7 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
 }:
 
 buildGoModule rec {
@@ -29,7 +30,7 @@ buildGoModule rec {
   '';
 
   # Install icons
-  postInstall = '' make install DESTDIR=$out '';
+  postInstall = ''make install DESTDIR=$out '';
 
   meta = with lib; {
     description = "Gopsutil-based command to display system usage info";

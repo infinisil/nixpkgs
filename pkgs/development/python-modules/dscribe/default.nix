@@ -1,14 +1,15 @@
-{ buildPythonPackage
-, lib
-, fetchFromGitHub
-, numpy
-, scipy
-, ase
-, joblib
-, sparse
-, pybind11
-, scikit-learn
-, pytestCheckHook
+{
+  buildPythonPackage,
+  lib,
+  fetchFromGitHub,
+  numpy,
+  scipy,
+  ase,
+  joblib,
+  sparse,
+  pybind11,
+  scikit-learn,
+  pytestCheckHook,
 }:
 
 buildPythonPackage rec {

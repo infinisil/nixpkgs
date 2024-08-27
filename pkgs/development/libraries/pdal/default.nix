@@ -1,28 +1,29 @@
-{ lib
-, stdenv
-, callPackage
-, fetchFromGitHub
-, testers
+{
+  lib,
+  stdenv,
+  callPackage,
+  fetchFromGitHub,
+  testers,
 
-, enableE57 ? lib.meta.availableOn stdenv.hostPlatform libe57format
+  enableE57 ? lib.meta.availableOn stdenv.hostPlatform libe57format,
 
-, cmake
-, curl
-, gdal
-, hdf5-cpp
-, laszip
-, libe57format
-, libgeotiff
-, libtiff
-, libxml2
-, openscenegraph
-, pkg-config
-, postgresql
-, proj
-, tiledb
-, xercesc
-, zlib
-, zstd
+  cmake,
+  curl,
+  gdal,
+  hdf5-cpp,
+  laszip,
+  libe57format,
+  libgeotiff,
+  libtiff,
+  libxml2,
+  openscenegraph,
+  pkg-config,
+  postgresql,
+  proj,
+  tiledb,
+  xercesc,
+  zlib,
+  zstd,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -41,24 +42,26 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ];
 
-  buildInputs = [
-    curl
-    gdal
-    hdf5-cpp
-    laszip
-    libgeotiff
-    libtiff
-    libxml2
-    openscenegraph
-    postgresql
-    proj
-    tiledb
-    xercesc
-    zlib
-    zstd
-  ] ++ lib.optionals enableE57 [
-    libe57format
-  ];
+  buildInputs =
+    [
+      curl
+      gdal
+      hdf5-cpp
+      laszip
+      libgeotiff
+      libtiff
+      libxml2
+      openscenegraph
+      postgresql
+      proj
+      tiledb
+      xercesc
+      zlib
+      zstd
+    ]
+    ++ lib.optionals enableE57 [
+      libe57format
+    ];
 
   cmakeFlags = [
     "-DBUILD_PLUGIN_E57=${if enableE57 then "ON" else "OFF"}"

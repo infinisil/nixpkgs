@@ -1,46 +1,47 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, gitUpdater
-, cmake
-, irrlichtmt
-, coreutils
-, libpng
-, bzip2
-, curl
-, libogg
-, jsoncpp
-, libjpeg
-, libGLU
-, openal
-, libvorbis
-, sqlite
-, lua5_1
-, luajit
-, freetype
-, gettext
-, doxygen
-, ncurses
-, graphviz
-, xorg
-, gmp
-, libspatialindex
-, leveldb
-, postgresql
-, hiredis
-, libiconv
-, zlib
-, libXrandr
-, libX11
-, ninja
-, prometheus-cpp
-, OpenGL
-, OpenAL ? openal
-, Carbon
-, Cocoa
-, withTouchSupport ? false
-, buildClient ? true
-, buildServer ? true
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  gitUpdater,
+  cmake,
+  irrlichtmt,
+  coreutils,
+  libpng,
+  bzip2,
+  curl,
+  libogg,
+  jsoncpp,
+  libjpeg,
+  libGLU,
+  openal,
+  libvorbis,
+  sqlite,
+  lua5_1,
+  luajit,
+  freetype,
+  gettext,
+  doxygen,
+  ncurses,
+  graphviz,
+  xorg,
+  gmp,
+  libspatialindex,
+  leveldb,
+  postgresql,
+  hiredis,
+  libiconv,
+  zlib,
+  libXrandr,
+  libX11,
+  ninja,
+  prometheus-cpp,
+  OpenGL,
+  OpenAL ? openal,
+  Carbon,
+  Cocoa,
+  withTouchSupport ? false,
+  buildClient ? true,
+  buildServer ? true,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -83,51 +84,59 @@ stdenv.mkDerivation (finalAttrs: {
     ninja
   ];
 
-  buildInputs = [
-    irrlichtmt
-    jsoncpp
-    gettext
-    freetype
-    sqlite
-    curl
-    bzip2
-    ncurses
-    gmp
-    libspatialindex
-  ] ++ lib.optional (lib.meta.availableOn stdenv.hostPlatform luajit) luajit
+  buildInputs =
+    [
+      irrlichtmt
+      jsoncpp
+      gettext
+      freetype
+      sqlite
+      curl
+      bzip2
+      ncurses
+      gmp
+      libspatialindex
+    ]
+    ++ lib.optional (lib.meta.availableOn stdenv.hostPlatform luajit) luajit
     ++ lib.optionals stdenv.isDarwin [
-    libiconv
-    OpenGL
-    OpenAL
-    Carbon
-    Cocoa
-  ] ++ lib.optionals buildClient [
-    libpng
-    libjpeg
-    libGLU
-    openal
-    libogg
-    libvorbis
-    xorg.libX11
-  ] ++ lib.optionals buildServer [
-    leveldb
-    postgresql
-    hiredis
-    prometheus-cpp
-  ];
+      libiconv
+      OpenGL
+      OpenAL
+      Carbon
+      Cocoa
+    ]
+    ++ lib.optionals buildClient [
+      libpng
+      libjpeg
+      libGLU
+      openal
+      libogg
+      libvorbis
+      xorg.libX11
+    ]
+    ++ lib.optionals buildServer [
+      leveldb
+      postgresql
+      hiredis
+      prometheus-cpp
+    ];
 
-  postPatch = ''
-    substituteInPlace src/filesys.cpp --replace "/bin/rm" "${coreutils}/bin/rm"
-  '' + lib.optionalString stdenv.isDarwin ''
-    sed -i '/pagezero_size/d;/fixup_bundle/d' src/CMakeLists.txt
-  '';
+  postPatch =
+    ''
+      substituteInPlace src/filesys.cpp --replace "/bin/rm" "${coreutils}/bin/rm"
+    ''
+    + lib.optionalString stdenv.isDarwin ''
+      sed -i '/pagezero_size/d;/fixup_bundle/d' src/CMakeLists.txt
+    '';
 
-  postInstall = lib.optionalString stdenv.isLinux ''
-    patchShebangs $out
-  '' + lib.optionalString stdenv.isDarwin ''
-    mkdir -p $out/Applications
-    mv $out/minetest.app $out/Applications
-  '';
+  postInstall =
+    lib.optionalString stdenv.isLinux ''
+      patchShebangs $out
+    ''
+    + lib.optionalString stdenv.isDarwin ''
+      mkdir -p $out/Applications
+      mv $out/minetest.app $out/Applications
+    '';
 
   passthru.updateScript = gitUpdater {
     ignoredVersions = "^[^.]+$|.*-android$";
@@ -138,6 +147,10 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Infinite-world block sandbox game";
     license = licenses.lgpl21Plus;
     platforms = platforms.linux ++ platforms.darwin;
-    maintainers = with maintainers; [ pyrolagus fpletz fgaz ];
+    maintainers = with maintainers; [
+      pyrolagus
+      fpletz
+      fgaz
+    ];
   };
 })

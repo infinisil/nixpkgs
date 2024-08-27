@@ -1,10 +1,11 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, fetchpatch
-, nix-update-script
-, testers
-, distribution
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  fetchpatch,
+  nix-update-script,
+  testers,
+  distribution,
 }:
 
 buildGoModule rec {

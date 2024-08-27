@@ -1,13 +1,14 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, installShellFiles
-, stdenv
-, darwin
-, rust-jemalloc-sys
-, ruff-lsp
-, testers
-, ruff
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  installShellFiles,
+  stdenv,
+  darwin,
+  rust-jemalloc-sys,
+  ruff-lsp,
+  testers,
+  ruff,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -33,11 +34,13 @@ rustPlatform.buildRustPackage rec {
     installShellFiles
   ];
 
-  buildInputs = [
-    rust-jemalloc-sys
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.CoreServices
-  ];
+  buildInputs =
+    [
+      rust-jemalloc-sys
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      darwin.apple_sdk.frameworks.CoreServices
+    ];
 
   # tests expect no colors
   preCheck = ''

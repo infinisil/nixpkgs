@@ -1,22 +1,23 @@
-{ lib
-, stdenv
-, fetchFromGitLab
-, docbook-xsl-nons
-, docutils
-, gi-docgen
-, gobject-introspection
-, gtk-doc
-, libxslt
-, meson
-, ninja
-, pkg-config
-, vala
-, wrapGAppsHook3
-, glib
-, gsound
-, json-glib
-, libgudev
-, dbus
+{
+  lib,
+  stdenv,
+  fetchFromGitLab,
+  docbook-xsl-nons,
+  docutils,
+  gi-docgen,
+  gobject-introspection,
+  gtk-doc,
+  libxslt,
+  meson,
+  ninja,
+  pkg-config,
+  vala,
+  wrapGAppsHook3,
+  glib,
+  gsound,
+  json-glib,
+  libgudev,
+  dbus,
 }:
 
 let
@@ -32,7 +33,11 @@ stdenv.mkDerivation rec {
   pname = "feedbackd";
   version = "0.2.0";
 
-  outputs = [ "out" "dev" "devdoc" ];
+  outputs = [
+    "out"
+    "dev"
+    "devdoc"
+  ];
 
   src = fetchFromGitLab {
     domain = "source.puri.sm";

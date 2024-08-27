@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -9,7 +14,8 @@ let
   dataDir = "/var/lib/stalwart-mail";
   useLegacyStorage = versionOlder config.system.stateVersion "24.11";
 
-in {
+in
+{
   options.services.stalwart-mail = {
     enable = mkEnableOption "the Stalwart all-in-one email server";
 
@@ -34,21 +40,25 @@ in {
       tracer.stdout = {
         type = mkDefault "stdout";
         level = mkDefault "info";
-        ansi = mkDefault false;  # no colour markers to journald
+        ansi = mkDefault false; # no colour markers to journald
         enable = mkDefault true;
       };
-      store = if useLegacyStorage then {
-        # structured data in SQLite, blobs on filesystem
-        db.type = mkDefault "sqlite";
-        db.path = mkDefault "${dataDir}/data/index.sqlite3";
-        fs.type = mkDefault "fs";
-        fs.path = mkDefault "${dataDir}/data/blobs";
-      } else {
-        # everything in RocksDB
-        db.type = mkDefault "rocksdb";
-        db.path = mkDefault "${dataDir}/db";
-        db.compression = mkDefault "lz4";
-      };
+      store =
+        if useLegacyStorage then
+          {
+            # structured data in SQLite, blobs on filesystem
+            db.type = mkDefault "sqlite";
+            db.path = mkDefault "${dataDir}/data/index.sqlite3";
+            fs.type = mkDefault "fs";
+            fs.path = mkDefault "${dataDir}/data/blobs";
+          }
+        else
+          {
+            # everything in RocksDB
+            db.type = mkDefault "rocksdb";
+            db.path = mkDefault "${dataDir}/db";
+            db.compression = mkDefault "lz4";
+          };
       storage.data = mkDefault "db";
       storage.fts = mkDefault "db";
       storage.lookup = mkDefault "db";
@@ -81,13 +91,20 @@ in {
       packages = [ cfg.package ];
       services.stalwart-mail = {
         wantedBy = [ "multi-user.target" ];
-        after = [ "local-fs.target" "network.target" ];
+        after = [
+          "local-fs.target"
+          "network.target"
+        ];
 
-        preStart = if useLegacyStorage then ''
-          mkdir -p ${dataDir}/data/blobs
-        '' else ''
-          mkdir -p ${dataDir}/db
-        '';
+        preStart =
+          if useLegacyStorage then
+            ''
+              mkdir -p ${dataDir}/data/blobs
+            ''
+          else
+            ''
+              mkdir -p ${dataDir}/db
+            '';
 
         serviceConfig = {
           ExecStart = [
@@ -109,7 +126,7 @@ in {
           LockPersonality = true;
           MemoryDenyWriteExecute = true;
           PrivateDevices = true;
-          PrivateUsers = false;  # incompatible with CAP_NET_BIND_SERVICE
+          PrivateUsers = false; # incompatible with CAP_NET_BIND_SERVICE
           ProcSubset = "pid";
           PrivateTmp = true;
           ProtectClock = true;
@@ -121,12 +138,18 @@ in {
           ProtectKernelTunables = true;
           ProtectProc = "invisible";
           ProtectSystem = "strict";
-          RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+          RestrictAddressFamilies = [
+            "AF_INET"
+            "AF_INET6"
+          ];
           RestrictNamespaces = true;
           RestrictRealtime = true;
           RestrictSUIDSGID = true;
           SystemCallArchitectures = "native";
-          SystemCallFilter = [ "@system-service" "~@privileged" ];
+          SystemCallFilter = [
+            "@system-service"
+            "~@privileged"
+          ];
           UMask = "0077";
         };
         unitConfig.ConditionPathExists = [
@@ -141,6 +164,10 @@ in {
   };
 
   meta = {
-    maintainers = with maintainers; [ happysalada pacien onny ];
+    maintainers = with maintainers; [
+      happysalada
+      pacien
+      onny
+    ];
   };
 }

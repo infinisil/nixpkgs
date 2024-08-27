@@ -1,29 +1,30 @@
-{ alsa-lib
-, cups
-, dpkg
-, fetchurl
-, glib
-, libssh2
-, gtk3
-, lib
-, libayatana-appindicator
-, libdrm
-, libgcrypt
-, libkrb5
-, libnotify
-, mesa # for libgbm
-, libpulseaudio
-, libGL
-, nss
-, xorg
-, systemd
-, stdenv
-, vips
-, at-spi2-core
-, autoPatchelfHook
-, makeShellWrapper
-, wrapGAppsHook3
-, commandLineArgs ? ""
+{
+  alsa-lib,
+  cups,
+  dpkg,
+  fetchurl,
+  glib,
+  libssh2,
+  gtk3,
+  lib,
+  libayatana-appindicator,
+  libdrm,
+  libgcrypt,
+  libkrb5,
+  libnotify,
+  mesa, # for libgbm
+  libpulseaudio,
+  libGL,
+  nss,
+  xorg,
+  systemd,
+  stdenv,
+  vips,
+  at-spi2-core,
+  autoPatchelfHook,
+  makeShellWrapper,
+  wrapGAppsHook3,
+  commandLineArgs ? "",
 }:
 
 let
@@ -38,7 +39,8 @@ let
       hash = sources.arm64_hash;
     };
   };
-  src = srcs.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+  src =
+    srcs.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 in
 stdenv.mkDerivation {
   pname = "qq";
@@ -112,7 +114,10 @@ stdenv.mkDerivation {
   meta = with lib; {
     homepage = "https://im.qq.com/linuxqq/";
     description = "Messaging app";
-    platforms = [ "x86_64-linux" "aarch64-linux" ];
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
     license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     maintainers = with lib.maintainers; [ fee1-dead ];

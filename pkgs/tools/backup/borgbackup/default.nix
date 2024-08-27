@@ -1,17 +1,18 @@
-{ lib
-, stdenv
-, acl
-, e2fsprogs
-, fetchFromGitHub
-, libb2
-, lz4
-, openssh
-, openssl
-, python3
-, xxHash
-, zstd
-, installShellFiles
-, nixosTests
+{
+  lib,
+  stdenv,
+  acl,
+  e2fsprogs,
+  fetchFromGitHub,
+  libb2,
+  lz4,
+  openssh,
+  openssl,
+  python3,
+  xxHash,
+  zstd,
+  installShellFiles,
+  nixosTests,
 }:
 
 let
@@ -50,17 +51,22 @@ python.pkgs.buildPythonApplication rec {
     installShellFiles
   ];
 
-  sphinxBuilders = [ "singlehtml" "man" ];
-
-  buildInputs = [
-    libb2
-    lz4
-    xxHash
-    zstd
-    openssl
-  ] ++ lib.optionals stdenv.isLinux [
-    acl
+  sphinxBuilders = [
+    "singlehtml"
+    "man"
   ];
+
+  buildInputs =
+    [
+      libb2
+      lz4
+      xxHash
+      zstd
+      openssl
+    ]
+    ++ lib.optionals stdenv.isLinux [
+      acl
+    ];
 
   dependencies = with python.pkgs; [
     msgpack
@@ -90,7 +96,8 @@ python.pkgs.buildPythonApplication rec {
 
   pytestFlagsArray = [
     "--benchmark-skip"
-    "--pyargs" "borg.testsuite"
+    "--pyargs"
+    "borg.testsuite"
   ];
 
   disabledTests = [
@@ -119,7 +126,11 @@ python.pkgs.buildPythonApplication rec {
     inherit (nixosTests) borgbackup;
   };
 
-  outputs = [ "out" "doc" "man" ];
+  outputs = [
+    "out"
+    "doc"
+    "man"
+  ];
 
   meta = with lib; {
     changelog = "https://github.com/borgbackup/borg/blob/${src.rev}/docs/changes.rst";
@@ -128,6 +139,9 @@ python.pkgs.buildPythonApplication rec {
     license = licenses.bsd3;
     platforms = platforms.unix; # Darwin and FreeBSD mentioned on homepage
     mainProgram = "borg";
-    maintainers = with maintainers; [ dotlambda globin ];
+    maintainers = with maintainers; [
+      dotlambda
+      globin
+    ];
   };
 }

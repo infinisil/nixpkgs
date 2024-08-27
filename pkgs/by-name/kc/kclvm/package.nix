@@ -1,9 +1,9 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, protobuf
-, pkg-config
-,
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  protobuf,
+  pkg-config,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "kclvm";
@@ -24,7 +24,10 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
-  nativeBuildInputs = [ pkg-config protobuf ];
+  nativeBuildInputs = [
+    pkg-config
+    protobuf
+  ];
 
   patches = [ ./enable_protoc_env.patch ];
 
@@ -36,6 +39,9 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/kcl-lang/kcl";
     license = licenses.asl20;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ selfuryon peefy ];
+    maintainers = with maintainers; [
+      selfuryon
+      peefy
+    ];
   };
 }
