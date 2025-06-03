@@ -236,7 +236,8 @@ in
 
 ## Windows
 
-# Obtain latest patch with ../update-mcfgthread-patches.sh
+# Backported mcf thread model support from gcc13:
+# https://github.com/gcc-mirror/gcc/commit/f036d759ecee538555fa8c6b11963e4033732463
 ++ optional (
   !atLeast13 && !withoutTargetLibc && targetPlatform.isMinGW && threadsCross.model == "mcf"
 ) (./. + "/${majorVersion}/Added-mcf-thread-model-support-from-mcfgthread.patch")
@@ -258,8 +259,11 @@ in
 
 ## gcc 10.0 and older ##############################################################################
 
+# Probably needed for gnat wrapper https://github.com/NixOS/nixpkgs/pull/62314
 ++ optional (langAda && (is9 || is10)) ./gnat-cflags.patch
 ++
+  # Backport native aarch64-darwin compilation fix from gcc12
+  # https://github.com/NixOS/nixpkgs/pull/167595
   optional
     (
       is10
@@ -279,6 +283,9 @@ in
 ## gcc 9.0 and older ##############################################################################
 
 ++ optional (majorVersion == "9") ./9/fix-struct-redefinition-on-glibc-2.36.patch
+# Needed for NetBSD cross comp in older versions
+# https://gcc.gnu.org/pipermail/gcc-patches/2020-January/thread.html#537548
+# https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=98d56ea8900fdcff8f1987cf2bf499a5b7399857
 ++ optional (!atLeast10 && targetPlatform.isNetBSD) ./libstdc++-netbsd-ctypes.patch
 
 # Make Darwin bootstrap respect whether the assembler supports `--gstabs`,
